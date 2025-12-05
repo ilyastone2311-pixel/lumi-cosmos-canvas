@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import BackgroundEffects from "@/components/BackgroundEffects";
-import { ArrowLeft, Sparkles, BookOpen, Target, Users } from "lucide-react";
+import { ArrowLeft, Sparkles, BookOpen, Target, Users, Coffee, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const About = () => {
@@ -31,69 +31,75 @@ const About = () => {
               </h1>
             </div>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Your gateway to knowledge in bite-sized pieces
+              We're a small team who got tired of never finishing books.
             </p>
           </header>
 
-          {/* Mission Section */}
+          {/* Story Section - more personal */}
           <section className="mb-16 animate-fade-in" style={{ animationDelay: '100ms' }}>
-            <div className="glass gradient-border rounded-2xl p-8 md:p-12">
-              <h2 className="font-display text-2xl font-semibold text-foreground mb-4 flex items-center gap-3">
-                <Target className="w-6 h-6 text-primary" />
-                Our Mission
-              </h2>
+            <div className="glass organic-border p-8 md:p-12">
+              <div className="flex items-center gap-3 mb-6">
+                <Coffee className="w-6 h-6 text-primary" />
+                <h2 className="font-display text-2xl font-semibold text-foreground">
+                  How it started
+                </h2>
+              </div>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                At Lumi, we believe that knowledge should be accessible, engaging, and efficient. 
-                In today's fast-paced world, finding time to read lengthy books and articles can be challenging. 
-                That's why we've created a platform that distills the essence of the world's best ideas into 
-                short, impactful reads that you can consume in just 5 minutes.
+                Real talk: we started Lumi because our reading lists were getting out of control. 
+                Hundreds of books saved "for later," browser tabs we'd never get back to, and that 
+                guilty feeling every time we walked past our bookshelves.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                So we asked ourselves—what if we could capture the <span className="text-primary">
+                soul of a book</span> in 5 minutes? Not cliff notes. Not dumbed-down summaries. 
+                But the actual insights that stick with you.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Our team of experts carefully curates and summarizes content across diverse topics—from 
-                psychology and technology to history and personal growth—ensuring you get maximum value 
-                from minimal time investment.
+                That's Lumi. It's what we wished existed when we were drowning in our "to-read" 
+                pile at 2am. We hope it helps you too.
               </p>
             </div>
           </section>
 
-          {/* Features Grid */}
+          {/* What we care about */}
           <section className="mb-16">
-            <h2 className="font-display text-2xl font-semibold text-foreground mb-8 text-center animate-fade-in" style={{ animationDelay: '200ms' }}>
-              What Makes Us Different
+            <h2 className="font-display text-2xl font-semibold text-foreground mb-8 text-center animate-fade-in flex items-center justify-center gap-2" style={{ animationDelay: '200ms' }}>
+              <Heart className="w-5 h-5 text-accent" />
+              What we actually care about
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
               {[
                 {
                   icon: BookOpen,
-                  title: "Expertly Curated",
-                  description: "Every piece of content is handpicked and summarized by subject matter experts."
+                  title: "Quality over quantity",
+                  description: "We'd rather have 50 great summaries than 5000 mediocre ones. Every piece goes through actual humans (not just AI)."
                 },
                 {
                   icon: Sparkles,
-                  title: "Science-Backed",
-                  description: "Our learning approach is based on cognitive science research for optimal retention."
+                  title: "Making you smarter",
+                  description: "We use spaced repetition and key takeaways because we actually researched what helps people remember stuff."
                 },
                 {
                   icon: Users,
-                  title: "Community Driven",
-                  description: "Join thousands of curious minds on their journey to continuous learning."
+                  title: "Our weird community",
+                  description: "We have a Discord. People share book recommendations at 3am. It's lovely and slightly chaotic."
                 },
                 {
                   icon: Target,
-                  title: "Goal Oriented",
-                  description: "Track your progress and build consistent reading habits with our tools."
+                  title: "Your time matters",
+                  description: "No dark patterns. No infinite scroll traps. Read, learn, go live your life. That's the whole point."
                 }
               ].map((feature, index) => (
                 <div
                   key={feature.title}
-                  className="glass rounded-xl p-6 animate-fade-in hover:bg-white/10 transition-all duration-300"
+                  className="glass organic-border p-6 animate-fade-in imperfect-card hover:bg-white/10 transition-all duration-300"
                   style={{ animationDelay: `${300 + index * 100}ms` }}
                 >
                   <feature.icon className="w-8 h-8 text-primary mb-4" />
                   <h3 className="font-display text-lg font-semibold text-foreground mb-2">
                     {feature.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-muted-foreground text-sm leading-relaxed">
                     {feature.description}
                   </p>
                 </div>
@@ -101,25 +107,28 @@ const About = () => {
             </div>
           </section>
 
-          {/* Stats */}
+          {/* Numbers - less corporate */}
           <section className="animate-fade-in" style={{ animationDelay: '600ms' }}>
-            <div className="glass gradient-border rounded-2xl p-8">
+            <div className="glass gradient-border organic-border p-8">
+              <p className="text-center text-muted-foreground mb-6 text-sm">
+                Some numbers (we're not obsessed with metrics, promise)
+              </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 <div>
                   <p className="font-display text-3xl font-bold text-primary mb-1">500+</p>
-                  <p className="text-sm text-muted-foreground">Book Summaries</p>
+                  <p className="text-sm text-muted-foreground">Summaries</p>
                 </div>
                 <div>
-                  <p className="font-display text-3xl font-bold text-secondary mb-1">50K+</p>
-                  <p className="text-sm text-muted-foreground">Active Readers</p>
+                  <p className="font-display text-3xl font-bold text-secondary mb-1">50K</p>
+                  <p className="text-sm text-muted-foreground">Readers</p>
                 </div>
                 <div>
-                  <p className="font-display text-3xl font-bold text-accent mb-1">9</p>
-                  <p className="text-sm text-muted-foreground">Categories</p>
+                  <p className="font-display text-3xl font-bold text-accent mb-1">4.8★</p>
+                  <p className="text-sm text-muted-foreground">Avg rating</p>
                 </div>
                 <div>
-                  <p className="font-display text-3xl font-bold text-foreground mb-1">5 min</p>
-                  <p className="text-sm text-muted-foreground">Average Read</p>
+                  <p className="font-display text-3xl font-bold text-foreground mb-1">∞</p>
+                  <p className="text-sm text-muted-foreground">Coffee consumed</p>
                 </div>
               </div>
             </div>

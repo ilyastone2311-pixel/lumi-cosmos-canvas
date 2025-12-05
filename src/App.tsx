@@ -12,6 +12,7 @@ import Experts from "./pages/Experts";
 import Downloads from "./pages/Downloads";
 import CategoryDetail from "./pages/CategoryDetail";
 import Article from "./pages/Article";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/downloads" element={<Downloads />} />
             <Route path="/category/:category" element={<CategoryDetail />} />
             <Route path="/article/:category/:articleId" element={<Article />} />
+            <Route path="/profile" element={<Profile />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

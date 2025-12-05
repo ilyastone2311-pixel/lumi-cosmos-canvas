@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import CategoryCard from "@/components/CategoryCard";
 import BackgroundEffects from "@/components/BackgroundEffects";
@@ -5,6 +6,7 @@ import HeroSection from "@/components/HeroSection";
 import HowItWorks from "@/components/HowItWorks";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useAuth } from "@/hooks/useAuth";
+import { getRandomArticle } from "@/data/articles";
 
 import categoryPolitics from "@/assets/category-politics.jpg";
 import categoryPsychology from "@/assets/category-psychology.jpg";
@@ -67,6 +69,7 @@ const categories = [
 const Index = () => {
   const { isFavorite, toggleFavorite } = useFavorites();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -137,7 +140,13 @@ const Index = () => {
                   : "Join thousands of curious minds on their learning journey"
                 }
               </p>
-              <button className="relative group px-8 py-4 rounded-full font-display font-semibold overflow-hidden transition-all duration-300 hover:scale-105">
+              <button 
+                onClick={() => {
+                  const randomArticle = getRandomArticle();
+                  navigate(`/article/${randomArticle.category}/${randomArticle.id}`);
+                }}
+                className="relative group px-8 py-4 rounded-full font-display font-semibold overflow-hidden transition-all duration-300 hover:scale-105 btn-hover"
+              >
                 {/* Button background */}
                 <span className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 rounded-full border border-primary/30" />
                 
@@ -147,7 +156,7 @@ const Index = () => {
                 {/* Text */}
                 <span className="relative flex items-center gap-3 text-foreground">
                   <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                  Random Read
+                  Surprise Me
                 </span>
               </button>
             </div>
