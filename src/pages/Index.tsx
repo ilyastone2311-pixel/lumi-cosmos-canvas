@@ -1,7 +1,8 @@
 import Navbar from "@/components/Navbar";
 import CategoryCard from "@/components/CategoryCard";
 import BackgroundEffects from "@/components/BackgroundEffects";
-import ParticleField from "@/components/ParticleField";
+import HeroSection from "@/components/HeroSection";
+import HowItWorks from "@/components/HowItWorks";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -71,81 +72,87 @@ const Index = () => {
     <div className="min-h-screen relative overflow-hidden">
       {/* Background Effects */}
       <BackgroundEffects />
-      <ParticleField />
 
       {/* Navigation */}
       <Navbar />
 
       {/* Main Content */}
-      <main className="relative z-10 pt-32 pb-20 px-6">
-        <div className="container mx-auto max-w-7xl">
-          {/* Hero Section */}
-          <header className="text-center mb-16">
-            <h1 className="font-display text-5xl md:text-7xl font-bold tracking-wider mb-6 animate-fade-in">
-              <span className="text-glow bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                Choose Your World
-              </span>
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '200ms' }}>
-              Explore short reads across every topic
-            </p>
-            
-            {/* User greeting */}
-            {user && (
-              <p className="text-primary mt-4 animate-fade-in" style={{ animationDelay: '300ms' }}>
-                Welcome back! Click the heart to save your favorites.
+      <main className="relative z-10 pt-24">
+        {/* Hero Section */}
+        <HeroSection />
+
+        {/* How It Works */}
+        <HowItWorks />
+
+        {/* Categories Section */}
+        <section className="py-20 px-6">
+          <div className="container mx-auto max-w-7xl">
+            <div className="text-center mb-16">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4 animate-fade-in">
+                Explore Categories
+              </h2>
+              <p className="text-muted-foreground max-w-xl mx-auto animate-fade-in" style={{ animationDelay: '100ms' }}>
+                {user 
+                  ? "Click the heart to save your favorites" 
+                  : "Dive into topics that spark your curiosity"
+                }
               </p>
-            )}
-            
-            {/* Decorative line */}
-            <div className="flex items-center justify-center gap-4 mt-8 animate-fade-in" style={{ animationDelay: '400ms' }}>
-              <div className="h-px w-16 bg-gradient-to-r from-transparent to-primary/50" />
-              <div className="w-2 h-2 rounded-full bg-primary animate-glow-pulse" />
-              <div className="h-px w-16 bg-gradient-to-l from-transparent to-primary/50" />
             </div>
-          </header>
 
-          {/* Categories Grid */}
-          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {categories.map((category, index) => (
-              <div
-                key={category.title}
-                className="animate-fade-in"
-                style={{ animationDelay: `${300 + index * 100}ms` }}
-              >
-                <CategoryCard
-                  title={category.title}
-                  subtitle={category.subtitle}
-                  image={category.image}
-                  delay={index * 100}
-                  isFavorite={isFavorite(category.title)}
-                  onToggleFavorite={() => toggleFavorite(category.title)}
-                />
-              </div>
-            ))}
-          </section>
+            {/* Categories Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              {categories.map((category, index) => (
+                <div
+                  key={category.title}
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${200 + index * 100}ms` }}
+                >
+                  <CategoryCard
+                    title={category.title}
+                    subtitle={category.subtitle}
+                    image={category.image}
+                    delay={index * 100}
+                    isFavorite={isFavorite(category.title)}
+                    onToggleFavorite={() => toggleFavorite(category.title)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-          {/* Bottom CTA */}
-          <footer className="text-center mt-20 animate-fade-in" style={{ animationDelay: '1200ms' }}>
-            <p className="text-muted-foreground mb-6">
-              {user ? "Explore your saved favorites anytime." : "Sign in to save your favorites."}
-            </p>
-            <button className="group relative px-8 py-4 rounded-full font-display font-semibold tracking-wider text-foreground overflow-hidden transition-all duration-300 hover:scale-105">
-              {/* Button background */}
-              <span className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 rounded-full" />
-              <span className="absolute inset-0 border border-primary/30 rounded-full" />
+        {/* Bottom CTA */}
+        <section className="py-20 px-6">
+          <div className="container mx-auto max-w-4xl text-center">
+            <div className="relative p-12 rounded-3xl glass gradient-border animate-fade-in">
+              {/* Background glow */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-secondary/10" />
               
-              {/* Glow effect */}
-              <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 blur-xl" />
-              
-              {/* Text */}
-              <span className="relative flex items-center gap-3">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                Random Read
-              </span>
-            </button>
-          </footer>
-        </div>
+              <h3 className="relative font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
+                Ready to expand your mind?
+              </h3>
+              <p className="relative text-muted-foreground mb-8 max-w-md mx-auto">
+                {user 
+                  ? "Explore your saved favorites anytime" 
+                  : "Join thousands of curious minds on their learning journey"
+                }
+              </p>
+              <button className="relative group px-8 py-4 rounded-full font-display font-semibold overflow-hidden transition-all duration-300 hover:scale-105">
+                {/* Button background */}
+                <span className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 rounded-full border border-primary/30" />
+                
+                {/* Glow effect on hover */}
+                <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 blur-xl rounded-full" />
+                
+                {/* Text */}
+                <span className="relative flex items-center gap-3 text-foreground">
+                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  Random Read
+                </span>
+              </button>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );
