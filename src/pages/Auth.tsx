@@ -203,11 +203,12 @@ const Auth = () => {
           <p className="text-center text-muted-foreground mt-6">
             {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
             <button
+              type="button"
               onClick={() => {
                 setIsLogin(!isLogin);
                 setErrors({});
               }}
-              className="text-primary hover:text-primary/80 font-medium transition-colors"
+              className="text-primary hover:text-primary/80 font-semibold underline underline-offset-2 transition-colors"
             >
               {isLogin ? "Sign up" : "Sign in"}
             </button>
