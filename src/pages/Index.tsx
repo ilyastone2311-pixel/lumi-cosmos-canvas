@@ -2,6 +2,8 @@ import Navbar from "@/components/Navbar";
 import CategoryCard from "@/components/CategoryCard";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import ParticleField from "@/components/ParticleField";
+import { useFavorites } from "@/hooks/useFavorites";
+import { useAuth } from "@/hooks/useAuth";
 
 import categoryPolitics from "@/assets/category-politics.jpg";
 import categoryPsychology from "@/assets/category-psychology.jpg";
@@ -62,6 +64,9 @@ const categories = [
 ];
 
 const Index = () => {
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const { user } = useAuth();
+
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Background Effects */}
@@ -85,6 +90,13 @@ const Index = () => {
               Explore short reads across every topic
             </p>
             
+            {/* User greeting */}
+            {user && (
+              <p className="text-primary mt-4 animate-fade-in" style={{ animationDelay: '300ms' }}>
+                Welcome back! Click the heart to save your favorites.
+              </p>
+            )}
+            
             {/* Decorative line */}
             <div className="flex items-center justify-center gap-4 mt-8 animate-fade-in" style={{ animationDelay: '400ms' }}>
               <div className="h-px w-16 bg-gradient-to-r from-transparent to-primary/50" />
@@ -106,6 +118,8 @@ const Index = () => {
                   subtitle={category.subtitle}
                   image={category.image}
                   delay={index * 100}
+                  isFavorite={isFavorite(category.title)}
+                  onToggleFavorite={() => toggleFavorite(category.title)}
                 />
               </div>
             ))}
@@ -114,7 +128,7 @@ const Index = () => {
           {/* Bottom CTA */}
           <footer className="text-center mt-20 animate-fade-in" style={{ animationDelay: '1200ms' }}>
             <p className="text-muted-foreground mb-6">
-              Can't decide? Let us surprise you.
+              {user ? "Explore your saved favorites anytime." : "Sign in to save your favorites."}
             </p>
             <button className="group relative px-8 py-4 rounded-full font-display font-semibold tracking-wider text-foreground overflow-hidden transition-all duration-300 hover:scale-105">
               {/* Button background */}
