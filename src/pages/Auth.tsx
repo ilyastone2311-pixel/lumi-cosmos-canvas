@@ -186,16 +186,23 @@ const Auth = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 rounded-lg font-display font-semibold text-primary-foreground bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 glow-cyan"
+              className="relative w-full py-3.5 rounded-full font-display font-semibold text-primary-foreground overflow-hidden transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {isLoading ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  {isLogin ? "Signing in..." : "Creating account..."}
-                </>
-              ) : (
-                <>{isLogin ? "Sign In" : "Create Account"}</>
-              )}
+              {/* Button gradient background */}
+              <span className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full" />
+              {/* Glow */}
+              <span className="absolute inset-0 opacity-50 blur-md bg-gradient-to-r from-primary to-secondary rounded-full" />
+              
+              <span className="relative flex items-center gap-2">
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    {isLogin ? "Signing in..." : "Creating account..."}
+                  </>
+                ) : (
+                  <>{isLogin ? "Sign In" : "Create Account"}</>
+                )}
+              </span>
             </button>
           </form>
 
