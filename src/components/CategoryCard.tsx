@@ -1,14 +1,29 @@
 import { useState } from "react";
+import { Heart } from "lucide-react";
 
 interface CategoryCardProps {
   title: string;
   subtitle: string;
   image: string;
   delay?: number;
+  isFavorite?: boolean;
+  onToggleFavorite?: () => void;
 }
 
-const CategoryCard = ({ title, subtitle, image, delay = 0 }: CategoryCardProps) => {
+const CategoryCard = ({ 
+  title, 
+  subtitle, 
+  image, 
+  delay = 0, 
+  isFavorite = false,
+  onToggleFavorite 
+}: CategoryCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onToggleFavorite?.();
+  };
 
   return (
     <div
@@ -34,6 +49,27 @@ const CategoryCard = ({ title, subtitle, image, delay = 0 }: CategoryCardProps) 
             ${isHovered ? "opacity-100" : ""}
           `}
         />
+
+        {/* Favorite Button */}
+        <button
+          onClick={handleFavoriteClick}
+          className={`
+            absolute top-4 right-4 z-20
+            w-10 h-10 rounded-full
+            flex items-center justify-center
+            transition-all duration-300
+            ${isFavorite 
+              ? "bg-accent/30 text-accent" 
+              : "bg-black/30 text-white/70 hover:bg-black/50 hover:text-white"
+            }
+            backdrop-blur-sm
+          `}
+        >
+          <Heart 
+            className={`w-5 h-5 transition-transform duration-300 ${isHovered ? "scale-110" : ""}`} 
+            fill={isFavorite ? "currentColor" : "none"}
+          />
+        </button>
 
         {/* Image Container */}
         <div className="relative h-48 overflow-hidden">
