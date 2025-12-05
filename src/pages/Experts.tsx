@@ -1,50 +1,56 @@
 import Navbar from "@/components/Navbar";
 import BackgroundEffects from "@/components/BackgroundEffects";
-import { ArrowLeft, Award, BookOpen, Linkedin, Twitter } from "lucide-react";
+import { ArrowLeft, Award, BookOpen, Linkedin, Twitter, Quote } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const experts = [
   {
-    name: "Dr. Sarah Chen",
-    role: "Psychology & Mindfulness Expert",
-    bio: "Former Stanford researcher with 15 years of experience in cognitive behavioral therapy and mindfulness practices.",
+    name: "Sarah Chen",
+    role: "Psychology & Mindfulness",
+    bio: "Former therapist who got tired of seeing the same advice repackaged. Now she distills what actually works.",
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
     articles: 48,
+    quote: "Most self-help books have one good idea stretched over 300 pages.",
   },
   {
     name: "Marcus Thompson",
-    role: "Technology & Innovation Writer",
-    bio: "Ex-Google engineer turned tech journalist. Covers AI, blockchain, and emerging technologies.",
+    role: "Tech & Innovation",
+    bio: "Ex-engineer who realized he was better at explaining things than building them. Your friendly tech translator.",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
     articles: 62,
+    quote: "Technology should make sense, not make you feel dumb.",
   },
   {
-    name: "Dr. Elena Rodriguez",
-    role: "History & Culture Curator",
-    bio: "Harvard PhD in Ancient History. Passionate about making historical insights relevant to modern life.",
+    name: "Elena Rodriguez",
+    role: "History & Culture",
+    bio: "History PhD who thinks dusty textbooks are a crime. Making the past feel surprisingly relevant.",
     avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
     articles: 35,
+    quote: "History isn't about memorizing dates. It's about recognizing patterns.",
   },
   {
     name: "James Nakamura",
-    role: "Business & Leadership Coach",
-    bio: "Former Fortune 500 CEO advisor. Specializes in leadership development and organizational psychology.",
+    role: "Business & Leadership",
+    bio: "Spent 20 years in boardrooms, now spends time making leadership advice actually actionable.",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
     articles: 54,
+    quote: "Every 'overnight success' story skips the boring middle part.",
   },
   {
-    name: "Dr. Priya Sharma",
-    role: "Science & Health Editor",
-    bio: "Medical doctor and science communicator. Makes complex scientific concepts accessible to everyone.",
+    name: "Priya Sharma",
+    role: "Science & Health",
+    bio: "Doctor by training, science communicator by passion. Explains complex stuff without the jargon.",
     avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face",
     articles: 41,
+    quote: "Your body is wild. Most people have no idea what's happening inside them.",
   },
   {
     name: "Alex Rivera",
-    role: "Personal Growth Specialist",
-    bio: "Life coach and bestselling author. Helps readers unlock their potential through actionable insights.",
+    role: "Personal Growth",
+    bio: "Former skeptic of self-help who found the gems worth sharing. Now helps others skip the fluff.",
     avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
     articles: 73,
+    quote: "Growth isn't linear. It's more like a weird squiggle.",
   },
 ];
 
@@ -70,10 +76,10 @@ const Experts = () => {
           {/* Header */}
           <header className="text-center mb-16 animate-fade-in">
             <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Our Expert Curators
+              The Humans Behind Lumi
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Meet the minds behind our carefully curated content
+              Real people who read way too many books so you don't have to.
             </p>
           </header>
 
@@ -82,7 +88,7 @@ const Experts = () => {
             {experts.map((expert, index) => (
               <div
                 key={expert.name}
-                className="glass gradient-border rounded-2xl p-6 animate-fade-in hover:scale-[1.02] transition-all duration-300 cursor-pointer group"
+                className="glass organic-border p-6 animate-fade-in imperfect-card hover:bg-white/5 transition-all duration-300 group"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* Avatar */}
@@ -90,7 +96,7 @@ const Experts = () => {
                   <img
                     src={expert.avatar}
                     alt={expert.name}
-                    className="w-16 h-16 rounded-full object-cover border-2 border-primary/30"
+                    className="w-16 h-16 rounded-full object-cover border-2 border-primary/30 group-hover:border-primary/60 transition-colors"
                   />
                   <div>
                     <h3 className="font-display text-lg font-semibold text-foreground">
@@ -105,13 +111,21 @@ const Experts = () => {
                   {expert.bio}
                 </p>
 
+                {/* Quote */}
+                <div className="flex gap-2 mb-4 p-3 bg-white/5 rounded-lg">
+                  <Quote className="w-4 h-4 text-primary/60 flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-foreground/80 italic">
+                    "{expert.quote}"
+                  </p>
+                </div>
+
                 {/* Stats & Social */}
                 <div className="flex items-center justify-between pt-4 border-t border-border/30">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <BookOpen className="w-4 h-4 text-primary" />
                     <span>{expert.articles} articles</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1">
                     <button className="p-2 rounded-full hover:bg-white/10 transition-colors btn-hover">
                       <Twitter className="w-4 h-4 text-muted-foreground hover:text-primary" />
                     </button>
@@ -126,16 +140,17 @@ const Experts = () => {
 
           {/* Join CTA */}
           <section className="mt-16 text-center animate-fade-in" style={{ animationDelay: '600ms' }}>
-            <div className="glass gradient-border rounded-2xl p-8 md:p-12">
+            <div className="glass gradient-border organic-border p-8 md:p-12">
               <Award className="w-12 h-12 text-primary mx-auto mb-4" />
               <h2 className="font-display text-2xl font-semibold text-foreground mb-3">
-                Become a Curator
+                Think you'd fit in?
               </h2>
               <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                Are you an expert in your field? Join our team of curators and help shape the future of learning.
+                We're always looking for curious minds who can turn complex ideas into 
+                something you'd actually want to read. No corporate speak required.
               </p>
-              <button className="btn-primary px-8 py-3 rounded-full font-display font-semibold">
-                Apply Now
+              <button className="btn-primary px-8 py-3 rounded-full font-display font-semibold btn-hover">
+                Say hi →
               </button>
             </div>
           </section>
