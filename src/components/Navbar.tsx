@@ -1,15 +1,18 @@
 import { Sparkles, LogOut, User } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const { user, signOut, loading } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
   };
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/50">
@@ -23,22 +26,40 @@ const Navbar = () => {
             <Sparkles className="w-6 h-6 text-primary animate-pulse-slow" />
             <div className="absolute inset-0 blur-md bg-primary/50 animate-glow-pulse rounded-full" />
           </div>
-          <span className="font-display text-2xl font-bold tracking-wider text-foreground">
+          <span className="font-display text-2xl font-bold tracking-wide text-foreground">
             Lumi
           </span>
         </div>
 
-        {/* Navigation Links */}
-        <div className="hidden md:flex items-center gap-8">
-          {["Home", "About", "Blog", "Contact"].map((item) => (
-            <a
-              key={item}
-              href="#"
-              className="text-muted-foreground hover:text-foreground transition-colors duration-300 text-sm font-medium"
-            >
-              {item}
-            </a>
-          ))}
+        {/* Big Navigation Buttons */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate("/")}
+            className={`relative px-6 py-2.5 rounded-full font-display font-semibold text-sm transition-all duration-300 ${
+              isActive("/")
+                ? "text-foreground"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {isActive("/") && (
+              <span className="absolute inset-0 bg-white/10 rounded-full border border-white/20" />
+            )}
+            <span className="relative">Home</span>
+          </button>
+          
+          <button
+            onClick={() => navigate("/library")}
+            className={`relative px-6 py-2.5 rounded-full font-display font-semibold text-sm transition-all duration-300 ${
+              isActive("/library")
+                ? "text-foreground"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {isActive("/library") && (
+              <span className="absolute inset-0 bg-white/10 rounded-full border border-white/20" />
+            )}
+            <span className="relative">Library</span>
+          </button>
         </div>
 
         {/* Auth Buttons */}
