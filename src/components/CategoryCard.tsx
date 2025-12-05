@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Heart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface CategoryCardProps {
   title: string;
@@ -19,10 +20,16 @@ const CategoryCard = ({
   onToggleFavorite 
 }: CategoryCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     onToggleFavorite?.();
+  };
+
+  const handleCardClick = () => {
+    const categorySlug = title.toLowerCase().replace(/\s+/g, '-');
+    navigate(`/category/${categorySlug}`);
   };
 
   return (
@@ -31,6 +38,7 @@ const CategoryCard = ({
       style={{ animationDelay: `${delay}ms` }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={handleCardClick}
     >
       {/* Card Container */}
       <div
@@ -39,6 +47,7 @@ const CategoryCard = ({
           glass gradient-border
           transition-all duration-500 ease-out
           ${isHovered ? "scale-[1.02] -translate-y-2" : ""}
+          active:scale-[0.98]
         `}
       >
         {/* Glow Effect */}
@@ -58,6 +67,7 @@ const CategoryCard = ({
             w-10 h-10 rounded-full
             flex items-center justify-center
             transition-all duration-300
+            hover:scale-110 active:scale-95
             ${isFavorite 
               ? "bg-accent/30 text-accent" 
               : "bg-black/30 text-white/70 hover:bg-black/50 hover:text-white"
@@ -88,7 +98,7 @@ const CategoryCard = ({
 
         {/* Content */}
         <div className="relative p-5">
-          <h3 className="font-display text-lg font-semibold text-foreground mb-1 tracking-wide">
+          <h3 className="font-display text-lg font-semibold text-foreground mb-1 tracking-wide group-hover:text-primary transition-colors">
             {title}
           </h3>
           <p className="text-sm text-muted-foreground line-clamp-2">

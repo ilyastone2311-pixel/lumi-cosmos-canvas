@@ -7,6 +7,11 @@ import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Library from "./pages/Library";
+import About from "./pages/About";
+import Experts from "./pages/Experts";
+import Downloads from "./pages/Downloads";
+import CategoryDetail from "./pages/CategoryDetail";
+import Article from "./pages/Article";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +27,11 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/library" element={<Library />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/experts" element={<Experts />} />
+            <Route path="/downloads" element={<Downloads />} />
+            <Route path="/category/:category" element={<CategoryDetail />} />
+            <Route path="/article/:category/:articleId" element={<Article />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
