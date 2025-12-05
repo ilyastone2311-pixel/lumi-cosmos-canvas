@@ -11,14 +11,14 @@ const HeroSection = () => {
       <div className="container mx-auto max-w-7xl px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
-          <div className="space-y-8 animate-fade-in">
-            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+          <div className="space-y-8 animate-fade-in relative z-10">
+            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-tight drop-shadow-lg">
               <span className="text-foreground">Short reads</span>
               <br />
               <span className="text-foreground">for quick insights</span>
             </h1>
             
-            <p className="text-xl text-muted-foreground max-w-md">
+            <p className="text-xl text-foreground/80 max-w-md drop-shadow-md">
               Discover books, articles, and ideas for self-improvement
             </p>
 
