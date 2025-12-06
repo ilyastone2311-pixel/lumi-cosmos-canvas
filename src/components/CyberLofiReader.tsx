@@ -1,11 +1,44 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useParallax } from "@/hooks/useParallax";
-import heroReaderIllustration from "@/assets/hero-reader-illustration.png";
+import heroReaderCharacter from "@/assets/hero-reader-character.png";
 
 const CyberLofiReader = () => {
   const [isHovered, setIsHovered] = useState(false);
   const parallaxOffset = useParallax(0.15);
+
+  // Memoize particle positions to avoid re-randomizing on re-render
+  const particles = useMemo(() => 
+    [...Array(8)].map((_, i) => ({
+      id: i,
+      width: 2 + Math.random() * 3,
+      left: 25 + Math.random() * 50,
+      top: 20 + Math.random() * 60,
+      duration: 3 + Math.random() * 2,
+      delay: Math.random() * 2,
+      isAlt: i % 2 === 0,
+    })), []
+  );
+
+  // Memoize sparkle positions
+  const sparkles = useMemo(() => [
+    { top: "12%", right: "30%", size: 14, delay: 0 },
+    { top: "22%", right: "12%", size: 10, delay: 0.5 },
+    { bottom: "28%", right: "15%", size: 12, delay: 1 },
+    { top: "55%", left: "12%", size: 8, delay: 1.5 },
+    { top: "18%", left: "28%", size: 10, delay: 2 },
+    { bottom: "22%", left: "18%", size: 12, delay: 0.8 },
+  ], []);
+
+  // Hover sparkles that appear on interaction
+  const hoverSparkles = useMemo(() => [
+    { top: "8%", right: "20%", size: 16, delay: 0 },
+    { top: "30%", right: "5%", size: 12, delay: 0.1 },
+    { bottom: "20%", right: "10%", size: 14, delay: 0.2 },
+    { top: "40%", left: "8%", size: 10, delay: 0.15 },
+    { bottom: "35%", left: "15%", size: 12, delay: 0.25 },
+    { top: "50%", right: "18%", size: 8, delay: 0.3 },
+  ], []);
 
   return (
     <div 
@@ -14,157 +47,226 @@ const CyberLofiReader = () => {
         transform: `translateY(calc(-50% + ${parallaxOffset}px))`,
       }}
     >
-      {/* Flowing energy rings container */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        {/* Outer flowing ring - cyan */}
+      {/* 3D Rotating rings container */}
+      <div 
+        className="absolute inset-0 flex items-center justify-center"
+        style={{ perspective: "1000px" }}
+      >
+        {/* Outer 3D ring - cyan/purple gradient */}
         <motion.div
-          className="absolute w-[95%] h-[95%]"
+          className="absolute w-[90%] h-[90%]"
           style={{
             borderRadius: '50%',
-            border: '2px solid transparent',
+            border: '3px solid transparent',
             background: `linear-gradient(transparent, transparent) padding-box,
                         conic-gradient(from 0deg, 
                           hsla(190, 100%, 50%, 0) 0%, 
-                          hsla(190, 100%, 60%, 0.8) 15%, 
-                          hsla(200, 100%, 50%, 0.4) 30%,
+                          hsla(190, 100%, 65%, 0.9) 15%, 
+                          hsla(200, 100%, 55%, 0.5) 30%,
                           hsla(190, 100%, 50%, 0) 45%,
-                          hsla(280, 100%, 60%, 0.6) 60%,
-                          hsla(260, 100%, 50%, 0) 75%,
+                          hsla(280, 100%, 65%, 0.7) 60%,
+                          hsla(260, 100%, 55%, 0) 75%,
                           hsla(190, 100%, 50%, 0) 100%
                         ) border-box`,
-            filter: 'blur(1px)',
+            filter: 'blur(0.5px)',
+            transformStyle: 'preserve-3d',
           }}
           animate={{ 
             rotate: 360,
+            rotateX: isHovered ? [0, 15, -10, 0] : 0,
+            rotateY: isHovered ? [0, -20, 15, 0] : 0,
           }}
           transition={{ 
-            duration: isHovered ? 8 : 20, 
-            repeat: Infinity, 
-            ease: "linear",
+            rotate: {
+              duration: isHovered ? 4 : 20, 
+              repeat: Infinity, 
+              ease: "linear",
+            },
+            rotateX: {
+              duration: 2,
+              repeat: isHovered ? Infinity : 0,
+              ease: "easeInOut",
+            },
+            rotateY: {
+              duration: 2.5,
+              repeat: isHovered ? Infinity : 0,
+              ease: "easeInOut",
+            },
           }}
         />
 
-        {/* Second flowing ring - inner */}
+        {/* Middle 3D ring - flowing gradient */}
         <motion.div
-          className="absolute w-[80%] h-[80%]"
+          className="absolute w-[75%] h-[75%]"
+          style={{
+            borderRadius: '50%',
+            border: '2.5px solid transparent',
+            background: `linear-gradient(transparent, transparent) padding-box,
+                        conic-gradient(from 180deg, 
+                          hsla(280, 100%, 65%, 0) 0%, 
+                          hsla(190, 100%, 70%, 0.85) 20%, 
+                          hsla(190, 100%, 55%, 0) 40%,
+                          hsla(260, 100%, 65%, 0.6) 60%,
+                          hsla(280, 100%, 55%, 0) 80%,
+                          hsla(280, 100%, 65%, 0) 100%
+                        ) border-box`,
+            filter: 'blur(0.5px)',
+            transformStyle: 'preserve-3d',
+          }}
+          animate={{ 
+            rotate: -360,
+            rotateX: isHovered ? [0, -12, 18, 0] : 0,
+            rotateY: isHovered ? [0, 25, -15, 0] : 0,
+          }}
+          transition={{ 
+            rotate: {
+              duration: isHovered ? 3 : 18, 
+              repeat: Infinity, 
+              ease: "linear",
+            },
+            rotateX: {
+              duration: 2.3,
+              repeat: isHovered ? Infinity : 0,
+              ease: "easeInOut",
+            },
+            rotateY: {
+              duration: 1.8,
+              repeat: isHovered ? Infinity : 0,
+              ease: "easeInOut",
+            },
+          }}
+        />
+
+        {/* Inner 3D ring - accent glow */}
+        <motion.div
+          className="absolute w-[60%] h-[60%]"
           style={{
             borderRadius: '50%',
             border: '2px solid transparent',
             background: `linear-gradient(transparent, transparent) padding-box,
-                        conic-gradient(from 180deg, 
-                          hsla(280, 100%, 60%, 0) 0%, 
-                          hsla(190, 100%, 60%, 0.7) 20%, 
-                          hsla(190, 100%, 50%, 0) 40%,
-                          hsla(260, 100%, 60%, 0.5) 60%,
-                          hsla(280, 100%, 50%, 0) 80%,
-                          hsla(280, 100%, 60%, 0) 100%
-                        ) border-box`,
-            filter: 'blur(1px)',
-          }}
-          animate={{ 
-            rotate: -360,
-          }}
-          transition={{ 
-            duration: isHovered ? 6 : 18, 
-            repeat: Infinity, 
-            ease: "linear",
-          }}
-        />
-
-        {/* Third ring - accent glow */}
-        <motion.div
-          className="absolute w-[70%] h-[70%]"
-          style={{
-            borderRadius: '50%',
-            border: '1.5px solid transparent',
-            background: `linear-gradient(transparent, transparent) padding-box,
                         conic-gradient(from 90deg, 
-                          hsla(190, 100%, 50%, 0) 0%, 
-                          hsla(190, 100%, 70%, 0.6) 10%,
-                          hsla(190, 100%, 50%, 0) 25%,
-                          hsla(270, 100%, 60%, 0.4) 50%,
-                          hsla(190, 100%, 50%, 0) 75%,
-                          hsla(190, 100%, 60%, 0.5) 90%,
-                          hsla(190, 100%, 50%, 0) 100%
+                          hsla(190, 100%, 55%, 0) 0%, 
+                          hsla(190, 100%, 75%, 0.75) 10%,
+                          hsla(190, 100%, 55%, 0) 25%,
+                          hsla(270, 100%, 65%, 0.5) 50%,
+                          hsla(190, 100%, 55%, 0) 75%,
+                          hsla(190, 100%, 70%, 0.6) 90%,
+                          hsla(190, 100%, 55%, 0) 100%
                         ) border-box`,
+            transformStyle: 'preserve-3d',
           }}
           animate={{ 
             rotate: 360,
+            rotateX: isHovered ? [0, 20, -15, 0] : 0,
+            rotateY: isHovered ? [0, -18, 22, 0] : 0,
           }}
           transition={{ 
-            duration: isHovered ? 10 : 25, 
-            repeat: Infinity, 
-            ease: "linear",
+            rotate: {
+              duration: isHovered ? 5 : 25, 
+              repeat: Infinity, 
+              ease: "linear",
+            },
+            rotateX: {
+              duration: 1.5,
+              repeat: isHovered ? Infinity : 0,
+              ease: "easeInOut",
+            },
+            rotateY: {
+              duration: 2,
+              repeat: isHovered ? Infinity : 0,
+              ease: "easeInOut",
+            },
           }}
         />
       </div>
 
-      {/* Glow effects behind the illustration */}
+      {/* Background glow effects */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55%] h-[55%] rounded-full"
         style={{
-          background: 'radial-gradient(circle, hsla(190, 100%, 50%, 0.15) 0%, transparent 60%)',
-          filter: 'blur(40px)',
+          background: 'radial-gradient(circle, hsla(190, 100%, 55%, 0.2) 0%, transparent 60%)',
+          filter: 'blur(50px)',
         }}
         animate={{
-          scale: isHovered ? [1, 1.1, 1] : [1, 1.05, 1],
-          opacity: isHovered ? [0.6, 0.8, 0.6] : [0.4, 0.5, 0.4],
+          scale: isHovered ? [1, 1.3, 1.1] : [1, 1.08, 1],
+          opacity: isHovered ? [0.5, 1, 0.7] : [0.4, 0.55, 0.4],
         }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: isHovered ? 1.5 : 3, repeat: Infinity, ease: "easeInOut" }}
       />
       
       <motion.div
-        className="absolute top-[45%] left-[55%] -translate-x-1/2 -translate-y-1/2 w-[40%] h-[40%] rounded-full"
+        className="absolute top-[42%] left-[52%] -translate-x-1/2 -translate-y-1/2 w-[35%] h-[35%] rounded-full"
         style={{
-          background: 'radial-gradient(circle, hsla(270, 100%, 60%, 0.12) 0%, transparent 60%)',
-          filter: 'blur(30px)',
+          background: 'radial-gradient(circle, hsla(270, 100%, 65%, 0.15) 0%, transparent 60%)',
+          filter: 'blur(35px)',
         }}
         animate={{
-          scale: [1, 1.08, 1],
-          opacity: [0.3, 0.5, 0.3],
+          scale: isHovered ? [1, 1.25, 1] : [1, 1.1, 1],
+          opacity: isHovered ? [0.4, 0.8, 0.5] : [0.3, 0.45, 0.3],
         }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        transition={{ duration: isHovered ? 1.2 : 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
       />
 
-      {/* Main illustration */}
+      {/* Book glow effect - appears on hover */}
+      <AnimatePresence>
+        {isHovered && (
+          <motion.div
+            className="absolute top-[45%] left-[48%] -translate-x-1/2 -translate-y-1/2 w-[20%] h-[15%] rounded-lg"
+            style={{
+              background: 'radial-gradient(ellipse, hsla(50, 100%, 70%, 0.6) 0%, hsla(40, 100%, 60%, 0.3) 40%, transparent 70%)',
+              filter: 'blur(15px)',
+            }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ 
+              opacity: [0.6, 1, 0.7],
+              scale: [1, 1.15, 1],
+            }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ 
+              duration: 1.2, 
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Main character illustration with levitation */}
       <motion.div
         className="absolute inset-0 flex items-center justify-center cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         animate={{
-          scale: isHovered ? 1.02 : 1,
+          scale: isHovered ? 1.03 : 1,
+          rotateZ: isHovered ? [-1, 1, -1] : 0,
         }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
+        transition={{ 
+          scale: { duration: 0.3, ease: "easeOut" },
+          rotateZ: { duration: 2, repeat: isHovered ? Infinity : 0, ease: "easeInOut" },
+        }}
       >
         <motion.img
-          src={heroReaderIllustration}
-          alt="Person reading a book with magical glow"
-          className="w-[75%] h-auto object-contain relative z-10"
+          src={heroReaderCharacter}
+          alt="Person reading a book with magical glowing rings"
+          className="w-[80%] h-auto object-contain relative z-10"
           style={{
             filter: isHovered 
-              ? 'drop-shadow(0 0 30px hsla(190, 100%, 50%, 0.5)) drop-shadow(0 0 60px hsla(270, 100%, 60%, 0.3))' 
-              : 'drop-shadow(0 0 20px hsla(190, 100%, 50%, 0.3)) drop-shadow(0 0 40px hsla(270, 100%, 60%, 0.2))',
+              ? 'drop-shadow(0 0 40px hsla(190, 100%, 55%, 0.6)) drop-shadow(0 0 80px hsla(270, 100%, 65%, 0.4)) drop-shadow(0 0 20px hsla(50, 100%, 70%, 0.3))' 
+              : 'drop-shadow(0 0 25px hsla(190, 100%, 55%, 0.35)) drop-shadow(0 0 50px hsla(270, 100%, 65%, 0.25))',
           }}
           animate={{
-            y: [0, -8, 0],
+            y: isHovered ? [0, -15, 0] : [0, -10, 0],
           }}
           transition={{
-            duration: 4,
+            duration: isHovered ? 2.5 : 4,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         />
       </motion.div>
 
-      {/* Sparkle/star accents */}
-      {[
-        { top: "15%", right: "25%", size: 12, delay: 0 },
-        { top: "25%", right: "10%", size: 8, delay: 0.5 },
-        { bottom: "30%", right: "8%", size: 10, delay: 1 },
-        { top: "60%", left: "15%", size: 6, delay: 1.5 },
-        { top: "20%", left: "25%", size: 8, delay: 2 },
-        { bottom: "25%", left: "20%", size: 10, delay: 0.8 },
-      ].map((sparkle, i) => (
+      {/* Default sparkle/star accents */}
+      {sparkles.map((sparkle, i) => (
         <motion.div
           key={i}
           className="absolute"
@@ -175,17 +277,17 @@ const CyberLofiReader = () => {
             right: sparkle.right,
           }}
           animate={{
-            opacity: [0.3, 1, 0.3],
-            scale: [0.8, 1.2, 0.8],
+            opacity: [0.4, 1, 0.4],
+            scale: [0.9, 1.3, 0.9],
+            rotate: [0, 180, 360],
           }}
           transition={{
-            duration: 2.5,
+            duration: 3,
             repeat: Infinity,
             delay: sparkle.delay,
             ease: "easeInOut",
           }}
         >
-          {/* 4-point star shape */}
           <svg 
             width={sparkle.size} 
             height={sparkle.size} 
@@ -194,44 +296,112 @@ const CyberLofiReader = () => {
           >
             <path 
               d="M12 0L13.5 10.5L24 12L13.5 13.5L12 24L10.5 13.5L0 12L10.5 10.5L12 0Z" 
-              fill="hsla(190, 100%, 70%, 0.9)"
+              fill="hsla(190, 100%, 75%, 0.95)"
               style={{
-                filter: 'drop-shadow(0 0 4px hsla(190, 100%, 50%, 0.8))',
+                filter: 'drop-shadow(0 0 6px hsla(190, 100%, 55%, 0.9))',
               }}
             />
           </svg>
         </motion.div>
       ))}
 
+      {/* Hover-triggered sparkle burst */}
+      <AnimatePresence>
+        {isHovered && hoverSparkles.map((sparkle, i) => (
+          <motion.div
+            key={`hover-sparkle-${i}`}
+            className="absolute"
+            style={{
+              top: sparkle.top,
+              bottom: sparkle.bottom,
+              left: sparkle.left,
+              right: sparkle.right,
+            }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{
+              opacity: [0, 1, 0.8],
+              scale: [0, 1.5, 1.2],
+              rotate: [0, 360],
+            }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={{
+              duration: 0.8,
+              delay: sparkle.delay,
+              ease: "easeOut",
+            }}
+          >
+            <svg 
+              width={sparkle.size} 
+              height={sparkle.size} 
+              viewBox="0 0 24 24" 
+              fill="none"
+            >
+              <path 
+                d="M12 0L13.5 10.5L24 12L13.5 13.5L12 24L10.5 13.5L0 12L10.5 10.5L12 0Z" 
+                fill="hsla(50, 100%, 80%, 0.95)"
+                style={{
+                  filter: 'drop-shadow(0 0 8px hsla(50, 100%, 65%, 1))',
+                }}
+              />
+            </svg>
+          </motion.div>
+        ))}
+      </AnimatePresence>
+
       {/* Floating particles */}
-      {[...Array(6)].map((_, i) => (
+      {particles.map((particle) => (
         <motion.div
-          key={`particle-${i}`}
+          key={`particle-${particle.id}`}
           className="absolute rounded-full"
           style={{
-            width: 3 + Math.random() * 3,
-            height: 3 + Math.random() * 3,
-            left: `${25 + Math.random() * 50}%`,
-            top: `${20 + Math.random() * 60}%`,
-            background: i % 2 === 0 
-              ? 'hsla(190, 100%, 60%, 0.7)' 
-              : 'hsla(270, 100%, 70%, 0.7)',
-            boxShadow: i % 2 === 0
-              ? '0 0 8px hsla(190, 100%, 50%, 0.6)'
-              : '0 0 8px hsla(270, 100%, 60%, 0.6)',
+            width: particle.width,
+            height: particle.width,
+            left: `${particle.left}%`,
+            top: `${particle.top}%`,
+            background: particle.isAlt 
+              ? 'hsla(190, 100%, 65%, 0.8)' 
+              : 'hsla(270, 100%, 75%, 0.8)',
+            boxShadow: particle.isAlt
+              ? '0 0 10px hsla(190, 100%, 55%, 0.7)'
+              : '0 0 10px hsla(270, 100%, 65%, 0.7)',
           }}
           animate={{
-            y: [0, -15, 0],
-            opacity: [0.4, 0.8, 0.4],
+            y: isHovered ? [0, -25, 0] : [0, -15, 0],
+            opacity: isHovered ? [0.5, 1, 0.5] : [0.4, 0.7, 0.4],
+            scale: isHovered ? [1, 1.3, 1] : [1, 1.1, 1],
           }}
           transition={{
-            duration: 3 + Math.random() * 2,
+            duration: isHovered ? particle.duration * 0.7 : particle.duration,
             repeat: Infinity,
-            delay: Math.random() * 2,
+            delay: particle.delay,
             ease: "easeInOut",
           }}
         />
       ))}
+
+      {/* Magical aura ring on hover */}
+      <AnimatePresence>
+        {isHovered && (
+          <motion.div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] rounded-full pointer-events-none"
+            style={{
+              border: '2px solid hsla(190, 100%, 70%, 0.4)',
+              boxShadow: '0 0 30px hsla(190, 100%, 55%, 0.3), inset 0 0 30px hsla(190, 100%, 55%, 0.1)',
+            }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ 
+              opacity: [0.5, 0.8, 0.5],
+              scale: [1, 1.05, 1],
+            }}
+            exit={{ opacity: 0, scale: 1.1 }}
+            transition={{ 
+              duration: 1.5, 
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
