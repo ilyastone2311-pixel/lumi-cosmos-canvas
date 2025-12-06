@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Clock, User, ArrowRight, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -9,20 +9,125 @@ interface ArticlePreviewCardProps {
   index?: number;
 }
 
+type PreviewPosition = 'right' | 'left' | 'top' | 'bottom';
+
 const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [previewPosition, setPreviewPosition] = useState<PreviewPosition>('right');
+  const cardRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/article/${article.category}/${article.id}`);
   };
 
-  // Extended excerpt for preview
-  const fullExcerpt = `${article.excerpt} Dive deep into this topic with our expertly curated insights. This article explores key concepts that will transform your understanding and provide actionable takeaways.`;
+  // Calculate optimal preview position based on card position in viewport
+  useEffect(() => {
+    if (showPreview && cardRef.current) {
+      const rect = cardRef.current.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      const previewWidth = 320;
+      const previewHeight = 380;
+
+      // Check available space on each side
+      const spaceRight = viewportWidth - rect.right;
+      const spaceLeft = rect.left;
+      const spaceBottom = viewportHeight - rect.bottom;
+      const spaceTop = rect.top;
+
+      // Prioritize side positioning on desktop, vertical on mobile
+      if (viewportWidth >= 768) {
+        // Desktop: prefer right, then left
+        if (spaceRight >= previewWidth + 20) {
+          setPreviewPosition('right');
+        } else if (spaceLeft >= previewWidth + 20) {
+          setPreviewPosition('left');
+        } else if (spaceTop >= previewHeight + 20) {
+          setPreviewPosition('top');
+        } else {
+          setPreviewPosition('bottom');
+        }
+      } else {
+        // Mobile: prefer top/bottom
+        if (spaceBottom >= previewHeight + 20) {
+          setPreviewPosition('bottom');
+        } else {
+          setPreviewPosition('top');
+        }
+      }
+    }
+  }, [showPreview]);
+
+  const getPreviewStyles = (): React.CSSProperties => {
+    switch (previewPosition) {
+      case 'right':
+        return {
+          left: '100%',
+          top: '0',
+          marginLeft: '12px',
+          width: '320px',
+        };
+      case 'left':
+        return {
+          right: '100%',
+          top: '0',
+          marginRight: '12px',
+          width: '320px',
+        };
+      case 'top':
+        return {
+          left: '0',
+          right: '0',
+          bottom: '100%',
+          marginBottom: '12px',
+        };
+      case 'bottom':
+      default:
+        return {
+          left: '0',
+          right: '0',
+          top: '100%',
+          marginTop: '12px',
+        };
+    }
+  };
+
+  const getAnimationVariants = () => {
+    const offset = 10;
+    switch (previewPosition) {
+      case 'right':
+        return {
+          initial: { opacity: 0, scale: 0.95, x: -offset },
+          animate: { opacity: 1, scale: 1, x: 0 },
+          exit: { opacity: 0, scale: 0.95, x: -offset / 2 },
+        };
+      case 'left':
+        return {
+          initial: { opacity: 0, scale: 0.95, x: offset },
+          animate: { opacity: 1, scale: 1, x: 0 },
+          exit: { opacity: 0, scale: 0.95, x: offset / 2 },
+        };
+      case 'top':
+        return {
+          initial: { opacity: 0, scale: 0.95, y: offset },
+          animate: { opacity: 1, scale: 1, y: 0 },
+          exit: { opacity: 0, scale: 0.95, y: offset / 2 },
+        };
+      case 'bottom':
+      default:
+        return {
+          initial: { opacity: 0, scale: 0.95, y: -offset },
+          animate: { opacity: 1, scale: 1, y: 0 },
+          exit: { opacity: 0, scale: 0.95, y: -offset / 2 },
+        };
+    }
+  };
 
   return (
     <motion.div
+      ref={cardRef}
       className="relative"
       initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
       whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -121,18 +226,17 @@ const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => 
         </div>
       </motion.button>
 
-      {/* Floating Preview Window */}
+      {/* Floating Preview Window - Smart Positioning */}
       <AnimatePresence>
         {showPreview && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 5 }}
+            {...getAnimationVariants()}
             transition={{ 
-              duration: 0.3, 
+              duration: 0.25, 
               ease: [0.2, 0.9, 0.2, 1]
             }}
-            className="absolute left-0 right-0 top-full mt-2 z-50 pointer-events-none md:pointer-events-auto"
+            className="absolute z-[100] hidden md:block"
+            style={getPreviewStyles()}
           >
             <div
               className="rounded-2xl overflow-hidden"
@@ -142,8 +246,8 @@ const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => 
                 border: '1px solid hsla(var(--primary), 0.15)',
                 boxShadow: `
                   0 0 0 1px hsla(var(--primary), 0.1),
-                  0 20px 50px hsla(230, 50%, 3%, 0.8),
-                  0 0 40px hsla(var(--primary), 0.1)
+                  0 25px 60px hsla(230, 50%, 3%, 0.9),
+                  0 0 50px hsla(var(--primary), 0.15)
                 `,
               }}
             >
