@@ -77,6 +77,16 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        'gradient-shift': {
+          '0%, 100%': { 
+            backgroundPosition: '0% 50%',
+            filter: 'blur(8px) brightness(1)',
+          },
+          '50%': { 
+            backgroundPosition: '100% 50%',
+            filter: 'blur(12px) brightness(1.2)',
+          },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -151,6 +161,7 @@ export default {
         "orbit": "orbit 20s linear infinite",
         "border-glow": "border-glow 4s ease-in-out infinite",
         "navbar-glow": "navbar-glow 4s ease-in-out infinite",
+        "gradient-shift": "gradient-shift 3s ease infinite",
       },
     },
   },

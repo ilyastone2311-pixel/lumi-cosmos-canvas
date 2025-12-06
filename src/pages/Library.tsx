@@ -4,15 +4,15 @@ import CategoryCard from "@/components/CategoryCard";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useAuth } from "@/hooks/useAuth";
 
-import categoryPolitics from "@/assets/category-politics.jpg";
-import categoryPsychology from "@/assets/category-psychology.jpg";
-import categoryCulture from "@/assets/category-culture.jpg";
-import categoryTechnology from "@/assets/category-technology.jpg";
-import categoryMindfulness from "@/assets/category-mindfulness.jpg";
-import categoryHistory from "@/assets/category-history.jpg";
-import categoryGrowth from "@/assets/category-growth.jpg";
-import categoryScience from "@/assets/category-science.jpg";
-import categoryBusiness from "@/assets/category-business.jpg";
+import categoryPolitics from "@/assets/category-politics-neon.png";
+import categoryPsychology from "@/assets/category-psychology-neon.png";
+import categoryCulture from "@/assets/category-culture-neon.png";
+import categoryTechnology from "@/assets/category-technology-neon.png";
+import categoryMindfulness from "@/assets/category-mindfulness-neon.png";
+import categoryHistory from "@/assets/category-history-neon.png";
+import categoryGrowth from "@/assets/category-growth-neon.png";
+import categoryScience from "@/assets/category-science-neon.png";
+import categoryBusiness from "@/assets/category-business-neon.png";
 
 const categories = [
   {
