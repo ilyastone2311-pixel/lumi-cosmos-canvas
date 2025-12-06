@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import CategoryCard from "@/components/CategoryCard";
 import BackgroundEffects from "@/components/BackgroundEffects";
@@ -6,6 +7,7 @@ import HeroSection from "@/components/HeroSection";
 import HowItWorks from "@/components/HowItWorks";
 import IllustrationSection from "@/components/IllustrationSection";
 import ScrollSection from "@/components/ScrollSection";
+import { SectionHeader, CardGrid } from "@/components/PageLoadAnimation";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useAuth } from "@/hooks/useAuth";
 import { getRandomArticle } from "@/data/articles";
@@ -19,6 +21,9 @@ import categoryHistory from "@/assets/category-history.jpg";
 import categoryGrowth from "@/assets/category-growth.jpg";
 import categoryScience from "@/assets/category-science.jpg";
 import categoryBusiness from "@/assets/category-business.jpg";
+
+// Premium easing
+const premiumEase: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
 
 const categories = [
   {
@@ -126,40 +131,57 @@ const Index = () => {
           }}
         />
 
-        {/* Categories Section - Enhanced with depth */}
+        {/* Categories Section - Enhanced with staggered load animations */}
         <ScrollSection direction="up" delay={0.15}>
           <section className="py-24 px-6 relative">
-            {/* Section ambient glow */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            {/* Section ambient glow with fade-in */}
+            <motion.div 
+              className="absolute inset-0 pointer-events-none overflow-hidden"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: premiumEase }}
+            >
               <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-secondary/8 rounded-full blur-[180px]" />
               <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-primary/6 rounded-full blur-[200px]" />
-            </div>
+            </motion.div>
 
             <div className="container mx-auto max-w-7xl relative">
-              {/* Section Header with floating effect */}
-              <div 
-                className="text-center mb-20 relative"
-                style={{
-                  transform: 'translateZ(20px)',
-                }}
-              >
-                <h2 
+              {/* Section Header with premium entrance animation */}
+              <SectionHeader className="text-center mb-20 relative">
+                <motion.h2 
                   className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4"
+                  initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.7, ease: premiumEase }}
                   style={{
                     textShadow: '0 4px 30px hsla(190, 100%, 50%, 0.15)',
                   }}
                 >
                   Explore Categories
-                </h2>
-                <p className="text-muted-foreground max-w-xl mx-auto">
+                </motion.h2>
+                <motion.p 
+                  className="text-muted-foreground max-w-xl mx-auto"
+                  initial={{ opacity: 0, y: 15, filter: "blur(4px)" }}
+                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.6, delay: 0.15, ease: premiumEase }}
+                >
                   {user 
                     ? "Click the heart to save your favorites" 
                     : "Dive into topics that spark your curiosity"
                   }
-                </p>
+                </motion.p>
                 
-                {/* Decorative line */}
-                <div className="mt-8 flex justify-center">
+                {/* Decorative line with entrance animation */}
+                <motion.div 
+                  className="mt-8 flex justify-center"
+                  initial={{ opacity: 0, scaleX: 0 }}
+                  whileInView={{ opacity: 1, scaleX: 1 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.8, delay: 0.3, ease: premiumEase }}
+                >
                   <div 
                     className="w-24 h-0.5 rounded-full"
                     style={{
@@ -167,28 +189,27 @@ const Index = () => {
                       boxShadow: '0 0 20px hsl(190 100% 50% / 0.3)',
                     }}
                   />
-                </div>
-              </div>
+                </motion.div>
+              </SectionHeader>
 
-              {/* Categories Grid with enhanced depth */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+              {/* Categories Grid with staggered card animations */}
+              <CardGrid 
+                staggerDelay={0.08} 
+                baseDelay={0.2}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10"
+              >
                 {categories.map((category, index) => (
-                  <ScrollSection 
-                    key={category.title} 
-                    direction="up" 
-                    delay={0.05 * index}
-                  >
-                    <CategoryCard
-                      title={category.title}
-                      subtitle={category.subtitle}
-                      image={category.image}
-                      delay={index * 100}
-                      isFavorite={isFavorite(category.title)}
-                      onToggleFavorite={() => toggleFavorite(category.title)}
-                    />
-                  </ScrollSection>
+                  <CategoryCard
+                    key={category.title}
+                    title={category.title}
+                    subtitle={category.subtitle}
+                    image={category.image}
+                    delay={index * 80}
+                    isFavorite={isFavorite(category.title)}
+                    onToggleFavorite={() => toggleFavorite(category.title)}
+                  />
                 ))}
-              </div>
+              </CardGrid>
             </div>
           </section>
         </ScrollSection>
@@ -201,18 +222,28 @@ const Index = () => {
           }}
         />
 
-        {/* Bottom CTA - Elevated floating card */}
+        {/* Bottom CTA - Elevated floating card with entrance animations */}
         <ScrollSection direction="up" delay={0.1}>
           <section className="py-24 px-6 relative">
-            {/* Background glow for section */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            {/* Background glow with fade-in */}
+            <motion.div 
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.5, ease: premiumEase }}
+            >
               <div className="w-[600px] h-[400px] bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 rounded-full blur-[120px]" />
-            </div>
+            </motion.div>
 
             <div className="container mx-auto max-w-4xl text-center relative">
-              {/* Floating CTA Card */}
-              <div 
+              {/* Floating CTA Card with premium entrance */}
+              <motion.div 
                 className="relative p-14 rounded-3xl overflow-hidden"
+                initial={{ opacity: 0, y: 30, scale: 0.98, filter: "blur(8px)" }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.8, ease: premiumEase }}
                 style={{
                   background: 'hsla(230, 50%, 8%, 0.6)',
                   backdropFilter: 'blur(20px)',
@@ -228,32 +259,66 @@ const Index = () => {
               >
                 {/* Inner glow effects */}
                 <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/8 via-transparent to-secondary/8 pointer-events-none" />
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+                <motion.div 
+                  className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
+                  initial={{ scaleX: 0, opacity: 0 }}
+                  whileInView={{ scaleX: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.3, ease: premiumEase }}
+                />
                 
-                {/* Floating orbs inside */}
-                <div className="absolute top-4 right-8 w-20 h-20 bg-primary/10 rounded-full blur-2xl" />
-                <div className="absolute bottom-4 left-8 w-16 h-16 bg-secondary/10 rounded-full blur-xl" />
+                {/* Floating orbs with entrance */}
+                <motion.div 
+                  className="absolute top-4 right-8 w-20 h-20 bg-primary/10 rounded-full blur-2xl"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.4, ease: premiumEase }}
+                />
+                <motion.div 
+                  className="absolute bottom-4 left-8 w-16 h-16 bg-secondary/10 rounded-full blur-xl"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.5, ease: premiumEase }}
+                />
                 
-                <h3 
+                <motion.h3 
                   className="relative font-display text-2xl md:text-3xl font-bold text-foreground mb-4"
+                  initial={{ opacity: 0, y: 15, filter: "blur(4px)" }}
+                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2, ease: premiumEase }}
                   style={{
                     textShadow: '0 2px 20px hsla(190, 100%, 50%, 0.2)',
                   }}
                 >
                   Ready to expand your mind?
-                </h3>
-                <p className="relative text-muted-foreground mb-10 max-w-md mx-auto">
+                </motion.h3>
+                <motion.p 
+                  className="relative text-muted-foreground mb-10 max-w-md mx-auto"
+                  initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
+                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.35, ease: premiumEase }}
+                >
                   {user 
                     ? "Explore your saved favorites anytime" 
                     : "Join thousands of curious minds on their learning journey"
                   }
-                </p>
-                <button 
+                </motion.p>
+                <motion.button 
                   onClick={() => {
                     const randomArticle = getRandomArticle();
                     navigate(`/article/${randomArticle.category}/${randomArticle.id}`);
                   }}
-                  className="relative group px-10 py-4 rounded-full font-display font-semibold overflow-hidden transition-all duration-300 hover:scale-105"
+                  className="relative group px-10 py-4 rounded-full font-display font-semibold overflow-hidden transition-all duration-300"
+                  initial={{ opacity: 0, scale: 0.95, filter: "blur(4px)" }}
+                  whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.5, ease: premiumEase }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
                   style={{
                     background: 'hsla(230, 40%, 12%, 0.8)',
                     border: '1px solid hsla(190, 100%, 50%, 0.2)',
@@ -275,8 +340,8 @@ const Index = () => {
                     />
                     Surprise Me
                   </span>
-                </button>
-              </div>
+                </motion.button>
+              </motion.div>
 
               {/* Shadow layer underneath */}
               <div 
