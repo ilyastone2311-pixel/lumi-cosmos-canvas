@@ -81,7 +81,7 @@ const HeroIllustration = () => {
   return (
     <div 
       ref={containerRef}
-      className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[55vw] h-[80vh] min-w-[350px] max-w-[750px] min-h-[450px] max-h-[800px] z-10"
+      className="absolute right-[-8%] top-1/2 -translate-y-1/2 w-[60vw] h-[85vh] min-w-[380px] max-w-[800px] min-h-[480px] max-h-[850px] z-10 pointer-events-auto"
       style={{
         transform: `translateY(calc(-50% + ${parallaxOffset}px))`,
         perspective: "1000px",
@@ -91,43 +91,55 @@ const HeroIllustration = () => {
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTap}
     >
-
-      {/* Background gradient blend */}
+      {/* Seamless ambient background blend - NO hard edges */}
       <div 
-        className="absolute inset-0 rounded-full pointer-events-none"
+        className="absolute inset-[-20%] pointer-events-none"
         style={{
-          background: `radial-gradient(ellipse at center, 
-            hsla(250, 60%, 15%, 0.6) 0%, 
-            hsla(230, 50%, 10%, 0.4) 40%, 
-            transparent 70%
+          background: `radial-gradient(ellipse 80% 70% at 50% 45%, 
+            hsla(250, 60%, 12%, 0.5) 0%, 
+            hsla(230, 55%, 8%, 0.3) 35%, 
+            transparent 65%
           )`,
-          filter: 'blur(40px)',
+          filter: 'blur(60px)',
         }}
       />
 
-      {/* Ambient glow layers */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] rounded-full pointer-events-none"
+      {/* Secondary soft blend layer */}
+      <div 
+        className="absolute inset-[-15%] pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, hsla(190, 100%, 55%, 0.15) 0%, transparent 60%)',
-          filter: 'blur(60px)',
+          background: `radial-gradient(ellipse 70% 60% at 55% 50%, 
+            hsla(270, 50%, 15%, 0.35) 0%, 
+            hsla(200, 60%, 12%, 0.2) 40%, 
+            transparent 70%
+          )`,
+          filter: 'blur(80px)',
+        }}
+      />
+
+      {/* Ambient glow layers - soft and diffused */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[80%] rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center, hsla(190, 100%, 55%, 0.12) 0%, transparent 55%)',
+          filter: 'blur(70px)',
         }}
         animate={{
-          scale: isActive ? [1, 1.25, 1.15] : [1, 1.08, 1],
-          opacity: isActive ? [0.4, 0.8, 0.6] : [0.3, 0.45, 0.3],
+          scale: isActive ? [1, 1.2, 1.1] : [1, 1.06, 1],
+          opacity: isActive ? [0.35, 0.7, 0.5] : [0.25, 0.4, 0.25],
         }}
         transition={{ duration: isActive ? 1.5 : 4, repeat: Infinity, ease: "easeInOut" }}
       />
       
       <motion.div
-        className="absolute top-[40%] left-[55%] -translate-x-1/2 -translate-y-1/2 w-[50%] h-[50%] rounded-full pointer-events-none"
+        className="absolute top-[38%] left-[52%] -translate-x-1/2 -translate-y-1/2 w-[60%] h-[55%] rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, hsla(270, 100%, 60%, 0.12) 0%, transparent 60%)',
-          filter: 'blur(50px)',
+          background: 'radial-gradient(ellipse at center, hsla(270, 100%, 60%, 0.1) 0%, transparent 55%)',
+          filter: 'blur(60px)',
         }}
         animate={{
-          scale: isActive ? [1, 1.2, 1] : [1, 1.1, 1],
-          opacity: isActive ? [0.3, 0.6, 0.4] : [0.25, 0.35, 0.25],
+          scale: isActive ? [1, 1.15, 1] : [1, 1.08, 1],
+          opacity: isActive ? [0.25, 0.5, 0.35] : [0.2, 0.3, 0.2],
         }}
         transition={{ duration: isActive ? 1.2 : 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
       />
@@ -186,11 +198,11 @@ const HeroIllustration = () => {
       >
         {/* Illustration with floating animation */}
         <motion.div
-          className="relative w-[85%] h-auto"
+          className="relative w-[90%] h-auto"
           animate={{
-            y: isActive ? [0, -20, 0] : [0, -12, 0],
-            scale: isActive ? 1.07 : 1,
-            z: isActive ? 30 : 0,
+            y: isActive ? [0, -18, 0] : [0, -10, 0],
+            scale: isActive ? 1.06 : 1,
+            z: isActive ? 25 : 0,
           }}
           transition={{
             y: {
@@ -202,41 +214,64 @@ const HeroIllustration = () => {
             z: { duration: 0.4 },
           }}
         >
-          {/* Bottom fade gradient mask */}
+          {/* Soft ambient glow behind image - seamless blend */}
+          <motion.div
+            className="absolute inset-[-25%] -z-10"
+            style={{
+              background: `radial-gradient(ellipse 70% 60% at 50% 45%, 
+                hsla(190, 100%, 55%, ${isActive ? 0.2 : 0.1}) 0%, 
+                hsla(270, 100%, 60%, ${isActive ? 0.12 : 0.06}) 35%, 
+                transparent 60%
+              )`,
+              filter: `blur(${isActive ? 50 : 40}px)`,
+            }}
+            animate={{
+              opacity: isActive ? [0.7, 1, 0.7] : [0.5, 0.7, 0.5],
+            }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          />
+
+          {/* Soft edge blend - bottom fade into background */}
           <div 
             className="absolute inset-0 pointer-events-none z-20"
             style={{
-              background: 'linear-gradient(to top, hsl(var(--background)) 0%, transparent 25%)',
-            }}
-          />
-
-          {/* Glow behind image - intensifies on hover */}
-          <motion.div
-            className="absolute inset-0 -z-10"
-            style={{
-              background: `radial-gradient(ellipse at 50% 40%, 
-                hsla(190, 100%, 55%, ${isActive ? 0.25 : 0.12}) 0%, 
-                hsla(270, 100%, 60%, ${isActive ? 0.15 : 0.08}) 30%, 
-                transparent 60%
+              background: `linear-gradient(to top, 
+                hsl(var(--background)) 0%, 
+                hsla(var(--background), 0.8) 8%,
+                hsla(var(--background), 0.4) 15%,
+                hsla(var(--background), 0.1) 25%,
+                transparent 35%
               )`,
-              filter: `blur(${isActive ? 35 : 25}px)`,
-              transform: 'scale(1.3)',
             }}
-            animate={{
-              opacity: isActive ? [0.8, 1, 0.8] : [0.6, 0.75, 0.6],
-            }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />
 
-          {/* The image */}
+          {/* Side edge blends for seamless integration */}
+          <div 
+            className="absolute inset-0 pointer-events-none z-20"
+            style={{
+              background: `
+                linear-gradient(to left, 
+                  hsla(var(--background), 0.6) 0%, 
+                  hsla(var(--background), 0.2) 5%,
+                  transparent 15%
+                ),
+                linear-gradient(to right, 
+                  hsla(var(--background), 0.3) 0%, 
+                  transparent 10%
+                )
+              `,
+            }}
+          />
+
+          {/* The image - full visibility, no clipping */}
           <motion.img
             src={heroReaderNew}
             alt="Magical reading illustration"
             className="w-full h-auto object-contain relative z-10"
             style={{
               filter: isActive 
-                ? 'drop-shadow(0 0 50px hsla(190, 100%, 60%, 0.5)) drop-shadow(0 0 100px hsla(270, 100%, 65%, 0.35)) drop-shadow(0 0 25px hsla(200, 100%, 75%, 0.4))' 
-                : 'drop-shadow(0 0 30px hsla(190, 100%, 55%, 0.3)) drop-shadow(0 0 60px hsla(270, 100%, 60%, 0.2))',
+                ? 'drop-shadow(0 0 40px hsla(190, 100%, 60%, 0.45)) drop-shadow(0 0 80px hsla(270, 100%, 65%, 0.3)) drop-shadow(0 0 20px hsla(200, 100%, 75%, 0.35))' 
+                : 'drop-shadow(0 0 25px hsla(190, 100%, 55%, 0.25)) drop-shadow(0 0 50px hsla(270, 100%, 60%, 0.15))',
               transition: 'filter 0.4s ease-out',
             }}
           />
@@ -255,12 +290,12 @@ const HeroIllustration = () => {
             right: sparkle.right,
           }}
           animate={{
-            opacity: isActive ? [0.6, 1, 0.6] : [0.3, 0.7, 0.3],
-            scale: isActive ? [1.1, 1.5, 1.1] : [0.9, 1.2, 0.9],
+            opacity: isActive ? [0.5, 0.9, 0.5] : [0.25, 0.6, 0.25],
+            scale: isActive ? [1.1, 1.4, 1.1] : [0.9, 1.15, 0.9],
             rotate: [0, 180, 360],
           }}
           transition={{
-            duration: isActive ? 2 : 3,
+            duration: isActive ? 2 : 3.5,
             repeat: Infinity,
             delay: sparkle.delay,
             ease: "easeInOut",
@@ -269,11 +304,11 @@ const HeroIllustration = () => {
           <svg width={sparkle.size} height={sparkle.size} viewBox="0 0 24 24" fill="none">
             <path 
               d="M12 0L13.5 10.5L24 12L13.5 13.5L12 24L10.5 13.5L0 12L10.5 10.5L12 0Z" 
-              fill={i % 2 === 0 ? "hsla(190, 100%, 75%, 0.95)" : "hsla(270, 100%, 80%, 0.95)"}
+              fill={i % 2 === 0 ? "hsla(190, 100%, 75%, 0.9)" : "hsla(270, 100%, 80%, 0.9)"}
               style={{
                 filter: i % 2 === 0 
-                  ? 'drop-shadow(0 0 6px hsla(190, 100%, 60%, 0.9))'
-                  : 'drop-shadow(0 0 6px hsla(270, 100%, 65%, 0.9))',
+                  ? 'drop-shadow(0 0 5px hsla(190, 100%, 60%, 0.85))'
+                  : 'drop-shadow(0 0 5px hsla(270, 100%, 65%, 0.85))',
               }}
             />
           </svg>
@@ -287,14 +322,14 @@ const HeroIllustration = () => {
             key={ripple.id}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
             style={{
-              border: '2px solid hsla(190, 100%, 70%, 0.5)',
-              boxShadow: '0 0 20px hsla(190, 100%, 55%, 0.3), 0 0 40px hsla(270, 100%, 60%, 0.2)',
+              border: '1.5px solid hsla(190, 100%, 70%, 0.4)',
+              boxShadow: '0 0 15px hsla(190, 100%, 55%, 0.25), 0 0 30px hsla(270, 100%, 60%, 0.15)',
             }}
-            initial={{ width: '40%', height: '40%', opacity: 0.8 }}
+            initial={{ width: '35%', height: '35%', opacity: 0.7 }}
             animate={{ 
-              width: ['40%', '95%'],
-              height: ['40%', '95%'],
-              opacity: [0.8, 0],
+              width: ['35%', '90%'],
+              height: ['35%', '90%'],
+              opacity: [0.7, 0],
             }}
             transition={{ duration: 1.5, ease: "easeOut" }}
           />
@@ -305,17 +340,17 @@ const HeroIllustration = () => {
       <AnimatePresence>
         {isActive && (
           <motion.div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[75%] h-[75%] rounded-full pointer-events-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] rounded-full pointer-events-none"
             style={{
-              border: '1.5px solid hsla(270, 100%, 70%, 0.4)',
-              boxShadow: '0 0 25px hsla(270, 100%, 60%, 0.25), inset 0 0 25px hsla(190, 100%, 55%, 0.1)',
+              border: '1px solid hsla(270, 100%, 70%, 0.3)',
+              boxShadow: '0 0 20px hsla(270, 100%, 60%, 0.2), inset 0 0 20px hsla(190, 100%, 55%, 0.08)',
             }}
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ 
-              opacity: [0.4, 0.7, 0.4],
-              scale: [1, 1.08, 1],
+              opacity: [0.35, 0.6, 0.35],
+              scale: [1, 1.06, 1],
             }}
-            exit={{ opacity: 0, scale: 1.1 }}
+            exit={{ opacity: 0, scale: 1.08 }}
             transition={{ 
               duration: 2, 
               repeat: Infinity,
@@ -332,14 +367,14 @@ const HeroIllustration = () => {
           return (
             <motion.div
               key={`burst-${i}`}
-              className="absolute top-1/2 left-1/2 w-2 h-2 rounded-full pointer-events-none"
+              className="absolute top-1/2 left-1/2 w-1.5 h-1.5 rounded-full pointer-events-none"
               style={{
                 background: i % 2 === 0 
-                  ? 'hsla(190, 100%, 70%, 0.9)'
-                  : 'hsla(270, 100%, 75%, 0.9)',
+                  ? 'hsla(190, 100%, 70%, 0.85)'
+                  : 'hsla(270, 100%, 75%, 0.85)',
                 boxShadow: i % 2 === 0
-                  ? '0 0 10px hsla(190, 100%, 60%, 0.8)'
-                  : '0 0 10px hsla(270, 100%, 65%, 0.8)',
+                  ? '0 0 8px hsla(190, 100%, 60%, 0.75)'
+                  : '0 0 8px hsla(270, 100%, 65%, 0.75)',
               }}
               initial={{ 
                 x: 0, 
@@ -348,13 +383,13 @@ const HeroIllustration = () => {
                 opacity: 1,
               }}
               animate={{ 
-                x: Math.cos(angle * Math.PI / 180) * 120,
-                y: Math.sin(angle * Math.PI / 180) * 120,
-                scale: [0, 1.5, 0],
-                opacity: [1, 0.8, 0],
+                x: Math.cos(angle * Math.PI / 180) * 100,
+                y: Math.sin(angle * Math.PI / 180) * 100,
+                scale: [0, 1.3, 0],
+                opacity: [1, 0.7, 0],
               }}
               transition={{ 
-                duration: 0.8,
+                duration: 0.7,
                 ease: "easeOut",
               }}
             />
