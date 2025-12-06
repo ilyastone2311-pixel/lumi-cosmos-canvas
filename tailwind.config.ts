@@ -99,6 +99,18 @@ export default {
           "0%": { opacity: "0", transform: "translateY(20px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        "fade-in-up": {
+          "0%": { opacity: "0", transform: "translateY(30px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "slide-up": {
+          "0%": { opacity: "0", transform: "translateY(40px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "scale-in": {
+          "0%": { opacity: "0", transform: "scale(0.95)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
         float: {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-10px)" },
@@ -147,11 +159,30 @@ export default {
             boxShadow: "0 0 0 1px hsla(190, 100%, 50%, 0.1), 0 0 30px hsla(190, 100%, 50%, 0.1), 0 0 60px hsla(270, 100%, 60%, 0.06), 0 8px 32px hsla(230, 50%, 5%, 0.4)"
           },
         },
+        "loader-bounce": {
+          "0%, 80%, 100%": { transform: "scale(0)", opacity: "0.5" },
+          "40%": { transform: "scale(1)", opacity: "1" },
+        },
+        "loader-orbit": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        "hover-lift": {
+          "0%": { transform: "translateY(0) scale(1)" },
+          "100%": { transform: "translateY(-4px) scale(1.02)" },
+        },
+        "press-down": {
+          "0%": { transform: "translateY(0) scale(1)" },
+          "100%": { transform: "translateY(2px) scale(0.98)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.6s ease-out forwards",
+        "fade-in-up": "fade-in-up 0.5s ease-out forwards",
+        "slide-up": "slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "scale-in": "scale-in 0.4s ease-out forwards",
         "float": "float 3s ease-in-out infinite",
         "float-slow": "float-slow 6s ease-in-out infinite",
         "shimmer": "shimmer 3s ease-in-out infinite",
@@ -162,6 +193,8 @@ export default {
         "border-glow": "border-glow 4s ease-in-out infinite",
         "navbar-glow": "navbar-glow 4s ease-in-out infinite",
         "gradient-shift": "gradient-shift 3s ease infinite",
+        "loader-bounce": "loader-bounce 1.4s ease-in-out infinite both",
+        "loader-orbit": "loader-orbit 1.2s linear infinite",
       },
     },
   },
