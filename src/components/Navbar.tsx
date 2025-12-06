@@ -32,21 +32,28 @@ const Navbar = () => {
 
   return (
     <nav 
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-2xl"
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-2xl animate-navbar-glow"
       style={{
         background: 'hsla(230, 50%, 8%, 0.6)',
         backdropFilter: 'blur(20px) saturate(180%)',
         WebkitBackdropFilter: 'blur(20px) saturate(180%)',
         border: '1px solid hsla(210, 40%, 98%, 0.08)',
-        boxShadow: `
-          0 0 0 1px hsla(190, 100%, 50%, 0.05),
-          0 0 20px hsla(190, 100%, 50%, 0.08),
-          0 0 40px hsla(270, 100%, 60%, 0.05),
-          0 8px 32px hsla(230, 50%, 5%, 0.4)
-        `,
       }}
     >
-      <div className="px-6 py-3 flex items-center justify-between">
+      {/* Animated glow border overlay */}
+      <div 
+        className="absolute inset-0 rounded-2xl pointer-events-none animate-border-glow"
+        style={{
+          background: 'transparent',
+          boxShadow: `
+            0 0 0 1px hsla(190, 100%, 50%, 0.1),
+            0 0 15px hsla(190, 100%, 50%, 0.1),
+            0 0 30px hsla(270, 100%, 60%, 0.05)
+          `,
+        }}
+      />
+      
+      <div className="relative px-6 py-3 flex items-center justify-between">
         {/* Logo with glow */}
         <div 
           onClick={() => navigate("/")}

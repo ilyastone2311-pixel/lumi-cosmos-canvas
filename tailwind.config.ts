@@ -119,6 +119,24 @@ export default {
           "0%": { transform: "rotate(0deg) translateX(100px) rotate(0deg)" },
           "100%": { transform: "rotate(360deg) translateX(100px) rotate(-360deg)" },
         },
+        "border-glow": {
+          "0%, 100%": { 
+            opacity: "0.5",
+            boxShadow: "0 0 0 1px hsla(190, 100%, 50%, 0.08), 0 0 15px hsla(190, 100%, 50%, 0.08), 0 0 30px hsla(270, 100%, 60%, 0.04)"
+          },
+          "50%": { 
+            opacity: "1",
+            boxShadow: "0 0 0 1px hsla(190, 100%, 50%, 0.15), 0 0 25px hsla(190, 100%, 50%, 0.15), 0 0 50px hsla(270, 100%, 60%, 0.08)"
+          },
+        },
+        "navbar-glow": {
+          "0%, 100%": { 
+            boxShadow: "0 0 0 1px hsla(190, 100%, 50%, 0.05), 0 0 20px hsla(190, 100%, 50%, 0.06), 0 0 40px hsla(270, 100%, 60%, 0.03), 0 8px 32px hsla(230, 50%, 5%, 0.4)"
+          },
+          "50%": { 
+            boxShadow: "0 0 0 1px hsla(190, 100%, 50%, 0.1), 0 0 30px hsla(190, 100%, 50%, 0.1), 0 0 60px hsla(270, 100%, 60%, 0.06), 0 8px 32px hsla(230, 50%, 5%, 0.4)"
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -131,6 +149,8 @@ export default {
         "glow-pulse": "glow-pulse 3s ease-in-out infinite",
         "particle": "particle-float 15s linear infinite",
         "orbit": "orbit 20s linear infinite",
+        "border-glow": "border-glow 4s ease-in-out infinite",
+        "navbar-glow": "navbar-glow 4s ease-in-out infinite",
       },
     },
   },
