@@ -10,6 +10,7 @@ import Downloads from "@/pages/Downloads";
 import CategoryDetail from "@/pages/CategoryDetail";
 import Article from "@/pages/Article";
 import Profile from "@/pages/Profile";
+import Settings from "@/pages/Settings";
 import NotFound from "@/pages/NotFound";
 
 const AnimatedRoutes = () => {
@@ -87,6 +88,14 @@ const AnimatedRoutes = () => {
           element={
             <PageTransition>
               <Profile />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <PageTransition>
+              <Settings />
             </PageTransition>
           }
         />
