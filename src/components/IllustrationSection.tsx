@@ -47,27 +47,41 @@ const IllustrationSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 overflow-hidden"
+      className="relative py-20 md:py-24 overflow-hidden"
     >
-      {/* Dark cosmic gradient background */}
+      {/* Top seamless blend */}
+      <div 
+        className="absolute top-0 left-0 right-0 h-40 -z-10 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, transparent, hsla(270, 50%, 12%, 0.1))',
+        }}
+      />
+      
+      {/* Dark cosmic gradient background - seamless edges */}
       <div 
         className="absolute inset-0 -z-10"
         style={{
           background: `
-            linear-gradient(180deg, 
-              hsl(var(--background)) 0%, 
-              hsla(270, 60%, 15%, 0.15) 15%,
-              hsla(200, 60%, 15%, 0.2) 50%,
-              hsla(270, 60%, 15%, 0.15) 85%,
-              hsl(var(--background)) 100%
+            radial-gradient(ellipse 100% 60% at 50% 50%, 
+              hsla(200, 60%, 15%, 0.15) 0%,
+              hsla(270, 60%, 12%, 0.1) 50%,
+              transparent 100%
             )
           `,
         }}
       />
+      
+      {/* Bottom seamless blend */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-40 -z-10 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to top, transparent, hsla(200, 50%, 10%, 0.08))',
+        }}
+      />
 
       {/* Decorative glowing shapes */}
-      <div className="absolute top-1/4 left-10 w-40 h-40 rounded-full bg-gradient-to-br from-primary/15 to-secondary/10 blur-3xl" />
-      <div className="absolute bottom-1/4 right-10 w-56 h-56 rounded-full bg-gradient-to-tl from-accent/10 to-primary/15 blur-3xl" />
+      <div className="absolute top-1/4 left-10 w-40 h-40 rounded-full bg-gradient-to-br from-primary/10 to-secondary/8 blur-3xl" />
+      <div className="absolute bottom-1/4 right-10 w-56 h-56 rounded-full bg-gradient-to-tl from-accent/8 to-primary/10 blur-3xl" />
 
       <div className="container mx-auto max-w-7xl px-6">
         <motion.div
