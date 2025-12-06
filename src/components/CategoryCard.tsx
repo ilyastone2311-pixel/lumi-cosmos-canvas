@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 interface CategoryCardProps {
   title: string;
@@ -20,6 +21,8 @@ const CategoryCard = ({
   onToggleFavorite 
 }: CategoryCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
@@ -32,22 +35,56 @@ const CategoryCard = ({
     navigate(`/category/${categorySlug}`);
   };
 
+  // Calculate 3D tilt based on mouse position
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = ((y - centerY) / centerY) * -3;
+    const rotateY = ((x - centerX) / centerX) * 3;
+    
+    cardRef.current.style.transform = `
+      perspective(1000px) 
+      rotateX(${rotateX}deg) 
+      rotateY(${rotateY}deg) 
+      translateY(-8px) 
+      scale(1.02)
+    `;
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    if (cardRef.current) {
+      cardRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
+    }
+  };
+
   return (
-    <div
+    <motion.div
+      ref={cardRef}
       className="group relative cursor-pointer"
       style={{ 
         animationDelay: `${delay}ms`,
-        perspective: '1000px',
+        transformStyle: 'preserve-3d',
+        transition: 'transform 0.4s cubic-bezier(0.2, 0.9, 0.2, 1), box-shadow 0.4s ease',
       }}
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onMouseDown={() => setIsPressed(true)}
+      onMouseUp={() => setIsPressed(false)}
       onClick={handleCardClick}
+      whileTap={{ scale: 0.98 }}
     >
       {/* Animated gradient border glow */}
       <div
         className={`
-          absolute -inset-[2px] rounded-2xl opacity-0 transition-opacity duration-500
-          ${isHovered ? "opacity-100" : "group-hover:opacity-70"}
+          absolute -inset-[2px] rounded-2xl transition-opacity duration-500
+          ${isHovered ? "opacity-100" : "opacity-0"}
         `}
         style={{
           background: 'linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 50%, hsl(var(--accent)) 100%)',
@@ -56,15 +93,16 @@ const CategoryCard = ({
         }}
       />
       
-      {/* Outer glow layer */}
+      {/* Outer glow layer - enhanced */}
       <div
         className={`
-          absolute -inset-3 rounded-3xl transition-all duration-700
-          ${isHovered ? "opacity-60" : "opacity-0"}
+          absolute -inset-4 rounded-3xl transition-all duration-500
+          ${isHovered ? "opacity-70" : "opacity-0"}
         `}
         style={{
-          background: 'radial-gradient(ellipse at center, hsla(var(--primary), 0.3) 0%, transparent 70%)',
-          filter: 'blur(20px)',
+          background: 'radial-gradient(ellipse at center, hsla(var(--primary), 0.35) 0%, transparent 70%)',
+          filter: 'blur(25px)',
+          transform: 'translateZ(-20px)',
         }}
       />
 
@@ -74,7 +112,15 @@ const CategoryCard = ({
         style={{
           background: 'linear-gradient(135deg, hsla(var(--primary), 0.15) 0%, hsla(var(--secondary), 0.1) 50%, hsla(var(--accent), 0.15) 100%)',
           padding: '1px',
-          transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
+          boxShadow: isHovered 
+            ? `
+                0 20px 40px hsla(var(--primary), 0.2),
+                0 30px 60px hsla(230, 50%, 5%, 0.5)
+              `
+            : `
+                0 4px 20px hsla(230, 50%, 5%, 0.4),
+                0 8px 40px hsla(230, 50%, 5%, 0.3)
+              `,
         }}
       >
         {/* Inner card */}
@@ -83,19 +129,6 @@ const CategoryCard = ({
           style={{
             background: 'hsla(230, 50%, 6%, 0.95)',
             backdropFilter: 'blur(20px)',
-            boxShadow: isHovered 
-              ? `
-                  0 0 0 1px hsla(var(--primary), 0.2),
-                  0 8px 32px hsla(var(--primary), 0.15),
-                  0 16px 48px hsla(var(--secondary), 0.1),
-                  0 24px 64px hsla(230, 50%, 5%, 0.6),
-                  inset 0 1px 0 hsla(210, 40%, 98%, 0.08)
-                `
-              : `
-                  0 4px 20px hsla(230, 50%, 5%, 0.4),
-                  0 8px 40px hsla(230, 50%, 5%, 0.3),
-                  inset 0 1px 0 hsla(210, 40%, 98%, 0.04)
-                `,
           }}
         >
           {/* Top edge glow line */}
@@ -242,7 +275,7 @@ const CategoryCard = ({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
