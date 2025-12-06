@@ -59,9 +59,9 @@ const ScrollSection = ({
       initial={getInitialState()}
       animate={isInView ? getFinalState() : getInitialState()}
       transition={{
-        duration: 0.8,
+        duration: 1,
         delay: delay,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.22, 1, 0.36, 1], // Custom easing for ultra-smooth feel
       }}
       className={className}
     >

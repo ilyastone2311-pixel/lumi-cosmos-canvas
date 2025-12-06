@@ -5,7 +5,6 @@ import BackgroundEffects from "@/components/BackgroundEffects";
 import HeroSection from "@/components/HeroSection";
 import HowItWorks from "@/components/HowItWorks";
 import IllustrationSection from "@/components/IllustrationSection";
-import SectionDivider from "@/components/SectionDivider";
 import ScrollSection from "@/components/ScrollSection";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useAuth } from "@/hooks/useAuth";
@@ -82,17 +81,22 @@ const Index = () => {
       {/* Navigation */}
       <Navbar />
 
-      {/* Main Content */}
+      {/* Main Content - Seamless flow */}
       <main className="relative z-10 pt-24">
         {/* Hero Section */}
         <HeroSection />
 
-        {/* Smooth transition to How It Works */}
-        <SectionDivider variant="wave" />
+        {/* Flowing gradient transition - Hero to HowItWorks */}
+        <div 
+          className="relative h-32 md:h-48 -mt-16 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to bottom, transparent 0%, hsla(230, 50%, 8%, 0.3) 50%, transparent 100%)',
+          }}
+        />
 
         {/* How It Works - Floating Section */}
         <ScrollSection direction="up">
-          <div className="relative">
+          <div className="relative -mt-16">
             {/* Section glow */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="w-[800px] h-[400px] bg-primary/5 rounded-full blur-[150px]" />
@@ -101,16 +105,26 @@ const Index = () => {
           </div>
         </ScrollSection>
 
-        {/* Smooth transition to Illustration */}
-        <SectionDivider variant="gradient" />
+        {/* Flowing gradient transition - HowItWorks to Illustration */}
+        <div 
+          className="relative h-24 md:h-32 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to bottom, transparent 0%, hsla(270, 50%, 12%, 0.2) 50%, transparent 100%)',
+          }}
+        />
 
         {/* Illustration Section - Hybrid pastel pocket */}
-        <ScrollSection direction="up" delay={0.1}>
+        <ScrollSection direction="fade" delay={0.05}>
           <IllustrationSection />
         </ScrollSection>
 
-        {/* Smooth transition to Categories */}
-        <SectionDivider variant="glow" />
+        {/* Flowing gradient transition - Illustration to Categories */}
+        <div 
+          className="relative h-20 md:h-28 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to bottom, transparent 0%, hsla(200, 50%, 10%, 0.15) 50%, transparent 100%)',
+          }}
+        />
 
         {/* Categories Section - Enhanced with depth */}
         <ScrollSection direction="up" delay={0.15}>
@@ -179,8 +193,13 @@ const Index = () => {
           </section>
         </ScrollSection>
 
-        {/* Smooth transition to CTA */}
-        <SectionDivider variant="wave" flip />
+        {/* Flowing gradient transition - Categories to CTA */}
+        <div 
+          className="relative h-24 md:h-32 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to bottom, transparent 0%, hsla(270, 50%, 12%, 0.15) 50%, transparent 100%)',
+          }}
+        />
 
         {/* Bottom CTA - Elevated floating card */}
         <ScrollSection direction="up" delay={0.1}>

@@ -26,11 +26,27 @@ const HowItWorks = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="py-28 relative">
+    <section className="py-20 md:py-28 relative">
+      {/* Top blend gradient */}
+      <div 
+        className="absolute top-0 left-0 right-0 h-32 pointer-events-none -z-10"
+        style={{
+          background: 'linear-gradient(to bottom, transparent, hsla(230, 50%, 8%, 0.1))',
+        }}
+      />
+      
       {/* Ambient section glow */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-gradient-to-r from-primary/5 via-secondary/8 to-primary/5 rounded-full blur-[150px]" />
       </div>
+      
+      {/* Bottom blend gradient */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none -z-10"
+        style={{
+          background: 'linear-gradient(to top, transparent, hsla(270, 50%, 10%, 0.1))',
+        }}
+      />
 
       <div className="container mx-auto max-w-7xl px-6 relative">
         <h2 

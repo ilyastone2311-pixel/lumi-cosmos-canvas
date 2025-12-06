@@ -235,11 +235,11 @@ const HeroSection = () => {
         </motion.div>
       </motion.button>
 
-      {/* Bottom fade gradient */}
+      {/* Bottom fade gradient - extended for seamless transition */}
       <div 
-        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+        className="absolute bottom-0 left-0 right-0 h-48 md:h-64 pointer-events-none"
         style={{
-          background: 'linear-gradient(to top, hsl(var(--background)) 0%, transparent 100%)',
+          background: 'linear-gradient(to top, hsl(var(--background)) 0%, hsla(var(--background), 0.8) 30%, transparent 100%)',
         }}
       />
     </section>
