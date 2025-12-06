@@ -31,48 +31,91 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/50">
-      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo */}
+    <nav 
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-2xl"
+      style={{
+        background: 'hsla(230, 50%, 8%, 0.6)',
+        backdropFilter: 'blur(20px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+        border: '1px solid hsla(210, 40%, 98%, 0.08)',
+        boxShadow: `
+          0 0 0 1px hsla(190, 100%, 50%, 0.05),
+          0 0 20px hsla(190, 100%, 50%, 0.08),
+          0 0 40px hsla(270, 100%, 60%, 0.05),
+          0 8px 32px hsla(230, 50%, 5%, 0.4)
+        `,
+      }}
+    >
+      <div className="px-6 py-3 flex items-center justify-between">
+        {/* Logo with glow */}
         <div 
           onClick={() => navigate("/")}
-          className="flex items-center gap-2 group cursor-pointer"
+          className="flex items-center gap-2.5 group cursor-pointer"
         >
           <div className="relative">
-            <Sparkles className="w-6 h-6 text-primary animate-pulse-slow" />
-            <div className="absolute inset-0 blur-md bg-primary/50 animate-glow-pulse rounded-full" />
+            <Sparkles className="w-5 h-5 text-primary relative z-10" />
+            <div 
+              className="absolute inset-0 blur-lg rounded-full animate-pulse"
+              style={{
+                background: 'hsl(190 100% 50% / 0.6)',
+                animationDuration: '2s',
+              }}
+            />
+            <div 
+              className="absolute -inset-1 blur-md rounded-full"
+              style={{
+                background: 'hsl(190 100% 50% / 0.3)',
+              }}
+            />
           </div>
-          <span className="font-display text-2xl font-bold tracking-wide text-foreground">
+          <span 
+            className="font-display text-xl font-bold tracking-wide text-foreground"
+            style={{
+              textShadow: '0 0 20px hsl(190 100% 50% / 0.3)',
+            }}
+          >
             Lumi
           </span>
         </div>
 
         {/* Center Navigation */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <button
             onClick={() => navigate("/")}
-            className={`relative px-5 py-2 rounded-full font-display font-semibold text-sm transition-all duration-300 btn-hover ${
+            className={`relative px-4 py-1.5 rounded-full font-display font-medium text-sm transition-all duration-300 ${
               isActive("/")
                 ? "text-foreground"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
             {isActive("/") && (
-              <span className="absolute inset-0 bg-white/10 rounded-full border border-white/20" />
+              <span 
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: 'hsla(190, 100%, 50%, 0.1)',
+                  border: '1px solid hsla(190, 100%, 50%, 0.2)',
+                }}
+              />
             )}
             <span className="relative">Home</span>
           </button>
           
           <button
             onClick={() => navigate("/library")}
-            className={`relative px-5 py-2 rounded-full font-display font-semibold text-sm transition-all duration-300 btn-hover ${
+            className={`relative px-4 py-1.5 rounded-full font-display font-medium text-sm transition-all duration-300 ${
               isActive("/library")
                 ? "text-foreground"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
             {isActive("/library") && (
-              <span className="absolute inset-0 bg-white/10 rounded-full border border-white/20" />
+              <span 
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: 'hsla(190, 100%, 50%, 0.1)',
+                  border: '1px solid hsla(190, 100%, 50%, 0.2)',
+                }}
+              />
             )}
             <span className="relative">Library</span>
           </button>
@@ -80,11 +123,11 @@ const Navbar = () => {
           {/* Search Button */}
           <button
             onClick={() => setSearchOpen(true)}
-            className="relative px-4 py-2 rounded-full font-display text-sm transition-all duration-300 text-muted-foreground hover:text-foreground btn-hover flex items-center gap-2"
+            className="relative px-3 py-1.5 rounded-full text-sm transition-all duration-300 text-muted-foreground hover:text-foreground flex items-center gap-2"
           >
             <Search className="w-4 h-4" />
-            <span className="hidden md:inline">Search</span>
-            <kbd className="hidden md:inline-flex h-5 items-center gap-1 rounded border border-border/50 bg-muted/50 px-1.5 font-mono text-[10px] text-muted-foreground">
+            <span className="hidden md:inline text-xs">Search</span>
+            <kbd className="hidden md:inline-flex h-4 items-center rounded border border-border/30 bg-white/5 px-1 font-mono text-[9px] text-muted-foreground/70">
               ⌘K
             </kbd>
           </button>
@@ -92,32 +135,34 @@ const Navbar = () => {
 
         {/* Auth Buttons */}
         {!loading && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             {user ? (
               <>
                 <button
                   onClick={() => navigate("/profile")}
-                  className="p-2 rounded-full hover:bg-white/10 transition-all btn-hover"
+                  className="p-2 rounded-full hover:bg-white/10 transition-all"
                   title="Profile"
                 >
-                  <User className="w-5 h-5 text-muted-foreground hover:text-foreground" />
+                  <User className="w-4 h-4 text-muted-foreground hover:text-foreground transition-colors" />
                 </button>
                 <button
                   onClick={handleSignOut}
-                  className="p-2 rounded-full hover:bg-white/10 transition-all btn-hover"
+                  className="p-2 rounded-full hover:bg-white/10 transition-all"
                   title="Sign Out"
                 >
-                  <LogOut className="w-5 h-5 text-muted-foreground hover:text-foreground" />
+                  <LogOut className="w-4 h-4 text-muted-foreground hover:text-foreground transition-colors" />
                 </button>
               </>
             ) : (
               <button
                 onClick={() => navigate("/auth")}
-                className="relative px-5 py-2 rounded-full text-sm font-semibold text-primary-foreground overflow-hidden transition-all duration-300 hover:scale-105 btn-hover"
+                className="relative px-4 py-1.5 rounded-full text-sm font-medium overflow-hidden transition-all duration-300 hover:scale-105"
+                style={{
+                  background: 'linear-gradient(135deg, hsl(190 100% 50%), hsl(270 80% 60%))',
+                  boxShadow: '0 0 20px hsl(190 100% 50% / 0.3)',
+                }}
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full" />
-                <span className="absolute inset-0 opacity-50 blur-md bg-gradient-to-r from-primary to-secondary rounded-full" />
-                <span className="relative">Sign Up</span>
+                <span className="relative text-primary-foreground">Sign Up</span>
               </button>
             )}
           </div>
