@@ -4,6 +4,7 @@ import CategoryCard from "@/components/CategoryCard";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import HeroSection from "@/components/HeroSection";
 import HowItWorks from "@/components/HowItWorks";
+import IllustrationSection from "@/components/IllustrationSection";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useAuth } from "@/hooks/useAuth";
 import { getRandomArticle } from "@/data/articles";
@@ -92,6 +93,9 @@ const Index = () => {
           </div>
           <HowItWorks />
         </div>
+
+        {/* Illustration Section - Hybrid pastel pocket */}
+        <IllustrationSection />
 
         {/* Categories Section - Enhanced with depth */}
         <section className="py-24 px-6 relative">
