@@ -79,21 +79,26 @@ const HeroIllustration = () => {
   const isActive = isHovered || isTapped;
 
   return (
-    <motion.div 
+    <div 
       ref={containerRef}
-      className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[55vw] h-[80vh] min-w-[350px] max-w-[750px] min-h-[450px] max-h-[800px] pointer-events-none lg:pointer-events-auto z-10"
+      className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[55vw] h-[80vh] min-w-[350px] max-w-[750px] min-h-[450px] max-h-[800px] z-10"
       style={{
         transform: `translateY(calc(-50% + ${parallaxOffset}px))`,
         perspective: "1000px",
       }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={handleMouseLeave}
-      onTouchStart={handleTap}
     >
+      {/* Invisible hover zone covering the illustration area */}
+      <div
+        className="absolute inset-[10%] cursor-pointer z-50"
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTap}
+      />
+
       {/* Background gradient blend */}
       <div 
-        className="absolute inset-0 rounded-full"
+        className="absolute inset-0 rounded-full pointer-events-none"
         style={{
           background: `radial-gradient(ellipse at center, 
             hsla(250, 60%, 15%, 0.6) 0%, 
@@ -176,7 +181,7 @@ const HeroIllustration = () => {
 
       {/* Main illustration container with 3D tilt */}
       <motion.div
-        className="absolute inset-0 flex items-center justify-center cursor-pointer"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{
           rotateX: isActive ? rotateX : 0,
           rotateY: isActive ? rotateY : 0,
@@ -360,7 +365,7 @@ const HeroIllustration = () => {
           );
         })}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 };
 
