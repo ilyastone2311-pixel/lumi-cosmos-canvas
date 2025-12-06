@@ -55,10 +55,10 @@ const HeroSection = () => {
 
       {/* Hero Illustration - positioned on the right with entrance animation */}
       <motion.div 
-        className="hidden lg:block"
-        initial={{ opacity: 0, scale: 1.05, x: 30, filter: "blur(10px)" }}
-        animate={{ opacity: 1, scale: 1, x: 0, filter: "blur(0px)" }}
-        transition={{ duration: 1, delay: 0.4, ease: premiumEase }}
+        className="hidden lg:block absolute inset-0 pointer-events-none"
+        initial={{ opacity: 0, scale: 1.02, filter: "blur(8px)" }}
+        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+        transition={{ duration: 1, delay: 0.3, ease: premiumEase }}
       >
         <HeroIllustration />
       </motion.div>
