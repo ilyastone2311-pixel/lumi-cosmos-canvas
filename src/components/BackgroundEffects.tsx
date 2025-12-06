@@ -44,6 +44,12 @@ const BackgroundEffects = () => {
     { x: 90, y: 85, size: 100, color: "250 70% 55%", opacity: 0.06 },
   ], []);
 
+  // Enhanced parallax multipliers for different depth layers
+  const parallaxSlow = scrollY * 0.02;
+  const parallaxMedium = scrollY * 0.05;
+  const parallaxFast = scrollY * 0.08;
+  const parallaxUltraFast = scrollY * 0.12;
+
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
       {/* Deep cosmic gradient base - enhanced */}
@@ -61,11 +67,11 @@ const BackgroundEffects = () => {
         }}
       />
 
-      {/* Subtle nebula clouds */}
+      {/* Subtle nebula clouds - slowest parallax (far background) */}
       {nebulas.map((nebula, i) => (
         <div
           key={`nebula-${i}`}
-          className="absolute rounded-full transition-transform duration-1000"
+          className="absolute rounded-full will-change-transform"
           style={{
             left: `${nebula.x}%`,
             top: `${nebula.y}%`,
@@ -73,7 +79,8 @@ const BackgroundEffects = () => {
             height: `${nebula.size}px`,
             background: `radial-gradient(circle, hsl(${nebula.color} / 0.15) 0%, hsl(${nebula.color} / 0.05) 40%, transparent 70%)`,
             filter: `blur(${nebula.blur}px)`,
-            transform: `translate(-50%, -50%) translateY(${scrollY * (0.02 + i * 0.01)}px)`,
+            transform: `translate(-50%, -50%) translate3d(0, ${parallaxSlow * (1 + i * 0.3)}px, 0)`,
+            transition: 'transform 0.1s linear',
           }}
         />
       ))}
@@ -81,11 +88,11 @@ const BackgroundEffects = () => {
       {/* Interactive starfield */}
       <InteractiveStarfield />
 
-      {/* Star dust particles - tiny floating dots */}
+      {/* Star dust particles - medium parallax */}
       {starDust.map((star, i) => (
         <div
           key={`dust-${i}`}
-          className="absolute rounded-full animate-pulse"
+          className="absolute rounded-full animate-pulse will-change-transform"
           style={{
             left: `${star.x}%`,
             top: `${star.y}%`,
@@ -100,48 +107,65 @@ const BackgroundEffects = () => {
             animationDelay: `${star.delay}s`,
             animationDuration: `${star.duration}s`,
             boxShadow: `0 0 ${star.size * 2}px hsl(190 100% 60% / 0.5)`,
-            transform: `translateY(${scrollY * 0.03}px)`,
+            transform: `translate3d(0, ${parallaxMedium * (0.5 + (i % 5) * 0.2)}px, 0)`,
+            transition: 'transform 0.1s linear',
           }}
         />
       ))}
 
-      {/* Large glowing orbs with enhanced parallax */}
+      {/* Large glowing orbs with enhanced multi-layer parallax */}
       <div 
-        className="absolute w-[700px] h-[700px] rounded-full"
+        className="absolute w-[700px] h-[700px] rounded-full will-change-transform"
         style={{
-          top: `${5 - scrollY * 0.04}%`,
+          top: '5%',
           right: '5%',
           background: 'radial-gradient(circle, hsl(190 100% 50% / 0.12) 0%, hsl(190 100% 50% / 0.03) 50%, transparent 70%)',
           filter: 'blur(80px)',
-          transform: `translateY(${scrollY * 0.08}px)`,
+          transform: `translate3d(${parallaxSlow * -0.3}px, ${parallaxFast}px, 0)`,
+          transition: 'transform 0.1s linear',
         }}
       />
       <div 
-        className="absolute w-[600px] h-[600px] rounded-full"
+        className="absolute w-[600px] h-[600px] rounded-full will-change-transform"
         style={{
-          top: `${25 - scrollY * 0.03}%`,
+          top: '25%',
           left: '0%',
           background: 'radial-gradient(circle, hsl(270 80% 55% / 0.15) 0%, hsl(270 80% 55% / 0.04) 45%, transparent 70%)',
           filter: 'blur(100px)',
-          transform: `translateY(${scrollY * 0.12}px)`,
+          transform: `translate3d(${parallaxMedium * 0.2}px, ${parallaxUltraFast}px, 0)`,
+          transition: 'transform 0.1s linear',
         }}
       />
       <div 
-        className="absolute w-[500px] h-[500px] rounded-full"
+        className="absolute w-[500px] h-[500px] rounded-full will-change-transform"
         style={{
-          bottom: `${15 + scrollY * 0.02}%`,
+          bottom: '15%',
           right: '15%',
           background: 'radial-gradient(circle, hsl(320 70% 50% / 0.1) 0%, hsl(320 70% 50% / 0.02) 50%, transparent 70%)',
           filter: 'blur(90px)',
-          transform: `translateY(${-scrollY * 0.06}px)`,
+          transform: `translate3d(${parallaxMedium * -0.4}px, ${-parallaxMedium}px, 0)`,
+          transition: 'transform 0.1s linear',
+        }}
+      />
+      
+      {/* New: Foreground accent orb - fastest parallax */}
+      <div 
+        className="absolute w-[300px] h-[300px] rounded-full will-change-transform"
+        style={{
+          top: '60%',
+          left: '70%',
+          background: 'radial-gradient(circle, hsl(200 90% 60% / 0.08) 0%, transparent 60%)',
+          filter: 'blur(60px)',
+          transform: `translate3d(${parallaxUltraFast * -0.5}px, ${parallaxUltraFast * 1.5}px, 0)`,
+          transition: 'transform 0.1s linear',
         }}
       />
 
-      {/* Small floating accent orbs */}
+      {/* Small floating accent orbs - varied parallax speeds */}
       {floatingOrbs.map((orb, i) => (
         <div
           key={`orb-${i}`}
-          className="absolute rounded-full animate-pulse"
+          className="absolute rounded-full animate-pulse will-change-transform"
           style={{
             left: `${orb.x}%`,
             top: `${orb.y}%`,
@@ -151,7 +175,8 @@ const BackgroundEffects = () => {
             filter: 'blur(30px)',
             animationDuration: `${3 + i}s`,
             animationDelay: `${i * 0.5}s`,
-            transform: `translate(-50%, -50%) translateY(${scrollY * (0.04 + i * 0.01)}px)`,
+            transform: `translate(-50%, -50%) translate3d(${(i % 2 === 0 ? 1 : -1) * parallaxMedium * 0.3}px, ${(parallaxMedium + i * parallaxSlow)}px, 0)`,
+            transition: 'transform 0.1s linear',
           }}
         />
       ))}
