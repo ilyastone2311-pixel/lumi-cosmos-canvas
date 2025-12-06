@@ -1,7 +1,9 @@
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import BackgroundEffects from "@/components/BackgroundEffects";
-import { ArrowLeft, Clock, BookOpen, Star } from "lucide-react";
+import ArticlePreviewCard from "@/components/ArticlePreviewCard";
+import { ArrowLeft } from "lucide-react";
+import { getArticlesByCategory, articles } from "@/data/articles";
 
 import categoryPolitics from "@/assets/category-politics.jpg";
 import categoryPsychology from "@/assets/category-psychology.jpg";
@@ -160,39 +162,41 @@ const CategoryDetail = () => {
             </div>
           </header>
 
-          {/* Articles List */}
+          {/* Articles List with Preview Cards */}
           <section>
             <h2 className="font-display text-2xl font-semibold text-foreground mb-6">
               Popular Articles
             </h2>
-            <div className="grid gap-4">
-              {data.articles.map((article, index) => (
-                <button
-                  key={article.id}
-                  onClick={() => navigate(`/article/${categoryKey}/${article.id}`)}
-                  className="glass rounded-xl p-6 text-left animate-fade-in hover:bg-white/10 transition-all duration-300 group btn-hover"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <h3 className="font-display text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-                        {article.title}
-                      </h3>
-                      <p className="text-muted-foreground text-sm">By {article.author}</p>
-                    </div>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
-                        {article.readTime} min
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Star className="w-4 h-4 text-yellow-500" />
-                        {article.rating}
-                      </span>
-                    </div>
-                  </div>
-                </button>
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {(() => {
+                const categoryArticles = getArticlesByCategory(categoryKey);
+                // Fallback to legacy data if no articles found
+                if (categoryArticles.length > 0) {
+                  return categoryArticles.map((article, index) => (
+                    <ArticlePreviewCard 
+                      key={article.id} 
+                      article={article} 
+                      index={index}
+                    />
+                  ));
+                }
+                // Use legacy data from categoryData
+                return data.articles.map((article, index) => (
+                  <ArticlePreviewCard 
+                    key={article.id} 
+                    article={{
+                      id: article.id,
+                      title: article.title,
+                      excerpt: `Explore insights from ${article.author} in this ${article.readTime} minute read.`,
+                      category: categoryKey,
+                      author: article.author,
+                      readTime: `${article.readTime} min`,
+                      rating: article.rating,
+                    }} 
+                    index={index}
+                  />
+                ));
+              })()}
             </div>
           </section>
         </div>
