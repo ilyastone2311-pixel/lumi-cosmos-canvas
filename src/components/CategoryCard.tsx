@@ -106,20 +106,23 @@ const CategoryCard = ({
         }}
       />
 
-      {/* Card Container with gradient border */}
+      {/* Card Container with gradient border - Glass Panel */}
       <div
-        className="relative overflow-hidden rounded-2xl transition-all duration-500 ease-out"
+        className="relative overflow-hidden rounded-2xl transition-all duration-500 ease-out glass-card"
         style={{
-          background: 'linear-gradient(135deg, hsla(var(--primary), 0.15) 0%, hsla(var(--secondary), 0.1) 50%, hsla(var(--accent), 0.15) 100%)',
+          background: 'linear-gradient(135deg, hsla(var(--primary), 0.12) 0%, hsla(var(--secondary), 0.08) 50%, hsla(var(--accent), 0.12) 100%)',
           padding: '1px',
           boxShadow: isHovered 
             ? `
-                0 20px 40px hsla(var(--primary), 0.2),
-                0 30px 60px hsla(230, 50%, 5%, 0.5)
+                8px 8px 24px hsla(230, 50%, 4%, 0.5),
+                -4px -4px 16px hsla(260, 40%, 22%, 0.12),
+                0 20px 40px hsla(var(--primary), 0.15),
+                0 0 50px hsla(var(--primary), 0.08)
               `
             : `
-                0 4px 20px hsla(230, 50%, 5%, 0.4),
-                0 8px 40px hsla(230, 50%, 5%, 0.3)
+                6px 6px 18px hsla(230, 50%, 4%, 0.45),
+                -3px -3px 12px hsla(260, 40%, 20%, 0.08),
+                0 4px 20px hsla(230, 50%, 5%, 0.3)
               `,
         }}
       >
@@ -127,7 +130,7 @@ const CategoryCard = ({
         <div
           className="relative overflow-hidden rounded-2xl"
           style={{
-            background: 'hsla(230, 50%, 6%, 0.95)',
+            background: 'hsla(230, 50%, 6%, 0.92)',
             backdropFilter: 'blur(20px)',
           }}
         >
