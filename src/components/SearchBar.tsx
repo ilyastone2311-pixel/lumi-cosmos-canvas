@@ -81,12 +81,16 @@ const SearchBar = ({ isOpen, onClose }: SearchBarProps) => {
   return (
     <div className="fixed inset-0 z-[100] flex items-start justify-center pt-24 px-4">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-background/95 backdrop-blur-md" onClick={onClose} />
 
       {/* Search Container */}
-      <div className="relative w-full max-w-2xl glass rounded-2xl border border-border/50 overflow-hidden animate-scale-in">
+      <div className="relative w-full max-w-2xl rounded-2xl overflow-hidden animate-scale-in" style={{
+        background: 'hsl(230, 50%, 8%)',
+        border: '1px solid hsla(210, 40%, 98%, 0.15)',
+        boxShadow: '0 20px 60px hsla(230, 50%, 3%, 0.8), 0 0 0 1px hsla(190, 100%, 50%, 0.1)',
+      }}>
         {/* Search Input */}
-        <div className="flex items-center gap-3 p-4 border-b border-border/30">
+        <div className="flex items-center gap-3 p-4 border-b" style={{ borderColor: 'hsla(210, 40%, 98%, 0.12)' }}>
           <Search className="w-5 h-5 text-muted-foreground flex-shrink-0" />
           <input
             ref={inputRef}
@@ -112,7 +116,7 @@ const SearchBar = ({ isOpen, onClose }: SearchBarProps) => {
                 <button
                   key={article.id}
                   onClick={() => handleSelect(article)}
-                  className="w-full text-left p-4 rounded-xl hover:bg-white/5 transition-colors group"
+                  className="w-full text-left p-4 rounded-xl hover:bg-white/10 transition-colors group"
                 >
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
@@ -146,7 +150,7 @@ const SearchBar = ({ isOpen, onClose }: SearchBarProps) => {
                   <button
                     key={term}
                     onClick={() => handleTrendingClick(term)}
-                    className="px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 text-sm text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {term}
                   </button>
@@ -157,7 +161,7 @@ const SearchBar = ({ isOpen, onClose }: SearchBarProps) => {
         </div>
 
         {/* Footer */}
-        <div className="p-3 border-t border-border/30 flex items-center justify-between text-xs text-muted-foreground">
+        <div className="p-3 border-t flex items-center justify-between text-xs text-muted-foreground" style={{ borderColor: 'hsla(210, 40%, 98%, 0.12)' }}>
           <span>Press ESC to close</span>
           <span>{allArticles.length} articles available</span>
         </div>
