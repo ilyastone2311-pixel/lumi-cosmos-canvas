@@ -86,15 +86,11 @@ const HeroIllustration = () => {
         transform: `translateY(calc(-50% + ${parallaxOffset}px))`,
         perspective: "1000px",
       }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTap}
     >
-      {/* Invisible hover zone covering the illustration area */}
-      <div
-        className="absolute inset-[10%] cursor-pointer z-50"
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={handleMouseLeave}
-        onTouchStart={handleTap}
-      />
 
       {/* Background gradient blend */}
       <div 
@@ -181,7 +177,7 @@ const HeroIllustration = () => {
 
       {/* Main illustration container with 3D tilt */}
       <motion.div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        className="absolute inset-0 flex items-center justify-center cursor-pointer"
         style={{
           rotateX: isActive ? rotateX : 0,
           rotateY: isActive ? rotateY : 0,
