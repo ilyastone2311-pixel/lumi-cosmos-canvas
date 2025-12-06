@@ -1,5 +1,7 @@
 import { Clock, List, Smartphone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useRef } from "react";
 
 const features = [
   {
@@ -59,26 +61,70 @@ const HowItWorks = () => {
         </h2>
 
         <div className="grid md:grid-cols-3 gap-10">
-          {features.map((feature, index) => (
-            <button
+          {features.map((feature, index) => {
+            const cardRef = useRef<HTMLButtonElement>(null);
+
+            const handleMouseMove = (e: React.MouseEvent) => {
+              if (!cardRef.current) return;
+              const rect = cardRef.current.getBoundingClientRect();
+              const x = e.clientX - rect.left;
+              const y = e.clientY - rect.top;
+              const centerX = rect.width / 2;
+              const centerY = rect.height / 2;
+              
+              const rotateX = ((y - centerY) / centerY) * -2;
+              const rotateY = ((x - centerX) / centerX) * 2;
+              
+              cardRef.current.style.transform = `
+                perspective(1000px) 
+                rotateX(${rotateX}deg) 
+                rotateY(${rotateY}deg) 
+                translateY(-8px) 
+                scale(1.02)
+              `;
+            };
+
+            const handleMouseLeave = () => {
+              if (cardRef.current) {
+                cardRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
+              }
+            };
+
+            return (
+            <motion.button
+              ref={cardRef}
               key={feature.title}
               onClick={() => navigate(feature.link)}
-              className="group relative animate-fade-in text-left"
-              style={{ animationDelay: `${index * 150}ms` }}
+              className="group relative text-left"
+              style={{ 
+                transformStyle: 'preserve-3d',
+                transition: 'transform 0.4s cubic-bezier(0.2, 0.9, 0.2, 1), box-shadow 0.4s ease',
+              }}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ 
+                duration: 0.6, 
+                delay: index * 0.15,
+                ease: [0.2, 0.9, 0.2, 1]
+              }}
+              whileTap={{ scale: 0.98 }}
             >
               {/* Multi-layer shadow base */}
               <div 
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"
                 style={{
-                  background: 'radial-gradient(ellipse at center bottom, hsla(190, 100%, 50%, 0.15) 0%, transparent 60%)',
+                  background: 'radial-gradient(ellipse at center bottom, hsla(190, 100%, 50%, 0.2) 0%, transparent 60%)',
                   filter: 'blur(25px)',
-                  transform: 'translateY(10px)',
+                  transform: 'translateY(15px)',
                 }}
               />
 
               {/* Card */}
               <div 
-                className="relative p-8 rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2 active:scale-[0.98]"
+                className="relative p-8 rounded-2xl transition-all duration-400"
                 style={{
                   background: 'hsla(230, 50%, 8%, 0.5)',
                   backdropFilter: 'blur(15px)',
@@ -142,8 +188,9 @@ const HowItWorks = () => {
                   filter: 'blur(15px)',
                 }}
               />
-            </button>
-          ))}
+            </motion.button>
+            );
+          })}
         </div>
       </div>
     </section>

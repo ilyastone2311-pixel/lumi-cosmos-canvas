@@ -181,6 +181,40 @@ export default {
           "0%": { transform: "translateY(0) scale(1)" },
           "100%": { transform: "translateY(2px) scale(0.98)" },
         },
+        "ripple": {
+          "0%": { 
+            width: "0px", 
+            height: "0px", 
+            opacity: "0.5" 
+          },
+          "100%": { 
+            width: "200px", 
+            height: "200px", 
+            opacity: "0" 
+          },
+        },
+        "card-hover": {
+          "0%": { 
+            transform: "translateY(0) scale(1) rotateX(0deg)",
+            boxShadow: "0 4px 20px hsla(230, 50%, 5%, 0.4)"
+          },
+          "100%": { 
+            transform: "translateY(-8px) scale(1.02) rotateX(2deg)",
+            boxShadow: "0 20px 40px hsla(var(--primary), 0.2), 0 30px 60px hsla(230, 50%, 5%, 0.5)"
+          },
+        },
+        "entrance-fade": {
+          "0%": { 
+            opacity: "0", 
+            transform: "translateY(16px)",
+            filter: "blur(4px)"
+          },
+          "100%": { 
+            opacity: "1", 
+            transform: "translateY(0)",
+            filter: "blur(0px)"
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -201,6 +235,9 @@ export default {
         "gradient-shift": "gradient-shift 3s ease infinite",
         "loader-bounce": "loader-bounce 1.4s ease-in-out infinite both",
         "loader-orbit": "loader-orbit 1.2s linear infinite",
+        "ripple": "ripple 0.6s cubic-bezier(0.2, 0.9, 0.2, 1) forwards",
+        "card-hover": "card-hover 0.4s cubic-bezier(0.2, 0.9, 0.2, 1) forwards",
+        "entrance": "entrance-fade 0.6s cubic-bezier(0.2, 0.9, 0.2, 1) forwards",
       },
     },
   },
