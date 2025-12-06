@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useAuth } from "@/hooks/useAuth";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useAdmin } from "@/hooks/useAdmin";
 import Navbar from "@/components/Navbar";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import { toast } from "@/hooks/use-toast";
@@ -17,6 +18,7 @@ import {
   Loader2,
   ChevronRight,
   Shield,
+  ShieldAlert,
   Settings as SettingsIcon,
   X,
 } from "lucide-react";
@@ -29,6 +31,7 @@ type SettingsTab = "account" | "security" | "favorites";
 const Settings = () => {
   const { user, loading: authLoading, updateEmail, updatePassword, signOut } = useAuth();
   const { favorites, toggleFavorite } = useFavorites();
+  const { isAdmin, loading: adminLoading } = useAdmin();
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState<SettingsTab>("account");
@@ -139,6 +142,10 @@ const Settings = () => {
     { id: "favorites" as SettingsTab, label: "Favorites", icon: Heart },
   ];
 
+  const handleGoToAdmin = () => {
+    navigate("/admin");
+  };
+
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -201,6 +208,18 @@ const Settings = () => {
                     )}
                   </button>
                 ))}
+                
+                {/* Admin Panel Link */}
+                {isAdmin && !adminLoading && (
+                  <button
+                    onClick={handleGoToAdmin}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-destructive hover:bg-destructive/10 border border-destructive/20 mt-4"
+                  >
+                    <ShieldAlert className="w-5 h-5" />
+                    <span className="font-medium">Admin Panel</span>
+                    <ChevronRight className="w-4 h-4 ml-auto" />
+                  </button>
+                )}
               </nav>
             </motion.div>
 

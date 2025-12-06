@@ -11,6 +11,7 @@ import CategoryDetail from "@/pages/CategoryDetail";
 import Article from "@/pages/Article";
 import Profile from "@/pages/Profile";
 import Settings from "@/pages/Settings";
+import Admin from "@/pages/Admin";
 import NotFound from "@/pages/NotFound";
 
 const AnimatedRoutes = () => {
@@ -96,6 +97,14 @@ const AnimatedRoutes = () => {
           element={
             <PageTransition>
               <Settings />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <PageTransition>
+              <Admin />
             </PageTransition>
           }
         />
