@@ -43,161 +43,202 @@ const CategoryCard = ({
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleCardClick}
     >
-      {/* Multi-layer floating shadow */}
+      {/* Animated gradient border glow */}
       <div
         className={`
-          absolute -inset-2 -z-20 rounded-3xl
-          transition-all duration-700
-          ${isHovered ? "opacity-80" : "opacity-0"}
+          absolute -inset-[2px] rounded-2xl opacity-0 transition-opacity duration-500
+          ${isHovered ? "opacity-100" : "group-hover:opacity-70"}
         `}
         style={{
-          background: 'radial-gradient(ellipse at center bottom, hsla(190, 100%, 50%, 0.2) 0%, transparent 60%)',
-          filter: 'blur(30px)',
-          transform: isHovered ? 'translateY(15px) scale(0.95)' : 'translateY(5px) scale(0.9)',
+          background: 'linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 50%, hsl(var(--accent)) 100%)',
+          filter: 'blur(8px)',
+          animation: isHovered ? 'gradient-shift 3s ease infinite' : 'none',
         }}
       />
       
-      {/* Secondary shadow layer */}
+      {/* Outer glow layer */}
       <div
         className={`
-          absolute -inset-1 -z-10 rounded-2xl
-          transition-all duration-500
+          absolute -inset-3 rounded-3xl transition-all duration-700
           ${isHovered ? "opacity-60" : "opacity-0"}
         `}
         style={{
-          background: 'linear-gradient(135deg, hsla(190, 100%, 50%, 0.15) 0%, hsla(270, 100%, 60%, 0.15) 100%)',
+          background: 'radial-gradient(ellipse at center, hsla(var(--primary), 0.3) 0%, transparent 70%)',
           filter: 'blur(20px)',
         }}
       />
 
-      {/* Card Container */}
+      {/* Card Container with gradient border */}
       <div
         className="relative overflow-hidden rounded-2xl transition-all duration-500 ease-out"
         style={{
-          background: 'hsla(230, 50%, 8%, 0.6)',
-          backdropFilter: 'blur(15px)',
-          border: '1px solid hsla(210, 40%, 98%, 0.08)',
-          boxShadow: isHovered 
-            ? `
-                0 0 0 1px hsla(190, 100%, 50%, 0.1),
-                0 4px 20px hsla(190, 100%, 50%, 0.1),
-                0 8px 40px hsla(270, 100%, 60%, 0.08),
-                0 20px 50px hsla(230, 50%, 5%, 0.5),
-                inset 0 1px 0 hsla(210, 40%, 98%, 0.06)
-              `
-            : `
-                0 4px 15px hsla(230, 50%, 5%, 0.3),
-                0 8px 30px hsla(230, 50%, 5%, 0.2),
-                inset 0 1px 0 hsla(210, 40%, 98%, 0.04)
-              `,
+          background: 'linear-gradient(135deg, hsla(var(--primary), 0.15) 0%, hsla(var(--secondary), 0.1) 50%, hsla(var(--accent), 0.15) 100%)',
+          padding: '1px',
           transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
         }}
       >
-        {/* Top edge glow */}
-        <div 
-          className={`absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent transition-opacity duration-500 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
-        />
-
-        {/* Glow Effect */}
+        {/* Inner card */}
         <div
-          className={`
-            absolute inset-0 opacity-0 transition-opacity duration-500 pointer-events-none
-            bg-gradient-to-br from-primary/15 via-transparent to-secondary/15
-            ${isHovered ? "opacity-100" : ""}
-          `}
-        />
-
-        {/* Favorite Button */}
-        <button
-          onClick={handleFavoriteClick}
-          className={`
-            absolute top-4 right-4 z-20
-            w-10 h-10 rounded-full
-            flex items-center justify-center
-            transition-all duration-300
-            hover:scale-110 active:scale-95
-            ${isFavorite 
-              ? "bg-accent/30 text-accent" 
-              : "bg-black/40 text-white/70 hover:bg-black/60 hover:text-white"
-            }
-            backdrop-blur-md
-          `}
+          className="relative overflow-hidden rounded-2xl"
           style={{
-            boxShadow: isFavorite 
-              ? '0 0 20px hsla(320, 80%, 60%, 0.4)' 
-              : '0 4px 15px hsla(230, 50%, 5%, 0.4)',
+            background: 'hsla(230, 50%, 6%, 0.95)',
+            backdropFilter: 'blur(20px)',
+            boxShadow: isHovered 
+              ? `
+                  0 0 0 1px hsla(var(--primary), 0.2),
+                  0 8px 32px hsla(var(--primary), 0.15),
+                  0 16px 48px hsla(var(--secondary), 0.1),
+                  0 24px 64px hsla(230, 50%, 5%, 0.6),
+                  inset 0 1px 0 hsla(210, 40%, 98%, 0.08)
+                `
+              : `
+                  0 4px 20px hsla(230, 50%, 5%, 0.4),
+                  0 8px 40px hsla(230, 50%, 5%, 0.3),
+                  inset 0 1px 0 hsla(210, 40%, 98%, 0.04)
+                `,
           }}
         >
-          <Heart 
-            className={`w-5 h-5 transition-transform duration-300 ${isHovered ? "scale-110" : ""}`} 
-            fill={isFavorite ? "currentColor" : "none"}
-          />
-        </button>
-
-        {/* Image Container */}
-        <div className="relative h-48 overflow-hidden">
-          <img
-            src={image}
-            alt={title}
-            className={`
-              w-full h-full object-cover
-              transition-transform duration-700 ease-out
-              ${isHovered ? "scale-110" : "scale-100"}
-            `}
-          />
-          {/* Overlay Gradient - enhanced */}
+          {/* Top edge glow line */}
           <div 
-            className="absolute inset-0"
+            className={`absolute top-0 left-0 right-0 h-px transition-opacity duration-500 ${isHovered ? 'opacity-100' : 'opacity-40'}`}
             style={{
-              background: 'linear-gradient(to top, hsla(230, 50%, 8%, 1) 0%, hsla(230, 50%, 8%, 0.7) 30%, hsla(230, 50%, 8%, 0.2) 60%, transparent 100%)',
+              background: 'linear-gradient(90deg, transparent 0%, hsla(var(--primary), 0.6) 30%, hsla(var(--secondary), 0.6) 70%, transparent 100%)',
             }}
           />
-        </div>
 
-        {/* Content */}
-        <div className="relative p-6">
-          <h3 
-            className="font-display text-lg font-semibold text-foreground mb-2 tracking-wide group-hover:text-primary transition-colors"
-            style={{
-              textShadow: isHovered ? '0 0 20px hsla(190, 100%, 50%, 0.3)' : 'none',
-            }}
-          >
-            {title}
-          </h3>
-          <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-            {subtitle}
-          </p>
-
-          {/* Hover Arrow */}
+          {/* Ambient glow overlay on hover */}
           <div
             className={`
-              absolute right-6 bottom-6
-              w-9 h-9 rounded-full
-              flex items-center justify-center
-              transition-all duration-300
-              ${isHovered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}
+              absolute inset-0 pointer-events-none transition-opacity duration-500
+              ${isHovered ? "opacity-100" : "opacity-0"}
             `}
             style={{
-              background: 'hsla(190, 100%, 50%, 0.15)',
-              boxShadow: '0 0 15px hsla(190, 100%, 50%, 0.2)',
+              background: 'radial-gradient(ellipse at top, hsla(var(--primary), 0.1) 0%, transparent 60%)',
+            }}
+          />
+
+          {/* Favorite Button */}
+          <button
+            onClick={handleFavoriteClick}
+            className={`
+              absolute top-4 right-4 z-20
+              w-10 h-10 rounded-full
+              flex items-center justify-center
+              transition-all duration-300
+              hover:scale-110 active:scale-95
+              backdrop-blur-md
+            `}
+            style={{
+              background: isFavorite 
+                ? 'hsla(var(--accent), 0.3)' 
+                : 'hsla(230, 50%, 10%, 0.6)',
+              boxShadow: isFavorite 
+                ? '0 0 20px hsla(var(--accent), 0.5), 0 0 40px hsla(var(--accent), 0.2)' 
+                : '0 4px 15px hsla(230, 50%, 5%, 0.5)',
+              border: `1px solid ${isFavorite ? 'hsla(var(--accent), 0.4)' : 'hsla(210, 40%, 98%, 0.1)'}`,
             }}
           >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+            <Heart 
+              className={`w-5 h-5 transition-all duration-300 ${isHovered ? "scale-110" : ""}`}
+              style={{
+                color: isFavorite ? 'hsl(var(--accent))' : 'hsla(210, 40%, 98%, 0.7)',
+                filter: isFavorite ? 'drop-shadow(0 0 8px hsla(var(--accent), 0.8))' : 'none',
+              }}
+              fill={isFavorite ? "currentColor" : "none"}
+            />
+          </button>
+
+          {/* Image Container */}
+          <div className="relative h-48 overflow-hidden">
+            <img
+              src={image}
+              alt={title}
+              className={`
+                w-full h-full object-cover
+                transition-all duration-700 ease-out
+                ${isHovered ? "scale-110 brightness-110" : "scale-100 brightness-100"}
+              `}
+            />
+            
+            {/* Image overlay with gradient */}
+            <div 
+              className="absolute inset-0"
+              style={{
+                background: `linear-gradient(to top, 
+                  hsla(230, 50%, 6%, 1) 0%, 
+                  hsla(230, 50%, 6%, 0.8) 20%,
+                  hsla(230, 50%, 6%, 0.4) 50%, 
+                  hsla(230, 50%, 6%, 0.1) 80%,
+                  transparent 100%)`,
+              }}
+            />
+            
+            {/* Subtle scan line effect */}
+            <div 
+              className={`absolute inset-0 pointer-events-none transition-opacity duration-500 ${isHovered ? 'opacity-30' : 'opacity-0'}`}
+              style={{
+                background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, hsla(var(--primary), 0.03) 2px, hsla(var(--primary), 0.03) 4px)',
+              }}
+            />
+          </div>
+
+          {/* Content */}
+          <div className="relative p-6">
+            <h3 
+              className="font-display text-lg font-semibold mb-2 tracking-wide transition-all duration-300"
+              style={{
+                color: isHovered ? 'hsl(var(--primary))' : 'hsl(var(--foreground))',
+                textShadow: isHovered ? '0 0 20px hsla(var(--primary), 0.5), 0 0 40px hsla(var(--primary), 0.2)' : 'none',
+              }}
             >
-              <path
-                d="M3 8H13M13 8L8 3M13 8L8 13"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-primary"
-              />
-            </svg>
+              {title}
+            </h3>
+            <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+              {subtitle}
+            </p>
+
+            {/* Hover Arrow with glow */}
+            <div
+              className={`
+                absolute right-6 bottom-6
+                w-9 h-9 rounded-full
+                flex items-center justify-center
+                transition-all duration-300
+                ${isHovered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}
+              `}
+              style={{
+                background: 'linear-gradient(135deg, hsla(var(--primary), 0.2) 0%, hsla(var(--secondary), 0.2) 100%)',
+                boxShadow: '0 0 20px hsla(var(--primary), 0.3), inset 0 0 10px hsla(var(--primary), 0.1)',
+                border: '1px solid hsla(var(--primary), 0.3)',
+              }}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{
+                  filter: 'drop-shadow(0 0 4px hsla(var(--primary), 0.8))',
+                }}
+              >
+                <path
+                  d="M3 8H13M13 8L8 3M13 8L8 13"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+
+            {/* Bottom edge accent */}
+            <div 
+              className={`absolute bottom-0 left-6 right-6 h-px transition-opacity duration-500 ${isHovered ? 'opacity-60' : 'opacity-0'}`}
+              style={{
+                background: 'linear-gradient(90deg, transparent 0%, hsla(var(--primary), 0.5) 50%, transparent 100%)',
+              }}
+            />
           </div>
         </div>
       </div>
