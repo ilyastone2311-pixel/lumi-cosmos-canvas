@@ -4,56 +4,70 @@
 
 @layer base {
   :root {
-    --background: 230 50% 5%;
-    --foreground: 210 40% 98%;
+    /* Deep cosmic background that blends with character */
+    --background: 240 35% 6%;
+    --foreground: 220 30% 95%;
 
-    --card: 230 40% 8%;
-    --card-foreground: 210 40% 98%;
+    /* Cards with subtle purple tint */
+    --card: 245 30% 10%;
+    --card-foreground: 220 30% 95%;
 
-    --popover: 230 40% 8%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 245 30% 10%;
+    --popover-foreground: 220 30% 95%;
 
-    --primary: 190 100% 50%;
-    --primary-foreground: 230 50% 5%;
+    /* Primary: Soft turquoise/cyan from character rings */
+    --primary: 195 85% 55%;
+    --primary-foreground: 240 35% 6%;
 
-    --secondary: 270 60% 50%;
-    --secondary-foreground: 210 40% 98%;
+    /* Secondary: Soft lavender purple from character */
+    --secondary: 265 55% 60%;
+    --secondary-foreground: 220 30% 95%;
 
-    --muted: 230 30% 15%;
-    --muted-foreground: 215 20% 65%;
+    /* Muted: Deep indigo tones */
+    --muted: 250 25% 18%;
+    --muted-foreground: 230 20% 70%;
 
-    --accent: 320 80% 60%;
-    --accent-foreground: 210 40% 98%;
+    /* Accent: Soft violet-pink highlight */
+    --accent: 280 60% 65%;
+    --accent-foreground: 220 30% 95%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 220 30% 95%;
 
-    --border: 230 30% 20%;
-    --input: 230 30% 15%;
-    --ring: 190 100% 50%;
+    /* Borders and inputs with purple undertone */
+    --border: 255 25% 22%;
+    --input: 250 25% 16%;
+    --ring: 195 85% 55%;
 
     --radius: 1rem;
 
-    /* Custom Lumi colors */
-    --neon-cyan: 190 100% 50%;
-    --neon-purple: 270 100% 65%;
-    --neon-pink: 320 100% 60%;
-    --cosmic-blue: 220 80% 20%;
-    --deep-space: 230 50% 3%;
+    /* Custom Lumi colors - harmonized with character */
+    --neon-cyan: 195 85% 55%;
+    --neon-purple: 265 70% 65%;
+    --neon-pink: 290 60% 60%;
+    --cosmic-blue: 235 50% 18%;
+    --deep-space: 240 40% 4%;
+    
+    /* New: Character-inspired colors */
+    --soft-turquoise: 190 70% 60%;
+    --soft-lavender: 260 50% 70%;
+    --deep-indigo: 245 45% 12%;
+    --warm-highlight: 45 70% 75%;
 
-    /* Gradients */
-    --gradient-cosmic: linear-gradient(135deg, hsl(270 60% 20%) 0%, hsl(230 50% 5%) 50%, hsl(200 60% 15%) 100%);
-    --gradient-neon: linear-gradient(135deg, hsl(190 100% 50%) 0%, hsl(270 100% 65%) 100%);
-    --gradient-glass: linear-gradient(135deg, hsla(210, 40%, 98%, 0.1) 0%, hsla(210, 40%, 98%, 0.02) 100%);
+    /* Updated gradients */
+    --gradient-cosmic: linear-gradient(135deg, hsl(265 50% 18%) 0%, hsl(240 35% 6%) 50%, hsl(195 50% 12%) 100%);
+    --gradient-neon: linear-gradient(135deg, hsl(195 85% 55%) 0%, hsl(265 70% 65%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsla(220, 30%, 95%, 0.08) 0%, hsla(220, 30%, 95%, 0.02) 100%);
+    --gradient-character-blend: linear-gradient(180deg, transparent 0%, hsl(245 35% 8%) 50%, hsl(240 35% 6%) 100%);
 
-    --sidebar-background: 230 50% 5%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 190 100% 50%;
-    --sidebar-primary-foreground: 230 50% 5%;
-    --sidebar-accent: 230 30% 15%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 230 30% 20%;
-    --sidebar-ring: 190 100% 50%;
+    --sidebar-background: 240 35% 6%;
+    --sidebar-foreground: 220 30% 95%;
+    --sidebar-primary: 195 85% 55%;
+    --sidebar-primary-foreground: 240 35% 6%;
+    --sidebar-accent: 250 25% 18%;
+    --sidebar-accent-foreground: 220 30% 95%;
+    --sidebar-border: 255 25% 22%;
+    --sidebar-ring: 195 85% 55%;
   }
 }
 
@@ -70,6 +84,13 @@
     @apply bg-background text-foreground antialiased;
     font-family: 'Plus Jakarta Sans', sans-serif;
     overflow-x: hidden;
+    /* Seamless cosmic background */
+    background: 
+      radial-gradient(ellipse at 70% 20%, hsla(265, 50%, 25%, 0.25) 0%, transparent 50%),
+      radial-gradient(ellipse at 30% 80%, hsla(195, 60%, 20%, 0.2) 0%, transparent 45%),
+      radial-gradient(ellipse at 85% 70%, hsla(280, 45%, 20%, 0.15) 0%, transparent 40%),
+      radial-gradient(ellipse at 15% 30%, hsla(245, 50%, 18%, 0.2) 0%, transparent 40%),
+      hsl(240, 35%, 6%);
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -84,27 +105,35 @@
 
 @layer utilities {
   .glass {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+    @apply backdrop-blur-xl border;
+    background: hsla(245, 30%, 12%, 0.6);
+    border-color: hsla(260, 40%, 40%, 0.15);
   }
 
   .glass-strong {
-    @apply bg-white/10 backdrop-blur-2xl border border-white/20;
+    @apply backdrop-blur-2xl border;
+    background: hsla(245, 30%, 14%, 0.75);
+    border-color: hsla(260, 40%, 45%, 0.2);
   }
 
   .glow-cyan {
-    box-shadow: 0 0 20px hsl(190 100% 50% / 0.3), 0 0 40px hsl(190 100% 50% / 0.1);
+    box-shadow: 0 0 20px hsl(195 85% 55% / 0.3), 0 0 40px hsl(195 85% 55% / 0.1);
   }
 
   .glow-purple {
-    box-shadow: 0 0 20px hsl(270 100% 65% / 0.3), 0 0 40px hsl(270 100% 65% / 0.1);
+    box-shadow: 0 0 20px hsl(265 70% 65% / 0.3), 0 0 40px hsl(265 70% 65% / 0.1);
   }
 
   .glow-pink {
-    box-shadow: 0 0 20px hsl(320 100% 60% / 0.3), 0 0 40px hsl(320 100% 60% / 0.1);
+    box-shadow: 0 0 20px hsl(290 60% 60% / 0.3), 0 0 40px hsl(290 60% 60% / 0.1);
   }
 
   .text-glow {
-    text-shadow: 0 0 20px hsl(190 100% 50% / 0.5), 0 0 40px hsl(190 100% 50% / 0.3);
+    text-shadow: 0 0 20px hsl(195 85% 55% / 0.5), 0 0 40px hsl(195 85% 55% / 0.3);
+  }
+
+  .text-glow-soft {
+    text-shadow: 0 0 15px hsl(260 50% 70% / 0.4), 0 0 30px hsl(195 70% 60% / 0.2);
   }
 
   .gradient-border {
@@ -118,7 +147,7 @@
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, hsl(190 100% 50% / 0.5), hsl(270 100% 65% / 0.5), hsl(320 100% 60% / 0.3));
+    background: linear-gradient(135deg, hsl(195 85% 55% / 0.4), hsl(265 70% 65% / 0.4), hsl(290 60% 60% / 0.25));
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
@@ -135,7 +164,7 @@
   }
   .hover-lift:hover {
     transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 12px 40px hsla(230, 50%, 5%, 0.4), 0 0 20px hsla(190, 100%, 50%, 0.1);
+    box-shadow: 0 12px 40px hsla(240, 35%, 6%, 0.5), 0 0 25px hsla(195, 85%, 55%, 0.12);
   }
   .hover-lift:active {
     transform: translateY(0) scale(0.98);
@@ -145,7 +174,7 @@
     @apply transition-all duration-300 ease-out;
   }
   .hover-glow:hover {
-    box-shadow: 0 0 25px hsla(190, 100%, 50%, 0.25), 0 0 50px hsla(270, 100%, 60%, 0.15);
+    box-shadow: 0 0 30px hsla(195, 85%, 55%, 0.25), 0 0 60px hsla(265, 70%, 65%, 0.15);
   }
 
   .hover-scale {
@@ -207,9 +236,9 @@
 @layer components {
   .cosmic-bg {
     background: 
-      radial-gradient(ellipse at 20% 20%, hsl(270 60% 15% / 0.4) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 80%, hsl(200 60% 15% / 0.4) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 50%, hsl(320 60% 15% / 0.2) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 15%, hsl(265 50% 18% / 0.35) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 75%, hsl(195 50% 15% / 0.3) 0%, transparent 45%),
+      radial-gradient(ellipse at 80% 85%, hsl(280 45% 18% / 0.2) 0%, transparent 50%),
       hsl(var(--background));
   }
 
@@ -224,9 +253,9 @@
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, hsl(190 100% 50%), hsl(270 100% 65%));
+    background: linear-gradient(90deg, hsl(195 85% 55%), hsl(265 70% 65%));
     transition: width 0.3s ease;
-    box-shadow: 0 0 10px hsl(190 100% 50% / 0.5);
+    box-shadow: 0 0 10px hsl(195 85% 55% / 0.5);
   }
 
   .neon-underline:hover::after {
@@ -248,14 +277,14 @@
 
   .btn-primary {
     @apply relative overflow-hidden text-primary-foreground font-semibold;
-    background: linear-gradient(135deg, hsl(190 100% 50%), hsl(270 100% 65%));
-    box-shadow: 0 4px 15px hsl(190 100% 50% / 0.25);
+    background: linear-gradient(135deg, hsl(195 85% 55%), hsl(265 70% 65%));
+    box-shadow: 0 4px 20px hsl(195 85% 55% / 0.3);
   }
 
   .btn-primary::before {
     content: '';
     @apply absolute inset-0 opacity-0 transition-opacity duration-300;
-    background: linear-gradient(135deg, hsl(270 100% 65%), hsl(190 100% 50%));
+    background: linear-gradient(135deg, hsl(265 70% 65%), hsl(195 85% 55%));
   }
 
   .btn-primary:hover::before {
@@ -263,13 +292,27 @@
   }
 
   .btn-primary:hover {
-    box-shadow: 0 6px 25px hsl(190 100% 50% / 0.4), 0 0 40px hsl(270 100% 65% / 0.2);
+    box-shadow: 0 8px 30px hsl(195 85% 55% / 0.4), 0 0 50px hsl(265 70% 65% / 0.2);
     transform: translateY(-2px);
   }
 
   .btn-primary:active {
     transform: translateY(0);
-    box-shadow: 0 2px 10px hsl(190 100% 50% / 0.3);
+    box-shadow: 0 2px 12px hsl(195 85% 55% / 0.3);
+  }
+
+  /* Secondary button style */
+  .btn-secondary {
+    @apply relative overflow-hidden font-semibold;
+    background: hsla(265, 55%, 60%, 0.15);
+    border: 1px solid hsla(265, 55%, 60%, 0.3);
+    color: hsl(260, 50%, 85%);
+  }
+
+  .btn-secondary:hover {
+    background: hsla(265, 55%, 60%, 0.25);
+    border-color: hsla(265, 55%, 60%, 0.5);
+    box-shadow: 0 0 25px hsl(265 55% 60% / 0.2);
   }
 
   /* Organic micro-interactions */
@@ -303,10 +346,20 @@
 
   /* Handwritten underline effect */
   .handwritten-underline {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8'%3E%3Cpath d='M0 6 Q50 2, 100 6 T200 6' stroke='%2300d4ff' stroke-width='2' fill='none' opacity='0.6'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8'%3E%3Cpath d='M0 6 Q50 2, 100 6 T200 6' stroke='%2356c8e8' stroke-width='2' fill='none' opacity='0.6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: bottom left;
     background-size: 100% 8px;
     padding-bottom: 4px;
+  }
+
+  /* Character blend overlay for hero section */
+  .character-blend-bg {
+    background: linear-gradient(180deg, 
+      transparent 0%, 
+      hsla(245, 35%, 8%, 0.3) 40%,
+      hsla(240, 35%, 6%, 0.8) 70%,
+      hsl(240, 35%, 6%) 100%
+    );
   }
 }

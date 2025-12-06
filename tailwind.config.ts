@@ -60,6 +60,12 @@ export default {
           blue: "hsl(var(--cosmic-blue))",
           space: "hsl(var(--deep-space))",
         },
+        lumi: {
+          turquoise: "hsl(var(--soft-turquoise))",
+          lavender: "hsl(var(--soft-lavender))",
+          indigo: "hsl(var(--deep-indigo))",
+          highlight: "hsl(var(--warm-highlight))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -128,8 +134,8 @@ export default {
           "50%": { opacity: "0.5" },
         },
         "glow-pulse": {
-          "0%, 100%": { boxShadow: "0 0 20px hsl(190 100% 50% / 0.3), 0 0 40px hsl(190 100% 50% / 0.1)" },
-          "50%": { boxShadow: "0 0 30px hsl(190 100% 50% / 0.5), 0 0 60px hsl(190 100% 50% / 0.2)" },
+          "0%, 100%": { boxShadow: "0 0 20px hsl(195 85% 55% / 0.3), 0 0 40px hsl(195 85% 55% / 0.1)" },
+          "50%": { boxShadow: "0 0 30px hsl(195 85% 55% / 0.5), 0 0 60px hsl(195 85% 55% / 0.2)" },
         },
         "particle-float": {
           "0%": { transform: "translateY(100vh) scale(0)", opacity: "0" },
@@ -144,19 +150,19 @@ export default {
         "border-glow": {
           "0%, 100%": { 
             opacity: "0.5",
-            boxShadow: "0 0 0 1px hsla(190, 100%, 50%, 0.08), 0 0 15px hsla(190, 100%, 50%, 0.08), 0 0 30px hsla(270, 100%, 60%, 0.04)"
+            boxShadow: "0 0 0 1px hsla(195, 85%, 55%, 0.08), 0 0 15px hsla(195, 85%, 55%, 0.08), 0 0 30px hsla(265, 70%, 65%, 0.04)"
           },
           "50%": { 
             opacity: "1",
-            boxShadow: "0 0 0 1px hsla(190, 100%, 50%, 0.15), 0 0 25px hsla(190, 100%, 50%, 0.15), 0 0 50px hsla(270, 100%, 60%, 0.08)"
+            boxShadow: "0 0 0 1px hsla(195, 85%, 55%, 0.15), 0 0 25px hsla(195, 85%, 55%, 0.15), 0 0 50px hsla(265, 70%, 65%, 0.08)"
           },
         },
         "navbar-glow": {
           "0%, 100%": { 
-            boxShadow: "0 0 0 1px hsla(190, 100%, 50%, 0.05), 0 0 20px hsla(190, 100%, 50%, 0.06), 0 0 40px hsla(270, 100%, 60%, 0.03), 0 8px 32px hsla(230, 50%, 5%, 0.4)"
+            boxShadow: "0 0 0 1px hsla(195, 85%, 55%, 0.05), 0 0 20px hsla(195, 85%, 55%, 0.06), 0 0 40px hsla(265, 70%, 65%, 0.03), 0 8px 32px hsla(240, 35%, 6%, 0.5)"
           },
           "50%": { 
-            boxShadow: "0 0 0 1px hsla(190, 100%, 50%, 0.1), 0 0 30px hsla(190, 100%, 50%, 0.1), 0 0 60px hsla(270, 100%, 60%, 0.06), 0 8px 32px hsla(230, 50%, 5%, 0.4)"
+            boxShadow: "0 0 0 1px hsla(195, 85%, 55%, 0.1), 0 0 30px hsla(195, 85%, 55%, 0.1), 0 0 60px hsla(265, 70%, 65%, 0.06), 0 8px 32px hsla(240, 35%, 6%, 0.5)"
           },
         },
         "loader-bounce": {
