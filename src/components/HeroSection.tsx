@@ -3,7 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useParallax } from "@/hooks/useParallax";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import CyberLofiReader from "./CyberLofiReader";
+import HeroIllustration from "./HeroIllustration";
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -48,9 +48,9 @@ const HeroSection = () => {
         ))}
       </div>
 
-      {/* Cyber Lofi Reader - positioned on the right */}
+      {/* Hero Illustration - positioned on the right */}
       <div className="hidden lg:block">
-        <CyberLofiReader />
+        <HeroIllustration />
       </div>
 
       {/* Ambient glow effects for depth with parallax */}
