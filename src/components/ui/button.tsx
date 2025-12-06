@@ -16,11 +16,18 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground hover:shadow-sm active:scale-[0.97]",
         link: "text-primary underline-offset-4 hover:underline",
         glow: "bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1.5 hover:scale-[1.03] active:scale-[0.97]",
+        // Neumorphism variants
+        neu: "neu-button text-foreground hover:-translate-y-1 active:translate-y-0",
+        neuPrimary: "neu-button-primary text-primary-foreground hover:-translate-y-1 active:translate-y-0",
+        // Glass variants
+        glass: "glass-card text-foreground hover:shadow-elevated hover:-translate-y-1 active:scale-[0.98]",
+        glassPrimary: "glass-panel border-primary/20 text-foreground hover:border-primary/40 hover:shadow-[0_0_30px_hsla(195,85%,55%,0.15)] hover:-translate-y-1 active:scale-[0.98]",
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
+        xl: "h-12 rounded-lg px-10 text-base",
         icon: "h-10 w-10",
       },
     },

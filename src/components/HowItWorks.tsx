@@ -122,18 +122,16 @@ const HowItWorks = () => {
                 }}
               />
 
-              {/* Card */}
+              {/* Card - Glass Panel with Neumorphism */}
               <div 
-                className="relative p-8 rounded-2xl transition-all duration-400"
+                className="relative p-8 rounded-2xl transition-all duration-400 glass-card"
                 style={{
-                  background: 'hsla(230, 50%, 8%, 0.5)',
-                  backdropFilter: 'blur(15px)',
-                  border: '1px solid hsla(210, 40%, 98%, 0.06)',
                   boxShadow: `
-                    0 0 0 1px hsla(190, 100%, 50%, 0.03),
+                    0 0 0 1px hsla(190, 100%, 50%, 0.04),
+                    8px 8px 24px hsla(230, 50%, 4%, 0.5),
+                    -4px -4px 16px hsla(260, 40%, 20%, 0.08),
                     0 4px 15px hsla(230, 50%, 5%, 0.3),
-                    0 8px 30px hsla(230, 50%, 5%, 0.2),
-                    inset 0 1px 0 hsla(210, 40%, 98%, 0.04)
+                    inset 0 1px 0 hsla(210, 40%, 98%, 0.05)
                   `,
                 }}
               >
@@ -146,16 +144,15 @@ const HowItWorks = () => {
                 {/* Icon with enhanced glow */}
                 <div className="relative mb-6">
                   <div 
-                    className="w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                    className="w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 neu-button"
                     style={{
-                      background: 'hsla(190, 100%, 50%, 0.1)',
-                      boxShadow: '0 0 20px hsla(190, 100%, 50%, 0.1)',
+                      background: 'linear-gradient(145deg, hsla(195, 80%, 50%, 0.15) 0%, hsla(245, 50%, 15%, 0.8) 100%)',
                     }}
                   >
-                    <feature.icon className="w-7 h-7 text-primary" />
+                    <feature.icon className="w-7 h-7 text-primary icon-glow" />
                   </div>
                   {/* Icon glow */}
-                  <div className="absolute inset-0 w-14 h-14 rounded-xl bg-primary/20 blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500" />
+                  <div className="absolute inset-0 w-14 h-14 rounded-xl bg-primary/25 blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
                 </div>
 
                 {/* Content */}
