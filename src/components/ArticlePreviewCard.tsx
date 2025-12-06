@@ -128,7 +128,7 @@ const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => 
   return (
     <motion.div
       ref={cardRef}
-      className="relative"
+      className={`relative ${showPreview ? 'z-50' : 'z-0'}`}
       initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
       whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       viewport={{ once: true, margin: "-30px" }}
