@@ -3,7 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useParallax } from "@/hooks/useParallax";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import FloatingCrystal from "./FloatingCrystal";
+import CyberLofiReader from "./CyberLofiReader";
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -48,15 +48,10 @@ const HeroSection = () => {
         ))}
       </div>
 
-      {/* Floating Crystal - positioned on the right with parallax */}
-      <motion.div 
-        className="hidden lg:block"
-        style={{
-          transform: `translateY(${parallaxOffsetSlow}px)`,
-        }}
-      >
-        <FloatingCrystal />
-      </motion.div>
+      {/* Cyber Lofi Reader - positioned on the right */}
+      <div className="hidden lg:block">
+        <CyberLofiReader />
+      </div>
 
       {/* Ambient glow effects for depth with parallax */}
       <motion.div 
@@ -198,64 +193,8 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right side - space for crystal with parallax */}
-          <motion.div 
-            className="relative hidden lg:flex items-center justify-center min-h-[500px]"
-            style={{
-              transform: `translateY(${parallaxOffsetSlow * 0.5}px)`,
-            }}
-          >
-            {/* Decorative rings behind the crystal */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <motion.div 
-                className="w-[350px] h-[350px] border border-primary/20 rounded-full"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              />
-              <motion.div 
-                className="absolute w-[280px] h-[280px] border border-secondary/15 rounded-full"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-              />
-              <motion.div 
-                className="absolute w-[200px] h-[200px] border border-accent/10 rounded-full"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-              />
-            </div>
-
-            {/* Sparkle accents */}
-            {[
-              { top: "25%", right: "25%", size: 8, delay: 0 },
-              { bottom: "33%", right: "16%", size: 6, delay: 1 },
-              { top: "50%", left: "25%", size: 4, delay: 2 },
-              { top: "33%", left: "33%", size: 6, delay: 1.5 },
-            ].map((sparkle, i) => (
-              <motion.div
-                key={i}
-                className="absolute rounded-full bg-primary"
-                style={{
-                  width: sparkle.size,
-                  height: sparkle.size,
-                  top: sparkle.top,
-                  bottom: sparkle.bottom,
-                  left: sparkle.left,
-                  right: sparkle.right,
-                  boxShadow: '0 0 10px hsl(190 100% 50% / 0.5)',
-                }}
-                animate={{
-                  opacity: [0.3, 1, 0.3],
-                  scale: [0.8, 1.2, 0.8],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  delay: sparkle.delay,
-                  ease: "easeInOut",
-                }}
-              />
-            ))}
-          </motion.div>
+          {/* Right side - placeholder for layout balance */}
+          <div className="relative hidden lg:flex items-center justify-center min-h-[500px]" />
         </div>
       </div>
 
