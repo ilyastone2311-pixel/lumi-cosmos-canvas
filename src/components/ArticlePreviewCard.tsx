@@ -241,13 +241,12 @@ const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => 
             <div
               className="rounded-2xl overflow-hidden"
               style={{
-                background: 'hsla(230, 50%, 6%, 0.98)',
-                backdropFilter: 'blur(20px)',
-                border: '1px solid hsla(var(--primary), 0.15)',
+                background: 'hsl(230, 50%, 6%)',
+                border: '2px solid hsla(var(--primary), 0.3)',
                 boxShadow: `
-                  0 0 0 1px hsla(var(--primary), 0.1),
-                  0 25px 60px hsla(230, 50%, 3%, 0.9),
-                  0 0 50px hsla(var(--primary), 0.15)
+                  0 0 0 1px hsla(var(--primary), 0.2),
+                  0 25px 60px hsla(230, 50%, 3%, 1),
+                  0 0 50px hsla(var(--primary), 0.2)
                 `,
               }}
             >
