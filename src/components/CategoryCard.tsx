@@ -35,26 +35,74 @@ const CategoryCard = ({
   return (
     <div
       className="group relative cursor-pointer"
-      style={{ animationDelay: `${delay}ms` }}
+      style={{ 
+        animationDelay: `${delay}ms`,
+        perspective: '1000px',
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleCardClick}
     >
-      {/* Card Container */}
+      {/* Multi-layer floating shadow */}
       <div
         className={`
-          relative overflow-hidden rounded-2xl
-          glass gradient-border
-          transition-all duration-500 ease-out
-          ${isHovered ? "scale-[1.02] -translate-y-2" : ""}
-          active:scale-[0.98]
+          absolute -inset-2 -z-20 rounded-3xl
+          transition-all duration-700
+          ${isHovered ? "opacity-80" : "opacity-0"}
         `}
+        style={{
+          background: 'radial-gradient(ellipse at center bottom, hsla(190, 100%, 50%, 0.2) 0%, transparent 60%)',
+          filter: 'blur(30px)',
+          transform: isHovered ? 'translateY(15px) scale(0.95)' : 'translateY(5px) scale(0.9)',
+        }}
+      />
+      
+      {/* Secondary shadow layer */}
+      <div
+        className={`
+          absolute -inset-1 -z-10 rounded-2xl
+          transition-all duration-500
+          ${isHovered ? "opacity-60" : "opacity-0"}
+        `}
+        style={{
+          background: 'linear-gradient(135deg, hsla(190, 100%, 50%, 0.15) 0%, hsla(270, 100%, 60%, 0.15) 100%)',
+          filter: 'blur(20px)',
+        }}
+      />
+
+      {/* Card Container */}
+      <div
+        className="relative overflow-hidden rounded-2xl transition-all duration-500 ease-out"
+        style={{
+          background: 'hsla(230, 50%, 8%, 0.6)',
+          backdropFilter: 'blur(15px)',
+          border: '1px solid hsla(210, 40%, 98%, 0.08)',
+          boxShadow: isHovered 
+            ? `
+                0 0 0 1px hsla(190, 100%, 50%, 0.1),
+                0 4px 20px hsla(190, 100%, 50%, 0.1),
+                0 8px 40px hsla(270, 100%, 60%, 0.08),
+                0 20px 50px hsla(230, 50%, 5%, 0.5),
+                inset 0 1px 0 hsla(210, 40%, 98%, 0.06)
+              `
+            : `
+                0 4px 15px hsla(230, 50%, 5%, 0.3),
+                0 8px 30px hsla(230, 50%, 5%, 0.2),
+                inset 0 1px 0 hsla(210, 40%, 98%, 0.04)
+              `,
+          transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
+        }}
       >
+        {/* Top edge glow */}
+        <div 
+          className={`absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent transition-opacity duration-500 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+        />
+
         {/* Glow Effect */}
         <div
           className={`
-            absolute inset-0 opacity-0 transition-opacity duration-500
-            bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20
+            absolute inset-0 opacity-0 transition-opacity duration-500 pointer-events-none
+            bg-gradient-to-br from-primary/15 via-transparent to-secondary/15
             ${isHovered ? "opacity-100" : ""}
           `}
         />
@@ -70,10 +118,15 @@ const CategoryCard = ({
             hover:scale-110 active:scale-95
             ${isFavorite 
               ? "bg-accent/30 text-accent" 
-              : "bg-black/30 text-white/70 hover:bg-black/50 hover:text-white"
+              : "bg-black/40 text-white/70 hover:bg-black/60 hover:text-white"
             }
-            backdrop-blur-sm
+            backdrop-blur-md
           `}
+          style={{
+            boxShadow: isFavorite 
+              ? '0 0 20px hsla(320, 80%, 60%, 0.4)' 
+              : '0 4px 15px hsla(230, 50%, 5%, 0.4)',
+          }}
         >
           <Heart 
             className={`w-5 h-5 transition-transform duration-300 ${isHovered ? "scale-110" : ""}`} 
@@ -92,29 +145,42 @@ const CategoryCard = ({
               ${isHovered ? "scale-110" : "scale-100"}
             `}
           />
-          {/* Overlay Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
+          {/* Overlay Gradient - enhanced */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(to top, hsla(230, 50%, 8%, 1) 0%, hsla(230, 50%, 8%, 0.7) 30%, hsla(230, 50%, 8%, 0.2) 60%, transparent 100%)',
+            }}
+          />
         </div>
 
         {/* Content */}
-        <div className="relative p-5">
-          <h3 className="font-display text-lg font-semibold text-foreground mb-1 tracking-wide group-hover:text-primary transition-colors">
+        <div className="relative p-6">
+          <h3 
+            className="font-display text-lg font-semibold text-foreground mb-2 tracking-wide group-hover:text-primary transition-colors"
+            style={{
+              textShadow: isHovered ? '0 0 20px hsla(190, 100%, 50%, 0.3)' : 'none',
+            }}
+          >
             {title}
           </h3>
-          <p className="text-sm text-muted-foreground line-clamp-2">
+          <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
             {subtitle}
           </p>
 
           {/* Hover Arrow */}
           <div
             className={`
-              absolute right-5 bottom-5
-              w-8 h-8 rounded-full
+              absolute right-6 bottom-6
+              w-9 h-9 rounded-full
               flex items-center justify-center
-              bg-primary/20 text-primary
               transition-all duration-300
               ${isHovered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}
             `}
+            style={{
+              background: 'hsla(190, 100%, 50%, 0.15)',
+              boxShadow: '0 0 15px hsla(190, 100%, 50%, 0.2)',
+            }}
           >
             <svg
               width="16"
@@ -129,21 +195,12 @@ const CategoryCard = ({
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                className="text-primary"
               />
             </svg>
           </div>
         </div>
       </div>
-
-      {/* Floating Shadow */}
-      <div
-        className={`
-          absolute -inset-1 -z-10 rounded-2xl
-          bg-gradient-to-br from-primary/30 via-secondary/20 to-accent/30
-          blur-xl opacity-0 transition-opacity duration-500
-          ${isHovered ? "opacity-50" : ""}
-        `}
-      />
     </div>
   );
 };
