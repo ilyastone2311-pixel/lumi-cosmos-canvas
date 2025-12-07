@@ -147,12 +147,12 @@ const CategoryCard = ({
             }}
           />
 
-          {/* Favorite Button */}
+          {/* Favorite Button - larger touch target on mobile */}
           <button
             onClick={handleFavoriteClick}
             className={`
-              absolute top-4 right-4 z-20
-              w-10 h-10 rounded-full
+              absolute top-3 right-3 sm:top-4 sm:right-4 z-20
+              w-11 h-11 sm:w-10 sm:h-10 rounded-full
               flex items-center justify-center
               transition-all duration-300
               hover:scale-110 active:scale-95
@@ -175,7 +175,7 @@ const CategoryCard = ({
           </button>
 
           {/* Image Container */}
-          <div className="relative h-48 overflow-hidden">
+          <div className="relative h-40 sm:h-48 overflow-hidden">
             <img
               src={image}
               alt={title}
@@ -201,9 +201,9 @@ const CategoryCard = ({
           </div>
 
           {/* Content */}
-          <div className="relative p-6">
+          <div className="relative p-4 sm:p-6">
             <h3 
-              className="font-display text-lg font-semibold mb-2 tracking-wide transition-all duration-300 text-card-foreground"
+              className="font-display text-base sm:text-lg font-semibold mb-1.5 sm:mb-2 tracking-wide transition-all duration-300 text-card-foreground"
               style={{
                 color: isHovered ? 'hsl(var(--primary))' : undefined,
                 textShadow: isHovered ? '0 0 20px hsla(var(--primary), 0.5), 0 0 40px hsla(var(--primary), 0.2)' : 'none',
@@ -211,15 +211,15 @@ const CategoryCard = ({
             >
               {title}
             </h3>
-            <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+            <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">
               {subtitle}
             </p>
 
             {/* Hover Arrow with glow */}
             <div
               className={`
-                absolute right-6 bottom-6
-                w-9 h-9 rounded-full
+                absolute right-4 bottom-4 sm:right-6 sm:bottom-6
+                w-8 h-8 sm:w-9 sm:h-9 rounded-full
                 flex items-center justify-center
                 transition-all duration-300
                 ${isHovered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}
@@ -252,7 +252,7 @@ const CategoryCard = ({
 
             {/* Bottom edge accent */}
             <div 
-              className={`absolute bottom-0 left-6 right-6 h-px transition-opacity duration-500 ${isHovered ? 'opacity-60' : 'opacity-0'}`}
+              className={`absolute bottom-0 left-4 right-4 sm:left-6 sm:right-6 h-px transition-opacity duration-500 ${isHovered ? 'opacity-60' : 'opacity-0'}`}
               style={{
                 background: 'linear-gradient(90deg, transparent 0%, hsla(var(--primary), 0.5) 50%, transparent 100%)',
               }}
