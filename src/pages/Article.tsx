@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import AudioPlayer from "@/components/AudioPlayer";
+import KaraokeText from "@/components/KaraokeText";
 import { ArrowLeft, Clock, Star, Bookmark, Share2, ThumbsUp } from "lucide-react";
 
 const articleContent = {
@@ -25,9 +27,16 @@ const articleContent = {
 const Article = () => {
   const { category, articleId } = useParams<{ category: string; articleId: string }>();
   const navigate = useNavigate();
+  const [audioTime, setAudioTime] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [seekToTime, setSeekToTime] = useState<number | null>(null);
 
   const displayCategory = category?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   const fullArticleId = `${category}-${articleId}`;
+
+  const handleWordClick = (time: number) => {
+    setSeekToTime(time);
+  };
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -71,6 +80,10 @@ const Article = () => {
             duration="5:00" 
             articleId={fullArticleId}
             articleTitle="Discovering Insights That Transform Perspectives"
+            onTimeUpdate={(time) => {
+              setAudioTime(time);
+              setIsPlaying(true);
+            }}
           />
 
           {/* Action Bar */}
@@ -89,11 +102,16 @@ const Article = () => {
             </button>
           </div>
 
-          {/* Article Content */}
+          {/* Article Content with Karaoke Highlighting */}
           <article className="prose prose-invert max-w-none">
-            <p className="text-lg text-foreground/90 leading-relaxed mb-8 animate-fade-in" style={{ animationDelay: '200ms' }}>
-              {articleContent.intro}
-            </p>
+            <div className="mb-8 animate-fade-in" style={{ animationDelay: '200ms' }}>
+              <KaraokeText 
+                text={articleContent.intro}
+                currentTime={audioTime}
+                isPlaying={isPlaying}
+                onWordClick={handleWordClick}
+              />
+            </div>
 
             {articleContent.sections.map((section, index) => (
               <section 
@@ -104,9 +122,12 @@ const Article = () => {
                 <h2 className="font-display text-2xl font-semibold text-foreground mb-4">
                   {section.title}
                 </h2>
-                <p className="text-foreground/80 leading-relaxed">
-                  {section.content}
-                </p>
+                <KaraokeText 
+                  text={section.content}
+                  currentTime={audioTime - (index + 1) * 15}
+                  isPlaying={isPlaying}
+                  onWordClick={handleWordClick}
+                />
               </section>
             ))}
           </article>
