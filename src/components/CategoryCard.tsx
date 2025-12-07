@@ -108,31 +108,25 @@ const CategoryCard = ({
 
       {/* Card Container with gradient border - Glass Panel */}
       <div
-        className="relative overflow-hidden rounded-2xl transition-all duration-500 ease-out glass-card"
+        className="relative overflow-hidden rounded-2xl transition-all duration-500 ease-out"
         style={{
           background: 'linear-gradient(135deg, hsla(var(--primary), 0.12) 0%, hsla(var(--secondary), 0.08) 50%, hsla(var(--accent), 0.12) 100%)',
           padding: '1px',
           boxShadow: isHovered 
             ? `
-                8px 8px 24px hsla(230, 50%, 4%, 0.5),
-                -4px -4px 16px hsla(260, 40%, 22%, 0.12),
+                0 8px 24px hsl(var(--foreground) / 0.15),
                 0 20px 40px hsla(var(--primary), 0.15),
                 0 0 50px hsla(var(--primary), 0.08)
               `
             : `
-                6px 6px 18px hsla(230, 50%, 4%, 0.45),
-                -3px -3px 12px hsla(260, 40%, 20%, 0.08),
-                0 4px 20px hsla(230, 50%, 5%, 0.3)
+                0 4px 18px hsl(var(--foreground) / 0.1),
+                0 4px 20px hsl(var(--foreground) / 0.08)
               `,
         }}
       >
-        {/* Inner card */}
+        {/* Inner card - theme aware */}
         <div
-          className="relative overflow-hidden rounded-2xl"
-          style={{
-            background: 'hsla(230, 50%, 6%, 0.92)',
-            backdropFilter: 'blur(20px)',
-          }}
+          className="relative overflow-hidden rounded-2xl bg-card backdrop-blur-xl"
         >
           {/* Top edge glow line */}
           <div 
@@ -162,22 +156,18 @@ const CategoryCard = ({
               flex items-center justify-center
               transition-all duration-300
               hover:scale-110 active:scale-95
-              backdrop-blur-md
+              backdrop-blur-md bg-muted/60 border border-border
             `}
             style={{
-              background: isFavorite 
-                ? 'hsla(var(--accent), 0.3)' 
-                : 'hsla(230, 50%, 10%, 0.6)',
               boxShadow: isFavorite 
                 ? '0 0 20px hsla(var(--accent), 0.5), 0 0 40px hsla(var(--accent), 0.2)' 
-                : '0 4px 15px hsla(230, 50%, 5%, 0.5)',
-              border: `1px solid ${isFavorite ? 'hsla(var(--accent), 0.4)' : 'hsla(210, 40%, 98%, 0.1)'}`,
+                : '0 4px 15px hsl(var(--foreground) / 0.15)',
             }}
           >
             <Heart 
               className={`w-5 h-5 transition-all duration-300 ${isHovered ? "scale-110" : ""}`}
               style={{
-                color: isFavorite ? 'hsl(var(--accent))' : 'hsla(210, 40%, 98%, 0.7)',
+                color: isFavorite ? 'hsl(var(--accent))' : 'hsl(var(--muted-foreground))',
                 filter: isFavorite ? 'drop-shadow(0 0 8px hsla(var(--accent), 0.8))' : 'none',
               }}
               fill={isFavorite ? "currentColor" : "none"}
@@ -196,17 +186,9 @@ const CategoryCard = ({
               `}
             />
             
-            {/* Image overlay with gradient */}
+            {/* Image overlay with gradient - theme aware */}
             <div 
-              className="absolute inset-0"
-              style={{
-                background: `linear-gradient(to top, 
-                  hsla(230, 50%, 6%, 1) 0%, 
-                  hsla(230, 50%, 6%, 0.8) 20%,
-                  hsla(230, 50%, 6%, 0.4) 50%, 
-                  hsla(230, 50%, 6%, 0.1) 80%,
-                  transparent 100%)`,
-              }}
+              className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent"
             />
             
             {/* Subtle scan line effect */}
@@ -221,9 +203,9 @@ const CategoryCard = ({
           {/* Content */}
           <div className="relative p-6">
             <h3 
-              className="font-display text-lg font-semibold mb-2 tracking-wide transition-all duration-300"
+              className="font-display text-lg font-semibold mb-2 tracking-wide transition-all duration-300 text-card-foreground"
               style={{
-                color: isHovered ? 'hsl(var(--primary))' : 'hsl(var(--foreground))',
+                color: isHovered ? 'hsl(var(--primary))' : undefined,
                 textShadow: isHovered ? '0 0 20px hsla(var(--primary), 0.5), 0 0 40px hsla(var(--primary), 0.2)' : 'none',
               }}
             >
