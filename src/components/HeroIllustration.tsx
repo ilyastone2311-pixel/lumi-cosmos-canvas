@@ -2,26 +2,28 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useParallax } from "@/hooks/useParallax";
 import { useTheme } from "next-themes";
-import heroReaderNew from "@/assets/hero-reader-new.png";
-// Light theme illustration - v2
-import heroReaderLight from "@/assets/hero-reader-light.png";
+
+// Dark theme illustration
+import heroImageDark from "@/assets/hero-reader-new.png";
+// Light theme illustration - dedicated separate image
+import heroImageLight from "@/assets/hero-image-light.png";
 
 const HeroIllustration = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isTapped, setIsTapped] = useState(false);
-  const [heroImage, setHeroImage] = useState(heroReaderNew);
+  const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const parallaxOffset = useParallax(0.15);
   const { resolvedTheme } = useTheme();
   
-  // Update image when theme changes
+  // Wait for theme to be resolved on client
   useEffect(() => {
-    if (resolvedTheme === 'light') {
-      setHeroImage(heroReaderLight);
-    } else {
-      setHeroImage(heroReaderNew);
-    }
-  }, [resolvedTheme]);
+    setMounted(true);
+  }, []);
+
+  // Explicit conditional: light theme = light image, dark theme = dark image
+  const isLightTheme = mounted && resolvedTheme === 'light';
+  const currentHeroImage = isLightTheme ? heroImageLight : heroImageDark;
 
   // Mouse position for parallax tilt
   const mouseX = useMotionValue(0);
@@ -92,6 +94,15 @@ const HeroIllustration = () => {
 
   const isActive = isHovered || isTapped;
 
+  // Don't render until mounted to prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <div 
+        className="absolute right-[-8%] top-1/2 -translate-y-1/2 w-[60vw] h-[85vh] min-w-[380px] max-w-[800px] min-h-[480px] max-h-[850px] z-10"
+      />
+    );
+  }
+
   return (
     <div 
       ref={containerRef}
@@ -109,11 +120,17 @@ const HeroIllustration = () => {
       <div 
         className="absolute inset-[-20%] pointer-events-none"
         style={{
-          background: `radial-gradient(ellipse 80% 70% at 50% 45%, 
-            hsla(250, 60%, 12%, 0.5) 0%, 
-            hsla(230, 55%, 8%, 0.3) 35%, 
-            transparent 65%
-          )`,
+          background: isLightTheme
+            ? `radial-gradient(ellipse 80% 70% at 50% 45%, 
+                hsla(280, 60%, 90%, 0.3) 0%, 
+                hsla(200, 55%, 95%, 0.2) 35%, 
+                transparent 65%
+              )`
+            : `radial-gradient(ellipse 80% 70% at 50% 45%, 
+                hsla(250, 60%, 12%, 0.5) 0%, 
+                hsla(230, 55%, 8%, 0.3) 35%, 
+                transparent 65%
+              )`,
           filter: 'blur(60px)',
         }}
       />
@@ -122,11 +139,17 @@ const HeroIllustration = () => {
       <div 
         className="absolute inset-[-15%] pointer-events-none"
         style={{
-          background: `radial-gradient(ellipse 70% 60% at 55% 50%, 
-            hsla(270, 50%, 15%, 0.35) 0%, 
-            hsla(200, 60%, 12%, 0.2) 40%, 
-            transparent 70%
-          )`,
+          background: isLightTheme
+            ? `radial-gradient(ellipse 70% 60% at 55% 50%, 
+                hsla(270, 50%, 85%, 0.25) 0%, 
+                hsla(200, 60%, 90%, 0.15) 40%, 
+                transparent 70%
+              )`
+            : `radial-gradient(ellipse 70% 60% at 55% 50%, 
+                hsla(270, 50%, 15%, 0.35) 0%, 
+                hsla(200, 60%, 12%, 0.2) 40%, 
+                transparent 70%
+              )`,
           filter: 'blur(80px)',
         }}
       />
@@ -135,7 +158,9 @@ const HeroIllustration = () => {
       <motion.div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[80%] rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at center, hsla(190, 100%, 55%, 0.12) 0%, transparent 55%)',
+          background: isLightTheme
+            ? 'radial-gradient(ellipse at center, hsla(280, 100%, 80%, 0.15) 0%, transparent 55%)'
+            : 'radial-gradient(ellipse at center, hsla(190, 100%, 55%, 0.12) 0%, transparent 55%)',
           filter: 'blur(70px)',
         }}
         animate={{
@@ -148,7 +173,9 @@ const HeroIllustration = () => {
       <motion.div
         className="absolute top-[38%] left-[52%] -translate-x-1/2 -translate-y-1/2 w-[60%] h-[55%] rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at center, hsla(270, 100%, 60%, 0.1) 0%, transparent 55%)',
+          background: isLightTheme
+            ? 'radial-gradient(ellipse at center, hsla(200, 100%, 85%, 0.12) 0%, transparent 55%)'
+            : 'radial-gradient(ellipse at center, hsla(270, 100%, 60%, 0.1) 0%, transparent 55%)',
           filter: 'blur(60px)',
         }}
         animate={{
@@ -168,11 +195,19 @@ const HeroIllustration = () => {
             height: star.size,
             left: `${star.left}%`,
             background: star.id % 2 === 0 
-              ? 'radial-gradient(circle, hsla(190, 100%, 80%, 1) 0%, hsla(190, 100%, 60%, 0.6) 50%, transparent 100%)'
-              : 'radial-gradient(circle, hsla(270, 100%, 85%, 1) 0%, hsla(270, 100%, 65%, 0.6) 50%, transparent 100%)',
+              ? isLightTheme
+                ? 'radial-gradient(circle, hsla(280, 100%, 75%, 1) 0%, hsla(280, 100%, 65%, 0.6) 50%, transparent 100%)'
+                : 'radial-gradient(circle, hsla(190, 100%, 80%, 1) 0%, hsla(190, 100%, 60%, 0.6) 50%, transparent 100%)'
+              : isLightTheme
+                ? 'radial-gradient(circle, hsla(200, 100%, 80%, 1) 0%, hsla(200, 100%, 70%, 0.6) 50%, transparent 100%)'
+                : 'radial-gradient(circle, hsla(270, 100%, 85%, 1) 0%, hsla(270, 100%, 65%, 0.6) 50%, transparent 100%)',
             boxShadow: star.id % 2 === 0
-              ? '0 0 8px hsla(190, 100%, 65%, 0.9)'
-              : '0 0 8px hsla(270, 100%, 70%, 0.9)',
+              ? isLightTheme
+                ? '0 0 8px hsla(280, 100%, 70%, 0.9)'
+                : '0 0 8px hsla(190, 100%, 65%, 0.9)'
+              : isLightTheme
+                ? '0 0 8px hsla(200, 100%, 75%, 0.9)'
+                : '0 0 8px hsla(270, 100%, 70%, 0.9)',
           }}
           animate={{
             y: ['0vh', '100vh'],
@@ -232,11 +267,17 @@ const HeroIllustration = () => {
           <motion.div
             className="absolute inset-[-25%] -z-10"
             style={{
-              background: `radial-gradient(ellipse 70% 60% at 50% 45%, 
-                hsla(190, 100%, 55%, ${isActive ? 0.2 : 0.1}) 0%, 
-                hsla(270, 100%, 60%, ${isActive ? 0.12 : 0.06}) 35%, 
-                transparent 60%
-              )`,
+              background: isLightTheme
+                ? `radial-gradient(ellipse 70% 60% at 50% 45%, 
+                    hsla(280, 100%, 80%, ${isActive ? 0.2 : 0.1}) 0%, 
+                    hsla(200, 100%, 85%, ${isActive ? 0.12 : 0.06}) 35%, 
+                    transparent 60%
+                  )`
+                : `radial-gradient(ellipse 70% 60% at 50% 45%, 
+                    hsla(190, 100%, 55%, ${isActive ? 0.2 : 0.1}) 0%, 
+                    hsla(270, 100%, 60%, ${isActive ? 0.12 : 0.06}) 35%, 
+                    transparent 60%
+                  )`,
               filter: `blur(${isActive ? 50 : 40}px)`,
             }}
             animate={{
@@ -277,25 +318,38 @@ const HeroIllustration = () => {
             }}
           />
 
-          {/* The image - full visibility, no clipping */}
-          <motion.img
-            key={resolvedTheme}
-            src={heroImage}
-            alt="Magical reading illustration"
-            className="w-full h-auto object-contain relative z-10"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            style={{
-              filter: isActive 
-                ? resolvedTheme === 'light'
+          {/* The image - EXPLICIT conditional rendering based on theme */}
+          {isLightTheme ? (
+            <motion.img
+              key="hero-light"
+              src={heroImageLight}
+              alt="Magical reading illustration - Light Theme"
+              className="w-full h-auto object-contain relative z-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              style={{
+                filter: isActive 
                   ? 'drop-shadow(0 0 40px hsla(280, 80%, 70%, 0.35)) drop-shadow(0 0 60px hsla(190, 100%, 70%, 0.25))'
-                  : 'drop-shadow(0 0 40px hsla(190, 100%, 60%, 0.45)) drop-shadow(0 0 80px hsla(270, 100%, 65%, 0.3)) drop-shadow(0 0 20px hsla(200, 100%, 75%, 0.35))' 
-                : resolvedTheme === 'light'
-                  ? 'drop-shadow(0 0 25px hsla(280, 80%, 75%, 0.2)) drop-shadow(0 0 40px hsla(190, 100%, 75%, 0.15))'
+                  : 'drop-shadow(0 0 25px hsla(280, 80%, 75%, 0.2)) drop-shadow(0 0 40px hsla(190, 100%, 75%, 0.15))',
+              }}
+            />
+          ) : (
+            <motion.img
+              key="hero-dark"
+              src={heroImageDark}
+              alt="Magical reading illustration - Dark Theme"
+              className="w-full h-auto object-contain relative z-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              style={{
+                filter: isActive 
+                  ? 'drop-shadow(0 0 40px hsla(190, 100%, 60%, 0.45)) drop-shadow(0 0 80px hsla(270, 100%, 65%, 0.3)) drop-shadow(0 0 20px hsla(200, 100%, 75%, 0.35))' 
                   : 'drop-shadow(0 0 25px hsla(190, 100%, 55%, 0.25)) drop-shadow(0 0 50px hsla(270, 100%, 60%, 0.15))',
-            }}
-          />
+              }}
+            />
+          )}
         </motion.div>
       </motion.div>
 
@@ -325,11 +379,22 @@ const HeroIllustration = () => {
           <svg width={sparkle.size} height={sparkle.size} viewBox="0 0 24 24" fill="none">
             <path 
               d="M12 0L13.5 10.5L24 12L13.5 13.5L12 24L10.5 13.5L0 12L10.5 10.5L12 0Z" 
-              fill={i % 2 === 0 ? "hsla(190, 100%, 75%, 0.9)" : "hsla(270, 100%, 80%, 0.9)"}
+              fill={i % 2 === 0 
+                ? isLightTheme 
+                  ? "hsla(280, 100%, 70%, 0.9)" 
+                  : "hsla(190, 100%, 75%, 0.9)" 
+                : isLightTheme 
+                  ? "hsla(200, 100%, 75%, 0.9)" 
+                  : "hsla(270, 100%, 80%, 0.9)"
+              }
               style={{
                 filter: i % 2 === 0 
-                  ? 'drop-shadow(0 0 5px hsla(190, 100%, 60%, 0.85))'
-                  : 'drop-shadow(0 0 5px hsla(270, 100%, 65%, 0.85))',
+                  ? isLightTheme
+                    ? 'drop-shadow(0 0 5px hsla(280, 100%, 65%, 0.85))'
+                    : 'drop-shadow(0 0 5px hsla(190, 100%, 60%, 0.85))'
+                  : isLightTheme
+                    ? 'drop-shadow(0 0 5px hsla(200, 100%, 70%, 0.85))'
+                    : 'drop-shadow(0 0 5px hsla(270, 100%, 65%, 0.85))',
               }}
             />
           </svg>
@@ -343,8 +408,12 @@ const HeroIllustration = () => {
             key={ripple.id}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
             style={{
-              border: '1.5px solid hsla(190, 100%, 70%, 0.4)',
-              boxShadow: '0 0 15px hsla(190, 100%, 55%, 0.25), 0 0 30px hsla(270, 100%, 60%, 0.15)',
+              border: isLightTheme
+                ? '1.5px solid hsla(280, 100%, 75%, 0.4)'
+                : '1.5px solid hsla(190, 100%, 70%, 0.4)',
+              boxShadow: isLightTheme
+                ? '0 0 15px hsla(280, 100%, 70%, 0.25), 0 0 30px hsla(200, 100%, 75%, 0.15)'
+                : '0 0 15px hsla(190, 100%, 55%, 0.25), 0 0 30px hsla(270, 100%, 60%, 0.15)',
             }}
             initial={{ width: '35%', height: '35%', opacity: 0.7 }}
             animate={{ 
@@ -363,8 +432,12 @@ const HeroIllustration = () => {
           <motion.div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] rounded-full pointer-events-none"
             style={{
-              border: '1px solid hsla(270, 100%, 70%, 0.3)',
-              boxShadow: '0 0 20px hsla(270, 100%, 60%, 0.2), inset 0 0 20px hsla(190, 100%, 55%, 0.08)',
+              border: isLightTheme
+                ? '1px solid hsla(200, 100%, 75%, 0.3)'
+                : '1px solid hsla(270, 100%, 70%, 0.3)',
+              boxShadow: isLightTheme
+                ? '0 0 20px hsla(280, 100%, 75%, 0.2), inset 0 0 20px hsla(200, 100%, 80%, 0.08)'
+                : '0 0 20px hsla(270, 100%, 60%, 0.2), inset 0 0 20px hsla(190, 100%, 55%, 0.08)',
             }}
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ 
@@ -391,11 +464,19 @@ const HeroIllustration = () => {
               className="absolute top-1/2 left-1/2 w-1.5 h-1.5 rounded-full pointer-events-none"
               style={{
                 background: i % 2 === 0 
-                  ? 'hsla(190, 100%, 70%, 0.85)'
-                  : 'hsla(270, 100%, 75%, 0.85)',
+                  ? isLightTheme
+                    ? 'hsla(280, 100%, 70%, 0.85)'
+                    : 'hsla(190, 100%, 70%, 0.85)'
+                  : isLightTheme
+                    ? 'hsla(200, 100%, 75%, 0.85)'
+                    : 'hsla(270, 100%, 75%, 0.85)',
                 boxShadow: i % 2 === 0
-                  ? '0 0 8px hsla(190, 100%, 60%, 0.75)'
-                  : '0 0 8px hsla(270, 100%, 65%, 0.75)',
+                  ? isLightTheme
+                    ? '0 0 8px hsla(280, 100%, 65%, 0.75)'
+                    : '0 0 8px hsla(190, 100%, 60%, 0.75)'
+                  : isLightTheme
+                    ? '0 0 8px hsla(200, 100%, 70%, 0.75)'
+                    : '0 0 8px hsla(270, 100%, 65%, 0.75)',
               }}
               initial={{ 
                 x: 0, 
