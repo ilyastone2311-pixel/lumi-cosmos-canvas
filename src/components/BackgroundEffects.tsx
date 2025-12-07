@@ -92,74 +92,74 @@ const BackgroundEffects = () => {
 
   // === DARK THEME ELEMENTS ===
   
-  // Glowing orbs - cyan, electric blue, violet, magenta
+  // Glowing orbs - cyan, electric blue, violet, magenta - MORE VISIBLE
   const darkGlowingOrbs = useMemo(() => [
-    { x: 12, y: 15, size: 6, color: "190 100% 60%", parallaxMouse: 0.12, parallaxScroll: 0.08 },
-    { x: 88, y: 25, size: 5, color: "220 95% 65%", parallaxMouse: 0.08, parallaxScroll: 0.12 },
-    { x: 20, y: 55, size: 7, color: "280 80% 60%", parallaxMouse: 0.15, parallaxScroll: 0.1 },
-    { x: 75, y: 70, size: 5, color: "320 75% 55%", parallaxMouse: 0.1, parallaxScroll: 0.15 },
+    { x: 12, y: 15, size: 12, color: "190 100% 60%", parallaxMouse: 0.15, parallaxScroll: 0.1 },
+    { x: 88, y: 25, size: 10, color: "220 95% 65%", parallaxMouse: 0.1, parallaxScroll: 0.15 },
+    { x: 20, y: 55, size: 14, color: "280 80% 60%", parallaxMouse: 0.18, parallaxScroll: 0.12 },
+    { x: 75, y: 70, size: 10, color: "320 75% 55%", parallaxMouse: 0.12, parallaxScroll: 0.18 },
     { x: 45, y: 12, size: 6, color: "195 90% 55%", parallaxMouse: 0.12, parallaxScroll: 0.06 },
     { x: 60, y: 85, size: 4, color: "270 85% 65%", parallaxMouse: 0.08, parallaxScroll: 0.18 },
     { x: 8, y: 78, size: 5, color: "200 90% 58%", parallaxMouse: 0.14, parallaxScroll: 0.12 },
     { x: 92, y: 48, size: 4, color: "315 70% 58%", parallaxMouse: 0.1, parallaxScroll: 0.1 },
   ], []);
 
-  // Nebula mist layers with blur
+  // Nebula mist layers with blur - MORE VISIBLE
   const darkNebulas = useMemo(() => [
-    { x: 75, y: 10, size: 450, color: "270 70% 22%", opacity: 0.12, parallaxScroll: 0.05 },
-    { x: 15, y: 35, size: 400, color: "220 60% 18%", opacity: 0.1, parallaxScroll: 0.08 },
-    { x: 85, y: 55, size: 350, color: "195 75% 18%", opacity: 0.08, parallaxScroll: 0.06 },
-    { x: 25, y: 75, size: 380, color: "310 65% 20%", opacity: 0.1, parallaxScroll: 0.1 },
+    { x: 75, y: 10, size: 550, color: "270 70% 28%", opacity: 0.2, parallaxScroll: 0.06 },
+    { x: 15, y: 35, size: 480, color: "220 60% 22%", opacity: 0.18, parallaxScroll: 0.1 },
+    { x: 85, y: 55, size: 420, color: "195 75% 22%", opacity: 0.15, parallaxScroll: 0.08 },
+    { x: 25, y: 75, size: 460, color: "310 65% 25%", opacity: 0.18, parallaxScroll: 0.12 },
   ], []);
 
-  // Neon waves/arcs - very low opacity
+  // Neon waves/arcs - MORE VISIBLE
   const darkNeonWaves = useMemo(() => [
-    { x: 20, y: 25, width: 300, height: 100, rotation: 15, color: "190 100% 60%", opacity: 0.04 },
-    { x: 70, y: 60, width: 250, height: 80, rotation: -20, color: "270 80% 65%", opacity: 0.035 },
-    { x: 50, y: 85, width: 280, height: 90, rotation: 8, color: "320 70% 55%", opacity: 0.03 },
+    { x: 20, y: 25, width: 350, height: 120, rotation: 15, color: "190 100% 60%", opacity: 0.08 },
+    { x: 70, y: 60, width: 300, height: 100, rotation: -20, color: "270 80% 65%", opacity: 0.07 },
+    { x: 50, y: 85, width: 320, height: 110, rotation: 8, color: "320 70% 55%", opacity: 0.06 },
   ], []);
 
-  // Twinkling stars
+  // Twinkling stars - MORE VISIBLE
   const darkTwinkleStars = useMemo(() => 
-    [...Array(isMobile ? 12 : 25)].map((_, i) => ({
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: 1.5 + Math.random() * 2.5,
-      delay: Math.random() * 6,
-      duration: 6 + Math.random() * 4,
-      parallaxMouse: Math.random() * 0.05,
-    })),
-  [isMobile]);
-
-  // Star dust particles
-  const darkStarDust = useMemo(() => 
     [...Array(isMobile ? 15 : 35)].map((_, i) => ({
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: 0.5 + Math.random() * 1.5,
-      opacity: 0.25 + Math.random() * 0.35,
+      size: 3 + Math.random() * 4,
+      delay: Math.random() * 4,
+      duration: 4 + Math.random() * 3,
+      parallaxMouse: Math.random() * 0.08,
+    })),
+  [isMobile]);
+
+  // Star dust particles - MORE VISIBLE
+  const darkStarDust = useMemo(() => 
+    [...Array(isMobile ? 20 : 50)].map((_, i) => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: 1 + Math.random() * 2.5,
+      opacity: 0.4 + Math.random() * 0.4,
       color: i % 4 === 0 ? "190 100% 70%" : i % 4 === 1 ? "270 80% 75%" : i % 4 === 2 ? "320 70% 65%" : "0 0% 95%",
-      parallaxScroll: 0.05 + Math.random() * 0.15,
+      parallaxScroll: 0.08 + Math.random() * 0.2,
     })),
   [isMobile]);
 
   // === LIGHT THEME ELEMENTS ===
 
-  // Light mode glowing particles - pastel colors
+  // Light mode glowing particles - pastel colors - MORE VISIBLE
   const lightGlowingOrbs = useMemo(() => [
-    { x: 15, y: 18, size: 7, color: "320 100% 75%", parallaxMouse: 0.12, parallaxScroll: 0.08 },
-    { x: 85, y: 28, size: 6, color: "280 85% 78%", parallaxMouse: 0.08, parallaxScroll: 0.12 },
-    { x: 22, y: 58, size: 8, color: "195 90% 65%", parallaxMouse: 0.15, parallaxScroll: 0.1 },
-    { x: 78, y: 72, size: 5, color: "340 90% 72%", parallaxMouse: 0.1, parallaxScroll: 0.15 },
-    { x: 48, y: 14, size: 6, color: "265 80% 75%", parallaxMouse: 0.12, parallaxScroll: 0.06 },
-    { x: 62, y: 88, size: 5, color: "200 85% 62%", parallaxMouse: 0.08, parallaxScroll: 0.18 },
+    { x: 15, y: 18, size: 14, color: "320 100% 75%", parallaxMouse: 0.15, parallaxScroll: 0.1 },
+    { x: 85, y: 28, size: 12, color: "280 85% 78%", parallaxMouse: 0.1, parallaxScroll: 0.15 },
+    { x: 22, y: 58, size: 16, color: "195 90% 65%", parallaxMouse: 0.18, parallaxScroll: 0.12 },
+    { x: 78, y: 72, size: 10, color: "340 90% 72%", parallaxMouse: 0.12, parallaxScroll: 0.18 },
+    { x: 48, y: 14, size: 12, color: "265 80% 75%", parallaxMouse: 0.15, parallaxScroll: 0.08 },
+    { x: 62, y: 88, size: 10, color: "200 85% 62%", parallaxMouse: 0.1, parallaxScroll: 0.2 },
   ], []);
 
-  // Light mode nebulae
+  // Light mode nebulae - MORE VISIBLE
   const lightNebulae = useMemo(() => [
-    { x: 80, y: 8, size: 500, color: '320 100% 72%', opacity: 0.06, parallaxScroll: 0.05 },
-    { x: 12, y: 38, size: 420, color: '270 80% 78%', opacity: 0.07, parallaxScroll: 0.08 },
-    { x: 65, y: 62, size: 380, color: '195 85% 62%', opacity: 0.05, parallaxScroll: 0.06 },
+    { x: 80, y: 8, size: 600, color: '320 100% 72%', opacity: 0.12, parallaxScroll: 0.06 },
+    { x: 12, y: 38, size: 500, color: '270 80% 78%', opacity: 0.14, parallaxScroll: 0.1 },
+    { x: 65, y: 62, size: 450, color: '195 85% 62%', opacity: 0.1, parallaxScroll: 0.08 },
   ], []);
 
   // Light mode twinkle stars
@@ -186,11 +186,11 @@ const BackgroundEffects = () => {
     })), 
   [isMobile]);
 
-  // GPU-friendly parallax calculations
-  const parallaxSlow = isMobile ? 0 : scrollY * 0.02;
-  const parallaxMedium = isMobile ? 0 : scrollY * 0.04;
-  const mouseParallaxX = isMobile ? 0 : mousePos.x * 12;
-  const mouseParallaxY = isMobile ? 0 : mousePos.y * 10;
+  // GPU-friendly parallax calculations - MORE NOTICEABLE
+  const parallaxSlow = isMobile ? 0 : scrollY * 0.05;
+  const parallaxMedium = isMobile ? 0 : scrollY * 0.1;
+  const mouseParallaxX = isMobile ? 0 : mousePos.x * 25;
+  const mouseParallaxY = isMobile ? 0 : mousePos.y * 20;
 
   // Common container styles
   const containerStyle = {
