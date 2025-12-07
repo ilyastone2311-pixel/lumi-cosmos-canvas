@@ -137,11 +137,7 @@ const HeroSection = () => {
               transition={{ duration: 0.6, delay: 0.1, ease: premiumEase }}
             >
               <span 
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium"
-                style={{
-                  background: 'linear-gradient(135deg, hsla(190, 100%, 50%, 0.1) 0%, hsla(270, 100%, 65%, 0.1) 100%)',
-                  border: '1px solid hsla(190, 100%, 50%, 0.2)',
-                }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-primary/10 border border-primary/20"
               >
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                 <span className="text-foreground/80">Expand your mind daily</span>
@@ -154,7 +150,7 @@ const HeroSection = () => {
                 <span 
                   className="text-foreground block"
                   style={{
-                    textShadow: '0 0 40px hsla(190, 100%, 50%, 0.1)',
+                    textShadow: '0 0 40px hsl(var(--primary) / 0.1)',
                   }}
                 >
                   Short reads
@@ -165,7 +161,7 @@ const HeroSection = () => {
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   transition={{ duration: 0.7, delay: 0.35, ease: premiumEase }}
                   style={{
-                    textShadow: '0 0 40px hsla(270, 100%, 65%, 0.1)',
+                    textShadow: '0 0 40px hsl(var(--secondary) / 0.1)',
                   }}
                 >
                   for quick insights
@@ -201,12 +197,7 @@ const HeroSection = () => {
 
                 <motion.button
                   onClick={() => navigate("/library")}
-                  className="group px-8 py-4 rounded-full font-display font-semibold text-foreground overflow-hidden transition-all duration-300"
-                  style={{
-                    background: 'hsla(230, 40%, 15%, 0.6)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid hsla(210, 40%, 98%, 0.1)',
-                  }}
+                  className="group px-8 py-4 rounded-full font-display font-semibold text-foreground overflow-hidden transition-all duration-300 bg-card/80 backdrop-blur-md border border-border"
                   whileHover={{ scale: 1.05, y: -4 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -242,12 +233,9 @@ const HeroSection = () => {
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
         >
           <div 
-            className="w-10 h-10 rounded-full flex items-center justify-center"
+            className="w-10 h-10 rounded-full flex items-center justify-center bg-card/80 backdrop-blur-md border border-primary/20"
             style={{
-              background: 'hsla(230, 40%, 15%, 0.6)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid hsla(190, 100%, 50%, 0.2)',
-              boxShadow: '0 0 20px hsla(190, 100%, 50%, 0.1)',
+              boxShadow: '0 0 20px hsl(var(--primary) / 0.1)',
             }}
           >
             <ChevronDown className="w-5 h-5 text-primary" />
@@ -265,7 +253,7 @@ const HeroSection = () => {
       <div 
         className="absolute bottom-0 left-0 right-0 h-48 md:h-64 pointer-events-none"
         style={{
-          background: 'linear-gradient(to top, hsl(var(--background)) 0%, hsla(var(--background), 0.8) 30%, transparent 100%)',
+          background: 'linear-gradient(to top, hsl(var(--background)) 0%, hsl(var(--background) / 0.8) 30%, transparent 100%)',
         }}
       />
     </section>

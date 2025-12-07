@@ -95,7 +95,7 @@ const Index = () => {
         <div 
           className="relative h-32 md:h-48 -mt-16 pointer-events-none"
           style={{
-            background: 'linear-gradient(to bottom, transparent 0%, hsla(230, 50%, 8%, 0.3) 50%, transparent 100%)',
+            background: 'linear-gradient(to bottom, transparent 0%, hsl(var(--background) / 0.3) 50%, transparent 100%)',
           }}
         />
 
@@ -114,7 +114,7 @@ const Index = () => {
         <div 
           className="relative h-24 md:h-32 pointer-events-none"
           style={{
-            background: 'linear-gradient(to bottom, transparent 0%, hsla(270, 50%, 12%, 0.2) 50%, transparent 100%)',
+            background: 'linear-gradient(to bottom, transparent 0%, hsl(var(--secondary) / 0.1) 50%, transparent 100%)',
           }}
         />
 
@@ -127,7 +127,7 @@ const Index = () => {
         <div 
           className="relative h-20 md:h-28 pointer-events-none"
           style={{
-            background: 'linear-gradient(to bottom, transparent 0%, hsla(200, 50%, 10%, 0.15) 50%, transparent 100%)',
+            background: 'linear-gradient(to bottom, transparent 0%, hsl(var(--primary) / 0.08) 50%, transparent 100%)',
           }}
         />
 
@@ -218,7 +218,7 @@ const Index = () => {
         <div 
           className="relative h-24 md:h-32 pointer-events-none"
           style={{
-            background: 'linear-gradient(to bottom, transparent 0%, hsla(270, 50%, 12%, 0.15) 50%, transparent 100%)',
+            background: 'linear-gradient(to bottom, transparent 0%, hsl(var(--secondary) / 0.08) 50%, transparent 100%)',
           }}
         />
 
@@ -237,23 +237,19 @@ const Index = () => {
             </motion.div>
 
             <div className="container mx-auto max-w-4xl text-center relative">
-              {/* Floating CTA Card with premium entrance */}
+              {/* Floating CTA Card with premium entrance - theme aware */}
               <motion.div 
-                className="relative p-14 rounded-3xl overflow-hidden"
+                className="relative p-14 rounded-3xl overflow-hidden bg-card/80 backdrop-blur-xl border border-border"
                 initial={{ opacity: 0, y: 30, scale: 0.98, filter: "blur(8px)" }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.8, ease: premiumEase }}
                 style={{
-                  background: 'hsla(230, 50%, 8%, 0.6)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid hsla(210, 40%, 98%, 0.08)',
                   boxShadow: `
-                    0 0 0 1px hsla(190, 100%, 50%, 0.05),
-                    0 4px 20px hsla(190, 100%, 50%, 0.08),
-                    0 8px 40px hsla(270, 100%, 60%, 0.06),
-                    0 20px 60px hsla(230, 50%, 5%, 0.5),
-                    0 40px 80px hsla(230, 50%, 5%, 0.3)
+                    0 0 0 1px hsl(var(--primary) / 0.05),
+                    0 4px 20px hsl(var(--primary) / 0.08),
+                    0 8px 40px hsl(var(--secondary) / 0.06),
+                    0 20px 60px hsl(var(--foreground) / 0.1)
                   `,
                 }}
               >
@@ -289,9 +285,6 @@ const Index = () => {
                   whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.2, ease: premiumEase }}
-                  style={{
-                    textShadow: '0 2px 20px hsla(190, 100%, 50%, 0.2)',
-                  }}
                 >
                   Ready to expand your mind?
                 </motion.h3>
@@ -312,7 +305,7 @@ const Index = () => {
                     const randomArticle = getRandomArticle();
                     navigate(`/article/${randomArticle.category}/${randomArticle.id}`);
                   }}
-                  className="relative group px-10 py-4 rounded-full font-display font-semibold overflow-hidden transition-all duration-300"
+                  className="relative group px-10 py-4 rounded-full font-display font-semibold overflow-hidden transition-all duration-300 bg-muted/80 border border-primary/20 text-foreground"
                   initial={{ opacity: 0, scale: 0.95, filter: "blur(4px)" }}
                   whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                   viewport={{ once: true }}
@@ -320,12 +313,9 @@ const Index = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
                   style={{
-                    background: 'hsla(230, 40%, 12%, 0.8)',
-                    border: '1px solid hsla(190, 100%, 50%, 0.2)',
                     boxShadow: `
-                      0 0 20px hsla(190, 100%, 50%, 0.1),
-                      0 4px 15px hsla(230, 50%, 5%, 0.4),
-                      inset 0 1px 0 hsla(210, 40%, 98%, 0.05)
+                      0 0 20px hsl(var(--primary) / 0.1),
+                      0 4px 15px hsl(var(--foreground) / 0.08)
                     `,
                   }}
                 >
@@ -333,10 +323,10 @@ const Index = () => {
                   <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 rounded-full" />
                   
                   {/* Text */}
-                  <span className="relative flex items-center gap-3 text-foreground">
+                  <span className="relative flex items-center gap-3">
                     <span 
                       className="w-2 h-2 rounded-full bg-primary animate-pulse"
-                      style={{ boxShadow: '0 0 10px hsl(190 100% 50%)' }}
+                      style={{ boxShadow: '0 0 10px hsl(var(--primary))' }}
                     />
                     Surprise Me
                   </span>

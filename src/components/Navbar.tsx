@@ -51,13 +51,12 @@ const Navbar = () => {
 
   return (
     <nav 
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-2xl animate-navbar-glow glass-panel"
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-2xl animate-navbar-glow bg-card/80 backdrop-blur-xl border border-border/50"
       style={{
         boxShadow: `
-          0 0 0 1px hsla(190, 100%, 50%, 0.1),
-          0 0 15px hsla(190, 100%, 50%, 0.1),
-          0 0 30px hsla(270, 100%, 60%, 0.05),
-          0 8px 32px hsla(240, 35%, 6%, 0.4)
+          0 0 0 1px hsl(var(--primary) / 0.1),
+          0 0 15px hsl(var(--primary) / 0.08),
+          0 8px 32px hsl(var(--foreground) / 0.1)
         `,
       }}
     >
