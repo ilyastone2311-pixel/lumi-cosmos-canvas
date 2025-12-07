@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      audio_progress: {
+        Row: {
+          article_id: string
+          created_at: string
+          id: string
+          playback_speed: number
+          progress_time: number
+          total_duration: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          article_id: string
+          created_at?: string
+          id?: string
+          playback_speed?: number
+          progress_time?: number
+          total_duration?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          article_id?: string
+          created_at?: string
+          id?: string
+          playback_speed?: number
+          progress_time?: number
+          total_duration?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       favorites: {
         Row: {
           category: string
