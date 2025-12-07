@@ -86,6 +86,7 @@ html {
   }
 
   /* ========== LIGHT MODE ========== */
+  html.light,
   .light {
     /* Light cosmic backgrounds */
     --background: 220 30% 97%;
@@ -168,8 +169,11 @@ html {
     overflow-x: hidden;
     transition: background 0.35s ease, background-color 0.35s ease;
     min-height: 100vh;
-    /* Dark mode default */
-    background-color: hsl(240, 35%, 6%);
+    background-color: hsl(var(--background));
+  }
+
+  /* Dark mode body cosmic background */
+  html:not(.light) body {
     background-image: 
       radial-gradient(ellipse at 70% 20%, hsla(265, 50%, 25%, 0.25) 0%, transparent 50%),
       radial-gradient(ellipse at 30% 80%, hsla(195, 60%, 20%, 0.2) 0%, transparent 45%),
@@ -177,14 +181,13 @@ html {
       radial-gradient(ellipse at 15% 30%, hsla(245, 50%, 18%, 0.2) 0%, transparent 40%);
   }
 
-  /* Light mode body background - use html.light for higher specificity */
+  /* Light mode body background */
   html.light body {
-    background-color: #F5F7FA !important;
     background-image: 
       radial-gradient(ellipse at 70% 20%, hsla(195, 60%, 85%, 0.3) 0%, transparent 50%),
       radial-gradient(ellipse at 30% 80%, hsla(265, 50%, 90%, 0.25) 0%, transparent 45%),
       radial-gradient(ellipse at 85% 70%, hsla(280, 45%, 92%, 0.2) 0%, transparent 40%),
-      radial-gradient(ellipse at 15% 30%, hsla(220, 50%, 94%, 0.25) 0%, transparent 40%) !important;
+      radial-gradient(ellipse at 15% 30%, hsla(220, 50%, 94%, 0.25) 0%, transparent 40%);
   }
 
   h1, h2, h3, h4, h5, h6 {
