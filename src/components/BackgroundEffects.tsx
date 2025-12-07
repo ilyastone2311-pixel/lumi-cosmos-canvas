@@ -62,6 +62,34 @@ const BackgroundEffects = () => {
 
   const isLight = theme === 'light';
 
+  // Animated floating particles for dark mode
+  const darkFloatingParticles = useMemo(() => [
+    { x: 15, y: 20, size: 4, color: "190 100% 60%", delay: 0 },
+    { x: 85, y: 35, size: 3, color: "270 80% 65%", delay: 1 },
+    { x: 25, y: 65, size: 5, color: "320 70% 55%", delay: 2 },
+    { x: 70, y: 80, size: 3, color: "200 90% 55%", delay: 3 },
+    { x: 50, y: 15, size: 4, color: "280 75% 60%", delay: 4 },
+  ], []);
+
+  // Animated floating particles for light mode
+  const lightFloatingParticles = useMemo(() => [
+    { x: 20, y: 25, size: 5, color: "320 100% 75%", delay: 0 },
+    { x: 80, y: 40, size: 4, color: "270 85% 80%", delay: 1 },
+    { x: 30, y: 70, size: 6, color: "195 90% 65%", delay: 2 },
+    { x: 65, y: 85, size: 4, color: "280 80% 75%", delay: 3 },
+    { x: 45, y: 12, size: 5, color: "310 95% 70%", delay: 4 },
+  ], []);
+
+  // Light mode twinkle stars
+  const lightTwinkleStars = useMemo(() => 
+    [...Array(isMobile ? 8 : 15)].map((_, i) => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: 2 + Math.random() * 3,
+      delay: Math.random() * 3,
+    })),
+  [isMobile]);
+
   // Reduced nebula positions for performance
   const nebulas = useMemo(() => [
     { x: 75, y: 15, size: 400, color: "270 70% 20%" },
@@ -132,11 +160,45 @@ const BackgroundEffects = () => {
           }}
         />
 
-        {/* Soft nebulae clouds */}
+        {/* Animated floating particles - Light theme */}
+        {lightFloatingParticles.map((particle, i) => (
+          <div
+            key={`light-float-${i}`}
+            className={`absolute rounded-full ${i % 2 === 0 ? 'animate-float-soft' : 'animate-float-soft-alt'}`}
+            style={{
+              left: `${particle.x}%`,
+              top: `${particle.y}%`,
+              width: `${particle.size}px`,
+              height: `${particle.size}px`,
+              background: `radial-gradient(circle, hsl(${particle.color}) 0%, hsl(${particle.color} / 0.3) 100%)`,
+              boxShadow: `0 0 ${particle.size * 3}px hsl(${particle.color} / 0.4)`,
+              animationDelay: `${particle.delay * 5}s`,
+            }}
+          />
+        ))}
+
+        {/* Twinkle stars - Light theme */}
+        {lightTwinkleStars.map((star, i) => (
+          <div
+            key={`light-twinkle-${i}`}
+            className="absolute rounded-full animate-twinkle"
+            style={{
+              left: `${star.x}%`,
+              top: `${star.y}%`,
+              width: `${star.size}px`,
+              height: `${star.size}px`,
+              background: `radial-gradient(circle, hsla(270, 80%, 85%, 0.9) 0%, transparent 70%)`,
+              animationDelay: `${star.delay}s`,
+              animationDuration: `${2 + Math.random() * 2}s`,
+            }}
+          />
+        ))}
+
+        {/* Animated nebula clouds - Light theme */}
         {lightNebulae.map((nebula, i) => (
           <div
             key={`light-nebula-${i}`}
-            className="absolute rounded-full cosmic-element"
+            className="absolute rounded-full cosmic-element animate-nebula-float"
             style={{
               left: `${nebula.x}%`,
               top: `${nebula.y}%`,
@@ -144,16 +206,17 @@ const BackgroundEffects = () => {
               height: `${nebula.size}px`,
               background: `radial-gradient(circle, hsl(${nebula.color} / ${nebula.opacity}) 0%, transparent 70%)`,
               filter: 'blur(60px)',
+              animationDelay: `${i * 15}s`,
               transform: `translate(-50%, -50%) translate3d(0, ${parallaxSlow * (0.5 + i * 0.2)}px, 0)`,
             }}
           />
         ))}
 
-        {/* Holographic gradient orbs */}
+        {/* Holographic gradient orbs with pulse */}
         {lightOrbs.map((orb, i) => (
           <div
             key={`light-orb-${i}`}
-            className="absolute rounded-full cosmic-element"
+            className="absolute rounded-full cosmic-element animate-gentle-pulse"
             style={{
               left: `${orb.x}%`,
               top: `${orb.y}%`,
@@ -161,12 +224,13 @@ const BackgroundEffects = () => {
               height: `${orb.size}px`,
               background: orb.gradient,
               filter: 'blur(30px)',
+              animationDelay: `${i * 4}s`,
               transform: `translate(-50%, -50%) translate3d(0, ${parallaxMedium * (0.5 + i * 0.15)}px, 0)`,
             }}
           />
         ))}
 
-        {/* Floating star dust particles - simplified, no animation props */}
+        {/* Floating star dust particles */}
         {lightStarDust.map((star, i) => (
           <div
             key={`light-star-${i}`}
@@ -183,26 +247,43 @@ const BackgroundEffects = () => {
           />
         ))}
 
-        {/* Large soft glow - Pink accent */}
+        {/* Geometric shimmer grid - very subtle */}
+        {!isMobile && (
+          <div 
+            className="absolute inset-0 animate-soft-shimmer"
+            style={{
+              backgroundImage: `
+                linear-gradient(hsla(270, 60%, 80%, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, hsla(270, 60%, 80%, 0.03) 1px, transparent 1px)
+              `,
+              backgroundSize: '60px 60px',
+            }}
+          />
+        )}
+
+        {/* Large soft glow - Pink accent with pulse */}
         <div 
-          className="absolute w-[600px] h-[600px] rounded-full cosmic-element"
+          className="absolute w-[600px] h-[600px] rounded-full cosmic-element animate-gentle-pulse"
           style={{
             top: '-10%',
             right: '-5%',
             background: 'radial-gradient(circle, hsla(320, 100%, 70%, 0.08) 0%, transparent 70%)',
             filter: 'blur(80px)',
+            animationDuration: '12s',
             transform: `translate3d(${parallaxSlow * -0.2}px, ${parallaxMedium * 0.5}px, 0)`,
           }}
         />
 
-        {/* Large soft glow - Lavender accent */}
+        {/* Large soft glow - Lavender accent with pulse */}
         <div 
-          className="absolute w-[500px] h-[500px] rounded-full cosmic-element"
+          className="absolute w-[500px] h-[500px] rounded-full cosmic-element animate-gentle-pulse"
           style={{
             top: '30%',
             left: '-10%',
             background: 'radial-gradient(circle, hsla(270, 80%, 75%, 0.1) 0%, transparent 70%)',
             filter: 'blur(100px)',
+            animationDelay: '6s',
+            animationDuration: '10s',
             transform: `translate3d(${parallaxMedium * 0.3}px, ${parallaxMedium * 0.4}px, 0)`,
           }}
         />
@@ -253,11 +334,53 @@ const BackgroundEffects = () => {
         }}
       />
 
-      {/* Subtle nebula clouds */}
+      {/* Animated floating particles - Dark theme */}
+      {darkFloatingParticles.map((particle, i) => (
+        <div
+          key={`dark-float-${i}`}
+          className={`absolute rounded-full ${i % 2 === 0 ? 'animate-float-soft' : 'animate-cosmic-drift'}`}
+          style={{
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+            width: `${particle.size}px`,
+            height: `${particle.size}px`,
+            background: `radial-gradient(circle, hsl(${particle.color}) 0%, hsl(${particle.color} / 0.2) 100%)`,
+            boxShadow: `0 0 ${particle.size * 4}px hsl(${particle.color} / 0.5)`,
+            animationDelay: `${particle.delay * 5}s`,
+          }}
+        />
+      ))}
+
+      {/* Cosmic light streaks - ultra subtle */}
+      {!isMobile && (
+        <>
+          <div 
+            className="absolute h-[1px] w-[200px] animate-cosmic-streak"
+            style={{
+              top: '25%',
+              left: '-100px',
+              background: 'linear-gradient(90deg, transparent, hsla(190, 100%, 60%, 0.15), transparent)',
+              animationDuration: '45s',
+            }}
+          />
+          <div 
+            className="absolute h-[1px] w-[150px] animate-cosmic-streak"
+            style={{
+              top: '65%',
+              left: '-100px',
+              background: 'linear-gradient(90deg, transparent, hsla(270, 80%, 65%, 0.12), transparent)',
+              animationDuration: '55s',
+              animationDelay: '20s',
+            }}
+          />
+        </>
+      )}
+
+      {/* Subtle nebula clouds with animation */}
       {nebulas.map((nebula, i) => (
         <div
           key={`nebula-${i}`}
-          className="absolute rounded-full cosmic-element"
+          className="absolute rounded-full cosmic-element animate-nebula-float"
           style={{
             left: `${nebula.x}%`,
             top: `${nebula.y}%`,
@@ -265,6 +388,7 @@ const BackgroundEffects = () => {
             height: `${nebula.size}px`,
             background: `radial-gradient(circle, hsl(${nebula.color} / 0.15) 0%, transparent 70%)`,
             filter: 'blur(80px)',
+            animationDelay: `${i * 15}s`,
             transform: `translate(-50%, -50%) translate3d(0, ${parallaxSlow * (1 + i * 0.3)}px, 0)`,
           }}
         />
@@ -273,7 +397,7 @@ const BackgroundEffects = () => {
       {/* Interactive starfield */}
       <InteractiveStarfield />
 
-      {/* Star dust particles - simplified */}
+      {/* Star dust particles */}
       {starDust.map((star, i) => (
         <div
           key={`dust-${i}`}
@@ -290,43 +414,48 @@ const BackgroundEffects = () => {
         />
       ))}
 
-      {/* Large glowing orbs */}
+      {/* Large glowing orbs with pulse */}
       <div 
-        className="absolute w-[600px] h-[600px] rounded-full cosmic-element"
+        className="absolute w-[600px] h-[600px] rounded-full cosmic-element animate-gentle-pulse"
         style={{
           top: '5%',
           right: '5%',
           background: 'radial-gradient(circle, hsl(190 100% 50% / 0.1) 0%, transparent 70%)',
           filter: 'blur(60px)',
+          animationDuration: '10s',
           transform: `translate3d(${parallaxSlow * -0.3}px, ${parallaxMedium}px, 0)`,
         }}
       />
       <div 
-        className="absolute w-[500px] h-[500px] rounded-full cosmic-element"
+        className="absolute w-[500px] h-[500px] rounded-full cosmic-element animate-gentle-pulse"
         style={{
           top: '25%',
           left: '0%',
           background: 'radial-gradient(circle, hsl(270 80% 55% / 0.12) 0%, transparent 70%)',
           filter: 'blur(80px)',
+          animationDelay: '5s',
+          animationDuration: '12s',
           transform: `translate3d(${parallaxMedium * 0.2}px, ${parallaxMedium}px, 0)`,
         }}
       />
       <div 
-        className="absolute w-[400px] h-[400px] rounded-full cosmic-element"
+        className="absolute w-[400px] h-[400px] rounded-full cosmic-element animate-gentle-pulse"
         style={{
           bottom: '15%',
           right: '15%',
           background: 'radial-gradient(circle, hsl(320 70% 50% / 0.08) 0%, transparent 70%)',
           filter: 'blur(70px)',
+          animationDelay: '8s',
+          animationDuration: '14s',
           transform: `translate3d(${parallaxMedium * -0.4}px, ${-parallaxMedium}px, 0)`,
         }}
       />
 
-      {/* Small floating accent orbs */}
+      {/* Small floating accent orbs with animation */}
       {floatingOrbs.map((orb, i) => (
         <div
           key={`orb-${i}`}
-          className="absolute rounded-full cosmic-element"
+          className={`absolute rounded-full cosmic-element ${i % 2 === 0 ? 'animate-float-soft-alt' : 'animate-cosmic-drift'}`}
           style={{
             left: `${orb.x}%`,
             top: `${orb.y}%`,
@@ -334,6 +463,7 @@ const BackgroundEffects = () => {
             height: `${orb.size}px`,
             background: `radial-gradient(circle, hsl(${orb.color} / ${orb.opacity}) 0%, transparent 60%)`,
             filter: 'blur(25px)',
+            animationDelay: `${i * 8}s`,
             transform: `translate(-50%, -50%) translate3d(0, ${parallaxMedium * (0.5 + i * 0.2)}px, 0)`,
           }}
         />

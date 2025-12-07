@@ -6,7 +6,8 @@ interface ScrollSectionProps {
   className?: string;
   delay?: number;
   direction?: "up" | "down" | "left" | "right" | "fade";
-  blur?: boolean; // Enable blur-in effect
+  blur?: boolean;
+  staggerIndex?: number; // For staggered animations in lists
 }
 
 const ScrollSection = ({ 
@@ -14,67 +15,61 @@ const ScrollSection = ({
   className = "", 
   delay = 0,
   direction = "up",
-  blur = true // Default to blur enabled for premium feel
+  blur = false, // Disabled by default for performance
+  staggerIndex = 0,
 }: ScrollSectionProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { 
     once: true, 
-    margin: "-80px 0px -80px 0px",
-    amount: 0.15 
+    margin: "-50px 0px -50px 0px",
+    amount: 0.1 
   });
 
-  const getInitialState = () => {
-    const base: Record<string, number> = { opacity: 0 };
-    if (blur) base.filter = 8; // blur(8px)
-    
+  // Calculate total delay including stagger
+  const totalDelay = delay + (staggerIndex * 0.12);
+
+  const getTranslateValue = () => {
     switch (direction) {
-      case "up":
-        return { ...base, y: 50 };
-      case "down":
-        return { ...base, y: -50 };
-      case "left":
-        return { ...base, x: 50 };
-      case "right":
-        return { ...base, x: -50 };
-      case "fade":
-        return { ...base, scale: 0.98 };
-      default:
-        return { ...base, y: 50 };
+      case "up": return { y: 16 };
+      case "down": return { y: -16 };
+      case "left": return { x: 16 };
+      case "right": return { x: -16 };
+      case "fade": return { scale: 0.98 };
+      default: return { y: 16 };
     }
   };
 
-  const getFinalState = () => {
-    const base: Record<string, number> = { opacity: 1 };
-    if (blur) base.filter = 0; // blur(0px)
-    
+  const getResetValue = () => {
     switch (direction) {
       case "up":
-      case "down":
-        return { ...base, y: 0 };
+      case "down": return { y: 0 };
       case "left":
-      case "right":
-        return { ...base, x: 0 };
-      case "fade":
-        return { ...base, scale: 1 };
-      default:
-        return { ...base, y: 0 };
+      case "right": return { x: 0 };
+      case "fade": return { scale: 1 };
+      default: return { y: 0 };
     }
   };
 
   return (
     <motion.div
       ref={ref}
-      initial={getInitialState()}
-      animate={isInView ? getFinalState() : getInitialState()}
+      initial={{ 
+        opacity: 0, 
+        ...getTranslateValue(),
+        filter: blur ? 'blur(4px)' : 'blur(0px)',
+      }}
+      animate={isInView ? { 
+        opacity: 1, 
+        ...getResetValue(),
+        filter: 'blur(0px)',
+      } : undefined}
       transition={{
-        duration: 1.1,
-        delay: delay,
-        ease: [0.22, 1, 0.36, 1], // Ultra-smooth cubic bezier
-        filter: { duration: 0.8 }, // Slightly faster blur transition
+        duration: 0.55,
+        delay: totalDelay,
+        ease: [0.25, 0.46, 0.45, 0.94], // Smooth ease-out-quart
       }}
       style={{
-        filter: isInView ? 'blur(0px)' : (blur ? 'blur(8px)' : 'blur(0px)'),
-        willChange: 'transform, opacity, filter',
+        willChange: 'transform, opacity',
       }}
       className={className}
     >
