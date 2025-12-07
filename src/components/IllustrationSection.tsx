@@ -49,39 +49,9 @@ const IllustrationSection = () => {
       ref={sectionRef}
       className="relative py-20 md:py-24 overflow-hidden"
     >
-      {/* Top seamless blend */}
-      <div 
-        className="absolute top-0 left-0 right-0 h-40 -z-10 pointer-events-none"
-        style={{
-          background: 'linear-gradient(to bottom, transparent, hsla(270, 50%, 12%, 0.1))',
-        }}
-      />
-      
-      {/* Dark cosmic gradient background - seamless edges */}
-      <div 
-        className="absolute inset-0 -z-10"
-        style={{
-          background: `
-            radial-gradient(ellipse 100% 60% at 50% 50%, 
-              hsla(200, 60%, 15%, 0.15) 0%,
-              hsla(270, 60%, 12%, 0.1) 50%,
-              transparent 100%
-            )
-          `,
-        }}
-      />
-      
-      {/* Bottom seamless blend */}
-      <div 
-        className="absolute bottom-0 left-0 right-0 h-40 -z-10 pointer-events-none"
-        style={{
-          background: 'linear-gradient(to top, transparent, hsla(200, 50%, 10%, 0.08))',
-        }}
-      />
-
-      {/* Decorative glowing shapes */}
-      <div className="absolute top-1/4 left-10 w-40 h-40 rounded-full bg-gradient-to-br from-primary/10 to-secondary/8 blur-3xl" />
-      <div className="absolute bottom-1/4 right-10 w-56 h-56 rounded-full bg-gradient-to-tl from-accent/8 to-primary/10 blur-3xl" />
+      {/* Decorative glowing shapes - theme aware */}
+      <div className="absolute top-1/4 left-10 w-40 h-40 rounded-full bg-gradient-to-br from-primary/10 to-secondary/8 blur-3xl dark:opacity-100 opacity-50" />
+      <div className="absolute bottom-1/4 right-10 w-56 h-56 rounded-full bg-gradient-to-tl from-accent/8 to-primary/10 blur-3xl dark:opacity-100 opacity-50" />
 
       <div className="container mx-auto max-w-7xl px-6">
         <motion.div
@@ -94,16 +64,12 @@ const IllustrationSection = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div variants={imageVariants} className="order-2 lg:order-1">
               <div 
-                className="relative rounded-3xl overflow-hidden p-8"
+                className="relative rounded-3xl overflow-hidden p-8 bg-card/80 dark:bg-card/60 backdrop-blur-xl border border-border/50"
                 style={{
-                  background: 'linear-gradient(135deg, hsla(230, 50%, 10%, 0.8) 0%, hsla(270, 50%, 12%, 0.7) 100%)',
-                  backdropFilter: 'blur(20px)',
                   boxShadow: `
-                    0 0 0 1px hsla(190, 100%, 50%, 0.1),
-                    0 20px 60px hsla(230, 50%, 5%, 0.5),
-                    0 0 40px hsla(190, 100%, 50%, 0.05)
+                    0 0 0 1px hsla(var(--primary), 0.1),
+                    0 20px 60px hsla(var(--foreground), 0.1)
                   `,
-                  border: '1px solid hsla(210, 40%, 98%, 0.08)',
                 }}
               >
                 {/* Top edge glow */}
@@ -114,7 +80,7 @@ const IllustrationSection = () => {
                   alt="People reading together"
                   className="w-full h-auto rounded-2xl"
                   style={{
-                    filter: 'drop-shadow(0 10px 30px hsla(230, 50%, 5%, 0.3))',
+                    filter: 'drop-shadow(0 10px 30px hsla(var(--foreground), 0.1))',
                   }}
                 />
                 {/* Floating accent elements */}
@@ -133,21 +99,11 @@ const IllustrationSection = () => {
 
             <motion.div variants={itemVariants} className="order-1 lg:order-2 space-y-6">
               <span 
-                className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-primary"
-                style={{
-                  background: 'linear-gradient(135deg, hsla(190, 100%, 50%, 0.15) 0%, hsla(270, 100%, 65%, 0.15) 100%)',
-                  border: '1px solid hsla(190, 100%, 50%, 0.25)',
-                  boxShadow: '0 0 20px hsla(190, 100%, 50%, 0.1)',
-                }}
+                className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-primary bg-primary/10 border border-primary/20"
               >
                 Community
               </span>
-              <h2 
-                className="font-display text-3xl md:text-4xl font-bold text-foreground"
-                style={{
-                  textShadow: '0 0 30px hsla(190, 100%, 50%, 0.15)',
-                }}
-              >
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
                 Learn Together, Grow Together
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
@@ -163,20 +119,16 @@ const IllustrationSection = () => {
             {/* Discovery Card */}
             <motion.div
               variants={itemVariants}
-              className="relative rounded-3xl overflow-hidden p-8 hover-lift"
+              className="relative rounded-3xl overflow-hidden p-8 hover-lift bg-card/80 dark:bg-card/60 backdrop-blur-xl border border-border/50"
               style={{
-                background: 'linear-gradient(135deg, hsla(230, 50%, 10%, 0.7) 0%, hsla(40, 50%, 15%, 0.4) 100%)',
-                backdropFilter: 'blur(16px)',
                 boxShadow: `
-                  0 0 0 1px hsla(40, 80%, 50%, 0.1),
-                  0 15px 50px hsla(230, 50%, 5%, 0.4),
-                  0 0 30px hsla(40, 80%, 50%, 0.05)
+                  0 0 0 1px hsla(var(--primary), 0.08),
+                  0 15px 50px hsla(var(--foreground), 0.08)
                 `,
-                border: '1px solid hsla(210, 40%, 98%, 0.06)',
               }}
             >
               {/* Top edge glow */}
-              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-yellow-500/30 to-transparent" />
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/30 dark:via-yellow-500/30 to-transparent" />
               
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <motion.img
@@ -184,18 +136,13 @@ const IllustrationSection = () => {
                   alt="Discovery moment"
                   className="w-32 h-32 object-contain"
                   style={{
-                    filter: 'drop-shadow(0 8px 20px hsla(230, 50%, 5%, 0.4))',
+                    filter: 'drop-shadow(0 8px 20px hsla(var(--foreground), 0.15))',
                   }}
                   whileHover={{ scale: 1.05, rotate: 2 }}
                   transition={{ duration: 0.3 }}
                 />
                 <div className="text-center md:text-left">
-                  <h3 
-                    className="font-display text-xl font-semibold text-foreground mb-2"
-                    style={{
-                      textShadow: '0 0 20px hsla(40, 80%, 50%, 0.15)',
-                    }}
-                  >
+                  <h3 className="font-display text-xl font-semibold text-foreground mb-2">
                     Discover New Ideas
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
@@ -208,16 +155,12 @@ const IllustrationSection = () => {
             {/* Mindful Card */}
             <motion.div
               variants={itemVariants}
-              className="relative rounded-3xl overflow-hidden p-8 hover-lift"
+              className="relative rounded-3xl overflow-hidden p-8 hover-lift bg-card/80 dark:bg-card/60 backdrop-blur-xl border border-border/50"
               style={{
-                background: 'linear-gradient(135deg, hsla(230, 50%, 10%, 0.7) 0%, hsla(270, 50%, 18%, 0.4) 100%)',
-                backdropFilter: 'blur(16px)',
                 boxShadow: `
-                  0 0 0 1px hsla(270, 80%, 60%, 0.1),
-                  0 15px 50px hsla(230, 50%, 5%, 0.4),
-                  0 0 30px hsla(270, 80%, 60%, 0.05)
+                  0 0 0 1px hsla(var(--primary), 0.08),
+                  0 15px 50px hsla(var(--foreground), 0.08)
                 `,
-                border: '1px solid hsla(210, 40%, 98%, 0.06)',
               }}
             >
               {/* Top edge glow */}
@@ -229,18 +172,13 @@ const IllustrationSection = () => {
                   alt="Mindful learning"
                   className="w-32 h-32 object-contain"
                   style={{
-                    filter: 'drop-shadow(0 8px 20px hsla(230, 50%, 5%, 0.4))',
+                    filter: 'drop-shadow(0 8px 20px hsla(var(--foreground), 0.15))',
                   }}
                   whileHover={{ scale: 1.05, rotate: -2 }}
                   transition={{ duration: 0.3 }}
                 />
                 <div className="text-center md:text-left">
-                  <h3 
-                    className="font-display text-xl font-semibold text-foreground mb-2"
-                    style={{
-                      textShadow: '0 0 20px hsla(270, 80%, 60%, 0.15)',
-                    }}
-                  >
+                  <h3 className="font-display text-xl font-semibold text-foreground mb-2">
                     Learn at Your Pace
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
