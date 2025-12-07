@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import Navbar from "@/components/Navbar";
 import CategoryCard from "@/components/CategoryCard";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import HeroSection from "@/components/HeroSection";
@@ -79,13 +78,9 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <>
-      {/* Navigation - Outside overflow container */}
-      <Navbar />
-      
-      <div className="min-h-screen relative overflow-hidden">
-        {/* Background Effects */}
-        <BackgroundEffects />
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Background Effects */}
+      <BackgroundEffects />
 
         {/* Main Content - Seamless flow */}
         <main className="relative z-10 pt-24 sm:pt-28">
@@ -329,8 +324,7 @@ const Index = () => {
         {/* Bottom spacing */}
         <div className="h-20" />
       </main>
-      </div>
-    </>
+    </div>
   );
 };
 
