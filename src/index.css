@@ -153,22 +153,33 @@ html {
 }
 
 @layer base {
+  /* ========== GPU-OPTIMIZED ANIMATION DEFAULTS ========== */
   * {
     @apply border-border;
-    /* Premium global theme transition */
-    transition: 
-      background-color 0.45s ease,
-      color 0.45s ease,
-      border-color 0.45s ease,
-      box-shadow 0.45s ease,
-      fill 0.45s ease,
-      stroke 0.45s ease,
-      filter 0.45s ease,
-      opacity 0.45s ease;
+    /* GPU-accelerated transitions only - avoid box-shadow, filter, blur */
+    transition-property: opacity, transform, color, background-color, border-color;
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Will-change hints for frequently animated elements */
+  .animate-in,
+  .page-transition,
+  .hero-image-element,
+  .cosmic-element,
+  [data-animate] {
+    will-change: transform, opacity;
   }
 
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Reduce scroll-linked animation intensity on mobile */
+  @media (max-width: 768px) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   body {
@@ -177,11 +188,8 @@ html {
     overflow-x: hidden;
     min-height: 100vh;
     background-color: hsl(var(--background));
-    /* Smooth background transition */
-    transition: 
-      background 0.5s ease,
-      background-color 0.5s ease,
-      background-image 0.5s ease;
+    /* GPU-friendly background transition */
+    transition: background-color 0.45s ease;
   }
 
   /* Dark mode body cosmic background */
@@ -211,31 +219,33 @@ html {
     position: relative;
   }
 
-  /* ========== THEME SWITCHING ANIMATION SYSTEM ========== */
+  /* ========== OPTIMIZED THEME SWITCHING ========== */
   
-  /* Global switching state - applied during theme transition */
+  /* Fast, GPU-friendly theme switch */
   html.theme-switching * {
-    transition-duration: 0.5s !important;
+    transition-duration: 0.4s !important;
   }
 
-  /* Hero image crossfade during switch */
+  /* Hero image crossfade - GPU optimized */
   .hero-image-container {
     position: relative;
+    transform: translateZ(0); /* Force GPU layer */
   }
 
   .hero-image-element {
+    will-change: transform, opacity;
+    transform: translateZ(0);
     transition: 
-      opacity 0.5s ease-in-out,
-      transform 0.5s ease-in-out,
-      filter 0.5s ease-in-out;
+      opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   html.theme-switching .hero-image-element {
     opacity: 0;
-    transform: scale(1.04);
+    transform: scale(1.03) translateZ(0);
   }
 
-  /* Cosmic glow pulse overlay during theme switch */
+  /* Cosmic glow - uses opacity instead of filter for performance */
   .theme-transition-glow {
     position: absolute;
     inset: -20%;
@@ -243,64 +253,106 @@ html {
     opacity: 0;
     background: radial-gradient(
       ellipse at center,
-      hsla(280, 80%, 70%, 0.3) 0%,
-      hsla(195, 85%, 60%, 0.2) 30%,
-      hsla(265, 70%, 55%, 0.1) 50%,
-      transparent 70%
+      hsla(280, 80%, 70%, 0.25) 0%,
+      hsla(195, 85%, 60%, 0.15) 30%,
+      transparent 60%
     );
-    transition: opacity 0.5s ease;
-    filter: blur(40px);
+    transition: opacity 0.4s ease;
     z-index: 5;
+    transform: translateZ(0);
   }
 
   html.theme-switching .theme-transition-glow {
     opacity: 1;
   }
 
-  /* Cosmic elements smooth transition */
-  .cosmic-element {
-    transition:
-      opacity 0.45s ease,
-      background-color 0.45s ease,
-      background 0.45s ease,
-      filter 0.45s ease,
-      box-shadow 0.45s ease;
+  /* ========== PAGE LOAD ANIMATIONS ========== */
+  
+  /* Lightweight fade-in + slide-up for page elements */
+  .animate-in {
+    opacity: 0;
+    transform: translateY(8px) translateZ(0);
+    transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
-  /* Cards and panels smooth transition */
+  [data-loaded='true'] .animate-in,
+  .animate-in.visible {
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
+  }
+
+  /* Page transition wrapper */
+  .page-transition {
+    opacity: 0;
+    transform: translateY(6px) translateZ(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .page-transition.active {
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
+  }
+
+  /* ========== COSMIC ELEMENTS - GPU OPTIMIZED ========== */
+  
+  .cosmic-element {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    transition: opacity 0.35s ease;
+    /* Avoid animating filter/blur - use opacity instead */
+  }
+
+  /* Cards and panels - minimal transitions */
   .glass,
   .glass-panel,
   .glass-card,
   .glass-strong {
+    transform: translateZ(0);
     transition:
-      background 0.45s ease,
-      border-color 0.45s ease,
-      box-shadow 0.45s ease,
-      backdrop-filter 0.45s ease;
+      opacity 0.35s ease,
+      transform 0.35s ease,
+      border-color 0.35s ease;
   }
 
-  /* Buttons smooth transition */
-  button,
-  .neu-button,
-  .neu-button-primary {
+  /* Buttons - fast, snappy */
+  button {
+    transform: translateZ(0);
     transition:
-      background 0.45s ease,
-      background-color 0.45s ease,
-      border-color 0.45s ease,
-      box-shadow 0.45s ease,
-      color 0.45s ease,
-      transform 0.2s ease;
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      background-color 0.25s ease;
   }
 
-  /* Icon glow transitions */
-  .icon-glow,
-  .icon-glow-purple {
-    transition: filter 0.45s ease;
+  /* ========== REDUCED MOTION SUPPORT ========== */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
-  /* Gradient elements */
-  .gradient-border::before {
-    transition: background 0.45s ease, opacity 0.45s ease;
+  /* ========== MOBILE PERFORMANCE ========== */
+  @media (max-width: 768px) {
+    * {
+      transition-duration: 0.25s;
+    }
+    
+    .hero-image-element {
+      transition-duration: 0.3s;
+    }
+
+    /* Disable expensive effects on mobile */
+    .theme-transition-glow {
+      display: none;
+    }
+
+    /* Reduce animation complexity */
+    .cosmic-element {
+      animation: none !important;
+    }
   }
 }
 
