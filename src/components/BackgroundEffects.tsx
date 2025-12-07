@@ -1,6 +1,5 @@
-import { useEffect, useState, useMemo, useRef, useCallback } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import InteractiveStarfield from "./InteractiveStarfield";
-
 // Throttle for scroll/mouse performance
 const throttle = <T extends (...args: unknown[]) => void>(fn: T, wait: number) => {
   let lastTime = 0;
@@ -49,22 +48,30 @@ const BackgroundEffects = () => {
     };
   }, []);
 
-  // Mouse parallax - smooth tracking
-  const handleMouseMove = useCallback(throttle((e: MouseEvent) => {
-    if (isMobile) return;
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-    setMousePos({
-      x: (e.clientX - centerX) / centerX,
-      y: (e.clientY - centerY) / centerY,
-    });
-  }, 16), [isMobile]);
-
+  // Mouse parallax - smooth tracking with direct event handling
   useEffect(() => {
     if (isMobile) return;
-    window.addEventListener("mousemove", handleMouseMove as EventListener);
-    return () => window.removeEventListener("mousemove", handleMouseMove as EventListener);
-  }, [handleMouseMove, isMobile]);
+    
+    let animationFrame: number;
+    const handleMouseMove = (e: MouseEvent) => {
+      if (animationFrame) return;
+      animationFrame = requestAnimationFrame(() => {
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        setMousePos({
+          x: (e.clientX - centerX) / centerX,
+          y: (e.clientY - centerY) / centerY,
+        });
+        animationFrame = 0;
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+    };
+  }, [isMobile]);
 
   // Listen for theme changes with transition detection
   useEffect(() => {
@@ -143,47 +150,64 @@ const BackgroundEffects = () => {
     })),
   [isMobile]);
 
-  // === LIGHT THEME ELEMENTS ===
+  // === LIGHT THEME ELEMENTS - ENHANCED VISIBILITY ===
 
-  // Light mode glowing particles - pastel colors - MORE VISIBLE
+  // Light mode glowing particles - MUCH MORE VISIBLE
   const lightGlowingOrbs = useMemo(() => [
-    { x: 15, y: 18, size: 14, color: "320 100% 75%", parallaxMouse: 0.15, parallaxScroll: 0.1 },
-    { x: 85, y: 28, size: 12, color: "280 85% 78%", parallaxMouse: 0.1, parallaxScroll: 0.15 },
-    { x: 22, y: 58, size: 16, color: "195 90% 65%", parallaxMouse: 0.18, parallaxScroll: 0.12 },
-    { x: 78, y: 72, size: 10, color: "340 90% 72%", parallaxMouse: 0.12, parallaxScroll: 0.18 },
-    { x: 48, y: 14, size: 12, color: "265 80% 75%", parallaxMouse: 0.15, parallaxScroll: 0.08 },
-    { x: 62, y: 88, size: 10, color: "200 85% 62%", parallaxMouse: 0.1, parallaxScroll: 0.2 },
+    { x: 10, y: 15, size: 28, color: "320 85% 65%", parallaxMouse: 0.2, parallaxScroll: 0.12 },
+    { x: 90, y: 22, size: 24, color: "280 75% 68%", parallaxMouse: 0.15, parallaxScroll: 0.18 },
+    { x: 18, y: 55, size: 32, color: "195 80% 55%", parallaxMouse: 0.22, parallaxScroll: 0.14 },
+    { x: 82, y: 68, size: 22, color: "340 80% 62%", parallaxMouse: 0.16, parallaxScroll: 0.2 },
+    { x: 45, y: 10, size: 20, color: "265 70% 65%", parallaxMouse: 0.18, parallaxScroll: 0.1 },
+    { x: 58, y: 85, size: 26, color: "200 75% 52%", parallaxMouse: 0.14, parallaxScroll: 0.22 },
+    { x: 35, y: 75, size: 18, color: "310 85% 60%", parallaxMouse: 0.12, parallaxScroll: 0.16 },
+    { x: 72, y: 38, size: 22, color: "220 70% 58%", parallaxMouse: 0.2, parallaxScroll: 0.12 },
   ], []);
 
-  // Light mode nebulae - MORE VISIBLE
+  // Light mode nebulae - ENHANCED
   const lightNebulae = useMemo(() => [
-    { x: 80, y: 8, size: 600, color: '320 100% 72%', opacity: 0.12, parallaxScroll: 0.06 },
-    { x: 12, y: 38, size: 500, color: '270 80% 78%', opacity: 0.14, parallaxScroll: 0.1 },
-    { x: 65, y: 62, size: 450, color: '195 85% 62%', opacity: 0.1, parallaxScroll: 0.08 },
+    { x: 85, y: 5, size: 700, color: '320 90% 65%', opacity: 0.25, parallaxScroll: 0.08 },
+    { x: 8, y: 35, size: 600, color: '270 70% 70%', opacity: 0.3, parallaxScroll: 0.12 },
+    { x: 70, y: 60, size: 550, color: '195 75% 55%', opacity: 0.22, parallaxScroll: 0.1 },
+    { x: 25, y: 80, size: 500, color: '340 85% 68%', opacity: 0.2, parallaxScroll: 0.14 },
+    { x: 50, y: 25, size: 450, color: '210 65% 60%', opacity: 0.18, parallaxScroll: 0.06 },
   ], []);
 
-  // Light mode twinkle stars
+  // Light mode twinkle stars - MORE AND BRIGHTER
   const lightTwinkleStars = useMemo(() => 
-    [...Array(isMobile ? 10 : 20)].map((_, i) => ({
+    [...Array(isMobile ? 18 : 45)].map((_, i) => ({
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: 2 + Math.random() * 3,
+      size: 4 + Math.random() * 6,
       delay: Math.random() * 5,
-      duration: 5 + Math.random() * 3,
-      color: i % 3 === 0 ? '320 100% 75%' : i % 3 === 1 ? '270 85% 80%' : '195 90% 70%',
+      duration: 4 + Math.random() * 4,
+      color: i % 5 === 0 ? '320 90% 60%' : i % 5 === 1 ? '270 75% 65%' : i % 5 === 2 ? '195 80% 50%' : i % 5 === 3 ? '340 85% 55%' : '210 70% 55%',
     })),
   [isMobile]);
 
-  // Light mode star dust
+  // Light mode star dust - MORE PARTICLES
   const lightStarDust = useMemo(() => 
-    [...Array(isMobile ? 12 : 28)].map((_, i) => ({
+    [...Array(isMobile ? 25 : 60)].map((_, i) => ({
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: 1 + Math.random() * 2,
-      opacity: 0.2 + Math.random() * 0.3,
-      color: i % 4 === 0 ? '320 100% 72%' : i % 4 === 1 ? '270 80% 78%' : i % 4 === 2 ? '195 85% 58%' : '0 0% 100%',
-      parallaxScroll: 0.05 + Math.random() * 0.12,
+      size: 2 + Math.random() * 4,
+      opacity: 0.4 + Math.random() * 0.4,
+      color: i % 5 === 0 ? '320 90% 62%' : i % 5 === 1 ? '270 70% 68%' : i % 5 === 2 ? '195 75% 48%' : i % 5 === 3 ? '340 80% 58%' : '210 65% 52%',
+      parallaxScroll: 0.08 + Math.random() * 0.15,
     })), 
+  [isMobile]);
+
+  // Light mode floating sparkles - NEW
+  const lightSparkles = useMemo(() => 
+    [...Array(isMobile ? 8 : 18)].map((_, i) => ({
+      x: 10 + Math.random() * 80,
+      y: 10 + Math.random() * 80,
+      size: 3 + Math.random() * 5,
+      delay: Math.random() * 8,
+      duration: 6 + Math.random() * 4,
+      color: i % 4 === 0 ? '320 100% 70%' : i % 4 === 1 ? '270 90% 75%' : i % 4 === 2 ? '195 95% 60%' : '340 95% 65%',
+      parallaxMouse: 0.1 + Math.random() * 0.15,
+    })),
   [isMobile]);
 
   // GPU-friendly parallax calculations - MORE NOTICEABLE
@@ -198,7 +222,7 @@ const BackgroundEffects = () => {
     transition: 'opacity 0.45s ease',
   };
 
-  // Light mode background
+  // Light mode background - ENHANCED
   if (isLight) {
     return (
       <div 
@@ -206,20 +230,21 @@ const BackgroundEffects = () => {
         className="fixed inset-0 overflow-hidden pointer-events-none z-0"
         style={containerStyle}
       >
-        {/* Base gradient */}
+        {/* Base gradient - more colorful */}
         <div 
           className="absolute inset-0"
           style={{
             background: `
-              radial-gradient(ellipse at 50% 0%, hsla(270, 60%, 95%, 0.8) 0%, transparent 50%),
-              radial-gradient(ellipse at 100% 50%, hsla(320, 80%, 95%, 0.6) 0%, transparent 40%),
-              radial-gradient(ellipse at 0% 80%, hsla(195, 70%, 92%, 0.7) 0%, transparent 45%),
-              linear-gradient(180deg, #F5F7FA 0%, #F0F2F8 50%, #F5F7FA 100%)
+              radial-gradient(ellipse at 50% 0%, hsla(270, 70%, 92%, 0.9) 0%, transparent 50%),
+              radial-gradient(ellipse at 100% 30%, hsla(320, 90%, 90%, 0.7) 0%, transparent 45%),
+              radial-gradient(ellipse at 0% 60%, hsla(195, 80%, 88%, 0.8) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 90%, hsla(340, 85%, 92%, 0.6) 0%, transparent 40%),
+              linear-gradient(180deg, #F5F7FA 0%, #EDE8F5 50%, #F0F5FA 100%)
             `,
           }}
         />
 
-        {/* Animated nebula clouds with parallax */}
+        {/* Animated nebula clouds with parallax - ENHANCED */}
         {lightNebulae.map((nebula, i) => (
           <div
             key={`light-nebula-${i}`}
@@ -229,35 +254,55 @@ const BackgroundEffects = () => {
               top: `${nebula.y}%`,
               width: `${nebula.size}px`,
               height: `${nebula.size}px`,
-              background: `radial-gradient(circle, hsl(${nebula.color} / ${nebula.opacity}) 0%, transparent 70%)`,
-              filter: 'blur(60px)',
-              animationDelay: `${i * 12}s`,
-              transform: `translate(-50%, -50%) translate3d(${mouseParallaxX * 0.3}px, ${parallaxSlow * nebula.parallaxScroll * 10 + mouseParallaxY * 0.2}px, 0)`,
+              background: `radial-gradient(circle, hsl(${nebula.color} / ${nebula.opacity}) 0%, hsl(${nebula.color} / ${nebula.opacity * 0.4}) 50%, transparent 70%)`,
+              filter: 'blur(50px)',
+              animationDelay: `${i * 10}s`,
+              transform: `translate(-50%, -50%) translate3d(${mouseParallaxX * 0.4}px, ${parallaxSlow * nebula.parallaxScroll * 15 + mouseParallaxY * 0.3}px, 0)`,
               willChange: 'transform',
             }}
           />
         ))}
 
-        {/* Glowing orbs with mouse + scroll parallax */}
+        {/* Glowing orbs with mouse + scroll parallax - LARGER AND BRIGHTER */}
         {lightGlowingOrbs.map((orb, i) => (
           <div
             key={`light-orb-${i}`}
-            className={`absolute rounded-full ${i % 2 === 0 ? 'animate-float-soft' : 'animate-cosmic-drift'}`}
+            className={`absolute rounded-full ${i % 3 === 0 ? 'animate-float-soft' : i % 3 === 1 ? 'animate-cosmic-drift' : 'animate-float-soft-alt'}`}
             style={{
               left: `${orb.x}%`,
               top: `${orb.y}%`,
               width: `${orb.size}px`,
               height: `${orb.size}px`,
-              background: `radial-gradient(circle, hsl(${orb.color}) 0%, hsl(${orb.color} / 0.3) 100%)`,
-              boxShadow: `0 0 ${orb.size * 4}px hsl(${orb.color} / 0.35)`,
-              animationDelay: `${i * 4}s`,
-              transform: `translate3d(${mouseParallaxX * orb.parallaxMouse}px, ${parallaxMedium * orb.parallaxScroll * 8 + mouseParallaxY * orb.parallaxMouse}px, 0)`,
+              background: `radial-gradient(circle, hsl(${orb.color}) 0%, hsl(${orb.color} / 0.4) 60%, transparent 100%)`,
+              boxShadow: `0 0 ${orb.size * 3}px hsl(${orb.color} / 0.5), 0 0 ${orb.size * 6}px hsl(${orb.color} / 0.3)`,
+              animationDelay: `${i * 3}s`,
+              transform: `translate3d(${mouseParallaxX * orb.parallaxMouse}px, ${parallaxMedium * orb.parallaxScroll * 12 + mouseParallaxY * orb.parallaxMouse}px, 0)`,
               willChange: 'transform',
             }}
           />
         ))}
 
-        {/* Twinkle stars with color */}
+        {/* Floating sparkles with mouse parallax - NEW */}
+        {lightSparkles.map((sparkle, i) => (
+          <div
+            key={`light-sparkle-${i}`}
+            className="absolute animate-twinkle-slow"
+            style={{
+              left: `${sparkle.x}%`,
+              top: `${sparkle.y}%`,
+              width: `${sparkle.size}px`,
+              height: `${sparkle.size}px`,
+              background: `radial-gradient(circle, hsl(${sparkle.color}) 0%, transparent 70%)`,
+              boxShadow: `0 0 ${sparkle.size * 4}px hsl(${sparkle.color} / 0.7)`,
+              animationDelay: `${sparkle.delay}s`,
+              animationDuration: `${sparkle.duration}s`,
+              transform: `translate3d(${mouseParallaxX * sparkle.parallaxMouse}px, ${mouseParallaxY * sparkle.parallaxMouse}px, 0)`,
+              willChange: 'transform',
+            }}
+          />
+        ))}
+
+        {/* Twinkle stars with color - ENHANCED */}
         {lightTwinkleStars.map((star, i) => (
           <div
             key={`light-twinkle-${i}`}
@@ -267,15 +312,15 @@ const BackgroundEffects = () => {
               top: `${star.y}%`,
               width: `${star.size}px`,
               height: `${star.size}px`,
-              background: `radial-gradient(circle, hsl(${star.color}) 0%, transparent 70%)`,
-              boxShadow: `0 0 ${star.size * 2}px hsl(${star.color} / 0.4)`,
+              background: `radial-gradient(circle, hsl(${star.color}) 0%, hsl(${star.color} / 0.5) 50%, transparent 70%)`,
+              boxShadow: `0 0 ${star.size * 3}px hsl(${star.color} / 0.6)`,
               animationDelay: `${star.delay}s`,
               animationDuration: `${star.duration}s`,
             }}
           />
         ))}
 
-        {/* Floating star dust with scroll parallax */}
+        {/* Floating star dust with scroll parallax - MORE VISIBLE */}
         {lightStarDust.map((star, i) => (
           <div
             key={`light-dust-${i}`}
@@ -285,66 +330,112 @@ const BackgroundEffects = () => {
               top: `${star.y}%`,
               width: `${star.size}px`,
               height: `${star.size}px`,
-              background: `hsl(${star.color})`,
+              background: `radial-gradient(circle, hsl(${star.color}) 0%, transparent 100%)`,
+              boxShadow: `0 0 ${star.size * 2}px hsl(${star.color} / 0.5)`,
               opacity: star.opacity,
-              transform: `translate3d(0, ${parallaxMedium * star.parallaxScroll * 6}px, 0)`,
+              transform: `translate3d(0, ${parallaxMedium * star.parallaxScroll * 8}px, 0)`,
               willChange: 'transform',
             }}
           />
         ))}
 
-        {/* Geometric shimmer grid - very subtle */}
+        {/* Geometric shimmer grid - slightly more visible */}
         {!isMobile && (
           <div 
             className="absolute inset-0 animate-soft-shimmer"
             style={{
               backgroundImage: `
-                linear-gradient(hsla(270, 60%, 80%, 0.025) 1px, transparent 1px),
-                linear-gradient(90deg, hsla(270, 60%, 80%, 0.025) 1px, transparent 1px)
+                linear-gradient(hsla(270, 70%, 70%, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, hsla(270, 70%, 70%, 0.04) 1px, transparent 1px)
               `,
-              backgroundSize: '70px 70px',
+              backgroundSize: '60px 60px',
             }}
           />
         )}
 
-        {/* Large soft ambient glows */}
+        {/* Large soft ambient glows - MORE PROMINENT */}
+        <div 
+          className="absolute w-[750px] h-[750px] rounded-full animate-gentle-pulse"
+          style={{
+            top: '-15%',
+            right: '-10%',
+            background: 'radial-gradient(circle, hsla(320, 90%, 65%, 0.2) 0%, hsla(320, 90%, 65%, 0.08) 50%, transparent 70%)',
+            filter: 'blur(60px)',
+            animationDuration: '12s',
+            transform: `translate3d(${mouseParallaxX * -0.2}px, ${parallaxSlow * 0.8 + mouseParallaxY * -0.15}px, 0)`,
+            willChange: 'transform',
+          }}
+        />
         <div 
           className="absolute w-[650px] h-[650px] rounded-full animate-gentle-pulse"
           style={{
-            top: '-12%',
-            right: '-8%',
-            background: 'radial-gradient(circle, hsla(320, 100%, 72%, 0.08) 0%, transparent 70%)',
-            filter: 'blur(80px)',
-            animationDuration: '14s',
-            transform: `translate3d(${mouseParallaxX * -0.15}px, ${parallaxSlow * 0.6 + mouseParallaxY * -0.1}px, 0)`,
+            top: '30%',
+            left: '-15%',
+            background: 'radial-gradient(circle, hsla(270, 75%, 68%, 0.22) 0%, hsla(270, 75%, 68%, 0.08) 50%, transparent 70%)',
+            filter: 'blur(70px)',
+            animationDelay: '6s',
+            animationDuration: '10s',
+            transform: `translate3d(${mouseParallaxX * 0.25}px, ${parallaxMedium * 0.6 + mouseParallaxY * 0.2}px, 0)`,
             willChange: 'transform',
           }}
         />
         <div 
           className="absolute w-[550px] h-[550px] rounded-full animate-gentle-pulse"
           style={{
-            top: '35%',
-            left: '-12%',
-            background: 'radial-gradient(circle, hsla(270, 80%, 78%, 0.1) 0%, transparent 70%)',
-            filter: 'blur(100px)',
-            animationDelay: '7s',
-            animationDuration: '12s',
-            transform: `translate3d(${mouseParallaxX * 0.2}px, ${parallaxMedium * 0.5 + mouseParallaxY * 0.15}px, 0)`,
+            bottom: '-10%',
+            right: '20%',
+            background: 'radial-gradient(circle, hsla(195, 80%, 55%, 0.18) 0%, hsla(195, 80%, 55%, 0.06) 50%, transparent 70%)',
+            filter: 'blur(80px)',
+            animationDelay: '3s',
+            animationDuration: '14s',
+            transform: `translate3d(${mouseParallaxX * 0.15}px, ${parallaxSlow * 0.5 + mouseParallaxY * 0.1}px, 0)`,
             willChange: 'transform',
           }}
         />
 
-        {/* Holographic wave overlays */}
+        {/* Neon accent waves - NEW for light theme */}
+        {!isMobile && (
+          <>
+            <div 
+              className="absolute animate-float-soft"
+              style={{
+                top: '20%',
+                left: '15%',
+                width: '300px',
+                height: '100px',
+                background: 'radial-gradient(ellipse at center, hsla(320, 85%, 60%, 0.12) 0%, transparent 70%)',
+                filter: 'blur(30px)',
+                transform: `rotate(15deg) translate3d(${mouseParallaxX * 0.2}px, ${mouseParallaxY * 0.15}px, 0)`,
+                willChange: 'transform',
+              }}
+            />
+            <div 
+              className="absolute animate-cosmic-drift"
+              style={{
+                top: '60%',
+                right: '10%',
+                width: '280px',
+                height: '90px',
+                background: 'radial-gradient(ellipse at center, hsla(195, 80%, 50%, 0.1) 0%, transparent 70%)',
+                filter: 'blur(25px)',
+                transform: `rotate(-20deg) translate3d(${mouseParallaxX * -0.15}px, ${mouseParallaxY * 0.1}px, 0)`,
+                willChange: 'transform',
+              }}
+            />
+          </>
+        )}
+
+        {/* Holographic wave overlays - softer */}
         <div 
-          className="absolute inset-x-0 top-0 h-[35vh]"
+          className="absolute inset-x-0 top-0 h-[40vh]"
           style={{
-            background: `linear-gradient(180deg, hsla(270, 60%, 95%, 0.5) 0%, transparent 100%)`,
+            background: `linear-gradient(180deg, hsla(270, 70%, 93%, 0.6) 0%, hsla(320, 60%, 95%, 0.3) 50%, transparent 100%)`,
           }}
         />
         <div 
-          className="absolute inset-x-0 bottom-0 h-[28vh]"
+          className="absolute inset-x-0 bottom-0 h-[30vh]"
           style={{
-            background: `linear-gradient(0deg, hsla(195, 70%, 95%, 0.4) 0%, transparent 100%)`,
+            background: `linear-gradient(0deg, hsla(195, 75%, 93%, 0.5) 0%, hsla(210, 60%, 95%, 0.2) 50%, transparent 100%)`,
           }}
         />
 
@@ -352,7 +443,7 @@ const BackgroundEffects = () => {
         <div 
           className="absolute inset-0"
           style={{
-            background: 'radial-gradient(ellipse at center, transparent 45%, hsla(220, 30%, 95%, 0.35) 100%)',
+            background: 'radial-gradient(ellipse at center, transparent 50%, hsla(240, 30%, 92%, 0.4) 100%)',
           }}
         />
       </div>

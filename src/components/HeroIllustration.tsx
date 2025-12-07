@@ -2,10 +2,10 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useParallax } from "@/hooks/useParallax";
 
-// Dark theme illustration
-import heroImageDark from "@/assets/hero-reader-new.png";
-// Light theme illustration - dedicated separate image
-import heroImageLight from "@/assets/hero-image-light.png";
+// Dark theme illustration - new high quality image
+import heroImageDark from "@/assets/hero-reader-dark.jpg";
+// Light theme illustration - new high quality image
+import heroImageLight from "@/assets/hero-reader-light.jpg";
 
 const HeroIllustration = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -387,6 +387,7 @@ const HeroIllustration = () => {
                     filter: isActive 
                       ? 'drop-shadow(0 0 40px hsla(280, 80%, 70%, 0.35)) drop-shadow(0 0 60px hsla(190, 100%, 70%, 0.25))'
                       : 'drop-shadow(0 0 25px hsla(280, 80%, 75%, 0.2)) drop-shadow(0 0 40px hsla(190, 100%, 75%, 0.15))',
+                    mixBlendMode: 'lighten',
                   }}
                 />
               ) : (
