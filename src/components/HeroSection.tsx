@@ -24,7 +24,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-[100vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[100vh] flex items-center overflow-hidden pt-24 sm:pt-0">
       {/* Animated background particles with staggered entrance */}
       <BackgroundReveal delay={0.1} className="absolute inset-0 pointer-events-none overflow-hidden">
         {[...Array(20)].map((_, i) => (
@@ -121,8 +121,8 @@ const HeroSection = () => {
         }}
       />
 
-      <div className="container mx-auto max-w-7xl px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Content with premium staggered animations */}
           <div 
             className="space-y-8 relative z-20"
@@ -146,7 +146,7 @@ const HeroSection = () => {
 
             {/* Headlines with premium fade + slide */}
             <HeroHeadline delay={0.2}>
-              <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+              <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
                 <span 
                   className="text-foreground block"
                   style={{
@@ -171,17 +171,17 @@ const HeroSection = () => {
             
             {/* Subtext with delayed entrance */}
             <HeroSubtext delay={0.5}>
-              <p className="text-xl text-muted-foreground max-w-md">
+              <p className="text-lg sm:text-xl text-muted-foreground max-w-md">
                 Discover books, articles, and ideas for self-improvement
               </p>
             </HeroSubtext>
 
             {/* CTA Buttons with scale pop effect */}
             <HeroCTA delay={0.7}>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <motion.button
                   onClick={() => navigate(user ? "/library" : "/auth")}
-                  className="group relative px-8 py-4 rounded-full font-display font-semibold text-primary-foreground overflow-hidden transition-all duration-300 hover:scale-105 hover:-translate-y-1 active:scale-[0.98]"
+                  className="group relative px-6 sm:px-8 py-3 sm:py-4 rounded-full font-display font-semibold text-primary-foreground overflow-hidden transition-all duration-300 hover:scale-105 hover:-translate-y-1 active:scale-[0.98] text-center"
                   whileHover={{ scale: 1.05, y: -4 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -197,7 +197,7 @@ const HeroSection = () => {
 
                 <motion.button
                   onClick={() => navigate("/library")}
-                  className="group px-8 py-4 rounded-full font-display font-semibold text-foreground overflow-hidden transition-all duration-300 bg-card/80 backdrop-blur-md border border-border"
+                  className="group px-6 sm:px-8 py-3 sm:py-4 rounded-full font-display font-semibold text-foreground overflow-hidden transition-all duration-300 bg-card/80 backdrop-blur-md border border-border text-center"
                   whileHover={{ scale: 1.05, y: -4 }}
                   whileTap={{ scale: 0.98 }}
                 >

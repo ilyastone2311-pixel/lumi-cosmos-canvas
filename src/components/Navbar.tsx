@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Sparkles, LogOut, User, Search, Settings, ChevronDown } from "lucide-react";
+import { Sparkles, LogOut, User, Search, Settings, ChevronDown, Menu, X } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
@@ -12,6 +12,7 @@ const Navbar = () => {
   const location = useLocation();
   const [searchOpen, setSearchOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Handle ESC key to close search
@@ -49,6 +50,11 @@ const Navbar = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
+
   return (
     <nav 
       className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-2xl animate-navbar-glow bg-card/80 backdrop-blur-xl border border-border/50"
@@ -60,7 +66,7 @@ const Navbar = () => {
         `,
       }}
     >
-      <div className="relative px-6 py-3 flex items-center justify-between">
+      <div className="relative px-4 sm:px-6 py-3 flex items-center justify-between">
         {/* Logo with glow */}
         <motion.div 
           onClick={() => navigate("/")}
@@ -88,8 +94,8 @@ const Navbar = () => {
           </span>
         </motion.div>
 
-        {/* Center Navigation */}
-        <div className="flex items-center gap-1">
+        {/* Center Navigation - Desktop */}
+        <div className="hidden md:flex items-center gap-1">
           <motion.button
             onClick={() => navigate("/")}
             className={`relative px-4 py-1.5 rounded-full font-display font-medium text-sm transition-all duration-300 ${
@@ -136,7 +142,7 @@ const Navbar = () => {
             <span className="relative">Library</span>
           </motion.button>
 
-          {/* Search Button */}
+          {/* Search Button - Desktop */}
           <motion.button
             onClick={() => setSearchOpen(true)}
             className="relative px-3 py-1.5 rounded-full text-sm transition-all duration-300 text-muted-foreground hover:text-foreground flex items-center gap-2"
@@ -144,20 +150,39 @@ const Navbar = () => {
             whileTap={{ scale: 0.95 }}
           >
             <Search className="w-4 h-4" />
-            <span className="hidden md:inline text-xs">Search</span>
-            <kbd className="hidden md:inline-flex h-4 items-center rounded border border-border/30 bg-white/5 px-1 font-mono text-[9px] text-muted-foreground/70">
+            <span className="text-xs">Search</span>
+            <kbd className="hidden lg:inline-flex h-4 items-center rounded border border-border/30 bg-white/5 px-1 font-mono text-[9px] text-muted-foreground/70">
               ⌘K
             </kbd>
           </motion.button>
         </div>
 
-        {/* Theme Toggle & Auth Buttons */}
+        {/* Mobile Search Button */}
+        <motion.button
+          onClick={() => setSearchOpen(true)}
+          className="md:hidden p-2 rounded-full text-muted-foreground hover:text-foreground"
+          whileTap={{ scale: 0.95 }}
+        >
+          <Search className="w-5 h-5" />
+        </motion.button>
+
+        {/* Theme Toggle, Auth & Mobile Menu */}
         <div className="flex items-center gap-2">
           {/* Theme Toggle */}
           <ThemeToggle />
 
+          {/* Mobile Menu Button */}
+          <motion.button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 rounded-full text-muted-foreground hover:text-foreground"
+            whileTap={{ scale: 0.95 }}
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </motion.button>
+
+          {/* Desktop Auth */}
           {!loading && (
-            <div className="flex items-center gap-1">
+            <div className="hidden md:flex items-center gap-1">
               {user ? (
                 <div className="relative" ref={dropdownRef}>
                   {/* User Account Button */}
@@ -170,7 +195,7 @@ const Navbar = () => {
                     <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
                       <User className="w-3.5 h-3.5 text-primary-foreground" />
                     </div>
-                    <span className="text-sm font-medium text-foreground hidden md:inline max-w-[100px] truncate">
+                    <span className="text-sm font-medium text-foreground max-w-[100px] truncate">
                       {user.email?.split("@")[0]}
                     </span>
                     <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
@@ -241,7 +266,6 @@ const Navbar = () => {
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  {/* Shine effect */}
                   <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                   </span>
@@ -252,6 +276,92 @@ const Navbar = () => {
           )}
         </div>
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden overflow-hidden border-t border-border/30"
+          >
+            <div className="px-4 py-4 space-y-2">
+              {/* Navigation Links */}
+              <button
+                onClick={() => navigate("/")}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all ${
+                  isActive("/")
+                    ? "bg-primary/10 text-foreground"
+                    : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                }`}
+              >
+                <span className="font-medium">Home</span>
+              </button>
+              
+              <button
+                onClick={() => navigate("/library")}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all ${
+                  isActive("/library")
+                    ? "bg-primary/10 text-foreground"
+                    : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                }`}
+              >
+                <span className="font-medium">Library</span>
+              </button>
+
+              {/* Divider */}
+              <div className="h-px bg-border/30 my-2" />
+
+              {/* User Section */}
+              {!loading && (
+                <>
+                  {user ? (
+                    <>
+                      <div className="px-4 py-2">
+                        <p className="text-sm font-medium text-foreground truncate">{user.email}</p>
+                        <p className="text-xs text-muted-foreground">Logged in</p>
+                      </div>
+                      <button
+                        onClick={() => navigate("/profile")}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all"
+                      >
+                        <User className="w-4 h-4" />
+                        <span className="font-medium">Profile</span>
+                      </button>
+                      <button
+                        onClick={() => navigate("/settings")}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all"
+                      >
+                        <Settings className="w-4 h-4" />
+                        <span className="font-medium">Settings</span>
+                      </button>
+                      <button
+                        onClick={handleSignOut}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-destructive hover:bg-destructive/10 transition-all"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span className="font-medium">Sign Out</span>
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={() => navigate("/auth")}
+                      className="w-full py-3 rounded-xl text-sm font-semibold text-primary-foreground"
+                      style={{
+                        background: 'linear-gradient(135deg, hsl(190 100% 50%), hsl(270 80% 60%))',
+                      }}
+                    >
+                      Sign Up / Log In
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Search Modal */}
       <SearchBar isOpen={searchOpen} onClose={() => setSearchOpen(false)} />

@@ -86,8 +86,8 @@ const Index = () => {
       {/* Navigation */}
       <Navbar />
 
-      {/* Main Content - Seamless flow */}
-      <main className="relative z-10 pt-24">
+        {/* Main Content - Seamless flow */}
+      <main className="relative z-10 pt-20 sm:pt-24">
         {/* Hero Section */}
         <HeroSection />
 
@@ -133,7 +133,7 @@ const Index = () => {
 
         {/* Categories Section - Enhanced with staggered load animations */}
         <ScrollSection direction="up" delay={0.15}>
-          <section className="py-24 px-6 relative">
+          <section className="py-16 sm:py-24 px-4 sm:px-6 relative">
             {/* Section ambient glow with fade-in */}
             <motion.div 
               className="absolute inset-0 pointer-events-none overflow-hidden"
@@ -148,9 +148,9 @@ const Index = () => {
 
             <div className="container mx-auto max-w-7xl relative">
               {/* Section Header with premium entrance animation */}
-              <SectionHeader className="text-center mb-20 relative">
+              <SectionHeader className="text-center mb-12 sm:mb-20 relative">
                 <motion.h2 
-                  className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4"
+                  className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4"
                   initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
                   whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   viewport={{ once: true, margin: "-80px" }}
@@ -162,7 +162,7 @@ const Index = () => {
                   Explore Categories
                 </motion.h2>
                 <motion.p 
-                  className="text-muted-foreground max-w-xl mx-auto"
+                  className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto px-4"
                   initial={{ opacity: 0, y: 15, filter: "blur(4px)" }}
                   whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   viewport={{ once: true, margin: "-80px" }}
@@ -196,7 +196,7 @@ const Index = () => {
               <CardGrid 
                 staggerDelay={0.08} 
                 baseDelay={0.2}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 lg:gap-10"
               >
                 {categories.map((category, index) => (
                   <CategoryCard
@@ -224,7 +224,7 @@ const Index = () => {
 
         {/* Bottom CTA - Elevated floating card with entrance animations */}
         <ScrollSection direction="up" delay={0.1}>
-          <section className="py-24 px-6 relative">
+          <section className="py-16 sm:py-24 px-4 sm:px-6 relative">
             {/* Background glow with fade-in */}
             <motion.div 
               className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -239,7 +239,7 @@ const Index = () => {
             <div className="container mx-auto max-w-4xl text-center relative">
               {/* Floating CTA Card with premium entrance - theme aware */}
               <motion.div 
-                className="relative p-14 rounded-3xl overflow-hidden bg-card/80 backdrop-blur-xl border border-border"
+                className="relative p-8 sm:p-14 rounded-3xl overflow-hidden bg-card/80 backdrop-blur-xl border border-border"
                 initial={{ opacity: 0, y: 30, scale: 0.98, filter: "blur(8px)" }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                 viewport={{ once: true, margin: "-80px" }}
@@ -280,7 +280,7 @@ const Index = () => {
                 />
                 
                 <motion.h3 
-                  className="relative font-display text-2xl md:text-3xl font-bold text-foreground mb-4"
+                  className="relative font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-4"
                   initial={{ opacity: 0, y: 15, filter: "blur(4px)" }}
                   whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   viewport={{ once: true }}
@@ -289,7 +289,7 @@ const Index = () => {
                   Ready to expand your mind?
                 </motion.h3>
                 <motion.p 
-                  className="relative text-muted-foreground mb-10 max-w-md mx-auto"
+                  className="relative text-sm sm:text-base text-muted-foreground mb-8 sm:mb-10 max-w-md mx-auto"
                   initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
                   whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   viewport={{ once: true }}
@@ -305,7 +305,7 @@ const Index = () => {
                     const randomArticle = getRandomArticle();
                     navigate(`/article/${randomArticle.category}/${randomArticle.id}`);
                   }}
-                  className="relative group px-10 py-4 rounded-full font-display font-semibold overflow-hidden transition-all duration-300 bg-muted/80 border border-primary/20 text-foreground"
+                  className="relative group px-6 sm:px-10 py-3 sm:py-4 rounded-full font-display font-semibold overflow-hidden transition-all duration-300 bg-muted/80 border border-primary/20 text-foreground text-sm sm:text-base"
                   initial={{ opacity: 0, scale: 0.95, filter: "blur(4px)" }}
                   whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                   viewport={{ once: true }}
