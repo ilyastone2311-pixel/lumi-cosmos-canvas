@@ -91,13 +91,8 @@ const Index = () => {
         {/* Hero Section */}
         <HeroSection />
 
-        {/* Flowing gradient transition - Hero to HowItWorks */}
-        <div 
-          className="relative h-32 md:h-48 -mt-16 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to bottom, transparent 0%, hsl(var(--background) / 0.3) 50%, transparent 100%)',
-          }}
-        />
+        {/* Seamless transition - Hero to HowItWorks */}
+        <div className="relative h-16 md:h-24 -mt-8 pointer-events-none" />
 
         {/* How It Works - Floating Section */}
         <ScrollSection direction="up">
@@ -110,26 +105,16 @@ const Index = () => {
           </div>
         </ScrollSection>
 
-        {/* Flowing gradient transition - HowItWorks to Illustration */}
-        <div 
-          className="relative h-24 md:h-32 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to bottom, transparent 0%, hsl(var(--secondary) / 0.1) 50%, transparent 100%)',
-          }}
-        />
+        {/* Seamless transition - HowItWorks to Illustration */}
+        <div className="relative h-12 md:h-16 pointer-events-none" />
 
         {/* Illustration Section - Hybrid pastel pocket */}
         <ScrollSection direction="fade" delay={0.05}>
           <IllustrationSection />
         </ScrollSection>
 
-        {/* Flowing gradient transition - Illustration to Categories */}
-        <div 
-          className="relative h-20 md:h-28 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to bottom, transparent 0%, hsl(var(--primary) / 0.08) 50%, transparent 100%)',
-          }}
-        />
+        {/* Seamless transition - Illustration to Categories */}
+        <div className="relative h-12 md:h-16 pointer-events-none" />
 
         {/* Categories Section - Enhanced with staggered load animations */}
         <ScrollSection direction="up" delay={0.15}>
@@ -214,13 +199,8 @@ const Index = () => {
           </section>
         </ScrollSection>
 
-        {/* Flowing gradient transition - Categories to CTA */}
-        <div 
-          className="relative h-24 md:h-32 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to bottom, transparent 0%, hsl(var(--secondary) / 0.08) 50%, transparent 100%)',
-          }}
-        />
+        {/* Seamless transition - Categories to CTA */}
+        <div className="relative h-12 md:h-16 pointer-events-none" />
 
         {/* Bottom CTA - Elevated floating card with entrance animations */}
         <ScrollSection direction="up" delay={0.1}>

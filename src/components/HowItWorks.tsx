@@ -29,33 +29,14 @@ const HowItWorks = () => {
 
   return (
     <section className="py-20 md:py-28 relative">
-      {/* Top blend gradient */}
-      <div 
-        className="absolute top-0 left-0 right-0 h-32 pointer-events-none -z-10"
-        style={{
-          background: 'linear-gradient(to bottom, transparent, hsla(230, 50%, 8%, 0.1))',
-        }}
-      />
-      
-      {/* Ambient section glow */}
+      {/* Ambient section glow - theme aware */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-gradient-to-r from-primary/5 via-secondary/8 to-primary/5 rounded-full blur-[150px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 rounded-full blur-[150px] dark:opacity-100 opacity-50" />
       </div>
-      
-      {/* Bottom blend gradient */}
-      <div 
-        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none -z-10"
-        style={{
-          background: 'linear-gradient(to top, transparent, hsla(270, 50%, 10%, 0.1))',
-        }}
-      />
 
       <div className="container mx-auto max-w-7xl px-6 relative">
         <h2 
           className="font-display text-3xl md:text-4xl font-bold text-center text-foreground mb-20 animate-fade-in"
-          style={{
-            textShadow: '0 4px 30px hsla(190, 100%, 50%, 0.15)',
-          }}
         >
           How Lumi works
         </h2>
@@ -116,60 +97,51 @@ const HowItWorks = () => {
               <div 
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"
                 style={{
-                  background: 'radial-gradient(ellipse at center bottom, hsla(190, 100%, 50%, 0.2) 0%, transparent 60%)',
+                  background: 'radial-gradient(ellipse at center bottom, hsla(var(--primary), 0.2) 0%, transparent 60%)',
                   filter: 'blur(25px)',
                   transform: 'translateY(15px)',
                 }}
               />
 
-              {/* Card - Glass Panel with Neumorphism */}
+              {/* Card - Glass Panel with theme-aware styling */}
               <div 
-                className="relative p-8 rounded-2xl transition-all duration-400 glass-card"
+                className="relative p-8 rounded-2xl transition-all duration-400 bg-card/80 backdrop-blur-xl border border-border/50 dark:bg-card/50"
                 style={{
                   boxShadow: `
-                    0 0 0 1px hsla(190, 100%, 50%, 0.04),
-                    8px 8px 24px hsla(230, 50%, 4%, 0.5),
-                    -4px -4px 16px hsla(260, 40%, 20%, 0.08),
-                    0 4px 15px hsla(230, 50%, 5%, 0.3),
-                    inset 0 1px 0 hsla(210, 40%, 98%, 0.05)
+                    0 0 0 1px hsla(var(--primary), 0.05),
+                    0 8px 24px hsla(var(--foreground), 0.08),
+                    0 4px 12px hsla(var(--foreground), 0.04)
                   `,
                 }}
               >
                 {/* Glow on hover */}
-                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/8 via-transparent to-secondary/8 pointer-events-none" />
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 pointer-events-none" />
                 
                 {/* Top edge highlight */}
-                <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 {/* Icon with enhanced glow */}
                 <div className="relative mb-6">
                   <div 
-                    className="w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 neu-button"
-                    style={{
-                      background: 'linear-gradient(145deg, hsla(195, 80%, 50%, 0.15) 0%, hsla(245, 50%, 15%, 0.8) 100%)',
-                    }}
+                    className="w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 bg-primary/10 dark:bg-primary/20"
                   >
-                    <feature.icon className="w-7 h-7 text-primary icon-glow" />
+                    <feature.icon className="w-7 h-7 text-primary" />
                   </div>
                   {/* Icon glow */}
-                  <div className="absolute inset-0 w-14 h-14 rounded-xl bg-primary/25 blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
+                  <div className="absolute inset-0 w-14 h-14 rounded-xl bg-primary/20 blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
                 </div>
 
-                {/* Content */}
+                {/* Content - theme-aware text colors */}
                 <h3 className="relative font-display text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
                   {feature.title}
                 </h3>
-                <p className="relative text-muted-foreground leading-relaxed">
+                <p className="relative text-muted-foreground dark:text-muted-foreground text-foreground/70 leading-relaxed">
                   {feature.description}
                 </p>
 
                 {/* Arrow indicator */}
                 <div 
-                  className="absolute bottom-8 right-8 w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0"
-                  style={{
-                    background: 'hsla(190, 100%, 50%, 0.1)',
-                    boxShadow: '0 0 15px hsla(190, 100%, 50%, 0.2)',
-                  }}
+                  className="absolute bottom-8 right-8 w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0 bg-primary/10"
                 >
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary">
                     <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -177,13 +149,9 @@ const HowItWorks = () => {
                 </div>
               </div>
 
-              {/* Floating shadow underneath */}
+              {/* Floating shadow underneath - theme aware */}
               <div 
-                className="absolute inset-x-4 -bottom-3 h-12 rounded-2xl -z-20 opacity-40 group-hover:opacity-60 transition-opacity duration-500"
-                style={{
-                  background: 'radial-gradient(ellipse at center, hsla(230, 50%, 5%, 0.8) 0%, transparent 70%)',
-                  filter: 'blur(15px)',
-                }}
+                className="absolute inset-x-4 -bottom-3 h-12 rounded-2xl -z-20 opacity-20 dark:opacity-40 group-hover:opacity-40 dark:group-hover:opacity-60 transition-opacity duration-500 bg-foreground/20 dark:bg-background blur-xl"
               />
             </motion.button>
             );
