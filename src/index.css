@@ -155,8 +155,16 @@ html {
 @layer base {
   * {
     @apply border-border;
-    /* Global theme transition */
-    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, fill 0.4s ease, stroke 0.4s ease;
+    /* Premium global theme transition */
+    transition: 
+      background-color 0.45s ease,
+      color 0.45s ease,
+      border-color 0.45s ease,
+      box-shadow 0.45s ease,
+      fill 0.45s ease,
+      stroke 0.45s ease,
+      filter 0.45s ease,
+      opacity 0.45s ease;
   }
 
   html {
@@ -167,9 +175,13 @@ html {
     @apply text-foreground antialiased;
     font-family: 'Plus Jakarta Sans', sans-serif;
     overflow-x: hidden;
-    transition: background 0.35s ease, background-color 0.35s ease;
     min-height: 100vh;
     background-color: hsl(var(--background));
+    /* Smooth background transition */
+    transition: 
+      background 0.5s ease,
+      background-color 0.5s ease,
+      background-image 0.5s ease;
   }
 
   /* Dark mode body cosmic background */
@@ -197,6 +209,98 @@ html {
   /* Smooth section transitions */
   section {
     position: relative;
+  }
+
+  /* ========== THEME SWITCHING ANIMATION SYSTEM ========== */
+  
+  /* Global switching state - applied during theme transition */
+  html.theme-switching * {
+    transition-duration: 0.5s !important;
+  }
+
+  /* Hero image crossfade during switch */
+  .hero-image-container {
+    position: relative;
+  }
+
+  .hero-image-element {
+    transition: 
+      opacity 0.5s ease-in-out,
+      transform 0.5s ease-in-out,
+      filter 0.5s ease-in-out;
+  }
+
+  html.theme-switching .hero-image-element {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+
+  /* Cosmic glow pulse overlay during theme switch */
+  .theme-transition-glow {
+    position: absolute;
+    inset: -20%;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+      ellipse at center,
+      hsla(280, 80%, 70%, 0.3) 0%,
+      hsla(195, 85%, 60%, 0.2) 30%,
+      hsla(265, 70%, 55%, 0.1) 50%,
+      transparent 70%
+    );
+    transition: opacity 0.5s ease;
+    filter: blur(40px);
+    z-index: 5;
+  }
+
+  html.theme-switching .theme-transition-glow {
+    opacity: 1;
+  }
+
+  /* Cosmic elements smooth transition */
+  .cosmic-element {
+    transition:
+      opacity 0.45s ease,
+      background-color 0.45s ease,
+      background 0.45s ease,
+      filter 0.45s ease,
+      box-shadow 0.45s ease;
+  }
+
+  /* Cards and panels smooth transition */
+  .glass,
+  .glass-panel,
+  .glass-card,
+  .glass-strong {
+    transition:
+      background 0.45s ease,
+      border-color 0.45s ease,
+      box-shadow 0.45s ease,
+      backdrop-filter 0.45s ease;
+  }
+
+  /* Buttons smooth transition */
+  button,
+  .neu-button,
+  .neu-button-primary {
+    transition:
+      background 0.45s ease,
+      background-color 0.45s ease,
+      border-color 0.45s ease,
+      box-shadow 0.45s ease,
+      color 0.45s ease,
+      transform 0.2s ease;
+  }
+
+  /* Icon glow transitions */
+  .icon-glow,
+  .icon-glow-purple {
+    transition: filter 0.45s ease;
+  }
+
+  /* Gradient elements */
+  .gradient-border::before {
+    transition: background 0.45s ease, opacity 0.45s ease;
   }
 }
 

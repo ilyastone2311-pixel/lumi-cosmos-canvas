@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
+
+const THEME_TRANSITION_DURATION = 500; // ms
 
 const ThemeToggle = () => {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [mounted, setMounted] = useState(false);
+  const [isSwitching, setIsSwitching] = useState(false);
 
   // Initialize theme from localStorage or system preference
   useEffect(() => {
@@ -32,9 +35,24 @@ const ThemeToggle = () => {
     localStorage.setItem("lumi-theme", theme);
   }, [theme, mounted]);
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
+  const toggleTheme = useCallback(() => {
+    const root = document.documentElement;
+    
+    // Add switching class for transition animations
+    root.classList.add("theme-switching");
+    setIsSwitching(true);
+    
+    // Small delay to let the fade-out start, then switch theme
+    setTimeout(() => {
+      setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+    }, 50);
+    
+    // Remove switching class after transition completes
+    setTimeout(() => {
+      root.classList.remove("theme-switching");
+      setIsSwitching(false);
+    }, THEME_TRANSITION_DURATION);
+  }, []);
 
   // Prevent hydration mismatch
   if (!mounted) {
@@ -46,6 +64,7 @@ const ThemeToggle = () => {
   return (
     <motion.button
       onClick={toggleTheme}
+      disabled={isSwitching}
       className="relative w-10 h-10 rounded-full flex items-center justify-center overflow-hidden theme-toggle-button"
       whileHover={{ scale: 1.08, y: -2 }}
       whileTap={{ scale: 0.95 }}
@@ -60,8 +79,25 @@ const ThemeToggle = () => {
         boxShadow: theme === "dark"
           ? "0 4px 20px hsla(240, 40%, 4%, 0.4), 0 0 25px hsla(195, 85%, 55%, 0.1)"
           : "0 4px 20px hsla(220, 20%, 70%, 0.3), 0 0 25px hsla(195, 85%, 55%, 0.15)",
+        cursor: isSwitching ? "wait" : "pointer",
       }}
     >
+      {/* Cosmic pulse glow during switch */}
+      <AnimatePresence>
+        {isSwitching && (
+          <motion.div
+            className="absolute inset-[-100%] rounded-full pointer-events-none"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1.5 }}
+            exit={{ opacity: 0, scale: 2 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            style={{
+              background: "radial-gradient(circle, hsla(280, 80%, 70%, 0.4) 0%, hsla(195, 85%, 60%, 0.2) 40%, transparent 70%)",
+            }}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Glow effect on hover */}
       <motion.div
         className="absolute inset-0 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300"
@@ -78,7 +114,7 @@ const ThemeToggle = () => {
             initial={{ rotate: -90, scale: 0, opacity: 0 }}
             animate={{ rotate: 0, scale: 1, opacity: 1 }}
             exit={{ rotate: 90, scale: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
             className="relative z-10"
           >
             <Moon 
@@ -95,7 +131,7 @@ const ThemeToggle = () => {
             initial={{ rotate: 90, scale: 0, opacity: 0 }}
             animate={{ rotate: 0, scale: 1, opacity: 1 }}
             exit={{ rotate: -90, scale: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
             className="relative z-10"
           >
             <Sun 
