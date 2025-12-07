@@ -79,15 +79,16 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Background Effects */}
-      <BackgroundEffects />
-
-      {/* Navigation */}
+    <>
+      {/* Navigation - Outside overflow container */}
       <Navbar />
+      
+      <div className="min-h-screen relative overflow-hidden">
+        {/* Background Effects */}
+        <BackgroundEffects />
 
         {/* Main Content - Seamless flow */}
-      <main className="relative z-10 pt-20 sm:pt-24">
+        <main className="relative z-10 pt-24 sm:pt-28">
         {/* Hero Section */}
         <HeroSection />
 
@@ -328,7 +329,8 @@ const Index = () => {
         {/* Bottom spacing */}
         <div className="h-20" />
       </main>
-    </div>
+      </div>
+    </>
   );
 };
 
