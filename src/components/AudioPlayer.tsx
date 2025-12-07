@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, Headphones, Volume2 } from "lucide-react";
+import { Play, Pause, Headphones, Volume2, VolumeX } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import MiniAudioPlayer from "./MiniAudioPlayer";
@@ -11,6 +11,7 @@ interface AudioPlayerProps {
   duration?: string;
   articleId?: string;
   articleTitle?: string;
+  onTimeUpdate?: (time: number) => void;
 }
 
 const PLAYBACK_SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2];
@@ -19,7 +20,8 @@ const AudioPlayer = ({
   audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
   duration = "3:24",
   articleId = "default",
-  articleTitle = "Discovering Insights That Transform Perspectives"
+  articleTitle = "Discovering Insights That Transform Perspectives",
+  onTimeUpdate
 }: AudioPlayerProps) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
@@ -34,6 +36,8 @@ const AudioPlayer = ({
   const [showMiniPlayer, setShowMiniPlayer] = useState(false);
   const [showResumeTooltip, setShowResumeTooltip] = useState(false);
   const [hasLoadedProgress, setHasLoadedProgress] = useState(false);
+  const [volume, setVolume] = useState(1);
+  const [isMuted, setIsMuted] = useState(false);
 
   const formatTime = (time: number) => {
     if (isNaN(time)) return "0:00";
@@ -144,7 +148,31 @@ const AudioPlayer = ({
 
   const handleTimeUpdate = () => {
     if (audioRef.current && !isDragging) {
-      setCurrentTime(audioRef.current.currentTime);
+      const time = audioRef.current.currentTime;
+      setCurrentTime(time);
+      onTimeUpdate?.(time);
+    }
+  };
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
+    }
+    setIsMuted(newVolume === 0);
+  };
+
+  const toggleMute = () => {
+    if (audioRef.current) {
+      if (isMuted) {
+        audioRef.current.volume = volume || 0.5;
+        setVolume(volume || 0.5);
+        setIsMuted(false);
+      } else {
+        audioRef.current.volume = 0;
+        setIsMuted(true);
+      }
     }
   };
 
@@ -372,23 +400,71 @@ const AudioPlayer = ({
                     </span>
                   </div>
                   
-                  {/* Speed Control */}
-                  <motion.button
-                    onClick={cycleSpeed}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all"
-                    style={{
-                      background: "hsla(var(--primary), 0.15)",
-                      border: "1px solid hsla(var(--neon-cyan), 0.3)",
-                    }}
-                    whileHover={{ 
-                      scale: 1.05,
-                      boxShadow: "0 0 15px hsla(var(--neon-cyan), 0.4)"
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Volume2 className="w-3 h-3 text-primary" />
-                    <span className="text-primary">{playbackSpeed}x</span>
-                  </motion.button>
+                  <div className="flex items-center gap-3">
+                    {/* Volume Control */}
+                    <div className="flex items-center gap-2 group">
+                      <motion.button
+                        onClick={toggleMute}
+                        className="p-1.5 rounded-full transition-all"
+                        style={{
+                          background: "hsla(var(--primary), 0.1)",
+                        }}
+                        whileHover={{ 
+                          scale: 1.1,
+                          boxShadow: "0 0 10px hsla(var(--neon-cyan), 0.3)"
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {isMuted || volume === 0 ? (
+                          <VolumeX className="w-4 h-4 text-muted-foreground" />
+                        ) : (
+                          <Volume2 className="w-4 h-4 text-primary" />
+                        )}
+                      </motion.button>
+                      <div className="relative w-20 h-1.5 group">
+                        <div 
+                          className="absolute inset-0 rounded-full"
+                          style={{
+                            background: "hsla(var(--muted), 0.3)",
+                          }}
+                        />
+                        <motion.div
+                          className="absolute top-0 left-0 h-full rounded-full"
+                          style={{ 
+                            width: `${isMuted ? 0 : volume * 100}%`,
+                            background: "linear-gradient(90deg, hsl(var(--neon-cyan)), hsl(var(--primary)))",
+                            boxShadow: "0 0 8px hsla(var(--neon-cyan), 0.5)",
+                          }}
+                        />
+                        <input
+                          type="range"
+                          min="0"
+                          max="1"
+                          step="0.01"
+                          value={isMuted ? 0 : volume}
+                          onChange={handleVolumeChange}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Speed Control */}
+                    <motion.button
+                      onClick={cycleSpeed}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all"
+                      style={{
+                        background: "hsla(var(--primary), 0.15)",
+                        border: "1px solid hsla(var(--neon-cyan), 0.3)",
+                      }}
+                      whileHover={{ 
+                        scale: 1.05,
+                        boxShadow: "0 0 15px hsla(var(--neon-cyan), 0.4)"
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <span className="text-primary">{playbackSpeed}x</span>
+                    </motion.button>
+                  </div>
                 </div>
 
                 {/* Progress Bar */}
