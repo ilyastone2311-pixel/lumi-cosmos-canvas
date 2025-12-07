@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import BackgroundEffects from "@/components/BackgroundEffects";
+import AudioPlayer from "@/components/AudioPlayer";
 import { ArrowLeft, Clock, Star, Bookmark, Share2, ThumbsUp } from "lucide-react";
 
 const articleContent = {
@@ -63,6 +64,9 @@ const Article = () => {
               </span>
             </div>
           </header>
+
+          {/* Audio Player */}
+          <AudioPlayer duration="5:00" />
 
           {/* Action Bar */}
           <div className="flex items-center gap-4 mb-12 pb-6 border-b border-border/30 animate-fade-in" style={{ animationDelay: '100ms' }}>
