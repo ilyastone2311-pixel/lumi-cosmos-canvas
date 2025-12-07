@@ -12,6 +12,7 @@ const HeroIllustration = () => {
   const [isTapped, setIsTapped] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [isSwitching, setIsSwitching] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const parallaxOffset = useParallax(0.15);
   
@@ -30,7 +31,11 @@ const HeroIllustration = () => {
 
     // Watch for theme class changes on document.documentElement
     const observer = new MutationObserver(() => {
-      const isLight = document.documentElement.classList.contains("light");
+      const root = document.documentElement;
+      const isLight = root.classList.contains("light");
+      const switching = root.classList.contains("theme-switching");
+      
+      setIsSwitching(switching);
       setTheme(isLight ? "light" : "dark");
     });
     
@@ -339,38 +344,60 @@ const HeroIllustration = () => {
             }}
           />
 
-          {/* The image - EXPLICIT conditional rendering based on theme */}
-          {isLightTheme ? (
-            <motion.img
-              key="hero-light"
-              src={heroImageLight}
-              alt="Magical reading illustration - Light Theme"
-              className="w-full h-auto object-contain relative z-10"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              style={{
-                filter: isActive 
-                  ? 'drop-shadow(0 0 40px hsla(280, 80%, 70%, 0.35)) drop-shadow(0 0 60px hsla(190, 100%, 70%, 0.25))'
-                  : 'drop-shadow(0 0 25px hsla(280, 80%, 75%, 0.2)) drop-shadow(0 0 40px hsla(190, 100%, 75%, 0.15))',
-              }}
-            />
-          ) : (
-            <motion.img
-              key="hero-dark"
-              src={heroImageDark}
-              alt="Magical reading illustration - Dark Theme"
-              className="w-full h-auto object-contain relative z-10"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              style={{
-                filter: isActive 
-                  ? 'drop-shadow(0 0 40px hsla(190, 100%, 60%, 0.45)) drop-shadow(0 0 80px hsla(270, 100%, 65%, 0.3)) drop-shadow(0 0 20px hsla(200, 100%, 75%, 0.35))' 
-                  : 'drop-shadow(0 0 25px hsla(190, 100%, 55%, 0.25)) drop-shadow(0 0 50px hsla(270, 100%, 60%, 0.15))',
-              }}
-            />
-          )}
+          {/* Cosmic glow pulse during theme switch */}
+          <motion.div
+            className="theme-transition-glow"
+            animate={{
+              opacity: isSwitching ? 1 : 0,
+              scale: isSwitching ? [1, 1.1, 1] : 1,
+            }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+          />
+
+          {/* The image - EXPLICIT conditional rendering based on theme with crossfade */}
+          <div className="hero-image-container relative">
+            <AnimatePresence mode="wait">
+              {isLightTheme ? (
+                <motion.img
+                  key="hero-light"
+                  src={heroImageLight}
+                  alt="Magical reading illustration - Light Theme"
+                  className={`hero-image-element w-full h-auto object-contain relative z-10 ${isSwitching ? 'opacity-0 scale-[1.04]' : 'opacity-100 scale-100'}`}
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ 
+                    opacity: isSwitching ? 0 : 1, 
+                    scale: isSwitching ? 1.04 : 1 
+                  }}
+                  exit={{ opacity: 0, scale: 1.04 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  style={{
+                    filter: isActive 
+                      ? 'drop-shadow(0 0 40px hsla(280, 80%, 70%, 0.35)) drop-shadow(0 0 60px hsla(190, 100%, 70%, 0.25))'
+                      : 'drop-shadow(0 0 25px hsla(280, 80%, 75%, 0.2)) drop-shadow(0 0 40px hsla(190, 100%, 75%, 0.15))',
+                  }}
+                />
+              ) : (
+                <motion.img
+                  key="hero-dark"
+                  src={heroImageDark}
+                  alt="Magical reading illustration - Dark Theme"
+                  className={`hero-image-element w-full h-auto object-contain relative z-10 ${isSwitching ? 'opacity-0 scale-[1.04]' : 'opacity-100 scale-100'}`}
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ 
+                    opacity: isSwitching ? 0 : 1, 
+                    scale: isSwitching ? 1.04 : 1 
+                  }}
+                  exit={{ opacity: 0, scale: 1.04 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  style={{
+                    filter: isActive 
+                      ? 'drop-shadow(0 0 40px hsla(190, 100%, 60%, 0.45)) drop-shadow(0 0 80px hsla(270, 100%, 65%, 0.3)) drop-shadow(0 0 20px hsla(200, 100%, 75%, 0.35))' 
+                      : 'drop-shadow(0 0 25px hsla(190, 100%, 55%, 0.25)) drop-shadow(0 0 50px hsla(270, 100%, 60%, 0.15))',
+                  }}
+                />
+              )}
+            </AnimatePresence>
+          </div>
         </motion.div>
       </motion.div>
 
