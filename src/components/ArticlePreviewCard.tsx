@@ -148,17 +148,16 @@ const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => 
       onTouchStart={() => setShowPreview(true)}
       onTouchEnd={() => setTimeout(() => setShowPreview(false), 3000)}
     >
-      {/* Main Card */}
+      {/* Main Card - with theme-aware styles */}
       <motion.button
         onClick={handleClick}
-        className="w-full text-left group relative rounded-xl overflow-hidden"
+        className="w-full text-left group relative rounded-xl overflow-hidden bg-card dark:bg-card/60"
         style={{
-          background: 'hsla(230, 50%, 8%, 0.6)',
           backdropFilter: 'blur(12px)',
-          border: '1px solid hsla(210, 40%, 98%, 0.06)',
+          border: '1px solid hsl(var(--border))',
           boxShadow: isHovered 
             ? '0 15px 40px hsla(var(--primary), 0.15), 0 0 0 1px hsla(var(--primary), 0.1)'
-            : '0 4px 20px hsla(230, 50%, 5%, 0.3)',
+            : '0 4px 20px hsla(var(--foreground), 0.05)',
           transition: 'all 0.4s cubic-bezier(0.2, 0.9, 0.2, 1)',
           transform: isHovered ? 'translateY(-4px) scale(1.01)' : 'translateY(0) scale(1)',
         }}
@@ -239,14 +238,13 @@ const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => 
             style={getPreviewStyles()}
           >
             <div
-              className="rounded-2xl overflow-hidden"
+              className="rounded-2xl overflow-hidden bg-card"
               style={{
-                background: 'hsl(230, 50%, 6%)',
                 border: '2px solid hsla(var(--primary), 0.3)',
                 boxShadow: `
                   0 0 0 1px hsla(var(--primary), 0.2),
-                  0 25px 60px hsla(230, 50%, 3%, 1),
-                  0 0 50px hsla(var(--primary), 0.2)
+                  0 25px 60px hsla(var(--foreground), 0.1),
+                  0 0 50px hsla(var(--primary), 0.15)
                 `,
               }}
             >
