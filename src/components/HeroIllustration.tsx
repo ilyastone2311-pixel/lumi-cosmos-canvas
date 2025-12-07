@@ -3,21 +3,25 @@ import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from
 import { useParallax } from "@/hooks/useParallax";
 import { useTheme } from "next-themes";
 import heroReaderNew from "@/assets/hero-reader-new.png";
+// Light theme illustration - v2
 import heroReaderLight from "@/assets/hero-reader-light.png";
 
 const HeroIllustration = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isTapped, setIsTapped] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [heroImage, setHeroImage] = useState(heroReaderNew);
   const containerRef = useRef<HTMLDivElement>(null);
   const parallaxOffset = useParallax(0.15);
   const { resolvedTheme } = useTheme();
   
+  // Update image when theme changes
   useEffect(() => {
-    setMounted(true);
-  }, []);
-  
-  const heroImage = mounted && resolvedTheme === 'light' ? heroReaderLight : heroReaderNew;
+    if (resolvedTheme === 'light') {
+      setHeroImage(heroReaderLight);
+    } else {
+      setHeroImage(heroReaderNew);
+    }
+  }, [resolvedTheme]);
 
   // Mouse position for parallax tilt
   const mouseX = useMotionValue(0);
@@ -275,9 +279,13 @@ const HeroIllustration = () => {
 
           {/* The image - full visibility, no clipping */}
           <motion.img
+            key={resolvedTheme}
             src={heroImage}
             alt="Magical reading illustration"
             className="w-full h-auto object-contain relative z-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
             style={{
               filter: isActive 
                 ? resolvedTheme === 'light'
@@ -286,7 +294,6 @@ const HeroIllustration = () => {
                 : resolvedTheme === 'light'
                   ? 'drop-shadow(0 0 25px hsla(280, 80%, 75%, 0.2)) drop-shadow(0 0 40px hsla(190, 100%, 75%, 0.15))'
                   : 'drop-shadow(0 0 25px hsla(190, 100%, 55%, 0.25)) drop-shadow(0 0 50px hsla(270, 100%, 60%, 0.15))',
-              transition: 'filter 0.4s ease-out',
             }}
           />
         </motion.div>
