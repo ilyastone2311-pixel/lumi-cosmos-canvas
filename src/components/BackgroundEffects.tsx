@@ -4,6 +4,7 @@ import FlowingWaves from "./FlowingWaves";
 
 const BackgroundEffects = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,13 +15,29 @@ const BackgroundEffects = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Listen for theme changes
+  useEffect(() => {
+    const checkTheme = () => {
+      setTheme(document.documentElement.classList.contains('light') ? 'light' : 'dark');
+    };
+    
+    checkTheme();
+    
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    
+    return () => observer.disconnect();
+  }, []);
+
+  const isLight = theme === 'light';
+
   // Generate nebula positions once
   const nebulas = useMemo(() => [
-    { x: 75, y: 15, size: 500, color: "270 70% 20%", blur: 120 },
-    { x: 15, y: 40, size: 400, color: "220 60% 18%", blur: 100 },
-    { x: 85, y: 60, size: 350, color: "190 80% 15%", blur: 90 },
-    { x: 30, y: 75, size: 450, color: "280 50% 15%", blur: 110 },
-    { x: 60, y: 25, size: 300, color: "200 70% 12%", blur: 80 },
+    { x: 75, y: 15, size: 500, colorDark: "270 70% 20%", colorLight: "270 60% 85%", blur: 120 },
+    { x: 15, y: 40, size: 400, colorDark: "220 60% 18%", colorLight: "220 50% 88%", blur: 100 },
+    { x: 85, y: 60, size: 350, colorDark: "190 80% 15%", colorLight: "190 70% 85%", blur: 90 },
+    { x: 30, y: 75, size: 450, colorDark: "280 50% 15%", colorLight: "280 50% 88%", blur: 110 },
+    { x: 60, y: 25, size: 300, colorDark: "200 70% 12%", colorLight: "200 60% 90%", blur: 80 },
   ], []);
 
   // Generate star dust particles
@@ -37,11 +54,11 @@ const BackgroundEffects = () => {
 
   // Floating orb configurations
   const floatingOrbs = useMemo(() => [
-    { x: 80, y: 20, size: 200, color: "190 100% 50%", opacity: 0.08 },
-    { x: 10, y: 50, size: 150, color: "270 100% 60%", opacity: 0.06 },
-    { x: 70, y: 70, size: 180, color: "320 80% 50%", opacity: 0.05 },
-    { x: 25, y: 30, size: 120, color: "200 90% 45%", opacity: 0.07 },
-    { x: 90, y: 85, size: 100, color: "250 70% 55%", opacity: 0.06 },
+    { x: 80, y: 20, size: 200, colorDark: "190 100% 50%", colorLight: "190 80% 60%", opacity: 0.08 },
+    { x: 10, y: 50, size: 150, colorDark: "270 100% 60%", colorLight: "270 70% 70%", opacity: 0.06 },
+    { x: 70, y: 70, size: 180, colorDark: "320 80% 50%", colorLight: "320 60% 70%", opacity: 0.05 },
+    { x: 25, y: 30, size: 120, colorDark: "200 90% 45%", colorLight: "200 70% 65%", opacity: 0.07 },
+    { x: 90, y: 85, size: 100, colorDark: "250 70% 55%", colorLight: "250 60% 75%", opacity: 0.06 },
   ], []);
 
   // Enhanced parallax multipliers for different depth layers
@@ -50,8 +67,48 @@ const BackgroundEffects = () => {
   const parallaxFast = scrollY * 0.08;
   const parallaxUltraFast = scrollY * 0.12;
 
+  // Hide completely in light mode for cleaner look
+  if (isLight) {
+    return (
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 transition-opacity duration-500">
+        {/* Light mode subtle background effects */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse at 80% 10%, hsl(195 60% 85% / 0.4) 0%, transparent 45%),
+              radial-gradient(ellipse at 10% 30%, hsl(265 50% 90% / 0.3) 0%, transparent 40%),
+              radial-gradient(ellipse at 90% 60%, hsl(280 45% 92% / 0.25) 0%, transparent 45%),
+              radial-gradient(ellipse at 30% 80%, hsl(220 50% 94% / 0.3) 0%, transparent 50%)
+            `,
+          }}
+        />
+        
+        {/* Subtle floating orbs for light mode */}
+        <div 
+          className="absolute w-[500px] h-[500px] rounded-full"
+          style={{
+            top: '10%',
+            right: '10%',
+            background: 'radial-gradient(circle, hsl(195 85% 45% / 0.08) 0%, transparent 70%)',
+            filter: 'blur(80px)',
+          }}
+        />
+        <div 
+          className="absolute w-[400px] h-[400px] rounded-full"
+          style={{
+            top: '40%',
+            left: '5%',
+            background: 'radial-gradient(circle, hsl(265 70% 55% / 0.06) 0%, transparent 70%)',
+            filter: 'blur(100px)',
+          }}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 transition-opacity duration-500">
       {/* Deep cosmic gradient base - enhanced */}
       <div 
         className="absolute inset-0"
@@ -77,7 +134,7 @@ const BackgroundEffects = () => {
             top: `${nebula.y}%`,
             width: `${nebula.size}px`,
             height: `${nebula.size}px`,
-            background: `radial-gradient(circle, hsl(${nebula.color} / 0.15) 0%, hsl(${nebula.color} / 0.05) 40%, transparent 70%)`,
+            background: `radial-gradient(circle, hsl(${nebula.colorDark} / 0.15) 0%, hsl(${nebula.colorDark} / 0.05) 40%, transparent 70%)`,
             filter: `blur(${nebula.blur}px)`,
             transform: `translate(-50%, -50%) translate3d(0, ${parallaxSlow * (1 + i * 0.3)}px, 0)`,
             transition: 'transform 0.1s linear',
@@ -171,7 +228,7 @@ const BackgroundEffects = () => {
             top: `${orb.y}%`,
             width: `${orb.size}px`,
             height: `${orb.size}px`,
-            background: `radial-gradient(circle, hsl(${orb.color} / ${orb.opacity}) 0%, transparent 60%)`,
+            background: `radial-gradient(circle, hsl(${orb.colorDark} / ${orb.opacity}) 0%, transparent 60%)`,
             filter: 'blur(30px)',
             animationDuration: `${3 + i}s`,
             animationDelay: `${i * 0.5}s`,
