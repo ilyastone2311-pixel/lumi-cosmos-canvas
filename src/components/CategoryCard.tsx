@@ -1,8 +1,43 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
+// Hover particle effect - inline for performance
+const useHoverParticles = (containerRef: React.RefObject<HTMLDivElement>, isHovered: boolean, isMobile: boolean) => {
+  const [particles, setParticles] = useState<Array<{
+    id: number;
+    x: number;
+    y: number;
+    size: number;
+    opacity: number;
+  }>>([]);
+
+  useEffect(() => {
+    if (isMobile || !isHovered) {
+      setParticles([]);
+      return;
+    }
+
+    // Spawn particles on hover
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    const newParticles = [...Array(5)].map((_, i) => ({
+      id: Date.now() + i,
+      x: Math.random() * rect.width,
+      y: Math.random() * rect.height,
+      size: 2 + Math.random() * 3,
+      opacity: 0.4 + Math.random() * 0.4,
+    }));
+    setParticles(newParticles);
+
+    // Fade out on unmount
+    return () => setParticles([]);
+  }, [isHovered, isMobile, containerRef]);
+
+  return particles;
+};
 interface CategoryCardProps {
   title: string;
   subtitle: string;
@@ -22,8 +57,17 @@ const CategoryCard = ({
 }: CategoryCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+
+  // Detect mobile
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
+  // Hover particles
+  const particles = useHoverParticles(cardRef, isHovered, isMobile);
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -92,6 +136,24 @@ const CategoryCard = ({
           animation: isHovered ? 'gradient-shift 3s ease infinite' : 'none',
         }}
       />
+
+      {/* Hover particles */}
+      {particles.map(particle => (
+        <div
+          key={particle.id}
+          className="absolute rounded-full pointer-events-none z-30 animate-float-soft"
+          style={{
+            left: particle.x,
+            top: particle.y,
+            width: particle.size,
+            height: particle.size,
+            background: 'hsl(var(--primary))',
+            opacity: particle.opacity,
+            boxShadow: '0 0 8px hsl(var(--primary) / 0.6), 0 0 16px hsl(var(--primary) / 0.3)',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      ))}
       
       {/* Outer glow layer - enhanced */}
       <div
