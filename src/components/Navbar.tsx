@@ -3,6 +3,7 @@ import { Sparkles, LogOut, User, Search, Settings, ChevronDown } from "lucide-re
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
+import ThemeToggle from "./ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
@@ -151,111 +152,106 @@ const Navbar = () => {
           </motion.button>
         </div>
 
-        {/* Auth Buttons */}
-        {!loading && (
-          <div className="flex items-center gap-1">
-            {user ? (
-              <div className="relative" ref={dropdownRef}>
-                {/* User Account Button */}
+        {/* Theme Toggle & Auth Buttons */}
+        <div className="flex items-center gap-2">
+          {/* Theme Toggle */}
+          <ThemeToggle />
+
+          {!loading && (
+            <div className="flex items-center gap-1">
+              {user ? (
+                <div className="relative" ref={dropdownRef}>
+                  {/* User Account Button */}
+                  <motion.button
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300 bg-muted/50 border border-border/50 hover:bg-muted"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                      <User className="w-3.5 h-3.5 text-primary-foreground" />
+                    </div>
+                    <span className="text-sm font-medium text-foreground hidden md:inline max-w-[100px] truncate">
+                      {user.email?.split("@")[0]}
+                    </span>
+                    <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+                  </motion.button>
+
+                  {/* Dropdown Menu */}
+                  <AnimatePresence>
+                    {dropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute right-0 top-full mt-2 w-52 rounded-xl overflow-hidden shadow-hero bg-card border border-border"
+                      >
+                        <div className="p-3 border-b border-border/20">
+                          <p className="text-sm font-medium text-foreground truncate">{user.email}</p>
+                          <p className="text-xs text-muted-foreground">Logged in</p>
+                        </div>
+                        
+                        <div className="p-1">
+                          <button
+                            onClick={() => {
+                              navigate("/profile");
+                              setDropdownOpen(false);
+                            }}
+                            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-foreground hover:bg-muted/50 transition-colors"
+                          >
+                            <User className="w-4 h-4 text-primary" />
+                            Profile
+                          </button>
+                          <button
+                            onClick={() => {
+                              navigate("/settings");
+                              setDropdownOpen(false);
+                            }}
+                            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-foreground hover:bg-muted/50 transition-colors"
+                          >
+                            <Settings className="w-4 h-4 text-muted-foreground" />
+                            Settings
+                          </button>
+                        </div>
+
+                        <div className="p-1 border-t border-border/20">
+                          <button
+                            onClick={handleSignOut}
+                            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-destructive hover:bg-destructive/10 transition-colors"
+                          >
+                            <LogOut className="w-4 h-4" />
+                            Sign Out
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
                 <motion.button
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300"
+                  onClick={() => navigate("/auth")}
+                  className="relative px-4 py-1.5 rounded-full text-sm font-medium overflow-hidden group"
                   style={{
-                    background: dropdownOpen 
-                      ? 'hsla(190, 100%, 50%, 0.15)' 
-                      : 'hsla(230, 50%, 15%, 0.5)',
-                    border: `1px solid ${dropdownOpen ? 'hsla(190, 100%, 50%, 0.3)' : 'hsla(210, 40%, 98%, 0.08)'}`,
+                    background: 'linear-gradient(135deg, hsl(190 100% 50%), hsl(270 80% 60%))',
+                    boxShadow: '0 0 20px hsl(190 100% 50% / 0.3)',
                   }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: '0 0 30px hsl(190 100% 50% / 0.5), 0 0 60px hsl(270 80% 60% / 0.3)',
+                  }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                    <User className="w-3.5 h-3.5 text-primary-foreground" />
-                  </div>
-                  <span className="text-sm font-medium text-foreground hidden md:inline max-w-[100px] truncate">
-                    {user.email?.split("@")[0]}
+                  {/* Shine effect */}
+                  <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                   </span>
-                  <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+                  <span className="relative text-primary-foreground">Sign Up</span>
                 </motion.button>
-
-                {/* Dropdown Menu */}
-                <AnimatePresence>
-                  {dropdownOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      transition={{ duration: 0.15 }}
-                      className="absolute right-0 top-full mt-2 w-52 rounded-xl overflow-hidden shadow-hero"
-                      style={{
-                        background: 'hsl(230, 50%, 8%)',
-                        border: '1px solid hsla(210, 40%, 98%, 0.1)',
-                      }}
-                    >
-                      <div className="p-3 border-b border-border/20">
-                        <p className="text-sm font-medium text-foreground truncate">{user.email}</p>
-                        <p className="text-xs text-muted-foreground">Logged in</p>
-                      </div>
-                      
-                      <div className="p-1">
-                        <button
-                          onClick={() => {
-                            navigate("/profile");
-                            setDropdownOpen(false);
-                          }}
-                          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-foreground hover:bg-white/5 transition-colors"
-                        >
-                          <User className="w-4 h-4 text-primary" />
-                          Profile
-                        </button>
-                        <button
-                          onClick={() => {
-                            navigate("/settings");
-                            setDropdownOpen(false);
-                          }}
-                          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-foreground hover:bg-white/5 transition-colors"
-                        >
-                          <Settings className="w-4 h-4 text-muted-foreground" />
-                          Settings
-                        </button>
-                      </div>
-
-                      <div className="p-1 border-t border-border/20">
-                        <button
-                          onClick={handleSignOut}
-                          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-destructive hover:bg-destructive/10 transition-colors"
-                        >
-                          <LogOut className="w-4 h-4" />
-                          Sign Out
-                        </button>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ) : (
-              <motion.button
-                onClick={() => navigate("/auth")}
-                className="relative px-4 py-1.5 rounded-full text-sm font-medium overflow-hidden group"
-                style={{
-                  background: 'linear-gradient(135deg, hsl(190 100% 50%), hsl(270 80% 60%))',
-                  boxShadow: '0 0 20px hsl(190 100% 50% / 0.3)',
-                }}
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: '0 0 30px hsl(190 100% 50% / 0.5), 0 0 60px hsl(270 80% 60% / 0.3)',
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {/* Shine effect */}
-                <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                </span>
-                <span className="relative text-primary-foreground">Sign Up</span>
-              </motion.button>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Search Modal */}
