@@ -163,30 +163,28 @@ html {
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply text-foreground antialiased;
     font-family: 'Plus Jakarta Sans', sans-serif;
     overflow-x: hidden;
-    transition: background 0.4s ease;
-  }
-
-  /* Dark mode body background */
-  :root body {
-    background: 
+    transition: background 0.35s ease, background-color 0.35s ease;
+    min-height: 100vh;
+    /* Dark mode default */
+    background-color: hsl(240, 35%, 6%);
+    background-image: 
       radial-gradient(ellipse at 70% 20%, hsla(265, 50%, 25%, 0.25) 0%, transparent 50%),
       radial-gradient(ellipse at 30% 80%, hsla(195, 60%, 20%, 0.2) 0%, transparent 45%),
       radial-gradient(ellipse at 85% 70%, hsla(280, 45%, 20%, 0.15) 0%, transparent 40%),
-      radial-gradient(ellipse at 15% 30%, hsla(245, 50%, 18%, 0.2) 0%, transparent 40%),
-      hsl(240, 35%, 6%);
+      radial-gradient(ellipse at 15% 30%, hsla(245, 50%, 18%, 0.2) 0%, transparent 40%);
   }
 
-  /* Light mode body background */
-  .light body {
-    background: 
-      radial-gradient(ellipse at 70% 20%, hsla(195, 50%, 80%, 0.2) 0%, transparent 50%),
-      radial-gradient(ellipse at 30% 80%, hsla(265, 40%, 85%, 0.15) 0%, transparent 45%),
-      radial-gradient(ellipse at 85% 70%, hsla(280, 35%, 88%, 0.12) 0%, transparent 40%),
-      radial-gradient(ellipse at 15% 30%, hsla(220, 40%, 92%, 0.2) 0%, transparent 40%),
-      hsl(220, 30%, 97%);
+  /* Light mode body background - use html.light for higher specificity */
+  html.light body {
+    background-color: #F5F7FA !important;
+    background-image: 
+      radial-gradient(ellipse at 70% 20%, hsla(195, 60%, 85%, 0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 30% 80%, hsla(265, 50%, 90%, 0.25) 0%, transparent 45%),
+      radial-gradient(ellipse at 85% 70%, hsla(280, 45%, 92%, 0.2) 0%, transparent 40%),
+      radial-gradient(ellipse at 15% 30%, hsla(220, 50%, 94%, 0.25) 0%, transparent 40%) !important;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -643,6 +641,18 @@ html {
     box-shadow: 0 0 25px hsl(265 55% 60% / 0.2);
   }
 
+  /* Light mode secondary button */
+  .light .btn-secondary {
+    background: hsla(265, 55%, 60%, 0.1);
+    border: 1px solid hsla(265, 55%, 60%, 0.2);
+    color: hsl(260, 50%, 45%);
+  }
+
+  .light .btn-secondary:hover {
+    background: hsla(265, 55%, 60%, 0.18);
+    border-color: hsla(265, 55%, 60%, 0.4);
+  }
+
   /* Organic micro-interactions */
   .wiggle-hover:hover {
     animation: subtle-wiggle 0.5s ease-in-out;
@@ -689,5 +699,51 @@ html {
       hsla(240, 35%, 6%, 0.8) 70%,
       hsl(240, 35%, 6%) 100%
     );
+  }
+
+  .light .character-blend-bg {
+    background: linear-gradient(180deg, 
+      transparent 0%, 
+      hsla(220, 30%, 97%, 0.3) 40%,
+      hsla(220, 30%, 97%, 0.8) 70%,
+      #F5F7FA 100%
+    );
+  }
+
+  /* ============================================ */
+  /* ========== LIGHT MODE OVERRIDES ============ */
+  /* ============================================ */
+  
+  /* Light mode neumorphism buttons */
+  .light .neu-button {
+    background: linear-gradient(145deg, #FFFFFF 0%, #F0F3F8 100%);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 
+      4px 4px 12px rgba(0, 0, 0, 0.08),
+      -2px -2px 8px rgba(255, 255, 255, 0.9),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    color: #1D1F26;
+  }
+
+  .light .neu-button:hover {
+    box-shadow: 
+      6px 6px 16px rgba(0, 0, 0, 0.1),
+      -3px -3px 10px rgba(255, 255, 255, 1),
+      0 0 20px hsla(195, 85%, 45%, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .light .neu-button-primary {
+    background: linear-gradient(145deg, hsl(195, 85%, 50%) 0%, hsl(195, 85%, 45%) 100%);
+    box-shadow: 
+      4px 4px 12px rgba(0, 0, 0, 0.12),
+      -2px -2px 8px hsla(195, 85%, 70%, 0.3),
+      inset 0 1px 0 hsla(195, 100%, 80%, 0.3);
+  }
+
+  /* Light mode neon underline */
+  .light .neon-underline::after {
+    background: linear-gradient(90deg, hsl(195, 85%, 45%), hsl(265, 70%, 55%));
+    box-shadow: 0 0 8px hsl(195 85% 45% / 0.4);
   }
 }
