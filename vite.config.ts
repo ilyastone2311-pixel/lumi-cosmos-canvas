@@ -15,4 +15,9 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  define: {
+    // Ensure environment variables are available at build time
+    'import.meta.env.VITE_SUPABASE_URL': JSON.stringify(process.env.VITE_SUPABASE_URL || "https://iiuzxepctsbzyzrrexdd.supabase.co"),
+    'import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY': JSON.stringify(process.env.VITE_SUPABASE_PUBLISHABLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlpdXp4ZXBjdHNienl6cnJleGRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ5NTE3MDMsImV4cCI6MjA4MDUyNzcwM30.RaFz9gmS_li_gYzPOJC64SC8SzN5HQ3hhFNQ7u_XgD4"),
+  },
 }));
