@@ -8,11 +8,16 @@ import heroReaderLight from "@/assets/hero-reader-light.png";
 const HeroIllustration = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isTapped, setIsTapped] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const parallaxOffset = useParallax(0.15);
   const { resolvedTheme } = useTheme();
   
-  const heroImage = resolvedTheme === 'light' ? heroReaderLight : heroReaderNew;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  const heroImage = mounted && resolvedTheme === 'light' ? heroReaderLight : heroReaderNew;
 
   // Mouse position for parallax tilt
   const mouseX = useMotionValue(0);
