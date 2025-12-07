@@ -97,6 +97,19 @@ const HeroIllustration = () => {
     })), []
   );
 
+  // Hover reactive particles - spawn on interaction
+  const hoverParticles = useMemo(() => 
+    [...Array(12)].map((_, i) => ({
+      id: i,
+      x: 20 + Math.random() * 60,
+      y: 20 + Math.random() * 60,
+      size: 2 + Math.random() * 3,
+      offsetX: (Math.random() - 0.5) * 30,
+      offsetY: (Math.random() - 0.5) * 30,
+      delay: Math.random() * 0.5,
+    })), []
+  );
+
   // Static sparkle accents
   const sparkles = useMemo(() => [
     { top: "8%", right: "25%", size: 12, delay: 0 },
@@ -449,6 +462,60 @@ const HeroIllustration = () => {
         </motion.div>
       ))}
 
+      {/* Hover-reactive particles */}
+      <AnimatePresence>
+        {isActive && hoverParticles.map((particle) => (
+          <motion.div
+            key={`hover-particle-${particle.id}`}
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              left: `${particle.x}%`,
+              top: `${particle.y}%`,
+              width: particle.size,
+              height: particle.size,
+              background: particle.id % 3 === 0
+                ? isLightTheme
+                  ? 'hsla(320, 100%, 72%, 0.9)'
+                  : 'hsla(195, 100%, 65%, 0.9)'
+                : particle.id % 3 === 1
+                  ? isLightTheme
+                    ? 'hsla(270, 85%, 75%, 0.9)'
+                    : 'hsla(270, 85%, 70%, 0.9)'
+                  : isLightTheme
+                    ? 'hsla(200, 90%, 70%, 0.9)'
+                    : 'hsla(320, 80%, 65%, 0.9)',
+              boxShadow: particle.id % 3 === 0
+                ? isLightTheme
+                  ? '0 0 10px hsla(320, 100%, 70%, 0.7)'
+                  : '0 0 10px hsla(195, 100%, 60%, 0.7)'
+                : isLightTheme
+                  ? '0 0 10px hsla(270, 85%, 72%, 0.7)'
+                  : '0 0 10px hsla(270, 85%, 65%, 0.7)',
+            }}
+            initial={{ 
+              opacity: 0,
+              scale: 0,
+              x: 0,
+              y: 0,
+            }}
+            animate={{ 
+              opacity: [0, 0.8, 0.6],
+              scale: [0, 1.2, 0.9],
+              x: particle.offsetX,
+              y: particle.offsetY,
+            }}
+            exit={{ 
+              opacity: 0,
+              scale: 0,
+            }}
+            transition={{ 
+              duration: 0.6,
+              delay: particle.delay,
+              ease: "easeOut",
+            }}
+          />
+        ))}
+      </AnimatePresence>
       {/* Ripple ring effect on hover */}
       <AnimatePresence>
         {isActive && ripples.map((ripple) => (
