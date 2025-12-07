@@ -27,6 +27,7 @@ const Article = () => {
   const navigate = useNavigate();
 
   const displayCategory = category?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  const fullArticleId = `${category}-${articleId}`;
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -66,7 +67,11 @@ const Article = () => {
           </header>
 
           {/* Audio Player */}
-          <AudioPlayer duration="5:00" />
+          <AudioPlayer 
+            duration="5:00" 
+            articleId={fullArticleId}
+            articleTitle="Discovering Insights That Transform Perspectives"
+          />
 
           {/* Action Bar */}
           <div className="flex items-center gap-4 mb-12 pb-6 border-b border-border/30 animate-fade-in" style={{ animationDelay: '100ms' }}>
