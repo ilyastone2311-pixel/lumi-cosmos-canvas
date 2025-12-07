@@ -79,15 +79,16 @@ const Library = () => {
   const otherCategories = categories.filter(cat => !isFavorite(cat.title));
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Background Effects */}
-      <BackgroundEffects />
-
-      {/* Navigation */}
+    <>
+      {/* Navigation - Outside overflow container */}
       <Navbar />
+      
+      <div className="min-h-screen relative overflow-hidden">
+        {/* Background Effects */}
+        <BackgroundEffects />
 
-      {/* Main Content */}
-      <main className="relative z-10 pt-28 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
+        {/* Main Content */}
+        <main className="relative z-10 pt-28 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
         <div className="container mx-auto max-w-7xl">
           {/* Header */}
           <header className="mb-10 sm:mb-16 animate-fade-in">
@@ -178,7 +179,8 @@ const Library = () => {
           </footer>
         </div>
       </main>
-    </div>
+      </div>
+    </>
   );
 };
 
