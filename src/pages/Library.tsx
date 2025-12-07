@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import CategoryCard from "@/components/CategoryCard";
 import { useFavorites } from "@/hooks/useFavorites";
@@ -79,13 +78,9 @@ const Library = () => {
   const otherCategories = categories.filter(cat => !isFavorite(cat.title));
 
   return (
-    <>
-      {/* Navigation - Outside overflow container */}
-      <Navbar />
-      
-      <div className="min-h-screen relative overflow-hidden">
-        {/* Background Effects */}
-        <BackgroundEffects />
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Background Effects */}
+      <BackgroundEffects />
 
         {/* Main Content */}
         <main className="relative z-10 pt-28 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
@@ -179,8 +174,7 @@ const Library = () => {
           </footer>
         </div>
       </main>
-      </div>
-    </>
+    </div>
   );
 };
 

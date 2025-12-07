@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import PageTransition from "./PageTransition";
+import Navbar from "./Navbar";
 import Index from "@/pages/Index";
 import Auth from "@/pages/Auth";
 import Library from "@/pages/Library";
@@ -18,7 +19,11 @@ const AnimatedRoutes = () => {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <>
+      {/* Navbar outside AnimatePresence for fixed positioning */}
+      <Navbar />
+      
+      <AnimatePresence mode="wait" initial={false}>
       <Routes location={location} key={location.pathname}>
         <Route
           path="/"
@@ -117,7 +122,8 @@ const AnimatedRoutes = () => {
           }
         />
       </Routes>
-    </AnimatePresence>
+      </AnimatePresence>
+    </>
   );
 };
 
