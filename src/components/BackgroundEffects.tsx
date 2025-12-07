@@ -40,7 +40,44 @@ const BackgroundEffects = () => {
     { x: 60, y: 25, size: 300, colorDark: "200 70% 12%", colorLight: "200 60% 90%", blur: 80 },
   ], []);
 
-  // Generate star dust particles
+  // Light mode star dust - softer, more numerous
+  const lightStarDust = useMemo(() => 
+    [...Array(60)].map((_, i) => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: 1 + Math.random() * 2.5,
+      opacity: 0.15 + Math.random() * 0.35,
+      delay: Math.random() * 4,
+      duration: 2.5 + Math.random() * 3,
+      color: i % 4 === 0 
+        ? '320 100% 70%' // Pink
+        : i % 4 === 1 
+          ? '270 80% 75%' // Lavender
+          : i % 4 === 2
+            ? '195 85% 55%' // Cyan
+            : '0 0% 75%', // Silver
+    })), 
+  []);
+
+  // Light mode floating nebulae - soft pastel clouds
+  const lightNebulae = useMemo(() => [
+    { x: 80, y: 10, size: 600, color: '320 100% 70%', opacity: 0.08 }, // Pink
+    { x: 15, y: 35, size: 500, color: '270 80% 75%', opacity: 0.1 }, // Lavender
+    { x: 90, y: 55, size: 450, color: '195 85% 60%', opacity: 0.06 }, // Cyan
+    { x: 25, y: 80, size: 550, color: '320 80% 75%', opacity: 0.07 }, // Pink-lavender
+    { x: 60, y: 20, size: 400, color: '270 60% 80%', opacity: 0.09 }, // Soft lavender
+    { x: 45, y: 65, size: 480, color: '195 70% 65%', opacity: 0.05 }, // Light cyan
+  ], []);
+
+  // Light mode holographic orbs
+  const lightOrbs = useMemo(() => [
+    { x: 85, y: 15, size: 250, gradient: 'linear-gradient(135deg, hsla(320, 100%, 70%, 0.12) 0%, hsla(270, 80%, 75%, 0.08) 50%, transparent 100%)' },
+    { x: 10, y: 45, size: 200, gradient: 'linear-gradient(225deg, hsla(270, 80%, 75%, 0.1) 0%, hsla(195, 85%, 60%, 0.06) 50%, transparent 100%)' },
+    { x: 75, y: 70, size: 180, gradient: 'linear-gradient(45deg, hsla(195, 85%, 55%, 0.08) 0%, hsla(320, 100%, 70%, 0.1) 50%, transparent 100%)' },
+    { x: 30, y: 25, size: 220, gradient: 'linear-gradient(315deg, hsla(320, 80%, 75%, 0.09) 0%, hsla(270, 70%, 80%, 0.07) 50%, transparent 100%)' },
+  ], []);
+
+  // Generate star dust particles for dark mode
   const starDust = useMemo(() => 
     [...Array(40)].map((_, i) => ({
       x: Math.random() * 100,
@@ -52,7 +89,7 @@ const BackgroundEffects = () => {
     })), 
   []);
 
-  // Floating orb configurations
+  // Floating orb configurations for dark mode
   const floatingOrbs = useMemo(() => [
     { x: 80, y: 20, size: 200, colorDark: "190 100% 50%", colorLight: "190 80% 60%", opacity: 0.08 },
     { x: 10, y: 50, size: 150, colorDark: "270 100% 60%", colorLight: "270 70% 70%", opacity: 0.06 },
@@ -67,46 +104,219 @@ const BackgroundEffects = () => {
   const parallaxFast = scrollY * 0.08;
   const parallaxUltraFast = scrollY * 0.12;
 
-  // Hide completely in light mode for cleaner look
+  // Light mode background with full cosmic treatment
   if (isLight) {
     return (
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 transition-opacity duration-500">
-        {/* Light mode subtle background effects */}
+        {/* Base gradient - soft cosmic gray with gentle color hints */}
         <div 
           className="absolute inset-0"
           style={{
             background: `
-              radial-gradient(ellipse at 80% 10%, hsl(195 60% 85% / 0.4) 0%, transparent 45%),
-              radial-gradient(ellipse at 10% 30%, hsl(265 50% 90% / 0.3) 0%, transparent 40%),
-              radial-gradient(ellipse at 90% 60%, hsl(280 45% 92% / 0.25) 0%, transparent 45%),
-              radial-gradient(ellipse at 30% 80%, hsl(220 50% 94% / 0.3) 0%, transparent 50%)
+              radial-gradient(ellipse at 50% 0%, hsla(270, 60%, 95%, 0.8) 0%, transparent 50%),
+              radial-gradient(ellipse at 100% 50%, hsla(320, 80%, 95%, 0.6) 0%, transparent 40%),
+              radial-gradient(ellipse at 0% 80%, hsla(195, 70%, 92%, 0.7) 0%, transparent 45%),
+              linear-gradient(180deg, #F5F7FA 0%, #F0F2F8 50%, #F5F7FA 100%)
             `,
           }}
         />
-        
-        {/* Subtle floating orbs for light mode */}
+
+        {/* Soft nebulae clouds - pink and lavender */}
+        {lightNebulae.map((nebula, i) => (
+          <div
+            key={`light-nebula-${i}`}
+            className="absolute rounded-full will-change-transform animate-pulse"
+            style={{
+              left: `${nebula.x}%`,
+              top: `${nebula.y}%`,
+              width: `${nebula.size}px`,
+              height: `${nebula.size}px`,
+              background: `radial-gradient(circle, hsl(${nebula.color} / ${nebula.opacity}) 0%, hsl(${nebula.color} / ${nebula.opacity * 0.3}) 40%, transparent 70%)`,
+              filter: 'blur(80px)',
+              transform: `translate(-50%, -50%) translate3d(0, ${parallaxSlow * (0.5 + i * 0.2)}px, 0)`,
+              transition: 'transform 0.1s linear',
+              animationDuration: `${6 + i * 2}s`,
+              animationDelay: `${i * 0.8}s`,
+            }}
+          />
+        ))}
+
+        {/* Holographic gradient orbs */}
+        {lightOrbs.map((orb, i) => (
+          <div
+            key={`light-orb-${i}`}
+            className="absolute rounded-full will-change-transform"
+            style={{
+              left: `${orb.x}%`,
+              top: `${orb.y}%`,
+              width: `${orb.size}px`,
+              height: `${orb.size}px`,
+              background: orb.gradient,
+              filter: 'blur(40px)',
+              transform: `translate(-50%, -50%) translate3d(${(i % 2 === 0 ? 1 : -1) * parallaxMedium * 0.2}px, ${parallaxMedium * (0.8 + i * 0.15)}px, 0)`,
+              transition: 'transform 0.1s linear',
+            }}
+          />
+        ))}
+
+        {/* Floating star dust particles */}
+        {lightStarDust.map((star, i) => (
+          <div
+            key={`light-star-${i}`}
+            className="absolute rounded-full will-change-transform"
+            style={{
+              left: `${star.x}%`,
+              top: `${star.y}%`,
+              width: `${star.size}px`,
+              height: `${star.size}px`,
+              background: `hsl(${star.color})`,
+              opacity: star.opacity,
+              boxShadow: `0 0 ${star.size * 3}px hsl(${star.color} / 0.4)`,
+              transform: `translate3d(0, ${parallaxMedium * (0.3 + (i % 5) * 0.15)}px, 0)`,
+              transition: 'transform 0.1s linear',
+              animation: `pulse ${star.duration}s ease-in-out infinite`,
+              animationDelay: `${star.delay}s`,
+            }}
+          />
+        ))}
+
+        {/* Large soft glow - Pink accent */}
         <div 
-          className="absolute w-[500px] h-[500px] rounded-full"
+          className="absolute w-[800px] h-[800px] rounded-full will-change-transform"
           style={{
-            top: '10%',
-            right: '10%',
-            background: 'radial-gradient(circle, hsl(195 85% 45% / 0.08) 0%, transparent 70%)',
-            filter: 'blur(80px)',
+            top: '-10%',
+            right: '-5%',
+            background: 'radial-gradient(circle, hsla(320, 100%, 70%, 0.1) 0%, hsla(320, 100%, 70%, 0.03) 40%, transparent 70%)',
+            filter: 'blur(100px)',
+            transform: `translate3d(${parallaxSlow * -0.2}px, ${parallaxFast * 0.5}px, 0)`,
+            transition: 'transform 0.1s linear',
           }}
         />
+
+        {/* Large soft glow - Lavender accent */}
         <div 
-          className="absolute w-[400px] h-[400px] rounded-full"
+          className="absolute w-[700px] h-[700px] rounded-full will-change-transform"
           style={{
-            top: '40%',
-            left: '5%',
-            background: 'radial-gradient(circle, hsl(265 70% 55% / 0.06) 0%, transparent 70%)',
-            filter: 'blur(100px)',
+            top: '30%',
+            left: '-10%',
+            background: 'radial-gradient(circle, hsla(270, 80%, 75%, 0.12) 0%, hsla(270, 80%, 75%, 0.04) 40%, transparent 70%)',
+            filter: 'blur(120px)',
+            transform: `translate3d(${parallaxMedium * 0.3}px, ${parallaxUltraFast * 0.4}px, 0)`,
+            transition: 'transform 0.1s linear',
+          }}
+        />
+
+        {/* Cyan accent glow */}
+        <div 
+          className="absolute w-[500px] h-[500px] rounded-full will-change-transform"
+          style={{
+            bottom: '10%',
+            right: '20%',
+            background: 'radial-gradient(circle, hsla(195, 85%, 55%, 0.08) 0%, hsla(195, 85%, 55%, 0.02) 50%, transparent 70%)',
+            filter: 'blur(80px)',
+            transform: `translate3d(${parallaxMedium * -0.3}px, ${-parallaxMedium * 0.5}px, 0)`,
+            transition: 'transform 0.1s linear',
+          }}
+        />
+
+        {/* Holographic wave effect - top */}
+        <div 
+          className="absolute inset-x-0 top-0 h-[50vh] pointer-events-none"
+          style={{
+            background: `
+              linear-gradient(180deg, 
+                hsla(270, 60%, 95%, 0.6) 0%, 
+                hsla(320, 80%, 97%, 0.3) 30%, 
+                transparent 100%
+              )
+            `,
+            opacity: 0.8,
+          }}
+        />
+
+        {/* Holographic wave effect - bottom */}
+        <div 
+          className="absolute inset-x-0 bottom-0 h-[40vh] pointer-events-none"
+          style={{
+            background: `
+              linear-gradient(0deg, 
+                hsla(195, 70%, 95%, 0.5) 0%, 
+                hsla(270, 60%, 97%, 0.2) 40%, 
+                transparent 100%
+              )
+            `,
+            opacity: 0.7,
+          }}
+        />
+
+        {/* Subtle holographic shimmer lines */}
+        <div 
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            background: `
+              repeating-linear-gradient(
+                135deg,
+                transparent 0px,
+                transparent 80px,
+                hsla(320, 100%, 70%, 0.15) 80px,
+                hsla(320, 100%, 70%, 0.15) 81px
+              ),
+              repeating-linear-gradient(
+                45deg,
+                transparent 0px,
+                transparent 120px,
+                hsla(270, 80%, 75%, 0.1) 120px,
+                hsla(270, 80%, 75%, 0.1) 121px
+              )
+            `,
+            transform: `translateX(${scrollY * 0.05}px)`,
+          }}
+        />
+
+        {/* Star cluster effect - scattered bright points */}
+        <svg className="absolute inset-0 w-full h-full opacity-30" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="lightStarGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="1" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          {[...Array(25)].map((_, i) => (
+            <circle
+              key={`star-cluster-${i}`}
+              cx={`${10 + Math.random() * 80}%`}
+              cy={`${10 + Math.random() * 80}%`}
+              r={0.5 + Math.random() * 1.5}
+              fill={i % 3 === 0 ? '#FF6BDA' : i % 3 === 1 ? '#D2B4FF' : '#33E8FF'}
+              opacity={0.3 + Math.random() * 0.4}
+              filter="url(#lightStarGlow)"
+            />
+          ))}
+        </svg>
+
+        {/* Soft vignette for depth */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(ellipse at center, transparent 40%, hsla(220, 30%, 95%, 0.4) 100%)',
+          }}
+        />
+
+        {/* Very subtle noise texture */}
+        <div 
+          className="absolute inset-0 opacity-[0.008]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
           }}
         />
       </div>
     );
   }
 
+  // Dark mode background (unchanged)
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 transition-opacity duration-500">
       {/* Deep cosmic gradient base - enhanced */}
