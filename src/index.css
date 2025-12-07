@@ -152,6 +152,92 @@ html {
   }
 }
 
+/* ===== Passive Background Animations ===== */
+@keyframes floatSoft {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.4; }
+  50% { transform: translateY(-10px) translateX(6px); opacity: 0.65; }
+}
+
+@keyframes floatSoftAlt {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.35; }
+  50% { transform: translateY(8px) translateX(-5px); opacity: 0.55; }
+}
+
+@keyframes cosmicDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  33% { transform: translate(8px, -6px) scale(1.02); opacity: 0.7; }
+  66% { transform: translate(-5px, 4px) scale(0.98); opacity: 0.55; }
+}
+
+@keyframes gentlePulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+@keyframes cosmicStreak {
+  0% { transform: translateX(-100%) translateY(0); opacity: 0; }
+  10% { opacity: 0.15; }
+  90% { opacity: 0.15; }
+  100% { transform: translateX(200%) translateY(-50px); opacity: 0; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.9); }
+  50% { opacity: 0.9; transform: scale(1.1); }
+}
+
+@keyframes softShimmer {
+  0%, 100% { opacity: 0.03; }
+  50% { opacity: 0.08; }
+}
+
+@keyframes nebulaFloat {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.5; }
+  25% { transform: translate(15px, -10px) rotate(2deg); opacity: 0.6; }
+  50% { transform: translate(-10px, 5px) rotate(-1deg); opacity: 0.45; }
+  75% { transform: translate(5px, -8px) rotate(1deg); opacity: 0.55; }
+}
+
+/* Animation utility classes */
+.animate-float-soft {
+  animation: floatSoft 25s ease-in-out infinite;
+}
+
+.animate-float-soft-alt {
+  animation: floatSoftAlt 30s ease-in-out infinite;
+}
+
+.animate-cosmic-drift {
+  animation: cosmicDrift 35s ease-in-out infinite;
+}
+
+.animate-gentle-pulse {
+  animation: gentlePulse 8s ease-in-out infinite;
+}
+
+.animate-cosmic-streak {
+  animation: cosmicStreak 40s linear infinite;
+}
+
+.animate-twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.animate-soft-shimmer {
+  animation: softShimmer 40s ease-in-out infinite;
+}
+
+.animate-nebula-float {
+  animation: nebulaFloat 45s ease-in-out infinite;
+}
+
+/* Staggered animation delays */
+.anim-delay-1 { animation-delay: 0s; }
+.anim-delay-2 { animation-delay: 5s; }
+.anim-delay-3 { animation-delay: 10s; }
+.anim-delay-4 { animation-delay: 15s; }
+.anim-delay-5 { animation-delay: 20s; }
+
 @layer base {
   /* ========== GPU-OPTIMIZED ANIMATION DEFAULTS ========== */
   * {
