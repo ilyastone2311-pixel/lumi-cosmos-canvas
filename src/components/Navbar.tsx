@@ -57,16 +57,18 @@ const Navbar = () => {
 
   return (
     <nav 
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-2xl animate-navbar-glow bg-card/80 backdrop-blur-xl border border-border/50 sticky-nav"
-      style={{
-        boxShadow: `
-          0 0 0 1px hsl(var(--primary) / 0.1),
-          0 0 15px hsl(var(--primary) / 0.08),
-          0 8px 32px hsl(var(--foreground) / 0.1)
-        `,
-        position: 'fixed',
-      }}
+      className="fixed top-0 left-0 right-0 z-50 w-full py-3 px-4"
     >
+      <div 
+        className="mx-auto max-w-5xl rounded-2xl animate-navbar-glow bg-card/80 backdrop-blur-xl border border-border/50"
+        style={{
+          boxShadow: `
+            0 0 0 1px hsl(var(--primary) / 0.1),
+            0 0 15px hsl(var(--primary) / 0.08),
+            0 8px 32px hsl(var(--foreground) / 0.1)
+          `,
+        }}
+      >
       <div className="relative px-4 sm:px-6 py-3 flex items-center justify-between">
         {/* Logo with glow */}
         <motion.div 
@@ -366,6 +368,7 @@ const Navbar = () => {
 
       {/* Search Modal */}
       <SearchBar isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      </div>
     </nav>
   );
 };
