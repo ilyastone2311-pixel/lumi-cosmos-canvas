@@ -57,13 +57,14 @@ const Navbar = () => {
 
   return (
     <nav 
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-2xl animate-navbar-glow bg-card/80 backdrop-blur-xl border border-border/50"
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-2xl animate-navbar-glow bg-card/80 backdrop-blur-xl border border-border/50 sticky-nav"
       style={{
         boxShadow: `
           0 0 0 1px hsl(var(--primary) / 0.1),
           0 0 15px hsl(var(--primary) / 0.08),
           0 8px 32px hsl(var(--foreground) / 0.1)
         `,
+        position: 'fixed',
       }}
     >
       <div className="relative px-4 sm:px-6 py-3 flex items-center justify-between">
@@ -98,7 +99,7 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-1">
           <motion.button
             onClick={() => navigate("/")}
-            className={`relative px-4 py-1.5 rounded-full font-display font-medium text-sm transition-all duration-300 ${
+            className={`relative px-5 py-2 rounded-full font-display font-medium text-base transition-all duration-300 ${
               isActive("/")
                 ? "text-foreground"
                 : "text-muted-foreground hover:text-foreground"
@@ -121,7 +122,7 @@ const Navbar = () => {
           
           <motion.button
             onClick={() => navigate("/library")}
-            className={`relative px-4 py-1.5 rounded-full font-display font-medium text-sm transition-all duration-300 ${
+            className={`relative px-5 py-2 rounded-full font-display font-medium text-base transition-all duration-300 ${
               isActive("/library")
                 ? "text-foreground"
                 : "text-muted-foreground hover:text-foreground"
@@ -145,13 +146,13 @@ const Navbar = () => {
           {/* Search Button - Desktop */}
           <motion.button
             onClick={() => setSearchOpen(true)}
-            className="relative px-3 py-1.5 rounded-full text-sm transition-all duration-300 text-muted-foreground hover:text-foreground flex items-center gap-2"
+            className="relative px-4 py-2 rounded-full text-base transition-all duration-300 text-muted-foreground hover:text-foreground flex items-center gap-2"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <Search className="w-4 h-4" />
-            <span className="text-xs">Search</span>
-            <kbd className="hidden lg:inline-flex h-4 items-center rounded border border-border/30 bg-white/5 px-1 font-mono text-[9px] text-muted-foreground/70">
+            <span className="text-sm">Search</span>
+            <kbd className="hidden lg:inline-flex h-5 items-center rounded border border-border/30 bg-white/5 px-1.5 font-mono text-[10px] text-muted-foreground/70">
               ⌘K
             </kbd>
           </motion.button>
