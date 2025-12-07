@@ -1,7 +1,6 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useParallax } from "@/hooks/useParallax";
-import { useTheme } from "next-themes";
 
 // Dark theme illustration
 import heroImageDark from "@/assets/hero-reader-new.png";
@@ -12,17 +11,39 @@ const HeroIllustration = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isTapped, setIsTapped] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
   const containerRef = useRef<HTMLDivElement>(null);
   const parallaxOffset = useParallax(0.15);
-  const { resolvedTheme } = useTheme();
   
-  // Wait for theme to be resolved on client
+  // Custom theme detection - reads from localStorage and observes class changes
   useEffect(() => {
+    // Initial theme read from localStorage (same logic as ThemeToggle)
+    const stored = localStorage.getItem("lumi-theme");
+    if (stored === "light" || stored === "dark") {
+      setTheme(stored);
+    } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+      setTheme("light");
+    } else {
+      setTheme("dark");
+    }
     setMounted(true);
+
+    // Watch for theme class changes on document.documentElement
+    const observer = new MutationObserver(() => {
+      const isLight = document.documentElement.classList.contains("light");
+      setTheme(isLight ? "light" : "dark");
+    });
+    
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   // Explicit conditional: light theme = light image, dark theme = dark image
-  const isLightTheme = mounted && resolvedTheme === 'light';
+  const isLightTheme = mounted && theme === 'light';
   const currentHeroImage = isLightTheme ? heroImageLight : heroImageDark;
 
   // Mouse position for parallax tilt
