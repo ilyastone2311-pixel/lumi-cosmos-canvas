@@ -17,7 +17,9 @@ import {
   UserX,
   UserCheck,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  FileText,
+  Plus
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -178,6 +180,29 @@ const Admin = () => {
               <h1 className="text-3xl font-bold text-foreground">Панель администратора</h1>
               <p className="text-muted-foreground">Управление пользователями и ролями</p>
             </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => navigate('/admin/articles')}
+              className="glass-card p-6 rounded-xl text-left hover:border-primary/30 transition-all group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                  <FileText className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground flex items-center gap-2">
+                    Добавить статью
+                    <Plus className="w-4 h-4 text-muted-foreground" />
+                  </h3>
+                  <p className="text-sm text-muted-foreground">Создать новую статью</p>
+                </div>
+              </div>
+            </motion.button>
           </div>
         </motion.div>
 

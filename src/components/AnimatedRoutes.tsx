@@ -13,6 +13,7 @@ import Article from "@/pages/Article";
 import Profile from "@/pages/Profile";
 import Settings from "@/pages/Settings";
 import Admin from "@/pages/Admin";
+import AdminArticles from "@/pages/AdminArticles";
 import NotFound from "@/pages/NotFound";
 
 const AnimatedRoutes = () => {
@@ -110,6 +111,14 @@ const AnimatedRoutes = () => {
           element={
             <PageTransition>
               <Admin />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/admin/articles"
+          element={
+            <PageTransition>
+              <AdminArticles />
             </PageTransition>
           }
         />
