@@ -14,6 +14,7 @@ import Profile from "@/pages/Profile";
 import Settings from "@/pages/Settings";
 import Admin from "@/pages/Admin";
 import AdminArticles from "@/pages/AdminArticles";
+import Recommended from "@/pages/Recommended";
 import NotFound from "@/pages/NotFound";
 
 const AnimatedRoutes = () => {
@@ -103,6 +104,14 @@ const AnimatedRoutes = () => {
           element={
             <PageTransition>
               <Settings />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/recommended"
+          element={
+            <PageTransition>
+              <Recommended />
             </PageTransition>
           }
         />

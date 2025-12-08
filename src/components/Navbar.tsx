@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Sparkles, LogOut, User, Search, Settings, ChevronDown, Menu, X } from "lucide-react";
+import { Sparkles, LogOut, User, Search, Settings, ChevronDown, Menu, X, Zap } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
@@ -144,6 +144,47 @@ const Navbar = () => {
             )}
             <span className="relative">Library</span>
           </motion.button>
+
+          {/* Recommended - Only for logged in users */}
+          {user && (
+            <motion.button
+              onClick={() => navigate("/recommended")}
+              className={`relative px-5 py-2 rounded-full font-display font-medium text-base transition-all duration-300 group ${
+                isActive("/recommended")
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {isActive("/recommended") && (
+                <motion.span 
+                  layoutId="navIndicator"
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background: 'hsla(190, 100%, 50%, 0.1)',
+                    border: '1px solid hsla(190, 100%, 50%, 0.2)',
+                  }}
+                />
+              )}
+              {/* Animated underline on hover */}
+              <motion.span
+                className="absolute bottom-0 left-1/2 h-0.5 bg-primary rounded-full"
+                initial={{ width: 0, x: '-50%' }}
+                whileHover={{ width: '60%' }}
+                transition={{ duration: 0.3 }}
+              />
+              {/* Glow pulse on hover */}
+              <motion.span
+                className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{ boxShadow: '0 0 20px hsl(var(--primary) / 0.3)' }}
+              />
+              <span className="relative flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5" />
+                For You
+              </span>
+            </motion.button>
+          )}
 
           {/* Search Button - Desktop */}
           <motion.button
@@ -313,6 +354,21 @@ const Navbar = () => {
               >
                 <span className="font-medium">Library</span>
               </button>
+
+              {/* Recommended - Mobile (only for logged in) */}
+              {user && (
+                <button
+                  onClick={() => navigate("/recommended")}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all ${
+                    isActive("/recommended")
+                      ? "bg-primary/10 text-foreground"
+                      : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                  }`}
+                >
+                  <Zap className="w-4 h-4" />
+                  <span className="font-medium">For You</span>
+                </button>
+              )}
 
               {/* Divider */}
               <div className="h-px bg-border/30 my-2" />

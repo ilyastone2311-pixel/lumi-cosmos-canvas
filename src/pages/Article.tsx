@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Navbar from "@/components/Navbar";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import AudioPlayer from "@/components/AudioPlayer";
 import KaraokeText from "@/components/KaraokeText";
+import LikeButton from "@/components/LikeButton";
+import ReadCompletionTracker from "@/components/ReadCompletionTracker";
+import { useArticleViews } from "@/hooks/useArticleViews";
 import { ArrowLeft, Clock, Star, Bookmark, Share2, ThumbsUp } from "lucide-react";
 
 const articleContent = {
@@ -27,12 +29,20 @@ const articleContent = {
 const Article = () => {
   const { category, articleId } = useParams<{ category: string; articleId: string }>();
   const navigate = useNavigate();
+  const { trackView } = useArticleViews();
   const [audioTime, setAudioTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [seekToTime, setSeekToTime] = useState<number | null>(null);
 
   const displayCategory = category?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   const fullArticleId = `${category}-${articleId}`;
+
+  // Track view on mount
+  useEffect(() => {
+    if (category && articleId) {
+      trackView(articleId, category);
+    }
+  }, [category, articleId, trackView]);
 
   const handleWordClick = (time: number) => {
     setSeekToTime(time);
@@ -41,7 +51,7 @@ const Article = () => {
   return (
     <div className="min-h-screen relative overflow-hidden">
       <BackgroundEffects />
-      <Navbar />
+      <ReadCompletionTracker articleId={fullArticleId} />
 
       <main className="relative z-10 pt-28 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
         <div className="container mx-auto max-w-3xl">
@@ -56,9 +66,12 @@ const Article = () => {
 
           {/* Article Header */}
           <header className="mb-8 sm:mb-12 animate-fade-in">
-            <span className="inline-block px-3 py-1 rounded-full bg-primary/20 text-primary text-xs sm:text-sm font-medium mb-3 sm:mb-4">
-              {displayCategory}
-            </span>
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <span className="inline-block px-3 py-1 rounded-full bg-primary/20 text-primary text-xs sm:text-sm font-medium">
+                {displayCategory}
+              </span>
+              <LikeButton articleId={fullArticleId} size="lg" />
+            </div>
             <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
               Discovering Insights That Transform Perspectives
             </h1>
