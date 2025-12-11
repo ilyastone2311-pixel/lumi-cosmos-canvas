@@ -67,8 +67,11 @@ export function OnboardingDialog({ open, onComplete }: OnboardingDialogProps) {
     onComplete();
   };
 
+  // Don't render anything if not open
+  if (!open) return null;
+
   return (
-    <Dialog open={open} onOpenChange={() => {}}>
+    <Dialog open={open} onOpenChange={(isOpen) => { if (!isOpen) onComplete(); }}>
       <DialogContent 
         className="sm:max-w-lg p-0 overflow-hidden border-primary/20 bg-background/95 backdrop-blur-xl"
         onPointerDownOutside={(e) => e.preventDefault()}
