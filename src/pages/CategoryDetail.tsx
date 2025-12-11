@@ -1,7 +1,9 @@
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import ArticlePreviewCard from "@/components/ArticlePreviewCard";
+import { SkeletonGrid } from "@/components/ui/skeleton-card";
 import { ArrowLeft } from "lucide-react";
 import { getArticlesByCategory, articles } from "@/data/articles";
 
@@ -111,9 +113,16 @@ const categoryData: Record<string, { image: string; description: string; article
 const CategoryDetail = () => {
   const { category } = useParams<{ category: string }>();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   const categoryKey = category?.toLowerCase().replace(/\s+/g, '-') || '';
   const data = categoryData[categoryKey];
+
+  useEffect(() => {
+    // Simulate loading for skeleton demo
+    const timer = setTimeout(() => setIsLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, [categoryKey]);
 
   if (!data) {
     return (
@@ -151,7 +160,13 @@ const CategoryDetail = () => {
           {/* Hero */}
           <header className="mb-12 animate-fade-in">
             <div className="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-8">
-              <img src={data.image} alt={displayName} className="w-full h-full object-cover" />
+              <img 
+                src={data.image} 
+                alt={displayName} 
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover" 
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
                 <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-2">
@@ -167,6 +182,9 @@ const CategoryDetail = () => {
             <h2 className="font-display text-2xl font-semibold text-foreground mb-6">
               Popular Articles
             </h2>
+            {isLoading ? (
+              <SkeletonGrid count={6} variant="article" />
+            ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {(() => {
                 const categoryArticles = getArticlesByCategory(categoryKey);
@@ -198,6 +216,7 @@ const CategoryDetail = () => {
                 ));
               })()}
             </div>
+            )}
           </section>
         </div>
       </main>
