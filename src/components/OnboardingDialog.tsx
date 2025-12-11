@@ -82,19 +82,20 @@ export function OnboardingDialog({ open, onComplete }: OnboardingDialogProps) {
           
           {/* Dialog */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed left-1/2 top-1/2 z-[101] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-border bg-background p-0 shadow-2xl overflow-hidden"
+            className="fixed inset-0 z-[101] flex items-center justify-center p-4 pointer-events-none"
           >
-            {/* Close button */}
-            <button
-              onClick={handleSkip}
-              className="absolute right-4 top-4 z-10 rounded-full p-1 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-            >
-              <X className="h-4 w-4" />
-            </button>
+            <div className="relative w-full max-w-lg rounded-2xl border border-border bg-background shadow-2xl overflow-hidden pointer-events-auto">
+              {/* Close button */}
+              <button
+                onClick={handleSkip}
+                className="absolute right-4 top-4 z-10 rounded-full p-1 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+              >
+                <X className="h-4 w-4" />
+              </button>
 
             <AnimatePresence mode="wait">
               {step === 1 ? (
@@ -288,6 +289,7 @@ export function OnboardingDialog({ open, onComplete }: OnboardingDialogProps) {
                 </motion.div>
               )}
             </AnimatePresence>
+            </div>
           </motion.div>
         </>
       )}
