@@ -34,10 +34,11 @@ const Auth = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user && mode !== "reset") {
+    // Don't navigate away if onboarding is showing
+    if (user && mode !== "reset" && !showOnboarding) {
       navigate("/");
     }
-  }, [user, navigate, mode]);
+  }, [user, navigate, mode, showOnboarding]);
 
   const validateForm = () => {
     try {
