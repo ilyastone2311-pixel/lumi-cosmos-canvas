@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { Sparkles, LogOut, User, Search, Settings, ChevronDown, Menu, X, Zap } from "lucide-react";
+import { Sparkles, LogOut, User, Search, Settings, ChevronDown, Menu, X, Zap, Shield } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useAdmin } from "@/hooks/useAdmin";
 import { useNavigate, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import ThemeToggle from "./ThemeToggle";
@@ -8,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const { user, signOut, loading } = useAuth();
+  const { isAdmin } = useAdmin();
   const navigate = useNavigate();
   const location = useLocation();
   const [searchOpen, setSearchOpen] = useState(false);
@@ -281,6 +283,18 @@ const Navbar = () => {
                             <Settings className="w-4 h-4 text-muted-foreground" />
                             Settings
                           </button>
+                          {isAdmin && (
+                            <button
+                              onClick={() => {
+                                navigate("/admin");
+                                setDropdownOpen(false);
+                              }}
+                              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-foreground hover:bg-muted/50 transition-colors"
+                            >
+                              <Shield className="w-4 h-4 text-amber-500" />
+                              Admin Panel
+                            </button>
+                          )}
                         </div>
 
                         <div className="p-1 border-t border-border/20">
@@ -396,6 +410,15 @@ const Navbar = () => {
                         <Settings className="w-4 h-4" />
                         <span className="font-medium">Settings</span>
                       </button>
+                      {isAdmin && (
+                        <button
+                          onClick={() => navigate("/admin")}
+                          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all"
+                        >
+                          <Shield className="w-4 h-4 text-amber-500" />
+                          <span className="font-medium">Admin Panel</span>
+                        </button>
+                      )}
                       <button
                         onClick={handleSignOut}
                         className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-destructive hover:bg-destructive/10 transition-all"
