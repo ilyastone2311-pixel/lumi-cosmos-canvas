@@ -123,7 +123,7 @@ const Recommended = () => {
               className="mb-4"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Назад
+              Back
             </Button>
 
             <div className="flex items-center gap-4 mb-6">
@@ -141,8 +141,8 @@ const Recommended = () => {
                 <Sparkles className="w-8 h-8 text-primary" />
               </motion.div>
               <div>
-                <h1 className="text-3xl font-bold text-foreground">Рекомендации</h1>
-                <p className="text-muted-foreground">Статьи, подобранные специально для вас</p>
+                <h1 className="text-3xl font-bold text-foreground">Recommended</h1>
+                <p className="text-muted-foreground">Articles curated just for you</p>
               </div>
             </div>
           </motion.div>
@@ -178,13 +178,13 @@ const Recommended = () => {
               >
                 <Sparkles className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
                 <h2 className="text-xl font-semibold text-foreground mb-2">
-                  Пока нет рекомендаций
+                  No recommendations yet
                 </h2>
                 <p className="text-muted-foreground mb-6">
-                  Читайте и лайкайте статьи, чтобы получить персональные рекомендации
+                  Read and like articles to get personalized recommendations
                 </p>
                 <Button onClick={() => navigate('/library')}>
-                  Перейти в библиотеку
+                  Go to Library
                 </Button>
               </motion.div>
             ) : (
