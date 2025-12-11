@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Sparkles, ArrowLeft, Loader2 } from 'lucide-react';
+import { Sparkles, ArrowLeft, Loader2, Heart, Wand2 } from 'lucide-react';
 import BackgroundEffects from '@/components/BackgroundEffects';
 import { Button } from '@/components/ui/button';
 import LikeButton from '@/components/LikeButton';
+import { OnboardingDialog } from '@/components/OnboardingDialog';
 import { useAuth } from '@/hooks/useAuth';
 import { useArticleLikes } from '@/hooks/useArticleLikes';
 import { useArticleReads } from '@/hooks/useArticleReads';
 import { useArticleViews } from '@/hooks/useArticleViews';
+import { useFavorites } from '@/hooks/useFavorites';
 import { articles, Article } from '@/data/articles';
 
 const Recommended = () => {
@@ -17,8 +19,11 @@ const Recommended = () => {
   const { likedArticles, loading: likesLoading } = useArticleLikes();
   const { readArticles, loading: readsLoading } = useArticleReads();
   const { getTopCategories } = useArticleViews();
+  const { favorites, loading: favoritesLoading } = useFavorites();
   const [recommendations, setRecommendations] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [hasNoActivity, setHasNoActivity] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -28,13 +33,29 @@ const Recommended = () => {
 
   useEffect(() => {
     const generateRecommendations = async () => {
-      if (likesLoading || readsLoading || !user) return;
+      if (likesLoading || readsLoading || favoritesLoading || !user) return;
 
       setLoading(true);
 
       try {
         const topCategories = await getTopCategories();
         
+        // Check if user has any activity
+        const hasLikes = likedArticles.length > 0;
+        const hasReads = readArticles.length > 0;
+        const hasFavorites = favorites.length > 0;
+        const hasViews = topCategories.length > 0;
+        
+        // If user has no activity at all, show empty state
+        if (!hasLikes && !hasReads && !hasFavorites && !hasViews) {
+          setHasNoActivity(true);
+          setRecommendations([]);
+          setLoading(false);
+          return;
+        }
+        
+        setHasNoActivity(false);
+
         // Get categories from liked articles
         const likedCategories = likedArticles
           .map(id => articles.find(a => a.id === id)?.category)
@@ -47,6 +68,11 @@ const Recommended = () => {
 
         // Combine and weight categories
         const categoryScores: Record<string, number> = {};
+        
+        // Favorites get highest weight
+        favorites.forEach(cat => {
+          categoryScores[cat] = (categoryScores[cat] || 0) + 5;
+        });
         
         likedCategories.forEach(cat => {
           categoryScores[cat] = (categoryScores[cat] || 0) + 3;
@@ -95,7 +121,14 @@ const Recommended = () => {
     };
 
     generateRecommendations();
-  }, [user, likedArticles, readArticles, likesLoading, readsLoading, getTopCategories]);
+  }, [user, likedArticles, readArticles, favorites, likesLoading, readsLoading, favoritesLoading, getTopCategories]);
+
+  const handleOnboardingComplete = () => {
+    setShowOnboarding(false);
+    // Trigger recommendations refresh
+    setLoading(true);
+    setHasNoActivity(false);
+  };
 
   if (authLoading) {
     return (
@@ -170,6 +203,88 @@ const Recommended = () => {
               <div className="flex items-center justify-center py-20">
                 <Loader2 className="w-8 h-8 animate-spin text-primary" />
               </div>
+            ) : hasNoActivity ? (
+              /* Empty state for new users */
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex flex-col items-center justify-center py-16 px-4"
+              >
+                {/* Animated icon container */}
+                <motion.div
+                  className="relative mb-8"
+                  animate={{ 
+                    y: [0, -8, 0],
+                  }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <motion.div
+                    className="w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center"
+                    animate={{ 
+                      boxShadow: [
+                        '0 0 30px hsl(var(--primary) / 0.2)',
+                        '0 0 60px hsl(var(--primary) / 0.4)',
+                        '0 0 30px hsl(var(--primary) / 0.2)'
+                      ]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <Heart className="w-10 h-10 text-primary" />
+                  </motion.div>
+                  
+                  {/* Floating sparkles */}
+                  <motion.div
+                    className="absolute -top-2 -right-2"
+                    animate={{ 
+                      rotate: [0, 360],
+                      scale: [1, 1.2, 1]
+                    }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                  >
+                    <Sparkles className="w-6 h-6 text-accent" />
+                  </motion.div>
+                </motion.div>
+
+                <h2 className="text-2xl font-bold text-foreground mb-3 text-center">
+                  Let's personalize your feed
+                </h2>
+                
+                <p className="text-muted-foreground text-center max-w-md mb-8 leading-relaxed">
+                  Tell us what topics interest you most, and we'll curate the perfect reading experience just for you.
+                </p>
+
+                {/* Personalization button */}
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Button
+                    size="lg"
+                    onClick={() => setShowOnboarding(true)}
+                    className="group relative overflow-hidden px-8 py-6 text-lg font-semibold rounded-xl"
+                  >
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-primary/0 via-white/20 to-primary/0"
+                      animate={{ x: ['-100%', '100%'] }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+                    />
+                    <Wand2 className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
+                    Choose Your Interests
+                  </Button>
+                </motion.div>
+
+                {/* Secondary option */}
+                <p className="text-sm text-muted-foreground mt-6">
+                  Or{' '}
+                  <button 
+                    onClick={() => navigate('/library')} 
+                    className="text-primary hover:underline font-medium"
+                  >
+                    browse the library
+                  </button>
+                  {' '}and start reading
+                </p>
+              </motion.div>
             ) : recommendations.length === 0 ? (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -254,6 +369,12 @@ const Recommended = () => {
           </motion.div>
         </div>
       </main>
+
+      {/* Onboarding Dialog */}
+      <OnboardingDialog 
+        open={showOnboarding} 
+        onComplete={handleOnboardingComplete} 
+      />
     </div>
   );
 };
