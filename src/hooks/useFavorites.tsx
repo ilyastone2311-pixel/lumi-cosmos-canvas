@@ -83,7 +83,24 @@ export function useFavorites() {
     }
   };
 
+  const addFavorite = async (category: string) => {
+    if (!user) return;
+    
+    if (favorites.includes(category)) return;
+
+    try {
+      const { error } = await supabase
+        .from("favorites")
+        .insert({ user_id: user.id, category });
+
+      if (error) throw error;
+      setFavorites(prev => [...prev, category]);
+    } catch (error) {
+      console.error("Error adding favorite:", error);
+    }
+  };
+
   const isFavorite = (category: string) => favorites.includes(category);
 
-  return { favorites, loading, toggleFavorite, isFavorite };
+  return { favorites, loading, toggleFavorite, isFavorite, addFavorite };
 }

@@ -6,6 +6,7 @@ import BackgroundEffects from "@/components/BackgroundEffects";
 import { Sparkles, Mail, Lock, ArrowLeft, Loader2, KeyRound } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
+import { OnboardingDialog } from "@/components/OnboardingDialog";
 
 const authSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -28,6 +29,7 @@ const Auth = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState<{ email?: string; password?: string; confirmPassword?: string }>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const { signIn, signUp, resetPassword, updatePassword, user } = useAuth();
   const navigate = useNavigate();
 
@@ -116,9 +118,9 @@ const Auth = () => {
         } else {
           toast({
             title: "Account created!",
-            description: "Welcome to Lumi. Start exploring your favorite topics.",
+            description: "Welcome to Lumi. Let's personalize your experience.",
           });
-          navigate("/");
+          setShowOnboarding(true);
         }
       } else if (mode === "forgot") {
         const { error } = await resetPassword(email);
@@ -198,9 +200,20 @@ const Auth = () => {
     }
   };
 
+  const handleOnboardingComplete = () => {
+    setShowOnboarding(false);
+    localStorage.setItem("lumi_onboarding_completed", "true");
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen relative overflow-hidden flex items-center justify-center">
       <BackgroundEffects />
+      
+      <OnboardingDialog 
+        open={showOnboarding} 
+        onComplete={handleOnboardingComplete} 
+      />
 
       <div className="relative z-10 w-full max-w-md px-6">
         {/* Back button */}
