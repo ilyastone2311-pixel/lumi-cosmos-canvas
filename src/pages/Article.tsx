@@ -5,6 +5,7 @@ import AudioPlayer from "@/components/AudioPlayer";
 import KaraokeText from "@/components/KaraokeText";
 import LikeButton from "@/components/LikeButton";
 import ReadCompletionTracker from "@/components/ReadCompletionTracker";
+import { ArticlePageSkeleton } from "@/components/ui/skeleton-card";
 import { useArticleViews } from "@/hooks/useArticleViews";
 import { ArrowLeft, Clock, Star, Bookmark, Share2, ThumbsUp } from "lucide-react";
 
@@ -33,20 +34,35 @@ const Article = () => {
   const [audioTime, setAudioTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [seekToTime, setSeekToTime] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const displayCategory = category?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   const fullArticleId = `${category}-${articleId}`;
 
-  // Track view on mount
+  // Track view on mount and simulate content loading
   useEffect(() => {
     if (category && articleId) {
       trackView(articleId, category);
     }
+    // Simulate content loading for skeleton demo
+    const timer = setTimeout(() => setIsLoading(false), 600);
+    return () => clearTimeout(timer);
   }, [category, articleId, trackView]);
 
   const handleWordClick = (time: number) => {
     setSeekToTime(time);
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen relative overflow-hidden">
+        <BackgroundEffects />
+        <main className="relative z-10 pt-28 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
+          <ArticlePageSkeleton />
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen relative overflow-hidden">

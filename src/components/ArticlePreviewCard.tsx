@@ -148,7 +148,7 @@ const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => 
       onTouchStart={() => setShowPreview(true)}
       onTouchEnd={() => setTimeout(() => setShowPreview(false), 3000)}
     >
-      {/* Main Card - with theme-aware styles */}
+      {/* Main Card - with theme-aware styles and enhanced hover */}
       <motion.button
         onClick={handleClick}
         className="w-full text-left group relative rounded-xl overflow-hidden bg-card dark:bg-card/60"
@@ -156,19 +156,32 @@ const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => 
           backdropFilter: 'blur(12px)',
           border: '1px solid hsl(var(--border))',
           boxShadow: isHovered 
-            ? '0 15px 40px hsla(var(--primary), 0.15), 0 0 0 1px hsla(var(--primary), 0.1)'
+            ? '0 20px 50px hsla(var(--primary), 0.2), 0 0 0 1px hsla(var(--primary), 0.15), 0 8px 16px hsla(var(--foreground), 0.1)'
             : '0 4px 20px hsla(var(--foreground), 0.05)',
           transition: 'all 0.4s cubic-bezier(0.2, 0.9, 0.2, 1)',
-          transform: isHovered ? 'translateY(-4px) scale(1.01)' : 'translateY(0) scale(1)',
+          transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
         }}
         whileTap={{ scale: 0.98 }}
       >
         {/* Top edge glow */}
         <div 
-          className={`absolute top-0 left-0 right-0 h-px transition-opacity duration-400 ${isHovered ? 'opacity-100' : 'opacity-30'}`}
+          className={`absolute top-0 left-0 right-0 h-px transition-all duration-400 ${isHovered ? 'opacity-100' : 'opacity-30'}`}
           style={{
-            background: 'linear-gradient(90deg, transparent, hsla(var(--primary), 0.5), transparent)',
+            background: 'linear-gradient(90deg, transparent, hsla(var(--primary), 0.6), hsla(var(--secondary), 0.4), transparent)',
           }}
+        />
+        
+        {/* Bottom glow on hover */}
+        <motion.div
+          className="absolute -bottom-2 left-1/2 w-3/4 h-8 rounded-full pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse, hsla(var(--primary), 0.3) 0%, transparent 70%)',
+            filter: 'blur(12px)',
+            transform: 'translateX(-50%)',
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
         />
 
         <div className="p-5">
@@ -212,14 +225,38 @@ const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => 
               </span>
             </div>
             
-            {/* Arrow indicator */}
+            {/* Arrow indicator with micro-animation */}
             <motion.div
-              className="flex items-center gap-1 text-primary"
-              animate={{ x: isHovered ? 4 : 0 }}
-              transition={{ duration: 0.2 }}
+              className="flex items-center gap-1.5 text-primary"
+              animate={{ 
+                x: isHovered ? 4 : 0,
+                scale: isHovered ? 1.05 : 1
+              }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
             >
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">Read</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <motion.span 
+                className="text-xs font-medium"
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ 
+                  opacity: isHovered ? 1 : 0,
+                  x: isHovered ? 0 : -8
+                }}
+                transition={{ duration: 0.2 }}
+              >
+                Read
+              </motion.span>
+              <motion.div
+                animate={{ 
+                  x: isHovered ? [0, 3, 0] : 0,
+                }}
+                transition={{ 
+                  duration: 0.8, 
+                  repeat: isHovered ? Infinity : 0,
+                  ease: "easeInOut"
+                }}
+              >
+                <ArrowRight className="w-4 h-4" />
+              </motion.div>
             </motion.div>
           </div>
         </div>
