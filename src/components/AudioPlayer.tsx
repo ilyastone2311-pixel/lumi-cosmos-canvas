@@ -303,16 +303,16 @@ const AudioPlayer = ({
           ))}
         </div>
 
-        {/* Main Player Container */}
+        {/* Main Player Container - Mobile optimized with larger touch targets */}
         <motion.div
-          className={`relative glass rounded-2xl p-6 sm:p-8 transition-all duration-500 ${
+          className={`relative glass rounded-2xl p-4 sm:p-6 md:p-8 transition-all duration-500 ${
             isPlaying ? "audio-player-active" : ""
           }`}
           style={{
             background: "linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--background)) 100%)",
             boxShadow: isPlaying
-              ? "0 0 60px hsla(var(--neon-cyan), 0.25), 0 0 100px hsla(var(--neon-purple), 0.15), 0 25px 60px hsla(240, 35%, 4%, 0.6)"
-              : "0 0 40px hsla(var(--neon-cyan), 0.1), 0 20px 50px hsla(240, 35%, 4%, 0.5)",
+              ? "0 0 40px hsla(var(--neon-cyan), 0.2), 0 0 60px hsla(var(--neon-purple), 0.1), 0 15px 40px hsla(240, 35%, 4%, 0.5)"
+              : "0 0 30px hsla(var(--neon-cyan), 0.08), 0 15px 40px hsla(240, 35%, 4%, 0.4)",
             border: "1px solid hsla(var(--primary), 0.2)",
           }}
           animate={{
@@ -322,9 +322,9 @@ const AudioPlayer = ({
           }}
           transition={{ duration: 3, repeat: isPlaying ? Infinity : 0 }}
         >
-          <div className="flex flex-col gap-6">
-            {/* Top Row: Play Button + Content */}
-            <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
+          <div className="flex flex-col gap-4 sm:gap-6">
+            {/* Top Row: Play Button + Content - Stack on mobile */}
+            <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
               {/* Play/Pause Button */}
               <div className="relative flex-shrink-0">
                 <motion.div
@@ -342,7 +342,7 @@ const AudioPlayer = ({
                 
                 <motion.button
                   onClick={togglePlay}
-                  className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center cursor-pointer z-10"
+                  className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center cursor-pointer z-10 active:scale-95"
                   style={{
                     background: "linear-gradient(135deg, hsl(var(--neon-cyan)), hsl(var(--primary)), hsl(var(--neon-purple)))",
                     boxShadow: "0 0 30px hsla(var(--neon-cyan), 0.4), inset 0 2px 10px hsla(0, 0%, 100%, 0.2)",
@@ -372,7 +372,7 @@ const AudioPlayer = ({
                         exit={{ scale: 0.5, opacity: 0 }}
                         transition={{ duration: 0.2 }}
                       >
-                        <Pause className="w-8 h-8 sm:w-10 sm:h-10 text-white drop-shadow-lg" fill="white" />
+                        <Pause className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-white drop-shadow-lg" fill="white" />
                       </motion.div>
                     ) : (
                       <motion.div
@@ -382,17 +382,17 @@ const AudioPlayer = ({
                         exit={{ scale: 0.5, opacity: 0 }}
                         transition={{ duration: 0.2 }}
                       >
-                        <Play className="w-8 h-8 sm:w-10 sm:h-10 text-white drop-shadow-lg ml-1" fill="white" />
+                        <Play className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-white drop-shadow-lg ml-0.5" fill="white" />
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </motion.button>
               </div>
 
-              {/* Content Section */}
-              <div className="flex-1 w-full text-center sm:text-left">
-                {/* Header Row */}
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mb-4">
+              {/* Content Section - Optimized for mobile */}
+              <div className="flex-1 w-full min-w-0">
+                {/* Header Row - Hidden on small mobile */}
+                <div className="hidden sm:flex flex-col sm:flex-row items-center justify-between gap-3 mb-4">
                   <div className="flex items-center gap-2">
                     <Headphones className="w-4 h-4 text-primary" />
                     <span className="text-sm text-muted-foreground font-medium tracking-wide">

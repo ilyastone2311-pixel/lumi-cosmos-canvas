@@ -69,7 +69,7 @@ const Article = () => {
       <BackgroundEffects />
       <ReadCompletionTracker articleId={fullArticleId} />
 
-      <main className="relative z-10 pt-28 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
+      <main className="relative z-10 pt-20 sm:pt-32 pb-24 sm:pb-20 px-4 sm:px-6">
         <div className="container mx-auto max-w-3xl">
           {/* Back button */}
           <button
@@ -115,24 +115,26 @@ const Article = () => {
             }}
           />
 
-          {/* Action Bar */}
-          <div className="flex flex-wrap items-center gap-2 sm:gap-4 mb-8 sm:mb-12 pb-4 sm:pb-6 border-b border-border/30 animate-fade-in" style={{ animationDelay: '100ms' }}>
-            <button className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-full glass hover:bg-white/10 transition-all btn-hover text-sm">
-              <Bookmark className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span>Save</span>
-            </button>
-            <button className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-full glass hover:bg-white/10 transition-all btn-hover text-sm">
-              <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span>Share</span>
-            </button>
-            <button className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-full glass hover:bg-white/10 transition-all btn-hover text-sm">
-              <ThumbsUp className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span>Like</span>
-            </button>
+          {/* Mobile-optimized Action Bar - sticky for easy access */}
+          <div className="sticky top-20 z-30 -mx-4 sm:mx-0 px-4 sm:px-0 py-3 sm:py-0 bg-background/80 backdrop-blur-md sm:bg-transparent sm:backdrop-blur-none mb-6 sm:mb-12 border-b sm:border-b-0 border-border/20 animate-fade-in" style={{ animationDelay: '100ms' }}>
+            <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-4 sm:pb-6 sm:border-b sm:border-border/30">
+              <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 sm:py-2 rounded-xl sm:rounded-full glass hover:bg-white/10 transition-all active:scale-95 text-sm font-medium">
+                <Bookmark className="w-4 h-4 sm:w-4 sm:h-4" />
+                <span className="sm:inline">Save</span>
+              </button>
+              <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 sm:py-2 rounded-xl sm:rounded-full glass hover:bg-white/10 transition-all active:scale-95 text-sm font-medium">
+                <Share2 className="w-4 h-4 sm:w-4 sm:h-4" />
+                <span className="sm:inline">Share</span>
+              </button>
+              <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 sm:py-2 rounded-xl sm:rounded-full glass hover:bg-white/10 transition-all active:scale-95 text-sm font-medium">
+                <ThumbsUp className="w-4 h-4 sm:w-4 sm:h-4" />
+                <span className="sm:inline">Like</span>
+              </button>
+            </div>
           </div>
 
-          {/* Article Content with Karaoke Highlighting */}
-          <article className="prose prose-invert max-w-none">
+          {/* Article Content with Karaoke Highlighting - optimized for mobile reading */}
+          <article className="prose prose-invert max-w-none prose-p:text-base prose-p:leading-relaxed sm:prose-p:text-lg prose-headings:scroll-mt-24">
             <div className="mb-8 animate-fade-in" style={{ animationDelay: '200ms' }}>
               <KaraokeText 
                 text={articleContent.intro}

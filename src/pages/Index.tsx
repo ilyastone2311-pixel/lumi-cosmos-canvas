@@ -83,7 +83,7 @@ const Index = () => {
       <BackgroundEffects />
 
         {/* Main Content - Seamless flow */}
-        <main className="relative z-10 pt-24 sm:pt-28">
+        <main id="main-content" className="relative z-10 pt-20 sm:pt-28">
         {/* Hero Section */}
         <HeroSection />
 

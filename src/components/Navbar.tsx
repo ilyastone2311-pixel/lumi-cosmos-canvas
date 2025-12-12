@@ -345,42 +345,42 @@ const Navbar = () => {
             transition={{ duration: 0.2 }}
             className="md:hidden overflow-hidden border-t border-border/30"
           >
-            <div className="px-4 py-4 space-y-2">
-              {/* Navigation Links */}
+            <div className="px-4 py-4 space-y-1 max-h-[70vh] overflow-y-auto">
+              {/* Navigation Links - Large touch targets */}
               <button
                 onClick={() => navigate("/")}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all ${
+                className={`w-full flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-all active:scale-[0.98] ${
                   isActive("/")
                     ? "bg-primary/10 text-foreground"
                     : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
                 }`}
               >
-                <span className="font-medium">Home</span>
+                <span className="font-medium text-base">Home</span>
               </button>
               
               <button
                 onClick={() => navigate("/library")}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all ${
+                className={`w-full flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-all active:scale-[0.98] ${
                   isActive("/library")
                     ? "bg-primary/10 text-foreground"
                     : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
                 }`}
               >
-                <span className="font-medium">Library</span>
+                <span className="font-medium text-base">Library</span>
               </button>
 
               {/* Recommended - Mobile (only for logged in) */}
               {user && (
                 <button
                   onClick={() => navigate("/recommended")}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all ${
+                  className={`w-full flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-all active:scale-[0.98] ${
                     isActive("/recommended")
                       ? "bg-primary/10 text-foreground"
                       : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
                   }`}
                 >
-                  <Zap className="w-4 h-4" />
-                  <span className="font-medium">For You</span>
+                  <Zap className="w-5 h-5" />
+                  <span className="font-medium text-base">For You</span>
                 </button>
               )}
 
@@ -398,17 +398,17 @@ const Navbar = () => {
                       </div>
                       <button
                         onClick={() => navigate("/profile")}
-                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all"
+                        className="w-full flex items-center gap-3 px-4 py-4 rounded-xl text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all active:scale-[0.98]"
                       >
-                        <User className="w-4 h-4" />
-                        <span className="font-medium">Profile</span>
+                        <User className="w-5 h-5" />
+                        <span className="font-medium text-base">Profile</span>
                       </button>
                       <button
                         onClick={() => navigate("/settings")}
-                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all"
+                        className="w-full flex items-center gap-3 px-4 py-4 rounded-xl text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all active:scale-[0.98]"
                       >
-                        <Settings className="w-4 h-4" />
-                        <span className="font-medium">Settings</span>
+                        <Settings className="w-5 h-5" />
+                        <span className="font-medium text-base">Settings</span>
                       </button>
                       {isAdmin && (
                         <button

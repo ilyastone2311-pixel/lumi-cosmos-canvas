@@ -83,7 +83,7 @@ const Library = () => {
       <BackgroundEffects />
 
         {/* Main Content */}
-        <main className="relative z-10 pt-28 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
+        <main id="main-content" className="relative z-10 pt-20 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
         <div className="container mx-auto max-w-7xl">
           {/* Header */}
           <header className="mb-10 sm:mb-16 animate-fade-in">

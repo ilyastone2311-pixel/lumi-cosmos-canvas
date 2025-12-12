@@ -55,10 +55,10 @@ const MiniAudioPlayer = ({
           animate={{ y: 0, opacity: 1, scale: 1 }}
           exit={{ y: 100, opacity: 0, scale: 0.9 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 sm:w-[360px]"
+          className="fixed bottom-0 left-0 right-0 sm:left-auto sm:right-6 sm:bottom-6 z-50 sm:w-[360px] safe-area-bottom"
         >
           <motion.div
-            className="relative rounded-2xl overflow-hidden"
+            className="relative rounded-t-2xl sm:rounded-2xl overflow-hidden"
             style={{
               background: "linear-gradient(135deg, hsla(var(--card), 0.95) 0%, hsla(var(--background), 0.95) 100%)",
               backdropFilter: "blur(20px)",
