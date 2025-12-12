@@ -2,16 +2,27 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5" />
     <title>Lumi - Discover Your Next Read | Micro-Learning Platform</title>
     <meta name="description" content="Explore curated short reads across Politics, Psychology, Culture, Technology, Mindfulness, History, Science and more. Your journey to knowledge starts here." />
     <meta name="author" content="Lumi" />
 
+    <!-- Mobile App Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Lumi" />
+    <meta name="theme-color" content="#0a0b14" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Open Graph -->
     <meta property="og:title" content="Lumi - Choose Your World" />
     <meta property="og:description" content="Explore short reads across every topic. A premium micro-learning experience." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@LumiReads" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
@@ -29,9 +40,27 @@
     <!-- DNS prefetch for potential external resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+    <!-- Accessibility: Skip link styles -->
+    <style>
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: #000;
+        color: #fff;
+        padding: 8px;
+        z-index: 100;
+        transition: top 0.2s;
+      }
+      .skip-link:focus {
+        top: 0;
+      }
+    </style>
   </head>
 
   <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

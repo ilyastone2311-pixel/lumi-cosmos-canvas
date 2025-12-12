@@ -457,14 +457,14 @@ html {
     }
   }
 
-  /* ========== MOBILE PERFORMANCE ========== */
+  /* ========== MOBILE PERFORMANCE & OPTIMIZATION ========== */
   @media (max-width: 768px) {
     * {
-      transition-duration: 0.25s;
+      transition-duration: 0.2s;
     }
     
     .hero-image-element {
-      transition-duration: 0.3s;
+      transition-duration: 0.25s;
     }
 
     /* Disable expensive effects on mobile */
@@ -475,6 +475,101 @@ html {
     /* Reduce animation complexity */
     .cosmic-element {
       animation: none !important;
+    }
+
+    /* Mobile typography scaling */
+    h1 {
+      font-size: clamp(1.75rem, 8vw, 3rem) !important;
+      line-height: 1.15 !important;
+    }
+
+    h2 {
+      font-size: clamp(1.25rem, 5vw, 1.75rem) !important;
+    }
+
+    /* Optimize touch targets - minimum 44x44px */
+    button,
+    a,
+    [role="button"] {
+      min-height: 44px;
+    }
+
+    /* Reduce parallax effects on mobile */
+    .parallax-element {
+      transform: none !important;
+    }
+
+    /* Better tap feedback */
+    button:active,
+    a:active {
+      opacity: 0.8;
+      transform: scale(0.98);
+    }
+
+    /* Optimize card layouts */
+    .glass-card,
+    .glass-panel {
+      backdrop-filter: blur(10px);
+    }
+
+    /* Reduce blur intensity for performance */
+    .backdrop-blur-xl {
+      backdrop-filter: blur(12px);
+    }
+
+    .backdrop-blur-2xl {
+      backdrop-filter: blur(16px);
+    }
+  }
+
+  /* Extra small screens */
+  @media (max-width: 375px) {
+    h1 {
+      font-size: 1.5rem !important;
+    }
+
+    h2 {
+      font-size: 1.125rem !important;
+    }
+
+    /* Ensure buttons are full width on very small screens */
+    .btn-primary,
+    .btn-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  /* Touch device optimizations */
+  @media (hover: none) and (pointer: coarse) {
+    /* Disable hover effects that don't work on touch */
+    .hover-lift:hover,
+    .hover-glow:hover,
+    .hover-scale:hover {
+      transform: none;
+      box-shadow: inherit;
+    }
+
+    /* Better active states for touch */
+    .hover-lift:active,
+    .hover-scale:active {
+      transform: scale(0.97);
+    }
+
+    /* Improve scrolling */
+    * {
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  /* Safe area insets for notched devices */
+  @supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .safe-area-bottom {
+      padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+
+    .safe-area-top {
+      padding-top: max(1rem, env(safe-area-inset-top));
     }
   }
 }
@@ -1127,4 +1222,111 @@ html {
     hsl(var(--primary) / 0.12) 50%,
     transparent 100%
   );
+}
+
+/* ========== MOBILE-SPECIFIC UTILITIES ========== */
+
+/* Touch-friendly button padding */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Better touch feedback */
+.touch-feedback {
+  transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+.touch-feedback:active {
+  transform: scale(0.95);
+  opacity: 0.85;
+}
+
+/* Mobile card optimization */
+@media (max-width: 640px) {
+  .card-mobile {
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+
+  /* Full-width buttons on mobile */
+  .btn-mobile-full {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Compact spacing on mobile */
+  .section-mobile {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+}
+
+/* Smooth momentum scrolling */
+.scroll-smooth-momentum {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Swipe hint animation */
+@keyframes swipe-hint {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-8px); }
+}
+
+.swipe-hint {
+  animation: swipe-hint 1.5s ease-in-out infinite;
+}
+
+/* Focus visible for accessibility */
+.focus-visible-ring:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
+
+/* Reading mode optimizations */
+@media (max-width: 768px) {
+  .prose-mobile {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .prose-mobile h2 {
+    font-size: 1.25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose-mobile p {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Landscape mobile optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-mobile-landscape {
+    min-height: auto;
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+  }
+
+  .nav-mobile-landscape {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
 }

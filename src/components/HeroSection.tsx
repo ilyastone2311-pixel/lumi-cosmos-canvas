@@ -24,7 +24,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-[100vh] flex items-center overflow-hidden pt-24 sm:pt-0">
+    <section className="relative min-h-[85vh] sm:min-h-[100vh] flex items-center overflow-hidden pt-16 sm:pt-0">
       {/* Animated background particles with staggered entrance */}
       <BackgroundReveal delay={0.1} className="absolute inset-0 pointer-events-none overflow-hidden">
         {[...Array(20)].map((_, i) => (
@@ -144,9 +144,9 @@ const HeroSection = () => {
               </span>
             </motion.div>
 
-            {/* Headlines with premium fade + slide */}
+            {/* Headlines with premium fade + slide - Mobile-optimized */}
             <HeroHeadline delay={0.2}>
-              <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+              <h1 className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] sm:leading-tight">
                 <span 
                   className="text-foreground block"
                   style={{
@@ -169,39 +169,39 @@ const HeroSection = () => {
               </h1>
             </HeroHeadline>
             
-            {/* Subtext with delayed entrance */}
+            {/* Subtext with delayed entrance - Mobile-optimized */}
             <HeroSubtext delay={0.5}>
-              <p className="text-lg sm:text-xl text-muted-foreground max-w-md">
+              <p className="text-base sm:text-xl text-muted-foreground max-w-md leading-relaxed">
                 Discover books, articles, and ideas for self-improvement
               </p>
             </HeroSubtext>
 
-            {/* CTA Buttons with scale pop effect */}
+            {/* CTA Buttons with scale pop effect - Mobile-optimized with full-width */}
             <HeroCTA delay={0.7}>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
                 <motion.button
                   onClick={() => navigate(user ? "/library" : "/auth")}
-                  className="group relative px-6 sm:px-8 py-3 sm:py-4 rounded-full font-display font-semibold text-primary-foreground overflow-hidden transition-all duration-300 hover:scale-105 hover:-translate-y-1 active:scale-[0.98] text-center"
+                  className="group relative w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-4 rounded-2xl sm:rounded-full font-display font-semibold text-primary-foreground overflow-hidden transition-all duration-300 active:scale-[0.97] text-center min-h-[52px]"
                   whileHover={{ scale: 1.05, y: -4 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileTap={{ scale: 0.97 }}
                 >
                   {/* Button gradient background */}
-                  <span className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_100%] animate-shimmer rounded-full" />
+                  <span className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_100%] animate-shimmer rounded-2xl sm:rounded-full" />
                   
                   {/* Glow effect */}
-                  <span className="absolute inset-0 opacity-50 blur-xl bg-gradient-to-r from-primary to-secondary rounded-full group-hover:opacity-70 transition-opacity" />
+                  <span className="absolute inset-0 opacity-50 blur-xl bg-gradient-to-r from-primary to-secondary rounded-2xl sm:rounded-full group-hover:opacity-70 transition-opacity" />
                   
                   {/* Text */}
-                  <span className="relative">Get started</span>
+                  <span className="relative text-base">Get started</span>
                 </motion.button>
 
                 <motion.button
                   onClick={() => navigate("/library")}
-                  className="group px-6 sm:px-8 py-3 sm:py-4 rounded-full font-display font-semibold text-foreground overflow-hidden transition-all duration-300 bg-card/80 backdrop-blur-md border border-border text-center"
+                  className="group w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-4 rounded-2xl sm:rounded-full font-display font-semibold text-foreground overflow-hidden transition-all duration-300 bg-card/80 backdrop-blur-md border border-border text-center min-h-[52px] active:scale-[0.97]"
                   whileHover={{ scale: 1.05, y: -4 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileTap={{ scale: 0.97 }}
                 >
-                  <span className="relative flex items-center gap-2">
+                  <span className="relative flex items-center justify-center gap-2 text-base">
                     Explore Library
                     <ChevronDown className="w-4 h-4 rotate-[-90deg] group-hover:translate-x-1 transition-transform" />
                   </span>
@@ -215,10 +215,10 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Scroll Hint Arrow with delayed appearance */}
+      {/* Scroll Hint Arrow with delayed appearance - Hidden on mobile for cleaner UI */}
       <motion.button
         onClick={scrollToContent}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 cursor-pointer group"
+        className="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex-col items-center gap-2 cursor-pointer group"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 1.2, ease: premiumEase }}
