@@ -1,9 +1,9 @@
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { motion, type Variants } from "framer-motion";
 
-import illustrationReaders from "@/assets/illustration-readers.png";
-import illustrationDiscovery from "@/assets/illustration-discovery.png";
-import illustrationMindful from "@/assets/illustration-mindful.png";
+import illustrationReaders from "@/assets/illustration-readers.webp";
+import illustrationDiscovery from "@/assets/illustration-discovery.webp";
+import illustrationMindful from "@/assets/illustration-mindful.webp";
 
 const IllustrationSection = () => {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
@@ -79,8 +79,12 @@ const IllustrationSection = () => {
                   src={illustrationReaders}
                   alt="People reading together"
                   className="w-full h-auto rounded-2xl"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
                   style={{
                     filter: 'drop-shadow(0 10px 30px hsla(var(--foreground), 0.1))',
+                    willChange: 'transform',
                   }}
                 />
                 {/* Floating accent elements */}
@@ -131,12 +135,15 @@ const IllustrationSection = () => {
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/30 dark:via-yellow-500/30 to-transparent" />
               
               <div className="flex flex-col md:flex-row items-center gap-6">
-                <motion.img
+              <motion.img
                   src={illustrationDiscovery}
                   alt="Discovery moment"
                   className="w-32 h-32 object-contain"
+                  loading="lazy"
+                  decoding="async"
                   style={{
                     filter: 'drop-shadow(0 8px 20px hsla(var(--foreground), 0.15))',
+                    willChange: 'transform',
                   }}
                   whileHover={{ scale: 1.05, rotate: 2 }}
                   transition={{ duration: 0.3 }}
@@ -167,12 +174,15 @@ const IllustrationSection = () => {
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-secondary/40 to-transparent" />
               
               <div className="flex flex-col md:flex-row items-center gap-6">
-                <motion.img
+              <motion.img
                   src={illustrationMindful}
                   alt="Mindful learning"
                   className="w-32 h-32 object-contain"
+                  loading="lazy"
+                  decoding="async"
                   style={{
                     filter: 'drop-shadow(0 8px 20px hsla(var(--foreground), 0.15))',
+                    willChange: 'transform',
                   }}
                   whileHover={{ scale: 1.05, rotate: -2 }}
                   transition={{ duration: 0.3 }}
