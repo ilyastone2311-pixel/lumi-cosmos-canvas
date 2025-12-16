@@ -93,10 +93,11 @@ const Library = () => {
               tag="h1"
               className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-3 sm:mb-4"
               splitType="chars"
-              delay={40}
-              duration={0.6}
-              from={{ opacity: 0, y: 40 }}
-              to={{ opacity: 1, y: 0 }}
+              delay={50}
+              duration={0.8}
+              ease="power2.out"
+              from={{ opacity: 0, y: 60, rotateX: -90 }}
+              to={{ opacity: 1, y: 0, rotateX: 0 }}
               threshold={0.1}
               textAlign="left"
             />

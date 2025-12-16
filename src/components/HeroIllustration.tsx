@@ -93,14 +93,14 @@ const HeroIllustration = () => {
 
   if (!mounted) {
     return (
-      <div className="absolute right-[-10%] top-[25%] -translate-y-1/2 w-[70vw] max-w-[900px] z-10" />
+      <div className="absolute right-[-15%] top-[15%] -translate-y-1/2 w-[85vw] max-w-[1100px] z-10" />
     );
   }
 
   return (
     <motion.div 
       ref={containerRef}
-      className="absolute right-[-10%] top-[25%] -translate-y-1/2 w-[70vw] max-w-[900px] z-10 pointer-events-auto"
+      className="absolute right-[-15%] top-[15%] -translate-y-1/2 w-[85vw] max-w-[1100px] z-10 pointer-events-auto"
       style={{
         perspective: "1000px",
         opacity: scrollOpacity,
