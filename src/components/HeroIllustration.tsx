@@ -14,7 +14,7 @@ const HeroIllustration = () => {
   const [isSwitching, setIsSwitching] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Scroll-based fade out - starts later, smoother exit
+  // Scroll-based fade out
   const { scrollY } = useScroll();
   const scrollOpacity = useTransform(scrollY, [0, 300, 550], [1, 1, 0]);
   const scrollScale = useTransform(scrollY, [0, 300, 550], [1, 1, 0.92]);
@@ -93,14 +93,14 @@ const HeroIllustration = () => {
 
   if (!mounted) {
     return (
-      <div className="absolute right-[-5%] top-[48%] -translate-y-1/2 w-[55vw] h-[90vh] min-w-[350px] max-w-[750px] z-10" />
+      <div className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[55vw] min-w-[350px] max-w-[750px] z-10" />
     );
   }
 
   return (
     <motion.div 
       ref={containerRef}
-      className="absolute right-[-5%] top-[48%] -translate-y-1/2 w-[55vw] h-[90vh] min-w-[350px] max-w-[750px] z-10 pointer-events-auto"
+      className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[55vw] min-w-[350px] max-w-[750px] z-10 pointer-events-auto"
       style={{
         perspective: "1000px",
         opacity: scrollOpacity,
@@ -114,7 +114,7 @@ const HeroIllustration = () => {
     >
       {/* Main illustration container with 3D tilt */}
       <motion.div
-        className="w-full h-full flex items-center justify-center cursor-pointer"
+        className="w-full flex items-center justify-center cursor-pointer"
         style={{
           rotateX: isActive ? rotateX : 0,
           rotateY: isActive ? rotateY : 0,
@@ -123,7 +123,7 @@ const HeroIllustration = () => {
       >
         {/* Illustration with floating animation */}
         <motion.div
-          className="relative w-full h-full flex items-center justify-center"
+          className="relative w-full flex items-center justify-center"
           animate={{
             y: isActive ? [0, -12, 0] : [0, -6, 0],
             scale: isActive ? 1.03 : 1,
@@ -151,14 +151,14 @@ const HeroIllustration = () => {
             )}
           </AnimatePresence>
 
-          {/* The image with crossfade theme transition - NO clipping */}
-          <div className="relative w-full h-full flex items-center justify-center overflow-visible">
+          {/* The image - fully visible, no clipping */}
+          <div className="relative w-full flex items-center justify-center">
             <AnimatePresence mode="wait">
               <motion.img
                 key={isLightTheme ? "hero-light" : "hero-dark"}
                 src={currentHeroImage}
                 alt="Magical reading illustration"
-                className="max-w-full max-h-full w-auto h-auto object-contain relative z-10"
+                className="w-full h-auto object-contain relative z-10"
                 initial={{ opacity: 0, scale: 1.02 }}
                 animate={{ 
                   opacity: isSwitching ? 0.4 : 1, 
