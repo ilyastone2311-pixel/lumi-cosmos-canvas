@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import {
   Scene,
   OrthographicCamera,
@@ -275,26 +275,30 @@ export default function FloatingLines({
   opacity = 1
 }: FloatingLinesProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const rendererRef = useRef<WebGLRenderer | null>(null);
+  const uniformsRef = useRef<Record<string, { value: unknown }> | null>(null);
   const targetMouseRef = useRef<Vector2>(new Vector2(-1000, -1000));
   const currentMouseRef = useRef<Vector2>(new Vector2(-1000, -1000));
   const targetInfluenceRef = useRef<number>(0);
   const currentInfluenceRef = useRef<number>(0);
   const targetParallaxRef = useRef<Vector2>(new Vector2(0, 0));
   const currentParallaxRef = useRef<Vector2>(new Vector2(0, 0));
+  const rafRef = useRef<number>(0);
+  const isInitializedRef = useRef(false);
 
-  const getLineCount = (waveType: 'top' | 'middle' | 'bottom'): number => {
+  const getLineCount = useCallback((waveType: 'top' | 'middle' | 'bottom'): number => {
     if (typeof lineCount === 'number') return lineCount;
     if (!enabledWaves.includes(waveType)) return 0;
     const index = enabledWaves.indexOf(waveType);
     return lineCount[index] ?? 6;
-  };
+  }, [lineCount, enabledWaves]);
 
-  const getLineDistance = (waveType: 'top' | 'middle' | 'bottom'): number => {
+  const getLineDistance = useCallback((waveType: 'top' | 'middle' | 'bottom'): number => {
     if (typeof lineDistance === 'number') return lineDistance;
     if (!enabledWaves.includes(waveType)) return 0.1;
     const index = enabledWaves.indexOf(waveType);
     return lineDistance[index] ?? 0.1;
-  };
+  }, [lineDistance, enabledWaves]);
 
   const topLineCount = enabledWaves.includes('top') ? getLineCount('top') : 0;
   const middleLineCount = enabledWaves.includes('middle') ? getLineCount('middle') : 0;
@@ -305,18 +309,33 @@ export default function FloatingLines({
   const bottomLineDistance = enabledWaves.includes('bottom') ? getLineDistance('bottom') * 0.01 : 0.01;
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const container = containerRef.current;
+    if (!container || isInitializedRef.current) return;
+    
+    isInitializedRef.current = true;
 
     const scene = new Scene();
 
     const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
     camera.position.z = 1;
 
-    const renderer = new WebGLRenderer({ antialias: true, alpha: false });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    // Optimize renderer for performance
+    const renderer = new WebGLRenderer({ 
+      antialias: false, // Disable for performance
+      alpha: true, // Enable transparency
+      powerPreference: 'high-performance',
+      stencil: false,
+      depth: false
+    });
+    
+    // Limit pixel ratio for performance
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    renderer.setClearColor(0x000000, 0); // Transparent background
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';
-    containerRef.current.appendChild(renderer.domElement);
+    renderer.domElement.style.display = 'block';
+    rendererRef.current = renderer;
+    container.appendChild(renderer.domElement);
 
     const uniforms = {
       iTime: { value: 0 },
@@ -368,6 +387,8 @@ export default function FloatingLines({
       },
       lineGradientCount: { value: 0 }
     };
+    
+    uniformsRef.current = uniforms;
 
     if (linesGradient && linesGradient.length > 0) {
       const stops = linesGradient.slice(0, MAX_GRADIENT_STOPS);
@@ -382,7 +403,8 @@ export default function FloatingLines({
     const material = new ShaderMaterial({
       uniforms,
       vertexShader,
-      fragmentShader
+      fragmentShader,
+      transparent: true
     });
 
     const geometry = new PlaneGeometry(2, 2);
@@ -392,9 +414,13 @@ export default function FloatingLines({
     const clock = new Clock();
 
     const setSize = () => {
-      const el = containerRef.current!;
-      const width = el.clientWidth || 1;
-      const height = el.clientHeight || 1;
+      const el = containerRef.current;
+      if (!el) return;
+      
+      const width = el.clientWidth;
+      const height = el.clientHeight;
+      
+      if (width === 0 || height === 0) return;
 
       renderer.setSize(width, height, false);
 
@@ -403,12 +429,20 @@ export default function FloatingLines({
       uniforms.iResolution.value.set(canvasWidth, canvasHeight, 1);
     };
 
-    setSize();
+    // Initial size set with delay to ensure container is rendered
+    requestAnimationFrame(() => {
+      setSize();
+    });
 
-    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(setSize) : null;
+    // Throttled resize observer
+    let resizeTimeout: ReturnType<typeof setTimeout>;
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(setSize, 100);
+    }) : null;
 
-    if (ro && containerRef.current) {
-      ro.observe(containerRef.current);
+    if (ro) {
+      ro.observe(container);
     }
 
     const handlePointerMove = (event: PointerEvent) => {
@@ -433,13 +467,24 @@ export default function FloatingLines({
       targetInfluenceRef.current = 0.0;
     };
 
+    // Add event listeners to the canvas element for interaction
     if (interactive) {
       renderer.domElement.addEventListener('pointermove', handlePointerMove);
       renderer.domElement.addEventListener('pointerleave', handlePointerLeave);
     }
 
-    let raf = 0;
-    const renderLoop = () => {
+    let lastTime = 0;
+    const targetFPS = 30; // Cap at 30fps for performance
+    const frameInterval = 1000 / targetFPS;
+
+    const renderLoop = (currentTime: number) => {
+      rafRef.current = requestAnimationFrame(renderLoop);
+      
+      // Throttle to target FPS
+      const delta = currentTime - lastTime;
+      if (delta < frameInterval) return;
+      lastTime = currentTime - (delta % frameInterval);
+
       uniforms.iTime.value = clock.getElapsedTime();
 
       if (interactive) {
@@ -456,17 +501,20 @@ export default function FloatingLines({
       }
 
       renderer.render(scene, camera);
-      raf = requestAnimationFrame(renderLoop);
     };
-    renderLoop();
+    
+    rafRef.current = requestAnimationFrame(renderLoop);
 
     return () => {
-      cancelAnimationFrame(raf);
-      if (ro && containerRef.current) {
+      isInitializedRef.current = false;
+      cancelAnimationFrame(rafRef.current);
+      clearTimeout(resizeTimeout);
+      
+      if (ro) {
         ro.disconnect();
       }
 
-      if (interactive) {
+      if (interactive && renderer.domElement) {
         renderer.domElement.removeEventListener('pointermove', handlePointerMove);
         renderer.domElement.removeEventListener('pointerleave', handlePointerLeave);
       }
@@ -474,26 +522,15 @@ export default function FloatingLines({
       geometry.dispose();
       material.dispose();
       renderer.dispose();
+      
       if (renderer.domElement.parentElement) {
         renderer.domElement.parentElement.removeChild(renderer.domElement);
       }
+      
+      rendererRef.current = null;
+      uniformsRef.current = null;
     };
-  }, [
-    linesGradient,
-    enabledWaves,
-    lineCount,
-    lineDistance,
-    topWavePosition,
-    middleWavePosition,
-    bottomWavePosition,
-    animationSpeed,
-    interactive,
-    bendRadius,
-    bendStrength,
-    mouseDamping,
-    parallax,
-    parallaxStrength
-  ]);
+  }, []);
 
   return (
     <div
@@ -501,7 +538,7 @@ export default function FloatingLines({
       className={`floating-lines-container ${className}`}
       style={{
         mixBlendMode: mixBlendMode,
-        opacity
+        opacity: opacity,
       }}
     />
   );

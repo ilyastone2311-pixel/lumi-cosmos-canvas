@@ -79,34 +79,34 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden bg-background">
       {/* Background Effects */}
       <BackgroundEffects />
       
-      {/* Floating Lines Effect */}
-      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+      {/* Floating Lines Effect - Interactive layer */}
+      <div className="fixed inset-0 z-[1]" style={{ pointerEvents: 'auto' }}>
         <FloatingLines 
           linesGradient={['#06b6d4', '#8b5cf6', '#ec4899', '#3b82f6']}
           enabledWaves={['top', 'middle', 'bottom']}
-          lineCount={[10, 15, 20]}
+          lineCount={[6, 10, 12]}
           lineDistance={[8, 6, 4]}
           bendRadius={5.0}
           bendStrength={-0.5}
           interactive={true}
           parallax={true}
-          animationSpeed={1}
-          opacity={0.4}
+          animationSpeed={0.8}
+          opacity={0.5}
           mixBlendMode="screen"
         />
       </div>
 
-        {/* Main Content - Seamless flow */}
-        <main id="main-content" className="relative z-10 pt-20 sm:pt-28">
+      {/* Main Content - Seamless flow */}
+      <main id="main-content" className="relative z-10 pt-20 sm:pt-28">
         {/* Hero Section */}
         <HeroSection />
 
-        {/* Seamless transition - Hero to HowItWorks */}
-        <div className="relative h-16 md:h-24 -mt-8 pointer-events-none" />
+        {/* Seamless gradient transition - Hero to HowItWorks */}
+        <div className="relative h-16 md:h-24 -mt-8 bg-transparent" />
 
         {/* How It Works - Floating Section */}
         <ScrollSection direction="up">
@@ -119,16 +119,16 @@ const Index = () => {
           </div>
         </ScrollSection>
 
-        {/* Seamless transition - HowItWorks to Illustration */}
-        <div className="relative h-12 md:h-16 pointer-events-none" />
+        {/* Seamless gradient transition - HowItWorks to Illustration */}
+        <div className="relative h-12 md:h-16 bg-transparent" />
 
         {/* Illustration Section - Hybrid pastel pocket */}
         <ScrollSection direction="fade" delay={0.05}>
           <IllustrationSection />
         </ScrollSection>
 
-        {/* Seamless transition - Illustration to Categories */}
-        <div className="relative h-12 md:h-16 pointer-events-none" />
+        {/* Seamless gradient transition - Illustration to Categories */}
+        <div className="relative h-12 md:h-16 bg-transparent" />
 
         {/* Categories Section - Enhanced with staggered load animations */}
         <ScrollSection direction="up" delay={0.15}>
@@ -213,8 +213,8 @@ const Index = () => {
           </section>
         </ScrollSection>
 
-        {/* Seamless transition - Categories to CTA */}
-        <div className="relative h-12 md:h-16 pointer-events-none" />
+        {/* Seamless gradient transition - Categories to CTA */}
+        <div className="relative h-12 md:h-16 bg-transparent" />
 
         {/* Bottom CTA - Elevated floating card with entrance animations */}
         <ScrollSection direction="up" delay={0.1}>
