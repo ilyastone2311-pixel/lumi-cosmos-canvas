@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import CategoryCard from "@/components/CategoryCard";
 import BackgroundEffects from "@/components/BackgroundEffects";
-import FloatingLines from "@/components/FloatingLines";
 import HeroSection from "@/components/HeroSection";
 import HowItWorks from "@/components/HowItWorks";
 import IllustrationSection from "@/components/IllustrationSection";
@@ -79,79 +78,41 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-background">
-      {/* Background Effects */}
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Single unified background with FloatingLines */}
       <BackgroundEffects />
-      
-      {/* Floating Lines Effect - Interactive layer */}
-      <div className="fixed inset-0 z-[1]" style={{ pointerEvents: 'auto' }}>
-        <FloatingLines 
-          linesGradient={['#06b6d4', '#8b5cf6', '#ec4899', '#3b82f6']}
-          enabledWaves={['top', 'middle', 'bottom']}
-          lineCount={[6, 10, 12]}
-          lineDistance={[8, 6, 4]}
-          bendRadius={5.0}
-          bendStrength={-0.5}
-          interactive={true}
-          parallax={true}
-          animationSpeed={0.8}
-          opacity={0.5}
-          mixBlendMode="screen"
-        />
-      </div>
 
-      {/* Main Content - Seamless flow */}
+      {/* Main Content - all sections are transparent to show background through */}
       <main id="main-content" className="relative z-10 pt-20 sm:pt-28">
         {/* Hero Section */}
         <HeroSection />
 
-        {/* Seamless gradient transition - Hero to HowItWorks */}
-        <div className="relative h-16 md:h-24 -mt-8 bg-transparent" />
-
         {/* How It Works - Floating Section */}
         <ScrollSection direction="up">
-          <div className="relative -mt-16">
-            {/* Section glow */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-[800px] h-[400px] bg-primary/5 rounded-full blur-[150px]" />
-            </div>
-            <HowItWorks />
-          </div>
+          <HowItWorks />
         </ScrollSection>
 
-        {/* Seamless gradient transition - HowItWorks to Illustration */}
-        <div className="relative h-12 md:h-16 bg-transparent" />
-
-        {/* Illustration Section - Hybrid pastel pocket */}
+        {/* Illustration Section */}
         <ScrollSection direction="fade" delay={0.05}>
           <IllustrationSection />
         </ScrollSection>
 
-        {/* Seamless gradient transition - Illustration to Categories */}
-        <div className="relative h-12 md:h-16 bg-transparent" />
-
-        {/* Categories Section - Enhanced with staggered load animations */}
-        <ScrollSection direction="up" delay={0.15}>
+        {/* Categories Section */}
+        <ScrollSection direction="up" delay={0.1}>
           <section className="py-16 sm:py-24 px-4 sm:px-6 relative">
-            {/* Section ambient glow with fade-in */}
-            <motion.div 
-              className="absolute inset-0 pointer-events-none overflow-hidden"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.2, ease: premiumEase }}
-            >
-              <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-secondary/8 rounded-full blur-[180px]" />
-              <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-primary/6 rounded-full blur-[200px]" />
-            </motion.div>
+            {/* Soft ambient glow */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[180px]" />
+              <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[200px]" />
+            </div>
 
             <div className="container mx-auto max-w-7xl relative">
-              {/* Section Header with premium entrance animation */}
+              {/* Section Header */}
               <SectionHeader className="text-center mb-12 sm:mb-20 relative">
                 <motion.h2 
                   className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4"
-                  initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-80px" }}
                   transition={{ duration: 0.7, ease: premiumEase }}
                   style={{
@@ -162,8 +123,8 @@ const Index = () => {
                 </motion.h2>
                 <motion.p 
                   className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto px-4"
-                  initial={{ opacity: 0, y: 15, filter: "blur(4px)" }}
-                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-80px" }}
                   transition={{ duration: 0.6, delay: 0.15, ease: premiumEase }}
                 >
@@ -173,7 +134,7 @@ const Index = () => {
                   }
                 </motion.p>
                 
-                {/* Decorative line with entrance animation */}
+                {/* Decorative line */}
                 <motion.div 
                   className="mt-8 flex justify-center"
                   initial={{ opacity: 0, scaleX: 0 }}
@@ -191,7 +152,7 @@ const Index = () => {
                 </motion.div>
               </SectionHeader>
 
-              {/* Categories Grid with staggered card animations */}
+              {/* Categories Grid */}
               <CardGrid 
                 staggerDelay={0.08} 
                 baseDelay={0.2}
@@ -213,29 +174,20 @@ const Index = () => {
           </section>
         </ScrollSection>
 
-        {/* Seamless gradient transition - Categories to CTA */}
-        <div className="relative h-12 md:h-16 bg-transparent" />
-
-        {/* Bottom CTA - Elevated floating card with entrance animations */}
+        {/* Bottom CTA */}
         <ScrollSection direction="up" delay={0.1}>
           <section className="py-16 sm:py-24 px-4 sm:px-6 relative">
-            {/* Background glow with fade-in */}
-            <motion.div 
-              className="absolute inset-0 flex items-center justify-center pointer-events-none"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.5, ease: premiumEase }}
-            >
-              <div className="w-[600px] h-[400px] bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 rounded-full blur-[120px]" />
-            </motion.div>
+            {/* Background glow */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="w-[600px] h-[400px] bg-gradient-to-r from-primary/8 via-secondary/8 to-primary/8 rounded-full blur-[120px]" />
+            </div>
 
             <div className="container mx-auto max-w-4xl text-center relative">
-              {/* Floating CTA Card with premium entrance - theme aware */}
+              {/* Floating CTA Card */}
               <motion.div 
-                className="relative p-8 sm:p-14 rounded-3xl overflow-hidden bg-card/80 backdrop-blur-xl border border-border"
-                initial={{ opacity: 0, y: 30, scale: 0.98, filter: "blur(8px)" }}
-                whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                className="relative p-8 sm:p-14 rounded-3xl overflow-hidden bg-card/60 backdrop-blur-md border border-border/50"
+                initial={{ opacity: 0, y: 30, scale: 0.98 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.8, ease: premiumEase }}
                 style={{
@@ -248,7 +200,7 @@ const Index = () => {
                 }}
               >
                 {/* Inner glow effects */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/8 via-transparent to-secondary/8 pointer-events-none" />
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
                 <motion.div 
                   className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
                   initial={{ scaleX: 0, opacity: 0 }}
@@ -257,26 +209,14 @@ const Index = () => {
                   transition={{ duration: 0.8, delay: 0.3, ease: premiumEase }}
                 />
                 
-                {/* Floating orbs with entrance */}
-                <motion.div 
-                  className="absolute top-4 right-8 w-20 h-20 bg-primary/10 rounded-full blur-2xl"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, delay: 0.4, ease: premiumEase }}
-                />
-                <motion.div 
-                  className="absolute bottom-4 left-8 w-16 h-16 bg-secondary/10 rounded-full blur-xl"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, delay: 0.5, ease: premiumEase }}
-                />
+                {/* Floating orbs */}
+                <div className="absolute top-4 right-8 w-20 h-20 bg-primary/10 rounded-full blur-2xl" />
+                <div className="absolute bottom-4 left-8 w-16 h-16 bg-secondary/10 rounded-full blur-xl" />
                 
                 <motion.h3 
                   className="relative font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-4"
-                  initial={{ opacity: 0, y: 15, filter: "blur(4px)" }}
-                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.2, ease: premiumEase }}
                 >
@@ -284,8 +224,8 @@ const Index = () => {
                 </motion.h3>
                 <motion.p 
                   className="relative text-sm sm:text-base text-muted-foreground mb-8 sm:mb-10 max-w-md mx-auto"
-                  initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
-                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.35, ease: premiumEase }}
                 >
@@ -300,8 +240,8 @@ const Index = () => {
                     navigate(`/article/${randomArticle.category}/${randomArticle.id}`);
                   }}
                   className="relative group px-6 sm:px-10 py-3 sm:py-4 rounded-full font-display font-semibold overflow-hidden transition-all duration-300 bg-muted/80 border border-primary/20 text-foreground text-sm sm:text-base"
-                  initial={{ opacity: 0, scale: 0.95, filter: "blur(4px)" }}
-                  whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.5, ease: premiumEase }}
                   whileHover={{ scale: 1.05 }}

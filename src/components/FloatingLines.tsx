@@ -515,9 +515,10 @@ export default function FloatingLines({
         ro.disconnect();
       }
 
-      if (interactive && renderer.domElement) {
-        renderer.domElement.removeEventListener('pointermove', handlePointerMove);
-        renderer.domElement.removeEventListener('pointerleave', handlePointerLeave);
+      if (interactive) {
+        window.removeEventListener('pointermove', handlePointerMove);
+        window.removeEventListener('blur', handlePointerLeave);
+        document.removeEventListener('mouseleave', handlePointerLeave);
       }
 
       geometry.dispose();

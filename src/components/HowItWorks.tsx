@@ -29,9 +29,9 @@ const HowItWorks = () => {
 
   return (
     <section className="py-20 md:py-28 relative">
-      {/* Ambient section glow - theme aware */}
+      {/* Ambient section glow */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 rounded-full blur-[150px] dark:opacity-100 opacity-50" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-gradient-to-r from-primary/3 via-secondary/3 to-primary/3 rounded-full blur-[150px]" />
       </div>
 
       <div className="container mx-auto max-w-7xl px-6 relative">
@@ -103,39 +103,39 @@ const HowItWorks = () => {
                 }}
               />
 
-              {/* Card - Glass Panel with theme-aware styling */}
+              {/* Card - Glass Panel */}
               <div 
-                className="relative p-8 rounded-2xl transition-all duration-400 bg-card/80 backdrop-blur-xl border border-border/50 dark:bg-card/50"
+                className="relative p-8 rounded-2xl transition-all duration-400 bg-card/60 backdrop-blur-md border border-border/30"
                 style={{
                   boxShadow: `
-                    0 0 0 1px hsla(var(--primary), 0.05),
-                    0 8px 24px hsla(var(--foreground), 0.08),
-                    0 4px 12px hsla(var(--foreground), 0.04)
+                    0 0 0 1px hsla(var(--primary), 0.03),
+                    0 8px 24px hsla(var(--foreground), 0.06),
+                    0 4px 12px hsla(var(--foreground), 0.03)
                   `,
                 }}
               >
                 {/* Glow on hover */}
-                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 pointer-events-none" />
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/8 via-transparent to-secondary/8 pointer-events-none" />
                 
                 {/* Top edge highlight */}
-                <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 {/* Icon with enhanced glow */}
                 <div className="relative mb-6">
                   <div 
-                    className="w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 bg-primary/10 dark:bg-primary/20"
+                    className="w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 bg-primary/10"
                   >
                     <feature.icon className="w-7 h-7 text-primary" />
                   </div>
                   {/* Icon glow */}
-                  <div className="absolute inset-0 w-14 h-14 rounded-xl bg-primary/20 blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
+                  <div className="absolute inset-0 w-14 h-14 rounded-xl bg-primary/15 blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
                 </div>
 
-                {/* Content - theme-aware text colors */}
+                {/* Content */}
                 <h3 className="relative font-display text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
                   {feature.title}
                 </h3>
-                <p className="relative text-muted-foreground dark:text-muted-foreground text-foreground/70 leading-relaxed">
+                <p className="relative text-muted-foreground leading-relaxed">
                   {feature.description}
                 </p>
 
@@ -149,9 +149,9 @@ const HowItWorks = () => {
                 </div>
               </div>
 
-              {/* Floating shadow underneath - theme aware */}
+              {/* Floating shadow underneath */}
               <div 
-                className="absolute inset-x-4 -bottom-3 h-12 rounded-2xl -z-20 opacity-20 dark:opacity-40 group-hover:opacity-40 dark:group-hover:opacity-60 transition-opacity duration-500 bg-foreground/20 dark:bg-background blur-xl"
+                className="absolute inset-x-4 -bottom-3 h-12 rounded-2xl -z-20 opacity-20 group-hover:opacity-40 transition-opacity duration-500 bg-foreground/10 blur-xl"
               />
             </motion.button>
             );
