@@ -23,10 +23,10 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-[85vh] sm:min-h-[100vh] flex items-center overflow-hidden pt-16 sm:pt-0">
+    <section className="relative min-h-[85vh] sm:min-h-[100vh] flex items-center pt-16 sm:pt-0 overflow-visible">
       {/* Hero Illustration - positioned on the right */}
       <motion.div 
-        className="hidden lg:block absolute inset-0 pointer-events-none"
+        className="hidden lg:block absolute inset-0 overflow-visible pointer-events-none"
         initial={{ opacity: 0, scale: 1.02 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1, delay: 0.3, ease: premiumEase }}

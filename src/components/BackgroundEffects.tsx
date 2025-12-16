@@ -26,10 +26,10 @@ const BackgroundParticles = memo(({ isLight }: { isLight: boolean }) => {
             width: p.size,
             height: p.size,
             background: isLight 
-              ? `hsla(280, 80%, 55%, ${0.6 + Math.random() * 0.3})`
+              ? `hsla(220, 60%, 70%, ${0.4 + Math.random() * 0.2})`
               : `hsla(200, 90%, 55%, ${0.5 + Math.random() * 0.3})`,
             boxShadow: isLight
-              ? `0 0 ${6 + p.size}px hsla(280, 80%, 55%, 0.5)`
+              ? `0 0 ${4 + p.size}px hsla(220, 60%, 65%, 0.4)`
               : `0 0 ${6 + p.size}px hsla(200, 90%, 55%, 0.5)`,
             animationDelay: `${p.delay}s`,
             animationDuration: `${p.duration}s`,
@@ -69,13 +69,29 @@ const BackgroundEffects = () => {
         }}
       />
 
-      {/* Floating Lines - darker blues for dark theme, bright purples/magentas for light theme */}
+      {/* Light theme: very subtle nebula (5-8% opacity max) */}
+      {isLight && (
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: `
+              radial-gradient(ellipse at 70% 25%, hsla(200, 70%, 85%, 0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 25% 70%, hsla(260, 50%, 88%, 0.06) 0%, transparent 45%),
+              radial-gradient(ellipse at 85% 75%, hsla(180, 50%, 90%, 0.05) 0%, transparent 40%)
+            `,
+          }}
+        />
+      )}
+
+      {/* Floating Lines */}
       <div className="absolute inset-0 pointer-events-auto">
         <FloatingLines
           key={key}
           linesGradient={isLight 
-            ? ['#d946ef', '#e879f9', '#f0abfc', '#c084fc', '#a855f7'] // Bright magentas/purples for light
-            : ['#1e3a5f', '#2d4a6f', '#1a365d', '#234876', '#0c4a6e'] // Darker blues for dark theme
+            // Light theme: pastel, airy colors (light cyan, soft blue, pale lilac, light pink)
+            ? ['#93c5fd', '#a5b4fc', '#c4b5fd', '#fbcfe8', '#99f6e4']
+            // Dark theme: deeper, richer blues and purples
+            : ['#1e40af', '#3730a3', '#5b21b6', '#7c3aed', '#0891b2']
           }
           enabledWaves={['top', 'middle', 'bottom']}
           lineCount={[6, 8, 10]}
@@ -87,7 +103,7 @@ const BackgroundEffects = () => {
           parallaxStrength={0.2}
           animationSpeed={1}
           mouseDamping={0.05}
-          mixBlendMode={isLight ? "normal" : "screen"}
+          mixBlendMode={isLight ? "multiply" : "screen"}
         />
       </div>
 

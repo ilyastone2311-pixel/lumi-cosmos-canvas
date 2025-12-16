@@ -85,70 +85,70 @@ html {
     --sidebar-ring: 195 85% 55%;
   }
 
-  /* ========== LIGHT MODE ========== */
+  /* ========== LIGHT MODE - Premium, clean, readable ========== */
   html.light,
   .light {
-    /* Light cosmic backgrounds */
-    --background: 220 30% 97%;
-    --foreground: 230 25% 8%;
+    /* Very light off-white base - breathable, premium */
+    --background: 225 25% 98%;
+    --foreground: 230 30% 12%;
 
-    /* Cards with soft depth */
+    /* Cards: white with high opacity for glassmorphism */
     --card: 0 0% 100%;
-    --card-foreground: 230 25% 10%;
+    --card-foreground: 230 30% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 230 25% 10%;
+    --popover-foreground: 230 30% 12%;
 
-    /* Primary: Keep neon cyan vibrant */
-    --primary: 195 85% 45%;
+    /* Primary: Vibrant cyan - slightly desaturated for light bg */
+    --primary: 195 75% 42%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary: Vibrant purple */
-    --secondary: 265 70% 55%;
+    /* Secondary: Soft purple */
+    --secondary: 265 55% 52%;
     --secondary-foreground: 0 0% 100%;
 
-    /* Muted: Soft gray-blue */
-    --muted: 220 20% 92%;
-    --muted-foreground: 220 15% 40%;
+    /* Muted: Very soft gray-blue */
+    --muted: 220 15% 94%;
+    --muted-foreground: 220 20% 38%;
 
-    /* Accent: Bright magenta-purple */
-    --accent: 280 70% 60%;
+    /* Accent: Soft violet */
+    --accent: 270 50% 55%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 75% 50%;
+    --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Borders and inputs */
-    --border: 220 20% 88%;
-    --input: 220 20% 94%;
-    --ring: 195 85% 45%;
+    /* Borders: very subtle */
+    --border: 220 15% 90%;
+    --input: 220 15% 96%;
+    --ring: 195 75% 42%;
 
     /* Custom Lumi colors for light mode */
-    --neon-cyan: 195 85% 45%;
-    --neon-purple: 265 70% 55%;
-    --neon-pink: 290 65% 55%;
-    --cosmic-blue: 220 40% 92%;
-    --deep-space: 220 30% 95%;
+    --neon-cyan: 195 65% 45%;
+    --neon-purple: 265 55% 55%;
+    --neon-pink: 290 50% 55%;
+    --cosmic-blue: 220 30% 95%;
+    --deep-space: 225 25% 97%;
     
-    --soft-turquoise: 190 70% 45%;
-    --soft-lavender: 260 50% 65%;
-    --deep-indigo: 245 30% 92%;
-    --warm-highlight: 45 80% 55%;
+    --soft-turquoise: 190 55% 45%;
+    --soft-lavender: 260 40% 65%;
+    --deep-indigo: 245 20% 94%;
+    --warm-highlight: 45 70% 55%;
 
-    /* Light mode gradients */
-    --gradient-cosmic: linear-gradient(135deg, hsl(220 30% 96%) 0%, hsl(220 25% 98%) 50%, hsl(195 30% 96%) 100%);
-    --gradient-neon: linear-gradient(135deg, hsl(195 85% 45%) 0%, hsl(265 70% 55%) 100%);
-    --gradient-glass: linear-gradient(135deg, hsla(220, 30%, 50%, 0.05) 0%, hsla(220, 30%, 50%, 0.02) 100%);
-    --gradient-character-blend: linear-gradient(180deg, transparent 0%, hsl(220 30% 97%) 50%, hsl(220 30% 98%) 100%);
+    /* Light mode gradients - very subtle */
+    --gradient-cosmic: linear-gradient(135deg, hsl(225 25% 98%) 0%, hsl(220 20% 99%) 50%, hsl(210 25% 98%) 100%);
+    --gradient-neon: linear-gradient(135deg, hsl(195 75% 42%) 0%, hsl(265 55% 52%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsla(220, 25%, 50%, 0.04) 0%, hsla(220, 25%, 50%, 0.01) 100%);
+    --gradient-character-blend: linear-gradient(180deg, transparent 0%, hsl(225 25% 98%) 50%, hsl(225 25% 99%) 100%);
 
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 230 25% 10%;
-    --sidebar-primary: 195 85% 45%;
+    --sidebar-foreground: 230 30% 12%;
+    --sidebar-primary: 195 75% 42%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 20% 94%;
-    --sidebar-accent-foreground: 230 25% 10%;
-    --sidebar-border: 220 20% 88%;
-    --sidebar-ring: 195 85% 45%;
+    --sidebar-accent: 220 15% 96%;
+    --sidebar-accent-foreground: 230 30% 12%;
+    --sidebar-border: 220 15% 90%;
+    --sidebar-ring: 195 75% 42%;
   }
 }
 
@@ -347,13 +347,14 @@ html {
       radial-gradient(ellipse at 15% 30%, hsla(245, 50%, 18%, 0.2) 0%, transparent 40%);
   }
 
-  /* Light mode body background */
+  /* Light mode body background - very subtle nebula, 5-8% max opacity */
   html.light body {
+    background-color: hsl(225 25% 98%);
     background-image: 
-      radial-gradient(ellipse at 70% 20%, hsla(195, 60%, 85%, 0.3) 0%, transparent 50%),
-      radial-gradient(ellipse at 30% 80%, hsla(265, 50%, 90%, 0.25) 0%, transparent 45%),
-      radial-gradient(ellipse at 85% 70%, hsla(280, 45%, 92%, 0.2) 0%, transparent 40%),
-      radial-gradient(ellipse at 15% 30%, hsla(220, 50%, 94%, 0.25) 0%, transparent 40%);
+      radial-gradient(ellipse at 70% 20%, hsla(200, 60%, 88%, 0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 30% 80%, hsla(260, 45%, 92%, 0.06) 0%, transparent 45%),
+      radial-gradient(ellipse at 85% 70%, hsla(180, 45%, 92%, 0.05) 0%, transparent 40%),
+      radial-gradient(ellipse at 15% 30%, hsla(220, 40%, 95%, 0.06) 0%, transparent 40%);
   }
 
   h1, h2, h3, h4, h5, h6 {
