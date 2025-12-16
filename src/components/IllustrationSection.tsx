@@ -64,11 +64,12 @@ const IllustrationSection = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div variants={imageVariants} className="order-2 lg:order-1">
               <div 
-                className="relative rounded-3xl overflow-hidden p-8 bg-card/80 dark:bg-card/60 backdrop-blur-xl border border-border/50"
+                className="relative rounded-3xl overflow-hidden p-8 bg-card/95 dark:bg-card/80 backdrop-blur-xl border border-border/50"
                 style={{
                   boxShadow: `
-                    0 0 0 1px hsla(var(--primary), 0.1),
-                    0 20px 60px hsla(var(--foreground), 0.1)
+                    0 0 0 1px hsla(var(--border), 0.2),
+                    0 20px 60px hsla(var(--foreground), 0.1),
+                    inset 0 1px 1px hsla(var(--card), 0.5)
                   `,
                 }}
               >
@@ -123,11 +124,12 @@ const IllustrationSection = () => {
             {/* Discovery Card */}
             <motion.div
               variants={itemVariants}
-              className="relative rounded-3xl overflow-hidden p-8 hover-lift bg-card/80 dark:bg-card/60 backdrop-blur-xl border border-border/50"
+              className="relative rounded-3xl overflow-hidden p-8 hover-lift bg-card/95 dark:bg-card/80 backdrop-blur-xl border border-border/50"
               style={{
                 boxShadow: `
-                  0 0 0 1px hsla(var(--primary), 0.08),
-                  0 15px 50px hsla(var(--foreground), 0.08)
+                  0 0 0 1px hsla(var(--border), 0.2),
+                  0 15px 50px hsla(var(--foreground), 0.08),
+                  inset 0 1px 1px hsla(var(--card), 0.5)
                 `,
               }}
             >
@@ -162,11 +164,12 @@ const IllustrationSection = () => {
             {/* Mindful Card */}
             <motion.div
               variants={itemVariants}
-              className="relative rounded-3xl overflow-hidden p-8 hover-lift bg-card/80 dark:bg-card/60 backdrop-blur-xl border border-border/50"
+              className="relative rounded-3xl overflow-hidden p-8 hover-lift bg-card/95 dark:bg-card/80 backdrop-blur-xl border border-border/50"
               style={{
                 boxShadow: `
-                  0 0 0 1px hsla(var(--primary), 0.08),
-                  0 15px 50px hsla(var(--foreground), 0.08)
+                  0 0 0 1px hsla(var(--border), 0.2),
+                  0 15px 50px hsla(var(--foreground), 0.08),
+                  inset 0 1px 1px hsla(var(--card), 0.5)
                 `,
               }}
             >
