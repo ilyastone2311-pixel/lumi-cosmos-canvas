@@ -271,6 +271,8 @@ export default function FloatingLines({
   mixBlendMode = 'screen'
 }: FloatingLinesProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const rendererRef = useRef<WebGLRenderer | null>(null);
+  const uniformsRef = useRef<any>(null);
   const targetMouseRef = useRef<Vector2>(new Vector2(-1000, -1000));
   const currentMouseRef = useRef<Vector2>(new Vector2(-1000, -1000));
   const targetInfluenceRef = useRef<number>(0);
@@ -313,6 +315,7 @@ export default function FloatingLines({
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';
     containerRef.current.appendChild(renderer.domElement);
+    rendererRef.current = renderer;
 
     const uniforms = {
       iTime: { value: 0 },
@@ -365,6 +368,8 @@ export default function FloatingLines({
       lineGradientCount: { value: 0 }
     };
 
+    uniformsRef.current = uniforms;
+
     if (linesGradient && linesGradient.length > 0) {
       const stops = linesGradient.slice(0, MAX_GRADIENT_STOPS);
       uniforms.lineGradientCount.value = stops.length;
@@ -389,6 +394,7 @@ export default function FloatingLines({
 
     const setSize = () => {
       const el = containerRef.current!;
+      if (!el) return;
       const width = el.clientWidth || 1;
       const height = el.clientHeight || 1;
 
@@ -407,11 +413,15 @@ export default function FloatingLines({
       ro.observe(containerRef.current);
     }
 
+    // Use WINDOW level events so hover works even when content is on top
     const handlePointerMove = (event: PointerEvent) => {
-      const rect = renderer.domElement.getBoundingClientRect();
+      const el = containerRef.current;
+      if (!el || !rendererRef.current) return;
+      
+      const rect = el.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
-      const dpr = renderer.getPixelRatio();
+      const dpr = rendererRef.current.getPixelRatio();
 
       targetMouseRef.current.set(x * dpr, (rect.height - y) * dpr);
       targetInfluenceRef.current = 1.0;
@@ -430,8 +440,9 @@ export default function FloatingLines({
     };
 
     if (interactive) {
-      renderer.domElement.addEventListener('pointermove', handlePointerMove);
-      renderer.domElement.addEventListener('pointerleave', handlePointerLeave);
+      // Attach to WINDOW for global mouse tracking
+      window.addEventListener('pointermove', handlePointerMove, { passive: true });
+      document.addEventListener('mouseleave', handlePointerLeave);
     }
 
     let raf = 0;
@@ -458,13 +469,13 @@ export default function FloatingLines({
 
     return () => {
       cancelAnimationFrame(raf);
-      if (ro && containerRef.current) {
+      if (ro) {
         ro.disconnect();
       }
 
       if (interactive) {
-        renderer.domElement.removeEventListener('pointermove', handlePointerMove);
-        renderer.domElement.removeEventListener('pointerleave', handlePointerLeave);
+        window.removeEventListener('pointermove', handlePointerMove);
+        document.removeEventListener('mouseleave', handlePointerLeave);
       }
 
       geometry.dispose();
@@ -473,15 +484,13 @@ export default function FloatingLines({
       if (renderer.domElement.parentElement) {
         renderer.domElement.parentElement.removeChild(renderer.domElement);
       }
+      rendererRef.current = null;
     };
   }, [
-    linesGradient,
-    enabledWaves,
-    lineCount,
-    lineDistance,
-    topWavePosition,
-    middleWavePosition,
-    bottomWavePosition,
+    linesGradient?.join(','),
+    enabledWaves.join(','),
+    topLineCount, middleLineCount, bottomLineCount,
+    topLineDistance, middleLineDistance, bottomLineDistance,
     animationSpeed,
     interactive,
     bendRadius,
