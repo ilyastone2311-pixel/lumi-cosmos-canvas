@@ -16,9 +16,9 @@ const HeroIllustration = () => {
   
   // Scroll-based fade out
   const { scrollY } = useScroll();
-  const scrollOpacity = useTransform(scrollY, [0, 300, 550], [1, 1, 0]);
-  const scrollScale = useTransform(scrollY, [0, 300, 550], [1, 1, 0.92]);
-  const scrollYOffset = useTransform(scrollY, [0, 550], [0, 80]);
+  const scrollOpacity = useTransform(scrollY, [0, 350, 600], [1, 1, 0]);
+  const scrollScale = useTransform(scrollY, [0, 350, 600], [1, 1, 0.9]);
+  const scrollYOffset = useTransform(scrollY, [0, 600], [0, 100]);
 
   useEffect(() => {
     const stored = localStorage.getItem("lumi-theme");
@@ -93,14 +93,14 @@ const HeroIllustration = () => {
 
   if (!mounted) {
     return (
-      <div className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[55vw] min-w-[350px] max-w-[750px] z-10" />
+      <div className="absolute right-[-2%] top-[45%] -translate-y-1/2 w-[48vw] max-w-[620px] z-10" />
     );
   }
 
   return (
     <motion.div 
       ref={containerRef}
-      className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[55vw] min-w-[350px] max-w-[750px] z-10 pointer-events-auto"
+      className="absolute right-[-2%] top-[45%] -translate-y-1/2 w-[48vw] max-w-[620px] z-10 pointer-events-auto"
       style={{
         perspective: "1000px",
         opacity: scrollOpacity,
@@ -151,14 +151,14 @@ const HeroIllustration = () => {
             )}
           </AnimatePresence>
 
-          {/* The image - fully visible, no clipping */}
+          {/* The image - fully visible */}
           <div className="relative w-full flex items-center justify-center">
             <AnimatePresence mode="wait">
               <motion.img
                 key={isLightTheme ? "hero-light" : "hero-dark"}
                 src={currentHeroImage}
                 alt="Magical reading illustration"
-                className="w-full h-auto object-contain relative z-10"
+                className="w-full h-auto max-h-[75vh] object-contain relative z-10"
                 initial={{ opacity: 0, scale: 1.02 }}
                 animate={{ 
                   opacity: isSwitching ? 0.4 : 1, 

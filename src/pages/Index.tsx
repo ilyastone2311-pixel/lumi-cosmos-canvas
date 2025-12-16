@@ -78,7 +78,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative overflow-x-hidden">
       {/* Single unified background with FloatingLines */}
       <BackgroundEffects />
 
