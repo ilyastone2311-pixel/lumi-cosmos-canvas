@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import CategoryCard from "@/components/CategoryCard";
 import BackgroundEffects from "@/components/BackgroundEffects";
+import FloatingLines from "@/components/FloatingLines";
 import HeroSection from "@/components/HeroSection";
 import HowItWorks from "@/components/HowItWorks";
 import IllustrationSection from "@/components/IllustrationSection";
@@ -81,6 +82,14 @@ const Index = () => {
     <div className="min-h-screen relative overflow-hidden">
       {/* Background Effects */}
       <BackgroundEffects />
+      
+      {/* Floating Lines Effect */}
+      <FloatingLines 
+        colors={['#06b6d4', '#8b5cf6', '#ec4899', '#3b82f6']}
+        animationSpeed={0.6}
+        opacity={0.35}
+        enabledWaves={['top', 'middle', 'bottom']}
+      />
 
         {/* Main Content - Seamless flow */}
         <main id="main-content" className="relative z-10 pt-20 sm:pt-28">
