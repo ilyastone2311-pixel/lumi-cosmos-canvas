@@ -4,7 +4,7 @@ import FloatingLines from "./FloatingLines";
 // Lightweight CSS-based particles
 const BackgroundParticles = memo(({ isLight }: { isLight: boolean }) => {
   const particles = useMemo(() => 
-    Array.from({ length: 20 }, (_, i) => ({
+    Array.from({ length: 18 }, (_, i) => ({
       id: i,
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
@@ -26,11 +26,11 @@ const BackgroundParticles = memo(({ isLight }: { isLight: boolean }) => {
             width: p.size,
             height: p.size,
             background: isLight 
-              ? `hsla(220, 60%, 70%, ${0.4 + Math.random() * 0.2})`
-              : `hsla(200, 90%, 55%, ${0.5 + Math.random() * 0.3})`,
+              ? `hsla(220, 60%, 70%, ${0.3 + Math.random() * 0.2})`
+              : `hsla(200, 90%, 55%, ${0.4 + Math.random() * 0.25})`,
             boxShadow: isLight
-              ? `0 0 ${4 + p.size}px hsla(220, 60%, 65%, 0.4)`
-              : `0 0 ${6 + p.size}px hsla(200, 90%, 55%, 0.5)`,
+              ? `0 0 ${4 + p.size}px hsla(220, 60%, 65%, 0.3)`
+              : `0 0 ${6 + p.size}px hsla(200, 90%, 55%, 0.4)`,
             animationDelay: `${p.delay}s`,
             animationDuration: `${p.duration}s`,
           }}
@@ -59,6 +59,10 @@ const BackgroundEffects = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Colors for floating lines
+  const lightColors = ['#bfdbfe', '#c7d2fe', '#ddd6fe', '#fce7f3', '#a5f3fc'];
+  const darkColors = ['#1e3a8a', '#312e81', '#4c1d95', '#5b21b6', '#0e7490'];
+
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
       {/* Clean background */}
@@ -69,30 +73,24 @@ const BackgroundEffects = () => {
         }}
       />
 
-      {/* Light theme: very subtle nebula (5-8% opacity max) */}
+      {/* Light theme: very subtle nebula */}
       {isLight && (
         <div 
           className="absolute inset-0 pointer-events-none"
           style={{
             background: `
-              radial-gradient(ellipse at 70% 25%, hsla(200, 70%, 85%, 0.08) 0%, transparent 50%),
-              radial-gradient(ellipse at 25% 70%, hsla(260, 50%, 88%, 0.06) 0%, transparent 45%),
-              radial-gradient(ellipse at 85% 75%, hsla(180, 50%, 90%, 0.05) 0%, transparent 40%)
+              radial-gradient(ellipse at 70% 25%, hsla(200, 70%, 88%, 0.06) 0%, transparent 50%),
+              radial-gradient(ellipse at 25% 70%, hsla(260, 50%, 90%, 0.05) 0%, transparent 45%)
             `,
           }}
         />
       )}
 
       {/* Floating Lines */}
-      <div className="absolute inset-0 pointer-events-auto">
+      <div className="absolute inset-0 pointer-events-none">
         <FloatingLines
           key={key}
-          linesGradient={isLight 
-            // Light theme: pastel, airy colors (light cyan, soft blue, pale lilac, light pink)
-            ? ['#93c5fd', '#a5b4fc', '#c4b5fd', '#fbcfe8', '#99f6e4']
-            // Dark theme: deeper, richer blues and purples
-            : ['#1e40af', '#3730a3', '#5b21b6', '#7c3aed', '#0891b2']
-          }
+          linesGradient={isLight ? lightColors : darkColors}
           enabledWaves={['top', 'middle', 'bottom']}
           lineCount={[6, 8, 10]}
           lineDistance={[5, 4, 3]}
