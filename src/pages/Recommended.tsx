@@ -228,10 +228,11 @@ const Recommended = () => {
                       tag="h1"
                       className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground"
                       splitType="chars"
-                      delay={35}
-                      duration={0.5}
-                      from={{ opacity: 0, y: 30 }}
-                      to={{ opacity: 1, y: 0 }}
+                      delay={50}
+                      duration={0.8}
+                      ease="power2.out"
+                      from={{ opacity: 0, y: 50, rotateX: -90 }}
+                      to={{ opacity: 1, y: 0, rotateX: 0 }}
                       threshold={0.1}
                       textAlign="left"
                     />

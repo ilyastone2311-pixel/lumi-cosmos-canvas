@@ -41,10 +41,11 @@ const HowItWorks = () => {
           tag="h2"
           className="font-display text-3xl md:text-4xl font-bold text-center text-foreground mb-20"
           splitType="chars"
-          delay={35}
-          duration={0.5}
-          from={{ opacity: 0, y: 30 }}
-          to={{ opacity: 1, y: 0 }}
+          delay={50}
+          duration={0.8}
+          ease="power2.out"
+          from={{ opacity: 0, y: 60, rotateX: -90 }}
+          to={{ opacity: 1, y: 0, rotateX: 0 }}
           threshold={0.15}
           textAlign="center"
         />

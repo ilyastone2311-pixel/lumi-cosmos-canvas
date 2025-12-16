@@ -109,23 +109,29 @@ const IllustrationSection = () => {
               >
                 Community
               </span>
-              <SplitText 
-                text="Learn Together, Grow Together"
-                tag="h2"
-                className="font-display text-3xl md:text-4xl font-bold text-foreground"
-                splitType="words"
-                delay={80}
-                duration={0.6}
-                from={{ opacity: 0, y: 25 }}
-                to={{ opacity: 1, y: 0 }}
-                threshold={0.2}
-                textAlign="left"
-              />
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Join thousands of curious minds exploring ideas across psychology, 
-                technology, mindfulness, and more. Our bite-sized insights make 
-                learning accessible and enjoyable.
-              </p>
+              
+              {/* Glass backdrop for readability over floating lines */}
+              <div className="relative">
+                <div className="absolute -inset-4 sm:-inset-6 rounded-2xl bg-background/60 backdrop-blur-md -z-10" />
+                <SplitText 
+                  text="Learn Together, Grow Together"
+                  tag="h2"
+                  className="font-display text-3xl md:text-4xl font-bold text-foreground"
+                  splitType="words"
+                  delay={100}
+                  duration={0.8}
+                  ease="power2.out"
+                  from={{ opacity: 0, y: 40, scale: 0.9 }}
+                  to={{ opacity: 1, y: 0, scale: 1 }}
+                  threshold={0.2}
+                  textAlign="left"
+                />
+                <p className="text-lg text-muted-foreground leading-relaxed mt-6">
+                  Join thousands of curious minds exploring ideas across psychology, 
+                  technology, mindfulness, and more. Our bite-sized insights make 
+                  learning accessible and enjoyable.
+                </p>
+              </div>
             </motion.div>
           </div>
 
