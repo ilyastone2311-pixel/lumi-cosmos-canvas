@@ -1,5 +1,6 @@
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { motion, type Variants } from "framer-motion";
+import SplitText from "./SplitText";
 
 import illustrationReaders from "@/assets/illustration-readers.webp";
 import illustrationDiscovery from "@/assets/illustration-discovery.webp";
@@ -108,9 +109,18 @@ const IllustrationSection = () => {
               >
                 Community
               </span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
-                Learn Together, Grow Together
-              </h2>
+              <SplitText 
+                text="Learn Together, Grow Together"
+                tag="h2"
+                className="font-display text-3xl md:text-4xl font-bold text-foreground"
+                splitType="words"
+                delay={80}
+                duration={0.6}
+                from={{ opacity: 0, y: 25 }}
+                to={{ opacity: 1, y: 0 }}
+                threshold={0.2}
+                textAlign="left"
+              />
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Join thousands of curious minds exploring ideas across psychology, 
                 technology, mindfulness, and more. Our bite-sized insights make 

@@ -4,6 +4,7 @@ import { useParallax } from "@/hooks/useParallax";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import HeroIllustration from "./HeroIllustration";
+import SplitText from "./SplitText";
 
 // Premium easing
 const premiumEase: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
@@ -75,31 +76,54 @@ const HeroSection = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: premiumEase }}
           >
-            {/* Main headline */}
+            {/* Main headline with glass backdrop for readability */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: premiumEase }}
+              className="relative"
             >
-              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-foreground">
-                <span className="block mb-2">Your shortcut</span>
-                <span 
+              {/* Glass backdrop for text readability */}
+              <div className="absolute -inset-4 sm:-inset-6 rounded-2xl bg-background/40 backdrop-blur-sm -z-10" />
+              
+              <div className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-foreground">
+                <SplitText 
+                  text="Your shortcut"
+                  tag="span"
+                  className="block mb-2"
+                  splitType="chars"
+                  delay={30}
+                  duration={0.5}
+                  from={{ opacity: 0, y: 30 }}
+                  to={{ opacity: 1, y: 0 }}
+                  threshold={0.2}
+                />
+                <SplitText 
+                  text="for quick insights"
+                  tag="span"
                   className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-shimmer"
-                >
-                  for quick insights
-                </span>
-              </h1>
+                  splitType="chars"
+                  delay={25}
+                  duration={0.5}
+                  from={{ opacity: 0, y: 30 }}
+                  to={{ opacity: 1, y: 0 }}
+                  threshold={0.2}
+                />
+              </div>
             </motion.div>
 
             {/* Subheadline */}
-            <motion.p 
-              className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0"
+            <motion.div 
+              className="relative"
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4, ease: premiumEase }}
             >
-              Discover books, articles, and ideas for self-improvement
-            </motion.p>
+              <div className="absolute -inset-3 rounded-xl bg-background/30 backdrop-blur-[2px] -z-10" />
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0">
+                Discover books, articles, and ideas for self-improvement
+              </p>
+            </motion.div>
 
             {/* CTA Buttons */}
             <motion.div 

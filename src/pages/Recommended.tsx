@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Sparkles, ArrowLeft, Loader2, Heart, Wand2, Headphones, BookOpen, TrendingUp } from 'lucide-react';
 import BackgroundEffects from '@/components/BackgroundEffects';
 import ArticlePreviewCard from '@/components/ArticlePreviewCard';
+import SplitText from '@/components/SplitText';
 import { SkeletonGrid } from '@/components/ui/skeleton-card';
 import { Button } from '@/components/ui/button';
 import { OnboardingDialog } from '@/components/OnboardingDialog';
@@ -222,9 +223,18 @@ const Recommended = () => {
                     <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                   </motion.div>
                   <div>
-                    <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
-                      For You
-                    </h1>
+                    <SplitText 
+                      text="For You"
+                      tag="h1"
+                      className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground"
+                      splitType="chars"
+                      delay={35}
+                      duration={0.5}
+                      from={{ opacity: 0, y: 30 }}
+                      to={{ opacity: 1, y: 0 }}
+                      threshold={0.1}
+                      textAlign="left"
+                    />
                     <p className="text-sm sm:text-base text-foreground/80">
                       Personalized recommendations based on your interests
                     </p>
