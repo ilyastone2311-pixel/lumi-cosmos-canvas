@@ -6,6 +6,7 @@ import HeroSection from "@/components/HeroSection";
 import HowItWorks from "@/components/HowItWorks";
 import IllustrationSection from "@/components/IllustrationSection";
 import ScrollSection from "@/components/ScrollSection";
+import SplitText from "@/components/SplitText";
 import { SectionHeader, CardGrid } from "@/components/PageLoadAnimation";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useAuth } from "@/hooks/useAuth";
@@ -109,18 +110,18 @@ const Index = () => {
             <div className="container mx-auto max-w-7xl relative">
               {/* Section Header */}
               <SectionHeader className="text-center mb-12 sm:mb-20 relative">
-                <motion.h2 
+                <SplitText 
+                  text="Explore Categories"
+                  tag="h2"
                   className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.7, ease: premiumEase }}
-                  style={{
-                    textShadow: '0 4px 30px hsla(190, 100%, 50%, 0.15)',
-                  }}
-                >
-                  Explore Categories
-                </motion.h2>
+                  splitType="chars"
+                  delay={30}
+                  duration={0.5}
+                  from={{ opacity: 0, y: 30 }}
+                  to={{ opacity: 1, y: 0 }}
+                  threshold={0.1}
+                  textAlign="center"
+                />
                 <motion.p 
                   className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto px-4"
                   initial={{ opacity: 0, y: 15 }}

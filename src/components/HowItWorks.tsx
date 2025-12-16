@@ -2,6 +2,7 @@ import { Clock, List, Smartphone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useRef } from "react";
+import SplitText from "./SplitText";
 
 const features = [
   {
@@ -35,11 +36,18 @@ const HowItWorks = () => {
       </div>
 
       <div className="container mx-auto max-w-7xl px-6 relative">
-        <h2 
-          className="font-display text-3xl md:text-4xl font-bold text-center text-foreground mb-20 animate-fade-in"
-        >
-          How Lumi works
-        </h2>
+        <SplitText 
+          text="How Lumi works"
+          tag="h2"
+          className="font-display text-3xl md:text-4xl font-bold text-center text-foreground mb-20"
+          splitType="chars"
+          delay={35}
+          duration={0.5}
+          from={{ opacity: 0, y: 30 }}
+          to={{ opacity: 1, y: 0 }}
+          threshold={0.15}
+          textAlign="center"
+        />
 
         <div className="grid md:grid-cols-3 gap-10">
           {features.map((feature, index) => {

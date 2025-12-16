@@ -1,5 +1,6 @@
 import BackgroundEffects from "@/components/BackgroundEffects";
 import CategoryCard from "@/components/CategoryCard";
+import SplitText from "@/components/SplitText";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -87,9 +88,18 @@ const Library = () => {
         <div className="container mx-auto max-w-7xl">
           {/* Header */}
           <header className="mb-10 sm:mb-16 animate-fade-in">
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-3 sm:mb-4">
-              Your Library
-            </h1>
+            <SplitText 
+              text="Your Library"
+              tag="h1"
+              className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-3 sm:mb-4"
+              splitType="chars"
+              delay={40}
+              duration={0.6}
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.1}
+              textAlign="left"
+            />
             <p className="text-base sm:text-xl text-muted-foreground max-w-2xl">
               Browse through our curated collection of insights. 
               {user ? " Your favorites are marked with a heart." : " Sign in to save your favorites."}

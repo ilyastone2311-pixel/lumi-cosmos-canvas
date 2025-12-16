@@ -59,9 +59,11 @@ const BackgroundEffects = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Colors for floating lines
-  const lightColors = ['#bfdbfe', '#c7d2fe', '#ddd6fe', '#fce7f3', '#a5f3fc'];
-  const darkColors = ['#1e3a8a', '#312e81', '#4c1d95', '#5b21b6', '#0e7490'];
+  // Colors for floating lines - matching Library/For You pages
+  // Light: soft pastels that work on bright backgrounds
+  const lightColors = ['#94a3b8', '#a5b4fc', '#c4b5fd', '#f0abfc', '#67e8f9'];
+  // Dark: rich deep colors for dark backgrounds  
+  const darkColors = ['#3b82f6', '#8b5cf6', '#a855f7', '#c026d3', '#06b6d4'];
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
@@ -86,21 +88,21 @@ const BackgroundEffects = () => {
         />
       )}
 
-      {/* Floating Lines */}
-      <div className="absolute inset-0 pointer-events-none">
+      {/* Floating Lines - unified settings like Library/For You */}
+      <div className="absolute inset-0 pointer-events-auto" style={{ zIndex: 1 }}>
         <FloatingLines
           key={key}
           linesGradient={isLight ? lightColors : darkColors}
           enabledWaves={['top', 'middle', 'bottom']}
-          lineCount={[6, 8, 10]}
-          lineDistance={[5, 4, 3]}
-          bendRadius={5.0}
-          bendStrength={-0.5}
+          lineCount={[5, 7, 9]}
+          lineDistance={[6, 5, 4]}
+          bendRadius={6.0}
+          bendStrength={-0.6}
           interactive={true}
           parallax={true}
-          parallaxStrength={0.2}
-          animationSpeed={1}
-          mouseDamping={0.05}
+          parallaxStrength={0.25}
+          animationSpeed={0.8}
+          mouseDamping={0.04}
           mixBlendMode={isLight ? "multiply" : "screen"}
         />
       </div>
