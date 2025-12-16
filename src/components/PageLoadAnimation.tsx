@@ -5,7 +5,7 @@ interface PageLoadAnimationProps {
   children: ReactNode;
   delay?: number;
   direction?: "up" | "down" | "left" | "right" | "scale";
-  blur?: boolean;
+  blur?: boolean; // kept for backwards-compat (no-op for performance)
   duration?: number;
   className?: string;
 }
@@ -13,18 +13,13 @@ interface PageLoadAnimationProps {
 // Premium easing curve for smooth, natural motion
 const premiumEase: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
 
-const getVariants = (direction: string, blur: boolean): Variants => {
-  const blurStart = blur ? "blur(8px)" : "blur(0px)";
-  const blurEnd = "blur(0px)";
-
+const getVariants = (direction: string): Variants => {
   const baseHidden = {
     opacity: 0,
-    filter: blurStart,
   };
 
   const baseVisible = {
     opacity: 1,
-    filter: blurEnd,
   };
 
   switch (direction) {
@@ -65,11 +60,11 @@ const PageLoadAnimation = ({
   children,
   delay = 0,
   direction = "up",
-  blur = true,
+  // blur is intentionally ignored for perf
   duration = 0.6,
   className = "",
 }: PageLoadAnimationProps) => {
-  const variants = getVariants(direction, blur);
+  const variants = getVariants(direction);
 
   const transition: Transition = {
     duration,
@@ -84,7 +79,7 @@ const PageLoadAnimation = ({
       variants={variants}
       transition={transition}
       className={className}
-      style={{ willChange: "transform, opacity, filter" }}
+      style={{ willChange: "transform, opacity" }}
     >
       {children}
     </motion.div>
@@ -132,7 +127,7 @@ export const StaggerContainer = ({
 interface StaggerItemProps {
   children: ReactNode;
   direction?: "up" | "down" | "left" | "right" | "scale";
-  blur?: boolean;
+  blur?: boolean; // kept for backwards-compat (no-op for performance)
   duration?: number;
   className?: string;
 }
@@ -140,18 +135,18 @@ interface StaggerItemProps {
 export const StaggerItem = ({
   children,
   direction = "up",
-  blur = true,
+  // blur is intentionally ignored for perf
   duration = 0.6,
   className = "",
 }: StaggerItemProps) => {
-  const variants = getVariants(direction, blur);
+  const variants = getVariants(direction);
 
   return (
     <motion.div
       variants={variants}
       transition={{ duration, ease: premiumEase }}
       className={className}
-      style={{ willChange: "transform, opacity, filter" }}
+      style={{ willChange: "transform, opacity" }}
     >
       {children}
     </motion.div>
@@ -159,80 +154,100 @@ export const StaggerItem = ({
 };
 
 // Hero-specific animations
-export const HeroHeadline = ({ children, delay = 0.2, className = "" }: { children: ReactNode; delay?: number; className?: string }) => (
+export const HeroHeadline = ({
+  children,
+  delay = 0.2,
+  className = "",
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+}) => (
   <motion.div
-    initial={{ opacity: 0, y: -10, filter: "blur(4px)" }}
-    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+    initial={{ opacity: 0, y: -10 }}
+    animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.7, delay, ease: premiumEase }}
     className={className}
-    style={{ willChange: "transform, opacity, filter" }}
+    style={{ willChange: "transform, opacity" }}
   >
     {children}
   </motion.div>
 );
 
-export const HeroSubtext = ({ children, delay = 0.4, className = "" }: { children: ReactNode; delay?: number; className?: string }) => (
+export const HeroSubtext = ({
+  children,
+  delay = 0.4,
+  className = "",
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+}) => (
   <motion.div
-    initial={{ opacity: 0, y: 15, filter: "blur(4px)" }}
-    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+    initial={{ opacity: 0, y: 15 }}
+    animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.6, delay, ease: premiumEase }}
     className={className}
-    style={{ willChange: "transform, opacity, filter" }}
+    style={{ willChange: "transform, opacity" }}
   >
     {children}
   </motion.div>
 );
 
-export const HeroCTA = ({ children, delay = 0.6, className = "" }: { children: ReactNode; delay?: number; className?: string }) => (
+export const HeroCTA = ({
+  children,
+  delay = 0.6,
+  className = "",
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+}) => (
   <motion.div
-    initial={{ opacity: 0, scale: 0.95, filter: "blur(4px)" }}
-    animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+    initial={{ opacity: 0, scale: 0.95 }}
+    animate={{ opacity: 1, scale: 1 }}
     transition={{ duration: 0.5, delay, ease: premiumEase }}
     className={className}
-    style={{ willChange: "transform, opacity, filter" }}
+    style={{ willChange: "transform, opacity" }}
   >
     {children}
   </motion.div>
 );
 
 // Image entrance with levitate effect
-export const ImageEntrance = ({ 
-  children, 
-  delay = 0.3, 
+export const ImageEntrance = ({
+  children,
+  delay = 0.3,
   className = "",
-  enableLevitate = true 
-}: { 
-  children: ReactNode; 
-  delay?: number; 
+  enableLevitate = true,
+}: {
+  children: ReactNode;
+  delay?: number;
   className?: string;
   enableLevitate?: boolean;
 }) => (
   <motion.div
-    initial={{ 
-      opacity: 0, 
-      scale: 1.03, 
-      y: 20,
-      filter: "blur(8px)" 
-    }}
-    animate={{ 
-      opacity: 1, 
-      scale: 1, 
+    initial={{ opacity: 0, scale: 1.03, y: 20 }}
+    animate={{
+      opacity: 1,
+      scale: 1,
       y: enableLevitate ? [0, -8, 0] : 0,
-      filter: "blur(0px)" 
     }}
-    transition={{ 
-      duration: 0.8, 
+    transition={{
+      duration: 0.8,
       delay,
       ease: premiumEase,
-      y: enableLevitate ? {
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: delay + 0.8,
-      } : undefined,
+      y: enableLevitate
+        ? {
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: delay + 0.8,
+          }
+        : undefined,
     }}
     className={className}
-    style={{ willChange: "transform, opacity, filter" }}
+    style={{ willChange: "transform, opacity" }}
   >
     {children}
   </motion.div>
@@ -264,15 +279,13 @@ export const CardGrid = ({
   };
 
   const itemVariants: Variants = {
-    hidden: { 
-      opacity: 0, 
-      y: 15, 
-      filter: "blur(6px)",
+    hidden: {
+      opacity: 0,
+      y: 15,
     },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      filter: "blur(0px)",
+    visible: {
+      opacity: 1,
+      y: 0,
       transition: {
         duration: 0.6,
         ease: premiumEase,
@@ -298,40 +311,40 @@ export const CardGrid = ({
 };
 
 // Section header animation
-export const SectionHeader = ({ 
-  children, 
-  delay = 0, 
-  className = "" 
-}: { 
-  children: ReactNode; 
-  delay?: number; 
+export const SectionHeader = ({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: ReactNode;
+  delay?: number;
   className?: string;
 }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-    whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-80px" }}
     transition={{ duration: 0.7, delay, ease: premiumEase }}
     className={className}
-    style={{ willChange: "transform, opacity, filter" }}
+    style={{ willChange: "transform, opacity" }}
   >
     {children}
   </motion.div>
 );
 
-// Background blur-to-clear transition
-export const BackgroundReveal = ({ 
-  children, 
+// Background reveal transition (kept lightweight)
+export const BackgroundReveal = ({
+  children,
   delay = 0,
-  className = "" 
-}: { 
-  children: ReactNode; 
+  className = "",
+}: {
+  children: ReactNode;
   delay?: number;
   className?: string;
 }) => (
   <motion.div
-    initial={{ opacity: 0, filter: "blur(20px)" }}
-    animate={{ opacity: 1, filter: "blur(0px)" }}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
     transition={{ duration: 1.2, delay, ease: premiumEase }}
     className={className}
   >

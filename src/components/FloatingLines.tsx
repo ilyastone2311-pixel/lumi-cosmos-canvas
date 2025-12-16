@@ -320,17 +320,17 @@ export default function FloatingLines({
     camera.position.z = 1;
 
     // Optimize renderer for performance
-    const renderer = new WebGLRenderer({ 
-      antialias: false, // Disable for performance
-      alpha: true, // Enable transparency
+    const renderer = new WebGLRenderer({
+      antialias: false,
+      alpha: true,
       powerPreference: 'high-performance',
       stencil: false,
-      depth: false
+      depth: false,
     });
-    
-    // Limit pixel ratio for performance
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-    renderer.setClearColor(0x000000, 0); // Transparent background
+
+    // Keep DPR conservative for smooth scrolling/compositing
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
+    renderer.setClearColor(0x000000, 0);
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';
     renderer.domElement.style.display = 'block';
@@ -355,21 +355,21 @@ export default function FloatingLines({
       bottomLineDistance: { value: bottomLineDistance },
 
       topWavePosition: {
-        value: new Vector3(topWavePosition?.x ?? 10.0, topWavePosition?.y ?? 0.5, topWavePosition?.rotate ?? -0.4)
+        value: new Vector3(topWavePosition?.x ?? 10.0, topWavePosition?.y ?? 0.5, topWavePosition?.rotate ?? -0.4),
       },
       middleWavePosition: {
         value: new Vector3(
           middleWavePosition?.x ?? 5.0,
           middleWavePosition?.y ?? 0.0,
           middleWavePosition?.rotate ?? 0.2
-        )
+        ),
       },
       bottomWavePosition: {
         value: new Vector3(
           bottomWavePosition?.x ?? 2.0,
           bottomWavePosition?.y ?? -0.7,
           bottomWavePosition?.rotate ?? 0.4
-        )
+        ),
       },
 
       iMouse: { value: new Vector2(-1000, -1000) },
@@ -383,11 +383,11 @@ export default function FloatingLines({
       parallaxOffset: { value: new Vector2(0, 0) },
 
       lineGradient: {
-        value: Array.from({ length: MAX_GRADIENT_STOPS }, () => new Vector3(1, 1, 1))
+        value: Array.from({ length: MAX_GRADIENT_STOPS }, () => new Vector3(1, 1, 1)),
       },
-      lineGradientCount: { value: 0 }
+      lineGradientCount: { value: 0 },
     };
-    
+
     uniformsRef.current = uniforms;
 
     if (linesGradient && linesGradient.length > 0) {
@@ -404,7 +404,7 @@ export default function FloatingLines({
       uniforms,
       vertexShader,
       fragmentShader,
-      transparent: true
+      transparent: true,
     });
 
     const geometry = new PlaneGeometry(2, 2);
@@ -416,10 +416,10 @@ export default function FloatingLines({
     const setSize = () => {
       const el = containerRef.current;
       if (!el) return;
-      
+
       const width = el.clientWidth;
       const height = el.clientHeight;
-      
+
       if (width === 0 || height === 0) return;
 
       renderer.setSize(width, height, false);
@@ -429,30 +429,34 @@ export default function FloatingLines({
       uniforms.iResolution.value.set(canvasWidth, canvasHeight, 1);
     };
 
-    // Initial size set with delay to ensure container is rendered
     requestAnimationFrame(() => {
       setSize();
     });
 
-    // Throttled resize observer
     let resizeTimeout: ReturnType<typeof setTimeout>;
     const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => {
       clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(setSize, 100);
+      resizeTimeout = setTimeout(setSize, 120);
     }) : null;
 
     if (ro) {
       ro.observe(container);
     }
 
+    let lastPointerMoveAt = 0;
+
     const handlePointerMove = (event: PointerEvent) => {
-      const rect = renderer.domElement.getBoundingClientRect();
+      const el = containerRef.current;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
       const dpr = renderer.getPixelRatio();
 
       targetMouseRef.current.set(x * dpr, (rect.height - y) * dpr);
       targetInfluenceRef.current = 1.0;
+      lastPointerMoveAt = performance.now();
 
       if (parallax) {
         const centerX = rect.width / 2;
@@ -467,27 +471,24 @@ export default function FloatingLines({
       targetInfluenceRef.current = 0.0;
     };
 
-    // Add event listeners to the canvas element for interaction
+    // Track pointer globally (works even when content overlays the canvas)
     if (interactive) {
-      renderer.domElement.addEventListener('pointermove', handlePointerMove);
-      renderer.domElement.addEventListener('pointerleave', handlePointerLeave);
+      window.addEventListener('pointermove', handlePointerMove, { passive: true });
+      window.addEventListener('blur', handlePointerLeave);
+      document.addEventListener('mouseleave', handlePointerLeave);
     }
 
-    let lastTime = 0;
-    const targetFPS = 30; // Cap at 30fps for performance
-    const frameInterval = 1000 / targetFPS;
-
-    const renderLoop = (currentTime: number) => {
+    const renderLoop = () => {
       rafRef.current = requestAnimationFrame(renderLoop);
-      
-      // Throttle to target FPS
-      const delta = currentTime - lastTime;
-      if (delta < frameInterval) return;
-      lastTime = currentTime - (delta % frameInterval);
 
       uniforms.iTime.value = clock.getElapsedTime();
 
       if (interactive) {
+        // If the user stops moving the pointer, fade bend influence out
+        if (lastPointerMoveAt && performance.now() - lastPointerMoveAt > 150) {
+          targetInfluenceRef.current = 0.0;
+        }
+
         currentMouseRef.current.lerp(targetMouseRef.current, mouseDamping);
         uniforms.iMouse.value.copy(currentMouseRef.current);
 
@@ -502,7 +503,7 @@ export default function FloatingLines({
 
       renderer.render(scene, camera);
     };
-    
+
     rafRef.current = requestAnimationFrame(renderLoop);
 
     return () => {
