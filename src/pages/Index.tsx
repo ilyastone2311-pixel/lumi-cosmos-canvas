@@ -84,12 +84,21 @@ const Index = () => {
       <BackgroundEffects />
       
       {/* Floating Lines Effect */}
-      <FloatingLines 
-        colors={['#06b6d4', '#8b5cf6', '#ec4899', '#3b82f6']}
-        animationSpeed={0.6}
-        opacity={0.35}
-        enabledWaves={['top', 'middle', 'bottom']}
-      />
+      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+        <FloatingLines 
+          linesGradient={['#06b6d4', '#8b5cf6', '#ec4899', '#3b82f6']}
+          enabledWaves={['top', 'middle', 'bottom']}
+          lineCount={[10, 15, 20]}
+          lineDistance={[8, 6, 4]}
+          bendRadius={5.0}
+          bendStrength={-0.5}
+          interactive={true}
+          parallax={true}
+          animationSpeed={1}
+          opacity={0.4}
+          mixBlendMode="screen"
+        />
+      </div>
 
         {/* Main Content - Seamless flow */}
         <main id="main-content" className="relative z-10 pt-20 sm:pt-28">
