@@ -93,14 +93,14 @@ const HeroIllustration = () => {
 
   if (!mounted) {
     return (
-      <div className="absolute right-[-15%] top-[15%] -translate-y-1/2 w-[85vw] max-w-[1100px] z-10" />
+      <div className="absolute right-[-8%] xl:right-[-12%] top-[18%] -translate-y-1/2 w-[95vw] max-w-[1500px] z-10" />
     );
   }
 
   return (
     <motion.div 
       ref={containerRef}
-      className="absolute right-[-15%] top-[15%] -translate-y-1/2 w-[85vw] max-w-[1100px] z-10 pointer-events-auto"
+      className="absolute right-[-8%] xl:right-[-12%] top-[18%] -translate-y-1/2 w-[95vw] max-w-[1500px] z-10 pointer-events-auto"
       style={{
         perspective: "1000px",
         opacity: scrollOpacity,
@@ -126,11 +126,11 @@ const HeroIllustration = () => {
           className="relative w-full flex items-center justify-center"
           animate={{
             y: isActive ? [0, -12, 0] : [0, -6, 0],
-            scale: isActive ? 1.03 : 1,
+            scale: isActive ? 1.08 : 1.04,
           }}
           transition={{
             y: { duration: isActive ? 2.5 : 4, repeat: Infinity, ease: "easeInOut" },
-            scale: { duration: 0.35, ease: [0.2, 0.9, 0.2, 1] },
+            scale: { duration: 0.4, ease: [0.2, 0.9, 0.2, 1] },
           }}
         >
           {/* Theme transition glow pulse */}
@@ -158,7 +158,7 @@ const HeroIllustration = () => {
                 key={isLightTheme ? "hero-light" : "hero-dark"}
                 src={currentHeroImage}
                 alt="Magical reading illustration"
-                className="w-full h-auto max-h-[75vh] object-contain relative z-10"
+                className="w-full h-auto max-h-[88vh] object-contain relative z-10"
                 initial={{ opacity: 0, scale: 1.02 }}
                 animate={{ 
                   opacity: isSwitching ? 0.4 : 1, 

@@ -65,35 +65,55 @@ const SplitText: React.FC<SplitTextProps> = ({
   useGSAP(() => {
     if (!containerRef.current || elements.length === 0 || animatedRef.current) return;
 
-    const chars = containerRef.current.querySelectorAll('.split-char');
+    const el = containerRef.current;
+    const chars = el.querySelectorAll<HTMLElement>('.split-char');
     if (chars.length === 0) return;
 
     // Set initial state
-    gsap.set(chars, from);
+    gsap.set(chars, { ...from, force3D: true });
 
-    // Create ScrollTrigger animation
-    ScrollTrigger.create({
-      trigger: containerRef.current,
+    let played = false;
+    const play = () => {
+      if (played || animatedRef.current) return;
+      played = true;
+
+      gsap.to(chars, {
+        ...to,
+        duration,
+        ease,
+        stagger: delay / 1000,
+        force3D: true,
+        onComplete: () => {
+          animatedRef.current = true;
+          onAnimationComplete?.();
+        },
+      });
+    };
+
+    const isInViewNow = () => {
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const triggerLine = vh * (1 - threshold);
+      return rect.top <= triggerLine && rect.bottom >= 0;
+    };
+
+    const st = ScrollTrigger.create({
+      trigger: el,
       start: `top ${(1 - threshold) * 100}%`,
       once: true,
-      onEnter: () => {
-        gsap.to(chars, {
-          ...to,
-          duration,
-          ease,
-          stagger: delay / 1000,
-          onComplete: () => {
-            animatedRef.current = true;
-            onAnimationComplete?.();
-          }
-        });
-      }
+      onEnter: play,
     });
 
+    // If already visible on mount, animate immediately (fixes above-the-fold invisibility)
+    if (isInViewNow()) {
+      play();
+      st.kill();
+    } else {
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+    }
+
     return () => {
-      ScrollTrigger.getAll().forEach(st => {
-        if (st.trigger === containerRef.current) st.kill();
-      });
+      st.kill();
     };
   }, { dependencies: [elements, delay, duration, ease, from, to, threshold], scope: containerRef });
 
@@ -104,7 +124,8 @@ const SplitText: React.FC<SplitTextProps> = ({
         className="split-char inline-block"
         style={{ 
           whiteSpace: char === ' ' ? 'pre' : 'normal',
-          willChange: 'transform, opacity'
+          willChange: 'transform, opacity',
+          transformOrigin: '50% 80%'
         }}
       >
         {char === ' ' ? '\u00A0' : char}
@@ -117,6 +138,8 @@ const SplitText: React.FC<SplitTextProps> = ({
     textAlign,
     overflow: 'visible',
     display: 'block',
+    paddingTop: '0.08em',
+    paddingBottom: '0.18em',
   };
 
   const props = {

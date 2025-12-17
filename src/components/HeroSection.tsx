@@ -90,28 +90,33 @@ const HeroSection = () => {
                   className="block mb-2"
                   splitType="chars"
                   delay={40}
-                  duration={0.7}
-                  ease="power2.out"
-                  from={{ opacity: 0, y: 50, rotateX: -90 }}
-                  to={{ opacity: 1, y: 0, rotateX: 0 }}
+                  duration={0.85}
+                  ease="power3.out"
+                  from={{ opacity: 0, y: 60, scale: 0.96 }}
+                  to={{ opacity: 1, y: 0, scale: 1 }}
                   threshold={0.2}
                 />
-                <div className="relative">
-                  <div className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text bg-[length:200%_auto] animate-shimmer">
-                    <SplitText 
-                      text="for quick insights"
-                      tag="span"
-                      className="block text-transparent"
-                      splitType="chars"
-                      delay={35}
-                      duration={0.7}
-                      ease="power2.out"
-                      from={{ opacity: 0, y: 50, rotateX: -90 }}
-                      to={{ opacity: 1, y: 0, rotateX: 0 }}
-                      threshold={0.2}
-                    />
-                  </div>
-                </div>
+
+                <span
+                  className="split-gradient block"
+                  style={{
+                    ['--split-gradient' as any]:
+                      'linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))',
+                  } as any}
+                >
+                  <SplitText 
+                    text="for quick insights"
+                    tag="span"
+                    className="block"
+                    splitType="chars"
+                    delay={35}
+                    duration={0.85}
+                    ease="power3.out"
+                    from={{ opacity: 0, y: 60, scale: 0.96 }}
+                    to={{ opacity: 1, y: 0, scale: 1 }}
+                    threshold={0.2}
+                  />
+                </span>
               </div>
             </motion.div>
 
