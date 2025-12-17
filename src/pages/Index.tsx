@@ -115,10 +115,11 @@ const Index = () => {
                   tag="h2"
                   className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4"
                   splitType="chars"
-                  delay={30}
-                  duration={0.5}
-                  from={{ opacity: 0, y: 30 }}
-                  to={{ opacity: 1, y: 0 }}
+                  delay={40}
+                  duration={0.85}
+                  ease="power3.out"
+                  from={{ opacity: 0, y: 50, scale: 0.96 }}
+                  to={{ opacity: 1, y: 0, scale: 1 }}
                   threshold={0.1}
                   textAlign="center"
                 />

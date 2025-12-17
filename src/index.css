@@ -373,6 +373,15 @@ html {
     color: transparent;
   }
 
+  /* Light-only visibility utility */
+  .light-only {
+    opacity: 0;
+    pointer-events: none;
+  }
+  html.light .light-only {
+    opacity: 1;
+  }
+
   /* Smooth section transitions */
   section {
     position: relative;
