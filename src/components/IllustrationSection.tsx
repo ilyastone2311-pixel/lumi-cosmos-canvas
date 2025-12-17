@@ -110,23 +110,22 @@ const IllustrationSection = () => {
                 Community
               </span>
               
-              {/* Glass backdrop for readability over floating lines */}
-              <div className="relative">
-                <div className="absolute -inset-4 sm:-inset-6 rounded-2xl bg-background/60 backdrop-blur-md -z-10" />
+              {/* Glass panel for readability (keeps spacing from "Community") */}
+              <div className="rounded-2xl bg-background/60 backdrop-blur-md border border-border/40 p-6 sm:p-8">
                 <SplitText 
                   text="Learn Together, Grow Together"
                   tag="h2"
                   className="font-display text-3xl md:text-4xl font-bold text-foreground"
                   splitType="words"
-                  delay={100}
-                  duration={0.8}
-                  ease="power2.out"
-                  from={{ opacity: 0, y: 40, scale: 0.9 }}
+                  delay={90}
+                  duration={0.85}
+                  ease="power3.out"
+                  from={{ opacity: 0, y: 40, scale: 0.96 }}
                   to={{ opacity: 1, y: 0, scale: 1 }}
                   threshold={0.2}
                   textAlign="left"
                 />
-                <p className="text-lg text-muted-foreground leading-relaxed mt-6">
+                <p className="text-lg text-muted-foreground leading-relaxed mt-5">
                   Join thousands of curious minds exploring ideas across psychology, 
                   technology, mindfulness, and more. Our bite-sized insights make 
                   learning accessible and enjoyable.

@@ -361,6 +361,18 @@ html {
     font-family: 'Sora', sans-serif;
   }
 
+  /* SplitText helpers (gradient per-letter) */
+  .split-gradient .split-char {
+    background-image: var(
+      --split-gradient,
+      linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)))
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
   /* Smooth section transitions */
   section {
     position: relative;
