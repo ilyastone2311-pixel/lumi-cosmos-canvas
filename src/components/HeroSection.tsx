@@ -71,11 +71,13 @@ const HeroSection = () => {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Text content - Left side */}
           <motion.div 
-            className="text-center lg:text-left space-y-6 sm:space-y-8"
+            className="relative text-center lg:text-left space-y-6 sm:space-y-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: premiumEase }}
           >
+            {/* Light-theme contrast layer (only visible in light mode) */}
+            <div className="light-only absolute -inset-6 sm:-inset-10 rounded-3xl bg-gradient-to-br from-background/80 via-background/50 to-transparent transition-opacity" />
             {/* Main headline */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
@@ -97,26 +99,18 @@ const HeroSection = () => {
                   threshold={0.2}
                 />
 
-                <span
-                  className="split-gradient block"
-                  style={{
-                    ['--split-gradient' as any]:
-                      'linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))',
-                  } as any}
-                >
-                  <SplitText 
-                    text="for quick insights"
-                    tag="span"
-                    className="block"
-                    splitType="chars"
-                    delay={35}
-                    duration={0.85}
-                    ease="power3.out"
-                    from={{ opacity: 0, y: 60, scale: 0.96 }}
-                    to={{ opacity: 1, y: 0, scale: 1 }}
-                    threshold={0.2}
-                  />
-                </span>
+                <SplitText 
+                  text="for quick insights"
+                  tag="span"
+                  className="block text-primary"
+                  splitType="chars"
+                  delay={35}
+                  duration={0.85}
+                  ease="power3.out"
+                  from={{ opacity: 0, y: 60, scale: 0.96 }}
+                  to={{ opacity: 1, y: 0, scale: 1 }}
+                  threshold={0.2}
+                />
               </div>
             </motion.div>
 
