@@ -143,28 +143,46 @@ const Recommended = () => {
   return (
     <div className="min-h-screen relative overflow-hidden">
       <BackgroundEffects />
+      
+      {/* Semantic overlay layer - reduces background interference */}
+      <div 
+        className="fixed inset-0 pointer-events-none z-[1]"
+        style={{
+          background: 'linear-gradient(180deg, rgba(11, 16, 32, 0.55) 0%, rgba(11, 16, 32, 0.65) 50%, rgba(11, 16, 32, 0.7) 100%)',
+          backdropFilter: 'blur(2px)',
+        }}
+      />
 
       <main className="relative z-10 pt-20 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
         <div className="container mx-auto max-w-6xl">
           {/* Back button */}
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-all duration-300 mb-6 sm:mb-8 group active:scale-95"
+            className="flex items-center gap-2 text-white/70 hover:text-white transition-all duration-300 mb-6 sm:mb-8 group active:scale-95 font-medium"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             Back
           </button>
 
-          {/* Hero Section - Similar to CategoryDetail */}
+          {/* Hero Section with improved contrast */}
           <motion.header
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-8 sm:mb-12"
           >
-            <div className="relative h-48 sm:h-64 md:h-72 rounded-2xl overflow-hidden mb-6 sm:mb-8">
-              {/* Animated gradient background */}
+            {/* Hero Card - Enhanced surface separation */}
+            <div 
+              className="relative h-48 sm:h-64 md:h-72 rounded-2xl overflow-hidden mb-6 sm:mb-8"
+              style={{
+                background: 'rgba(15, 20, 40, 0.75)',
+                backdropFilter: 'blur(12px)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05) inset',
+              }}
+            >
+              {/* Dimmed animated gradient background */}
               <motion.div 
-                className="absolute inset-0"
+                className="absolute inset-0 opacity-40"
                 style={{
                   background: 'linear-gradient(135deg, hsl(var(--primary) / 0.3) 0%, hsl(var(--secondary) / 0.2) 50%, hsl(var(--accent) / 0.3) 100%)',
                 }}
@@ -178,43 +196,54 @@ const Recommended = () => {
                 transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
               />
               
-              {/* Floating particles */}
+              {/* Floating particles - reduced opacity */}
               <div className="absolute inset-0 overflow-hidden">
-                {[...Array(12)].map((_, i) => (
+                {[...Array(8)].map((_, i) => (
                   <motion.div
                     key={i}
-                    className="absolute w-2 h-2 rounded-full"
+                    className="absolute w-1.5 h-1.5 rounded-full"
                     style={{
-                      background: `hsl(var(--${['primary', 'secondary', 'accent'][i % 3]}) / 0.6)`,
-                      left: `${10 + (i * 7) % 80}%`,
-                      top: `${20 + (i * 13) % 60}%`,
+                      background: `hsl(var(--${['primary', 'secondary', 'accent'][i % 3]}) / 0.5)`,
+                      left: `${10 + (i * 10) % 80}%`,
+                      top: `${20 + (i * 15) % 60}%`,
                     }}
                     animate={{
-                      y: [0, -20, 0],
-                      opacity: [0.4, 0.8, 0.4],
-                      scale: [1, 1.3, 1],
+                      y: [0, -15, 0],
+                      opacity: [0.3, 0.6, 0.3],
+                      scale: [1, 1.2, 1],
                     }}
                     transition={{
-                      duration: 3 + i * 0.5,
+                      duration: 4 + i * 0.5,
                       repeat: Infinity,
-                      delay: i * 0.3,
+                      delay: i * 0.4,
                       ease: 'easeInOut',
                     }}
                   />
                 ))}
               </div>
 
-              {/* Content overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+              {/* Dark gradient scrim for text area */}
+              <div 
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(to top, rgba(11, 16, 32, 0.95) 0%, rgba(11, 16, 32, 0.7) 40%, rgba(11, 16, 32, 0.3) 100%)',
+                }}
+              />
               
+              {/* Content with improved typography */}
               <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
                 <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
                   <motion.div 
-                    className="p-2.5 sm:p-3 rounded-xl bg-primary/20 backdrop-blur-sm"
+                    className="p-2.5 sm:p-3 rounded-xl"
+                    style={{
+                      background: 'rgba(15, 20, 40, 0.8)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      boxShadow: '0 0 20px hsl(var(--primary) / 0.3)',
+                    }}
                     animate={{ 
                       boxShadow: [
                         '0 0 20px hsl(var(--primary) / 0.3)',
-                        '0 0 40px hsl(var(--primary) / 0.5)',
+                        '0 0 35px hsl(var(--primary) / 0.4)',
                         '0 0 20px hsl(var(--primary) / 0.3)'
                       ]
                     }}
@@ -226,7 +255,7 @@ const Recommended = () => {
                     <SplitText 
                       text="For You"
                       tag="h1"
-                      className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground"
+                      className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white"
                       splitType="chars"
                       delay={50}
                       duration={0.85}
@@ -236,7 +265,7 @@ const Recommended = () => {
                       threshold={0.1}
                       textAlign="left"
                     />
-                    <p className="text-sm sm:text-base text-foreground/80">
+                    <p className="text-sm sm:text-base text-white/70 leading-relaxed mt-1">
                       Personalized recommendations based on your interests
                     </p>
                   </div>
@@ -244,19 +273,26 @@ const Recommended = () => {
               </div>
             </div>
 
-            {/* Stats bar */}
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-muted-foreground">
+            {/* Stats bar - Enhanced card surface */}
+            <div 
+              className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm p-4 rounded-xl"
+              style={{
+                background: 'rgba(15, 20, 40, 0.6)',
+                backdropFilter: 'blur(8px)',
+                border: '1px solid rgba(255, 255, 255, 0.06)',
+              }}
+            >
               <div className="flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-primary" />
-                <span>{recommendations.length} articles</span>
+                <span className="text-white/80 font-medium">{recommendations.length} articles</span>
               </div>
               <div className="flex items-center gap-2">
                 <Headphones className="w-4 h-4 text-secondary" />
-                <span>Audio available</span>
+                <span className="text-white/80 font-medium">Audio available</span>
               </div>
               <div className="flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-accent" />
-                <span>Updated daily</span>
+                <span className="text-white/80 font-medium">Updated daily</span>
               </div>
             </div>
           </motion.header>
@@ -266,11 +302,17 @@ const Recommended = () => {
             {loading ? (
               <SkeletonGrid count={6} variant="article" />
             ) : hasNoActivity ? (
-              /* Empty state for new users */
+              /* Empty state for new users - Enhanced card */
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex flex-col items-center justify-center py-12 sm:py-16 px-4"
+                className="flex flex-col items-center justify-center py-12 sm:py-16 px-4 rounded-2xl"
+                style={{
+                  background: 'rgba(15, 20, 40, 0.7)',
+                  backdropFilter: 'blur(12px)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.25)',
+                }}
               >
                 {/* Animated icon container */}
                 <motion.div
@@ -279,11 +321,15 @@ const Recommended = () => {
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                 >
                   <motion.div
-                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center"
+                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(var(--primary-rgb), 0.2), rgba(var(--accent-rgb), 0.2))',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                    }}
                     animate={{ 
                       boxShadow: [
                         '0 0 30px hsl(var(--primary) / 0.2)',
-                        '0 0 60px hsl(var(--primary) / 0.4)',
+                        '0 0 50px hsl(var(--primary) / 0.35)',
                         '0 0 30px hsl(var(--primary) / 0.2)'
                       ]
                     }}
@@ -302,11 +348,11 @@ const Recommended = () => {
                   </motion.div>
                 </motion.div>
 
-                <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2 sm:mb-3 text-center">
+                <h2 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3 text-center">
                   Let's personalize your feed
                 </h2>
                 
-                <p className="text-sm sm:text-base text-muted-foreground text-center max-w-md mb-6 sm:mb-8 leading-relaxed">
+                <p className="text-sm sm:text-base text-white/70 text-center max-w-md mb-6 sm:mb-8 leading-relaxed">
                   Tell us what topics interest you most, and we'll curate the perfect reading experience just for you.
                 </p>
 
@@ -328,7 +374,7 @@ const Recommended = () => {
                 </motion.div>
 
                 {/* Secondary option */}
-                <p className="text-sm text-muted-foreground mt-5 sm:mt-6 text-center">
+                <p className="text-sm text-white/60 mt-5 sm:mt-6 text-center">
                   Or{' '}
                   <button 
                     onClick={() => navigate('/library')} 
@@ -343,13 +389,18 @@ const Recommended = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-center py-16 sm:py-20"
+                className="text-center py-16 sm:py-20 rounded-2xl"
+                style={{
+                  background: 'rgba(15, 20, 40, 0.7)',
+                  backdropFilter: 'blur(12px)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                }}
               >
-                <Sparkles className="w-12 h-12 sm:w-16 sm:h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-                <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-2">
+                <Sparkles className="w-12 h-12 sm:w-16 sm:h-16 text-white/40 mx-auto mb-4" />
+                <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">
                   No recommendations yet
                 </h2>
-                <p className="text-sm sm:text-base text-muted-foreground mb-6">
+                <p className="text-sm sm:text-base text-white/70 mb-6">
                   Read and like articles to get personalized recommendations
                 </p>
                 <Button onClick={() => navigate('/library')} className="w-full sm:w-auto">
@@ -358,9 +409,18 @@ const Recommended = () => {
               </motion.div>
             ) : (
               <>
-                <h2 className="font-display text-xl sm:text-2xl font-semibold text-foreground mb-4 sm:mb-6">
-                  Recommended Articles
-                </h2>
+                {/* Section heading with scrim */}
+                <div 
+                  className="mb-4 sm:mb-6 p-4 rounded-xl inline-block"
+                  style={{
+                    background: 'rgba(15, 20, 40, 0.5)',
+                    backdropFilter: 'blur(4px)',
+                  }}
+                >
+                  <h2 className="font-display text-xl sm:text-2xl font-semibold text-white">
+                    Recommended Articles
+                  </h2>
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {recommendations.map((article, index) => (
                     <ArticlePreviewCard 
@@ -380,19 +440,29 @@ const Recommended = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="mt-12 sm:mt-16 pt-8 sm:pt-12 border-t border-border/30"
+              className="mt-12 sm:mt-16 pt-8 sm:pt-12"
+              style={{
+                borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+              }}
             >
-              <div className="text-center">
-                <h3 className="font-display text-lg sm:text-xl font-semibold text-foreground mb-2">
+              <div 
+                className="text-center p-8 rounded-2xl"
+                style={{
+                  background: 'rgba(15, 20, 40, 0.6)',
+                  backdropFilter: 'blur(8px)',
+                  border: '1px solid rgba(255, 255, 255, 0.06)',
+                }}
+              >
+                <h3 className="font-display text-lg sm:text-xl font-semibold text-white mb-2">
                   Want more personalized content?
                 </h3>
-                <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6">
+                <p className="text-sm sm:text-base text-white/70 mb-4 sm:mb-6 leading-relaxed">
                   Explore more categories to improve your recommendations
                 </p>
                 <Button 
                   variant="outline" 
                   onClick={() => navigate('/library')}
-                  className="w-full sm:w-auto"
+                  className="w-full sm:w-auto border-white/20 text-white hover:bg-white/10"
                 >
                   Browse All Categories
                 </Button>
