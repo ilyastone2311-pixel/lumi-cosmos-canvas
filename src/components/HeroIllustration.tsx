@@ -81,28 +81,30 @@ const HeroIllustration = () => {
     }, 2000);
   };
 
-  // Sparkles
+  // Sparkles positioned around the illustration
   const sparkles = useMemo(() => [
-    { top: "8%", right: "18%", size: 12, delay: 0 },
-    { top: "22%", right: "6%", size: 8, delay: 0.6 },
-    { bottom: "28%", right: "12%", size: 10, delay: 1.2 },
-    { top: "40%", right: "25%", size: 6, delay: 1.8 },
+    { top: "5%", right: "15%", size: 14, delay: 0 },
+    { top: "20%", right: "5%", size: 10, delay: 0.6 },
+    { bottom: "25%", right: "8%", size: 12, delay: 1.2 },
+    { top: "35%", right: "22%", size: 8, delay: 1.8 },
+    { bottom: "40%", left: "10%", size: 10, delay: 0.3 },
+    { top: "15%", left: "15%", size: 8, delay: 0.9 },
   ], []);
 
   const isActive = isHovered || isTapped;
 
   if (!mounted) {
     return (
-      <div className="absolute right-[-8%] xl:right-[-12%] top-[18%] -translate-y-1/2 w-[95vw] max-w-[1500px] z-10" />
+      <div className="relative w-full h-full" />
     );
   }
 
   return (
     <motion.div 
       ref={containerRef}
-      className="absolute right-[-8%] xl:right-[-12%] top-[18%] -translate-y-1/2 w-[95vw] max-w-[1500px] z-10 pointer-events-auto"
+      className="relative w-full h-full flex items-center justify-center lg:justify-end"
       style={{
-        perspective: "1000px",
+        perspective: "1200px",
         opacity: scrollOpacity,
         scale: scrollScale,
         y: scrollYOffset,
@@ -112,9 +114,26 @@ const HeroIllustration = () => {
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTap}
     >
+      {/* Ambient glow behind illustration */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, delay: 0.5 }}
+      >
+        <div 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full blur-[100px]"
+          style={{
+            background: isLightTheme
+              ? 'radial-gradient(ellipse at center, hsla(270, 80%, 75%, 0.25) 0%, hsla(270, 60%, 85%, 0.1) 40%, transparent 70%)'
+              : 'radial-gradient(ellipse at center, hsla(195, 100%, 50%, 0.2) 0%, hsla(195, 80%, 40%, 0.08) 40%, transparent 70%)',
+          }}
+        />
+      </motion.div>
+
       {/* Main illustration container with 3D tilt */}
       <motion.div
-        className="w-full flex items-center justify-center cursor-pointer"
+        className="relative w-full h-full flex items-center justify-center lg:justify-end cursor-pointer"
         style={{
           rotateX: isActive ? rotateX : 0,
           rotateY: isActive ? rotateY : 0,
@@ -123,10 +142,10 @@ const HeroIllustration = () => {
       >
         {/* Illustration with floating animation */}
         <motion.div
-          className="relative w-full flex items-center justify-center"
+          className="relative flex items-center justify-center"
           animate={{
             y: isActive ? [0, -12, 0] : [0, -6, 0],
-            scale: isActive ? 1.08 : 1.04,
+            scale: isActive ? 1.02 : 1,
           }}
           transition={{
             y: { duration: isActive ? 2.5 : 4, repeat: Infinity, ease: "easeInOut" },
@@ -151,14 +170,14 @@ const HeroIllustration = () => {
             )}
           </AnimatePresence>
 
-          {/* The image - fully visible */}
-          <div className="relative w-full flex items-center justify-center">
+          {/* The image - sized to fill 75-85% of hero height */}
+          <div className="relative flex items-center justify-center">
             <AnimatePresence mode="wait">
               <motion.img
                 key={isLightTheme ? "hero-light" : "hero-dark"}
                 src={currentHeroImage}
                 alt="Magical reading illustration"
-                className="w-full h-auto max-h-[88vh] object-contain relative z-10"
+                className="w-auto h-[50vh] sm:h-[55vh] lg:h-[75vh] xl:h-[80vh] 2xl:h-[85vh] max-w-none object-contain relative z-10"
                 initial={{ opacity: 0, scale: 1.02 }}
                 animate={{ 
                   opacity: isSwitching ? 0.4 : 1, 
@@ -169,11 +188,11 @@ const HeroIllustration = () => {
                 style={{
                   filter: isActive 
                     ? isLightTheme
-                      ? 'drop-shadow(0 0 35px hsla(270, 85%, 60%, 0.4))'
-                      : 'drop-shadow(0 0 35px hsla(195, 100%, 50%, 0.45))'
+                      ? 'drop-shadow(0 0 50px hsla(270, 85%, 60%, 0.45))'
+                      : 'drop-shadow(0 0 50px hsla(195, 100%, 50%, 0.5))'
                     : isLightTheme
-                      ? 'drop-shadow(0 0 20px hsla(270, 85%, 65%, 0.25))'
-                      : 'drop-shadow(0 0 20px hsla(195, 100%, 45%, 0.3))',
+                      ? 'drop-shadow(0 0 30px hsla(270, 85%, 65%, 0.3))'
+                      : 'drop-shadow(0 0 30px hsla(195, 100%, 45%, 0.35))',
                   willChange: 'transform, filter, opacity',
                 }}
               />
@@ -187,7 +206,12 @@ const HeroIllustration = () => {
         <motion.div
           key={i}
           className="absolute pointer-events-none"
-          style={{ top: sparkle.top, bottom: sparkle.bottom, right: sparkle.right }}
+          style={{ 
+            top: sparkle.top, 
+            bottom: sparkle.bottom, 
+            right: sparkle.right,
+            left: sparkle.left,
+          }}
           animate={{
             opacity: isActive ? [0.6, 1, 0.6] : [0.35, 0.65, 0.35],
             scale: isActive ? [1, 1.35, 1] : [0.9, 1.1, 0.9],
@@ -208,6 +232,38 @@ const HeroIllustration = () => {
         </motion.div>
       ))}
 
+      {/* Glowing rings extending into space */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.4 }}
+        transition={{ duration: 1.5, delay: 0.8 }}
+      >
+        <div 
+          className="w-[90vh] h-[90vh] rounded-full"
+          style={{
+            border: isLightTheme
+              ? '1px solid hsla(270, 80%, 75%, 0.15)'
+              : '1px solid hsla(195, 100%, 60%, 0.15)',
+          }}
+        />
+      </motion.div>
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.25 }}
+        transition={{ duration: 1.5, delay: 1 }}
+      >
+        <div 
+          className="w-[110vh] h-[110vh] rounded-full"
+          style={{
+            border: isLightTheme
+              ? '1px solid hsla(270, 80%, 75%, 0.1)'
+              : '1px solid hsla(195, 100%, 60%, 0.1)',
+          }}
+        />
+      </motion.div>
+
       {/* Hover glow ring */}
       <AnimatePresence>
         {isActive && (
@@ -219,8 +275,8 @@ const HeroIllustration = () => {
                 : '1.5px solid hsla(195, 100%, 65%, 0.35)',
             }}
             initial={{ width: '35%', height: '35%', opacity: 0.7 }}
-            animate={{ width: '80%', height: '80%', opacity: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            animate={{ width: '100%', height: '100%', opacity: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
           />
         )}
       </AnimatePresence>

@@ -14,7 +14,6 @@ const HeroSection = () => {
   const { user } = useAuth();
   const parallaxOffset = useParallax(0.3);
   const parallaxOffsetSlow = useParallax(0.15);
-  const parallaxOffsetFast = useParallax(0.5);
 
   const scrollToContent = () => {
     window.scrollTo({
@@ -24,17 +23,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-[85vh] sm:min-h-[100vh] flex items-center pt-16 sm:pt-0 overflow-visible">
-      {/* Hero Illustration - positioned on the right */}
-      <motion.div 
-        className="hidden lg:block absolute inset-0 overflow-visible pointer-events-none"
-        initial={{ opacity: 0, scale: 1.02 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 0.3, ease: premiumEase }}
-      >
-        <HeroIllustration />
-      </motion.div>
-
+    <section className="relative min-h-[100vh] flex items-center overflow-hidden">
       {/* Subtle ambient glow effects */}
       <motion.div 
         className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-primary/8 rounded-full blur-[150px] pointer-events-none"
@@ -66,18 +55,20 @@ const HeroSection = () => {
         }}
       />
 
-      {/* Main content */}
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Text content - Left side */}
+      {/* Main content - Two column layout */}
+      <div className="container mx-auto max-w-[1800px] px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-4">
+          
+          {/* Left side - Text content (45-50%) */}
           <motion.div 
-            className="relative text-center lg:text-left space-y-6 sm:space-y-8"
+            className="relative w-full lg:w-[45%] xl:w-[42%] text-center lg:text-left space-y-6 sm:space-y-8 pt-20 lg:pt-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: premiumEase }}
           >
             {/* Light-theme contrast layer (only visible in light mode) */}
             <div className="light-only absolute -inset-6 sm:-inset-10 rounded-3xl bg-gradient-to-br from-background/80 via-background/50 to-transparent transition-opacity" />
+            
             {/* Main headline */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
@@ -85,7 +76,7 @@ const HeroSection = () => {
               transition={{ duration: 0.7, delay: 0.2, ease: premiumEase }}
               className="relative"
             >
-              <div className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-foreground">
+              <div className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-tight text-foreground">
                 <SplitText 
                   text="Your shortcut"
                   tag="span"
@@ -166,8 +157,15 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Mobile illustration placeholder */}
-          <div className="lg:hidden" />
+          {/* Right side - Hero Illustration (50-55%) */}
+          <motion.div 
+            className="relative w-full lg:w-[55%] xl:w-[58%] h-[50vh] sm:h-[60vh] lg:h-[85vh] flex items-center justify-center lg:justify-end"
+            initial={{ opacity: 0, scale: 0.95, x: 30 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.3, ease: premiumEase }}
+          >
+            <HeroIllustration />
+          </motion.div>
         </div>
       </div>
 
