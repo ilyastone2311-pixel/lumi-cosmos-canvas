@@ -185,13 +185,14 @@ const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => 
         />
 
         <div className="p-5">
-          {/* Category badge */}
+          {/* Category badge - High contrast pill design */}
           <span 
-            className="inline-block px-2.5 py-1 rounded-full text-xs font-medium mb-3 capitalize"
+            className="inline-block px-3 py-1.5 rounded-full text-xs font-semibold mb-3 capitalize"
             style={{
-              background: 'hsla(var(--primary), 0.15)',
+              background: 'hsla(var(--primary), 0.2)',
               color: 'hsl(var(--primary))',
-              border: '1px solid hsla(var(--primary), 0.2)',
+              border: '1px solid hsla(var(--primary), 0.35)',
+              textShadow: '0 0 10px hsla(var(--primary), 0.3)',
             }}
           >
             {article.category.replace('-', ' ')}
@@ -208,26 +209,26 @@ const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => 
           </h3>
 
           {/* Excerpt */}
-          <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+          <p className="text-sm text-muted-foreground line-clamp-2 mb-4 leading-relaxed">
             {article.excerpt}
           </p>
 
-          {/* Meta info */}
-          <div className="flex items-center justify-between text-xs text-muted-foreground">
+          {/* Meta info - Enhanced contrast */}
+          <div className="flex items-center justify-between text-xs">
             <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1">
-                <Clock className="w-3 h-3" />
+              <span className="flex items-center gap-1.5 text-foreground/80 font-medium">
+                <Clock className="w-3.5 h-3.5 text-primary/70" />
                 {article.readTime}
               </span>
-              <span className="flex items-center gap-1">
-                <Star className="w-3 h-3 text-yellow-400" />
-                {article.rating}
+              <span className="flex items-center gap-1.5 font-medium">
+                <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" style={{ filter: 'drop-shadow(0 0 4px rgba(251, 191, 36, 0.5))' }} />
+                <span className="text-foreground/80">{article.rating}</span>
               </span>
             </div>
             
             {/* Arrow indicator with micro-animation */}
             <motion.div
-              className="flex items-center gap-1.5 text-primary"
+              className="flex items-center gap-1.5 text-primary font-medium"
               animate={{ 
                 x: isHovered ? 4 : 0,
                 scale: isHovered ? 1.05 : 1
@@ -235,7 +236,7 @@ const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => 
               transition={{ duration: 0.25, ease: "easeOut" }}
             >
               <motion.span 
-                className="text-xs font-medium"
+                className="text-xs"
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ 
                   opacity: isHovered ? 1 : 0,
@@ -307,12 +308,12 @@ const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => 
                       <User className="w-4 h-4 text-primary" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-foreground">{article.author}</p>
-                      <p className="text-xs text-muted-foreground">Expert Author</p>
+                      <p className="text-sm font-semibold text-foreground">{article.author}</p>
+                      <p className="text-xs text-foreground/60 font-medium">Expert Author</p>
                     </div>
                   </div>
-                  <div className="ml-auto flex items-center gap-2 text-xs text-muted-foreground">
-                    <Clock className="w-3.5 h-3.5" />
+                  <div className="ml-auto flex items-center gap-2 text-xs text-foreground/70 font-medium">
+                    <Clock className="w-3.5 h-3.5 text-primary/80" />
                     <span>{article.readTime} read</span>
                   </div>
                 </div>
@@ -329,10 +330,10 @@ const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => 
 
                 {/* Extended excerpt - 2 paragraphs */}
                 <div className="space-y-2 mb-5">
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-foreground/75 leading-relaxed">
                     {article.excerpt}
                   </p>
-                  <p className="text-sm text-muted-foreground/80 leading-relaxed">
+                  <p className="text-sm text-foreground/60 leading-relaxed">
                     Dive deep into this topic with our expertly curated insights. This article explores key concepts that will transform your understanding.
                   </p>
                 </div>
@@ -343,11 +344,12 @@ const ArticlePreviewCard = ({ article, index = 0 }: ArticlePreviewCardProps) => 
                     {[...Array(5)].map((_, i) => (
                       <Star 
                         key={i} 
-                        className={`w-3.5 h-3.5 ${i < Math.floor(article.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-muted-foreground/30'}`}
+                        className={`w-3.5 h-3.5 ${i < Math.floor(article.rating) ? 'text-amber-400 fill-amber-400' : 'text-foreground/20'}`}
+                        style={i < Math.floor(article.rating) ? { filter: 'drop-shadow(0 0 3px rgba(251, 191, 36, 0.5))' } : {}}
                       />
                     ))}
                   </div>
-                  <span className="text-xs text-muted-foreground">{article.rating} rating</span>
+                  <span className="text-xs text-foreground/70 font-medium">{article.rating} rating</span>
                 </div>
 
                 {/* Continue Reading Button */}

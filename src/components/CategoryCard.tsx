@@ -264,10 +264,13 @@ const CategoryCard = ({
             />
           </div>
 
-          {/* Content */}
+          {/* Content - Enhanced readability with backdrop */}
           <div className="relative p-4 sm:p-6">
+            {/* Subtle backdrop for text legibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-card via-card/95 to-card/80 pointer-events-none" />
+            
             <h3 
-              className="font-display text-base sm:text-lg font-semibold mb-1.5 sm:mb-2 tracking-wide transition-all duration-300 text-card-foreground"
+              className="relative font-display text-base sm:text-lg font-semibold mb-1.5 sm:mb-2 tracking-wide transition-all duration-300 text-card-foreground"
               style={{
                 color: isHovered ? 'hsl(var(--primary))' : undefined,
                 textShadow: isHovered ? '0 0 20px hsla(var(--primary), 0.5), 0 0 40px hsla(var(--primary), 0.2)' : 'none',
@@ -275,7 +278,7 @@ const CategoryCard = ({
             >
               {title}
             </h3>
-            <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+            <p className="relative text-sm text-foreground/70 dark:text-foreground/60 line-clamp-2 leading-relaxed font-medium">
               {subtitle}
             </p>
 
