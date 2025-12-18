@@ -54,8 +54,8 @@ const HeroIllustration = () => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const springConfig = { damping: 25, stiffness: 100 };
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [4, -4]), springConfig);
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-4, 4]), springConfig);
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [3, -3]), springConfig);
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-3, 3]), springConfig);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!containerRef.current || !isHovered) return;
@@ -83,26 +83,24 @@ const HeroIllustration = () => {
 
   // Sparkles positioned around the illustration
   const sparkles = useMemo(() => [
-    { top: "5%", right: "15%", size: 14, delay: 0 },
-    { top: "20%", right: "5%", size: 10, delay: 0.6 },
-    { bottom: "25%", right: "8%", size: 12, delay: 1.2 },
-    { top: "35%", right: "22%", size: 8, delay: 1.8 },
-    { bottom: "40%", left: "10%", size: 10, delay: 0.3 },
-    { top: "15%", left: "15%", size: 8, delay: 0.9 },
+    { top: "8%", right: "20%", size: 16, delay: 0 },
+    { top: "18%", right: "8%", size: 12, delay: 0.6 },
+    { bottom: "22%", right: "12%", size: 14, delay: 1.2 },
+    { top: "40%", right: "28%", size: 10, delay: 1.8 },
+    { bottom: "35%", left: "15%", size: 12, delay: 0.3 },
+    { top: "25%", left: "20%", size: 10, delay: 0.9 },
   ], []);
 
   const isActive = isHovered || isTapped;
 
   if (!mounted) {
-    return (
-      <div className="relative w-full h-full" />
-    );
+    return <div className="w-full h-full" />;
   }
 
   return (
     <motion.div 
       ref={containerRef}
-      className="relative w-full h-full flex items-center justify-center lg:justify-end"
+      className="absolute inset-0 flex items-center justify-end pointer-events-auto"
       style={{
         perspective: "1200px",
         opacity: scrollOpacity,
@@ -114,26 +112,26 @@ const HeroIllustration = () => {
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTap}
     >
-      {/* Ambient glow behind illustration */}
+      {/* Ambient glow behind illustration - MASSIVE */}
       <motion.div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none overflow-visible"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.5 }}
       >
         <div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full blur-[100px]"
+          className="absolute top-1/2 left-1/2 -translate-x-1/3 -translate-y-1/2 w-[140%] h-[140%] rounded-full blur-[120px]"
           style={{
             background: isLightTheme
-              ? 'radial-gradient(ellipse at center, hsla(270, 80%, 75%, 0.25) 0%, hsla(270, 60%, 85%, 0.1) 40%, transparent 70%)'
-              : 'radial-gradient(ellipse at center, hsla(195, 100%, 50%, 0.2) 0%, hsla(195, 80%, 40%, 0.08) 40%, transparent 70%)',
+              ? 'radial-gradient(ellipse at center, hsla(270, 80%, 75%, 0.3) 0%, hsla(270, 60%, 85%, 0.15) 40%, transparent 70%)'
+              : 'radial-gradient(ellipse at center, hsla(195, 100%, 50%, 0.25) 0%, hsla(195, 80%, 40%, 0.1) 40%, transparent 70%)',
           }}
         />
       </motion.div>
 
-      {/* Main illustration container with 3D tilt */}
+      {/* Main illustration container with 3D tilt - FULL SIZE */}
       <motion.div
-        className="relative w-full h-full flex items-center justify-center lg:justify-end cursor-pointer"
+        className="relative w-full h-full flex items-center justify-end cursor-pointer pr-4 lg:pr-0"
         style={{
           rotateX: isActive ? rotateX : 0,
           rotateY: isActive ? rotateY : 0,
@@ -142,10 +140,10 @@ const HeroIllustration = () => {
       >
         {/* Illustration with floating animation */}
         <motion.div
-          className="relative flex items-center justify-center"
+          className="relative h-full flex items-center justify-end"
           animate={{
-            y: isActive ? [0, -12, 0] : [0, -6, 0],
-            scale: isActive ? 1.02 : 1,
+            y: isActive ? [0, -10, 0] : [0, -5, 0],
+            scale: isActive ? 1.01 : 1,
           }}
           transition={{
             y: { duration: isActive ? 2.5 : 4, repeat: Infinity, ease: "easeInOut" },
@@ -156,7 +154,7 @@ const HeroIllustration = () => {
           <AnimatePresence>
             {isSwitching && (
               <motion.div
-                className="absolute inset-[-15%] rounded-full pointer-events-none z-30"
+                className="absolute inset-[-20%] rounded-full pointer-events-none z-30"
                 style={{
                   background: isLightTheme
                     ? 'radial-gradient(ellipse at center, hsla(270, 90%, 75%, 0.5) 0%, transparent 55%)'
@@ -170,42 +168,42 @@ const HeroIllustration = () => {
             )}
           </AnimatePresence>
 
-          {/* The image - sized to fill 75-85% of hero height */}
-          <div className="relative flex items-center justify-center">
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={isLightTheme ? "hero-light" : "hero-dark"}
-                src={currentHeroImage}
-                alt="Magical reading illustration"
-                className="w-auto h-[50vh] sm:h-[55vh] lg:h-[75vh] xl:h-[80vh] 2xl:h-[85vh] max-w-none object-contain relative z-10"
-                initial={{ opacity: 0, scale: 1.02 }}
-                animate={{ 
-                  opacity: isSwitching ? 0.4 : 1, 
-                  scale: isSwitching ? 1.01 : 1,
-                }}
-                exit={{ opacity: 0, scale: 1.02 }}
-                transition={{ duration: 0.45, ease: "easeInOut" }}
-                style={{
-                  filter: isActive 
-                    ? isLightTheme
-                      ? 'drop-shadow(0 0 50px hsla(270, 85%, 60%, 0.45))'
-                      : 'drop-shadow(0 0 50px hsla(195, 100%, 50%, 0.5))'
-                    : isLightTheme
-                      ? 'drop-shadow(0 0 30px hsla(270, 85%, 65%, 0.3))'
-                      : 'drop-shadow(0 0 30px hsla(195, 100%, 45%, 0.35))',
-                  willChange: 'transform, filter, opacity',
-                }}
-              />
-            </AnimatePresence>
-          </div>
+          {/* The image - MASSIVE, fills the container height, can overflow */}
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={isLightTheme ? "hero-light" : "hero-dark"}
+              src={currentHeroImage}
+              alt="Magical reading illustration"
+              className="h-[90%] lg:h-[95%] xl:h-[100%] 2xl:h-[105%] w-auto max-w-none object-contain relative z-10"
+              initial={{ opacity: 0, scale: 1.02 }}
+              animate={{ 
+                opacity: isSwitching ? 0.4 : 1, 
+                scale: isSwitching ? 1.01 : 1,
+              }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 0.45, ease: "easeInOut" }}
+              style={{
+                filter: isActive 
+                  ? isLightTheme
+                    ? 'drop-shadow(0 0 60px hsla(270, 85%, 60%, 0.5))'
+                    : 'drop-shadow(0 0 60px hsla(195, 100%, 50%, 0.55))'
+                  : isLightTheme
+                    ? 'drop-shadow(0 0 40px hsla(270, 85%, 65%, 0.35))'
+                    : 'drop-shadow(0 0 40px hsla(195, 100%, 45%, 0.4))',
+                willChange: 'transform, filter, opacity',
+                // Allow overflow to the right for full-bleed effect
+                marginRight: '-5%',
+              }}
+            />
+          </AnimatePresence>
         </motion.div>
       </motion.div>
 
-      {/* Sparkles */}
+      {/* Sparkles - positioned relative to container */}
       {sparkles.map((sparkle, i) => (
         <motion.div
           key={i}
-          className="absolute pointer-events-none"
+          className="absolute pointer-events-none z-20"
           style={{ 
             top: sparkle.top, 
             bottom: sparkle.bottom, 
@@ -232,34 +230,34 @@ const HeroIllustration = () => {
         </motion.div>
       ))}
 
-      {/* Glowing rings extending into space */}
+      {/* Glowing rings extending into space - LARGER */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        className="absolute top-1/2 right-[25%] -translate-y-1/2 pointer-events-none"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.4 }}
+        animate={{ opacity: 0.35 }}
         transition={{ duration: 1.5, delay: 0.8 }}
       >
         <div 
-          className="w-[90vh] h-[90vh] rounded-full"
+          className="w-[80vh] h-[80vh] rounded-full"
           style={{
             border: isLightTheme
-              ? '1px solid hsla(270, 80%, 75%, 0.15)'
-              : '1px solid hsla(195, 100%, 60%, 0.15)',
+              ? '1px solid hsla(270, 80%, 75%, 0.2)'
+              : '1px solid hsla(195, 100%, 60%, 0.2)',
           }}
         />
       </motion.div>
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        className="absolute top-1/2 right-[20%] -translate-y-1/2 pointer-events-none"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.25 }}
+        animate={{ opacity: 0.2 }}
         transition={{ duration: 1.5, delay: 1 }}
       >
         <div 
-          className="w-[110vh] h-[110vh] rounded-full"
+          className="w-[100vh] h-[100vh] rounded-full"
           style={{
             border: isLightTheme
-              ? '1px solid hsla(270, 80%, 75%, 0.1)'
-              : '1px solid hsla(195, 100%, 60%, 0.1)',
+              ? '1px solid hsla(270, 80%, 75%, 0.12)'
+              : '1px solid hsla(195, 100%, 60%, 0.12)',
           }}
         />
       </motion.div>
@@ -268,14 +266,14 @@ const HeroIllustration = () => {
       <AnimatePresence>
         {isActive && (
           <motion.div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+            className="absolute top-1/2 right-[30%] -translate-y-1/2 rounded-full pointer-events-none"
             style={{
               border: isLightTheme
-                ? '1.5px solid hsla(270, 100%, 70%, 0.35)'
-                : '1.5px solid hsla(195, 100%, 65%, 0.35)',
+                ? '2px solid hsla(270, 100%, 70%, 0.4)'
+                : '2px solid hsla(195, 100%, 65%, 0.4)',
             }}
-            initial={{ width: '35%', height: '35%', opacity: 0.7 }}
-            animate={{ width: '100%', height: '100%', opacity: 0 }}
+            initial={{ width: '20vh', height: '20vh', opacity: 0.8 }}
+            animate={{ width: '70vh', height: '70vh', opacity: 0 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           />
         )}
