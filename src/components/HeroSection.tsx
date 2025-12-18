@@ -57,7 +57,7 @@ const HeroSection = () => {
 
       {/* Hero Illustration - FULL BLEED RIGHT SIDE - Absolutely positioned for dominance */}
       <motion.div 
-        className="hidden lg:block absolute top-0 right-0 bottom-0 w-[60%] xl:w-[62%] 2xl:w-[65%] overflow-visible pointer-events-none z-0"
+        className="hidden lg:block absolute top-0 right-[-2%] xl:right-[-4%] bottom-0 w-[66%] xl:w-[68%] 2xl:w-[70%] overflow-visible pointer-events-none z-0"
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1.2, delay: 0.2, ease: premiumEase }}
@@ -71,7 +71,7 @@ const HeroSection = () => {
           
           {/* Left side - Text content - FIXED WIDTH, not competing with image */}
           <motion.div 
-            className="relative w-full lg:w-[40%] lg:max-w-[520px] xl:max-w-[580px] text-center lg:text-left space-y-6 sm:space-y-8 pt-20 lg:pt-0 lg:pr-8"
+            className="relative w-full lg:w-[34%] lg:max-w-[480px] xl:max-w-[520px] text-center lg:text-left space-y-6 sm:space-y-8 pt-20 lg:pt-0 lg:pr-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: premiumEase }}
@@ -169,7 +169,7 @@ const HeroSection = () => {
 
           {/* Mobile illustration - shown only on mobile/tablet */}
           <motion.div 
-            className="lg:hidden w-full h-[60vh] mt-8 flex items-center justify-center"
+            className="lg:hidden relative w-full h-[72vh] mt-8 flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4, ease: premiumEase }}
