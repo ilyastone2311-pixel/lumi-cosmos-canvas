@@ -23,7 +23,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-[100vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[100vh] flex items-center overflow-visible">
       {/* Subtle ambient glow effects */}
       <motion.div 
         className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-primary/8 rounded-full blur-[150px] pointer-events-none"
@@ -55,19 +55,29 @@ const HeroSection = () => {
         }}
       />
 
-      {/* Main content - Two column layout */}
-      <div className="container mx-auto max-w-[1800px] px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-4">
+      {/* Hero Illustration - FULL BLEED RIGHT SIDE - Absolutely positioned for dominance */}
+      <motion.div 
+        className="hidden lg:block absolute top-0 right-0 bottom-0 w-[60%] xl:w-[62%] 2xl:w-[65%] overflow-visible pointer-events-none z-0"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1.2, delay: 0.2, ease: premiumEase }}
+      >
+        <HeroIllustration />
+      </motion.div>
+
+      {/* Main content - Text on left, fixed width */}
+      <div className="container mx-auto max-w-[1800px] px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 w-full">
+        <div className="flex flex-col lg:flex-row items-center">
           
-          {/* Left side - Text content (45-50%) */}
+          {/* Left side - Text content - FIXED WIDTH, not competing with image */}
           <motion.div 
-            className="relative w-full lg:w-[45%] xl:w-[42%] text-center lg:text-left space-y-6 sm:space-y-8 pt-20 lg:pt-0"
+            className="relative w-full lg:w-[40%] lg:max-w-[520px] xl:max-w-[580px] text-center lg:text-left space-y-6 sm:space-y-8 pt-20 lg:pt-0 lg:pr-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: premiumEase }}
           >
             {/* Light-theme contrast layer (only visible in light mode) */}
-            <div className="light-only absolute -inset-6 sm:-inset-10 rounded-3xl bg-gradient-to-br from-background/80 via-background/50 to-transparent transition-opacity" />
+            <div className="light-only absolute -inset-6 sm:-inset-10 rounded-3xl bg-gradient-to-br from-background/90 via-background/70 to-transparent transition-opacity" />
             
             {/* Main headline */}
             <motion.div
@@ -107,7 +117,7 @@ const HeroSection = () => {
 
             {/* Subheadline */}
             <motion.p 
-              className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0"
+              className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-md mx-auto lg:mx-0"
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5, ease: premiumEase }}
@@ -157,12 +167,12 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right side - Hero Illustration (50-55%) */}
+          {/* Mobile illustration - shown only on mobile/tablet */}
           <motion.div 
-            className="relative w-full lg:w-[55%] xl:w-[58%] h-[50vh] sm:h-[60vh] lg:h-[85vh] flex items-center justify-center lg:justify-end"
-            initial={{ opacity: 0, scale: 0.95, x: 30 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.3, ease: premiumEase }}
+            className="lg:hidden w-full h-[60vh] mt-8 flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.4, ease: premiumEase }}
           >
             <HeroIllustration />
           </motion.div>
