@@ -2,9 +2,9 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion";
 
 // Dark theme illustration
-import heroImageDark from "@/assets/hero-reader-dark.png";
+import heroImageDark from "@/assets/hero-reader-dark-user.png";
 // Light theme illustration
-import heroImageLight from "@/assets/hero-reader-light.png";
+import heroImageLight from "@/assets/hero-reader-light-user.png";
 
 const HeroIllustration = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -168,34 +168,34 @@ const HeroIllustration = () => {
             )}
           </AnimatePresence>
 
-          {/* The image - MASSIVE, fills the container height, can overflow */}
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={isLightTheme ? "hero-light" : "hero-dark"}
-              src={currentHeroImage}
-              alt="Magical reading illustration"
-              className="h-[90%] lg:h-[95%] xl:h-[100%] 2xl:h-[105%] w-auto max-w-none object-contain relative z-10"
-              initial={{ opacity: 0, scale: 1.02 }}
-              animate={{ 
-                opacity: isSwitching ? 0.4 : 1, 
-                scale: isSwitching ? 1.01 : 1,
-              }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.45, ease: "easeInOut" }}
-              style={{
-                filter: isActive 
-                  ? isLightTheme
-                    ? 'drop-shadow(0 0 60px hsla(270, 85%, 60%, 0.5))'
-                    : 'drop-shadow(0 0 60px hsla(195, 100%, 50%, 0.55))'
-                  : isLightTheme
-                    ? 'drop-shadow(0 0 40px hsla(270, 85%, 65%, 0.35))'
-                    : 'drop-shadow(0 0 40px hsla(195, 100%, 45%, 0.4))',
-                willChange: 'transform, filter, opacity',
-                // Allow overflow to the right for full-bleed effect
-                marginRight: '-5%',
-              }}
-            />
-          </AnimatePresence>
+          {/* The image - FULL BLEED in the right column */}
+          <div className="relative h-full w-full overflow-visible flex items-center justify-end origin-right lg:scale-[1.25] xl:scale-[1.32] 2xl:scale-[1.38] lg:translate-x-[8%] xl:translate-x-[10%] 2xl:translate-x-[12%] lg:-translate-y-[3%]">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={isLightTheme ? "hero-light" : "hero-dark"}
+                src={currentHeroImage}
+                alt="Girl reading in a glowing neon bubble"
+                className="w-full h-full object-contain max-w-none relative z-10"
+                initial={{ opacity: 0, scale: 1.02 }}
+                animate={{
+                  opacity: isSwitching ? 0.4 : 1,
+                  scale: isSwitching ? 1.01 : 1,
+                }}
+                exit={{ opacity: 0, scale: 1.02 }}
+                transition={{ duration: 0.45, ease: "easeInOut" }}
+                style={{
+                  filter: isActive
+                    ? isLightTheme
+                      ? "drop-shadow(0 0 70px hsla(270, 85%, 60%, 0.55))"
+                      : "drop-shadow(0 0 70px hsla(195, 100%, 50%, 0.6))"
+                    : isLightTheme
+                      ? "drop-shadow(0 0 50px hsla(270, 85%, 65%, 0.4))"
+                      : "drop-shadow(0 0 50px hsla(195, 100%, 45%, 0.45))",
+                  willChange: "transform, filter, opacity",
+                }}
+              />
+            </AnimatePresence>
+          </div>
         </motion.div>
       </motion.div>
 
@@ -230,34 +230,34 @@ const HeroIllustration = () => {
         </motion.div>
       ))}
 
-      {/* Glowing rings extending into space - LARGER */}
+      {/* Glowing rings extending into space - scaled up to match the artwork */}
       <motion.div
-        className="absolute top-1/2 right-[25%] -translate-y-1/2 pointer-events-none"
+        className="absolute top-1/2 right-[12%] -translate-y-1/2 pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.35 }}
         transition={{ duration: 1.5, delay: 0.8 }}
       >
-        <div 
-          className="w-[80vh] h-[80vh] rounded-full"
+        <div
+          className="w-[110vh] h-[110vh] rounded-full"
           style={{
             border: isLightTheme
-              ? '1px solid hsla(270, 80%, 75%, 0.2)'
-              : '1px solid hsla(195, 100%, 60%, 0.2)',
+              ? "1px solid hsla(270, 80%, 75%, 0.2)"
+              : "1px solid hsla(195, 100%, 60%, 0.2)",
           }}
         />
       </motion.div>
       <motion.div
-        className="absolute top-1/2 right-[20%] -translate-y-1/2 pointer-events-none"
+        className="absolute top-1/2 right-[8%] -translate-y-1/2 pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.2 }}
         transition={{ duration: 1.5, delay: 1 }}
       >
-        <div 
-          className="w-[100vh] h-[100vh] rounded-full"
+        <div
+          className="w-[140vh] h-[140vh] rounded-full"
           style={{
             border: isLightTheme
-              ? '1px solid hsla(270, 80%, 75%, 0.12)'
-              : '1px solid hsla(195, 100%, 60%, 0.12)',
+              ? "1px solid hsla(270, 80%, 75%, 0.12)"
+              : "1px solid hsla(195, 100%, 60%, 0.12)",
           }}
         />
       </motion.div>
@@ -266,14 +266,14 @@ const HeroIllustration = () => {
       <AnimatePresence>
         {isActive && (
           <motion.div
-            className="absolute top-1/2 right-[30%] -translate-y-1/2 rounded-full pointer-events-none"
+            className="absolute top-1/2 right-[10%] -translate-y-1/2 rounded-full pointer-events-none"
             style={{
               border: isLightTheme
-                ? '2px solid hsla(270, 100%, 70%, 0.4)'
-                : '2px solid hsla(195, 100%, 65%, 0.4)',
+                ? "2px solid hsla(270, 100%, 70%, 0.4)"
+                : "2px solid hsla(195, 100%, 65%, 0.4)",
             }}
-            initial={{ width: '20vh', height: '20vh', opacity: 0.8 }}
-            animate={{ width: '70vh', height: '70vh', opacity: 0 }}
+            initial={{ width: "26vh", height: "26vh", opacity: 0.8 }}
+            animate={{ width: "95vh", height: "95vh", opacity: 0 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           />
         )}
