@@ -38,9 +38,9 @@ html {
     --secondary: 265 55% 60%;
     --secondary-foreground: 220 30% 95%;
 
-    /* Muted: Deep indigo tones */
+    /* Muted: Deep indigo tones - WCAG AA compliant */
     --muted: 250 25% 18%;
-    --muted-foreground: 230 20% 70%;
+    --muted-foreground: 230 25% 75%;
 
     /* Accent: Soft violet-pink highlight */
     --accent: 280 60% 65%;
@@ -107,9 +107,9 @@ html {
     --secondary: 265 55% 52%;
     --secondary-foreground: 0 0% 100%;
 
-    /* Muted: Very soft gray-blue */
+    /* Muted: Very soft gray-blue - WCAG AA compliant */
     --muted: 220 15% 94%;
-    --muted-foreground: 220 20% 38%;
+    --muted-foreground: 220 25% 32%;
 
     /* Accent: Soft violet */
     --accent: 270 50% 55%;
@@ -380,6 +380,42 @@ html {
   }
   html.light .light-only {
     opacity: 1;
+  }
+
+  /* ========== ACCESSIBILITY IMPROVEMENTS ========== */
+  
+  /* High contrast text utility */
+  .text-high-contrast {
+    color: hsl(var(--foreground));
+    font-weight: 500;
+  }
+  
+  /* Enhanced muted foreground with better contrast */
+  .text-muted-enhanced {
+    color: hsl(var(--foreground) / 0.75);
+  }
+  
+  html.light .text-muted-enhanced {
+    color: hsl(var(--foreground) / 0.7);
+  }
+  
+  /* Readable backdrop for text over busy backgrounds */
+  .text-backdrop {
+    position: relative;
+  }
+  
+  .text-backdrop::before {
+    content: '';
+    position: absolute;
+    inset: -0.5rem -1rem;
+    background: hsl(var(--background) / 0.7);
+    backdrop-filter: blur(8px);
+    border-radius: 0.75rem;
+    z-index: -1;
+  }
+  
+  html.light .text-backdrop::before {
+    background: hsl(var(--background) / 0.8);
   }
 
   /* Smooth section transitions */
