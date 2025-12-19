@@ -100,7 +100,7 @@ const HeroIllustration = () => {
   return (
     <motion.div 
       ref={containerRef}
-      className="absolute inset-0 flex items-center justify-end pointer-events-auto"
+      className="absolute inset-0 flex items-center justify-center pointer-events-auto"
       style={{
         perspective: "1200px",
         opacity: scrollOpacity,
@@ -129,9 +129,9 @@ const HeroIllustration = () => {
         />
       </motion.div>
 
-      {/* Main illustration container with 3D tilt - FULL SIZE */}
+      {/* Main illustration container with 3D tilt */}
       <motion.div
-        className="relative w-full h-full flex items-center justify-end cursor-pointer pr-4 lg:pr-0"
+        className="relative w-full h-[88%] flex items-center justify-center cursor-pointer"
         style={{
           rotateX: isActive ? rotateX : 0,
           rotateY: isActive ? rotateY : 0,
@@ -140,7 +140,7 @@ const HeroIllustration = () => {
       >
         {/* Illustration with floating animation */}
         <motion.div
-          className="relative h-full flex items-center justify-end"
+          className="relative h-full flex items-center justify-center"
           animate={{
             y: isActive ? [0, -10, 0] : [0, -5, 0],
             scale: isActive ? 1.01 : 1,
@@ -168,14 +168,14 @@ const HeroIllustration = () => {
             )}
           </AnimatePresence>
 
-          {/* The image - centered within frame, scaled for visual balance */}
-          <div className="relative h-full w-full overflow-visible flex items-center justify-center origin-center lg:scale-[1.18] xl:scale-[1.22] 2xl:scale-[1.26] lg:-translate-x-[2%] xl:-translate-x-[3%] 2xl:-translate-x-[4%]">
+          {/* The image - scaled to fit fully within the viewport */}
+          <div className="relative h-full w-full overflow-visible flex items-center justify-center">
             <AnimatePresence mode="wait">
               <motion.img
                 key={isLightTheme ? "hero-light" : "hero-dark"}
                 src={currentHeroImage}
                 alt="Girl reading in a glowing neon bubble"
-                className="w-full h-full object-contain max-w-none relative z-10"
+                className="h-full w-auto object-contain max-h-[88vh] relative z-10"
                 initial={{ opacity: 0, scale: 1.02 }}
                 animate={{
                   opacity: isSwitching ? 0.4 : 1,
