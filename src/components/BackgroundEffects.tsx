@@ -82,8 +82,8 @@ const BackgroundEffects = () => {
           className="absolute inset-0 pointer-events-auto" 
           style={{ 
             zIndex: 1,
-            opacity: 0.22, // Clearly visible but not overpowering
-            filter: 'blur(1px)', // Light blur for soft edges
+            opacity: 0.30, // 28-32% range for clear visual presence
+            filter: 'blur(0.5px)', // Minimal blur for sharper lines
           }}
         >
           <FloatingLines
