@@ -86,7 +86,7 @@ const HeroSection = () => {
               transition={{ duration: 0.7, delay: 0.2, ease: premiumEase }}
               className="relative"
             >
-              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-[1.1]">
+              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-[1.18]">
                 {/* First line - solid foreground text */}
                 <span className="block mb-1 sm:mb-2 text-foreground">
                   Your shortcut

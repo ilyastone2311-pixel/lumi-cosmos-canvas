@@ -371,6 +371,11 @@ html {
 
   /* Animated gradient text for hero headline */
   .animated-gradient-text {
+    display: inline-block;
+    padding-bottom: 0.14em; /* prevent descender clipping */
+    padding-top: 0.02em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
     background: linear-gradient(
       90deg,
       hsl(195 80% 45%) 0%,
