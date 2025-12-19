@@ -59,9 +59,9 @@ const BackgroundEffects = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Light mode: extremely subtle colors, very low opacity (≤6%)
+  // Light mode: soft pastels - cyan, lavender, pearl tones (very desaturated)
+  const lightColors = ['#b8d4e3', '#c9c4e8', '#e8dfd4', '#d4e3e8', '#e0d8eb'];
   // Dark mode: rich deep colors for dark backgrounds  
-  const lightColors = ['#cbd5e1', '#c7d2fe', '#ddd6fe', '#e9d5ff', '#a5f3fc'];
   const darkColors = ['#3b82f6', '#8b5cf6', '#a855f7', '#c026d3', '#06b6d4'];
 
   return (
@@ -74,11 +74,36 @@ const BackgroundEffects = () => {
         }}
       />
 
-      {/* Floating Lines - DISABLED in light mode for clean appearance */}
-      {!isLight && (
+      {/* Floating Lines - Light mode: soft, airy, out-of-focus */}
+      {isLight ? (
+        <div 
+          className="absolute inset-0 pointer-events-auto" 
+          style={{ 
+            zIndex: 1,
+            opacity: 0.045, // 3-6% opacity range
+            filter: 'blur(2px)', // Additional blur for softness
+          }}
+        >
+          <FloatingLines
+            key={`light-${key}`}
+            linesGradient={lightColors}
+            enabledWaves={['middle', 'bottom']} // Fewer waves for cleaner look
+            lineCount={[4, 5]} // Reduced line count
+            lineDistance={[8, 7]} // More spread out
+            bendRadius={4.0}
+            bendStrength={-0.3} // Gentler bend
+            interactive={false} // No interaction in light mode for calm feel
+            parallax={true}
+            parallaxStrength={0.15} // Subtle parallax
+            animationSpeed={0.35} // Very slow, gentle motion
+            mouseDamping={0.02}
+            mixBlendMode="multiply" // Soft blend on light backgrounds
+          />
+        </div>
+      ) : (
         <div className="absolute inset-0 pointer-events-auto" style={{ zIndex: 1 }}>
           <FloatingLines
-            key={key}
+            key={`dark-${key}`}
             linesGradient={darkColors}
             enabledWaves={['top', 'middle', 'bottom']}
             lineCount={[5, 7, 9]}
@@ -95,7 +120,7 @@ const BackgroundEffects = () => {
         </div>
       )}
 
-      {/* Particles - disabled in light mode */}
+      {/* Particles - dark mode only */}
       {!isLight && <BackgroundParticles isLight={isLight} />}
     </div>
   );
