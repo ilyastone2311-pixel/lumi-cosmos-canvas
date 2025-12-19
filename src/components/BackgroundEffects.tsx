@@ -59,10 +59,9 @@ const BackgroundEffects = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Colors for floating lines - matching Library/For You pages
-  // Light: soft pastels that work on bright backgrounds
-  const lightColors = ['#94a3b8', '#a5b4fc', '#c4b5fd', '#f0abfc', '#67e8f9'];
-  // Dark: rich deep colors for dark backgrounds  
+  // Light mode: extremely subtle colors, very low opacity (≤6%)
+  // Dark mode: rich deep colors for dark backgrounds  
+  const lightColors = ['#cbd5e1', '#c7d2fe', '#ddd6fe', '#e9d5ff', '#a5f3fc'];
   const darkColors = ['#3b82f6', '#8b5cf6', '#a855f7', '#c026d3', '#06b6d4'];
 
   return (
@@ -75,40 +74,29 @@ const BackgroundEffects = () => {
         }}
       />
 
-      {/* Light theme: very subtle nebula */}
-      {isLight && (
-        <div 
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: `
-              radial-gradient(ellipse at 70% 25%, hsla(200, 70%, 88%, 0.06) 0%, transparent 50%),
-              radial-gradient(ellipse at 25% 70%, hsla(260, 50%, 90%, 0.05) 0%, transparent 45%)
-            `,
-          }}
-        />
+      {/* Floating Lines - DISABLED in light mode for clean appearance */}
+      {!isLight && (
+        <div className="absolute inset-0 pointer-events-auto" style={{ zIndex: 1 }}>
+          <FloatingLines
+            key={key}
+            linesGradient={darkColors}
+            enabledWaves={['top', 'middle', 'bottom']}
+            lineCount={[5, 7, 9]}
+            lineDistance={[6, 5, 4]}
+            bendRadius={6.0}
+            bendStrength={-0.6}
+            interactive={true}
+            parallax={true}
+            parallaxStrength={0.25}
+            animationSpeed={0.8}
+            mouseDamping={0.04}
+            mixBlendMode="screen"
+          />
+        </div>
       )}
 
-      {/* Floating Lines - unified settings like Library/For You */}
-      <div className="absolute inset-0 pointer-events-auto" style={{ zIndex: 1 }}>
-        <FloatingLines
-          key={key}
-          linesGradient={isLight ? lightColors : darkColors}
-          enabledWaves={['top', 'middle', 'bottom']}
-          lineCount={[5, 7, 9]}
-          lineDistance={[6, 5, 4]}
-          bendRadius={6.0}
-          bendStrength={-0.6}
-          interactive={true}
-          parallax={true}
-          parallaxStrength={0.25}
-          animationSpeed={0.8}
-          mouseDamping={0.04}
-          mixBlendMode={isLight ? "multiply" : "screen"}
-        />
-      </div>
-
-      {/* Particles */}
-      <BackgroundParticles isLight={isLight} />
+      {/* Particles - disabled in light mode */}
+      {!isLight && <BackgroundParticles isLight={isLight} />}
     </div>
   );
 };

@@ -24,9 +24,9 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-[100vh] flex items-center overflow-visible">
-      {/* Subtle ambient glow effects */}
+      {/* Subtle ambient glow effects - only in dark mode */}
       <motion.div 
-        className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-primary/8 rounded-full blur-[150px] pointer-events-none"
+        className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[150px] pointer-events-none dark:bg-primary/8 bg-transparent"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.2, ease: premiumEase }}
@@ -35,7 +35,7 @@ const HeroSection = () => {
         }}
       />
       <motion.div 
-        className="absolute top-1/3 right-1/3 w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[120px] pointer-events-none"
+        className="absolute top-1/3 right-1/3 w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none dark:bg-secondary/10 bg-transparent"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.3, ease: premiumEase }}
@@ -44,9 +44,9 @@ const HeroSection = () => {
         }}
       />
 
-      {/* Background geometric shape - subtle */}
+      {/* Background geometric shape - subtle, dark mode only */}
       <motion.div
-        className="absolute top-20 left-10 w-32 h-32 border border-primary/5 rounded-lg rotate-45 pointer-events-none"
+        className="absolute top-20 left-10 w-32 h-32 border rounded-lg rotate-45 pointer-events-none dark:border-primary/5 border-transparent"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.6, ease: premiumEase }}
@@ -76,8 +76,8 @@ const HeroSection = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: premiumEase }}
           >
-            {/* Light-theme contrast layer (only visible in light mode) */}
-            <div className="light-only absolute -inset-6 sm:-inset-10 rounded-3xl bg-gradient-to-br from-background/90 via-background/70 to-transparent transition-opacity" />
+            {/* Light-theme contrast layer - clean white scrim, no dark overlays */}
+            <div className="light-only absolute -inset-6 sm:-inset-10 rounded-3xl bg-background/80 transition-opacity" />
             
             {/* Main headline */}
             <motion.div
@@ -150,7 +150,7 @@ const HeroSection = () => {
 
               <motion.button
                 onClick={() => navigate("/library")}
-                className="group w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-4 rounded-2xl sm:rounded-full font-display font-semibold text-foreground overflow-hidden transition-all duration-300 bg-card/60 backdrop-blur-md border border-border/50 text-center min-h-[52px] active:scale-[0.97]"
+                className="group w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-4 rounded-2xl sm:rounded-full font-display font-semibold text-foreground overflow-hidden transition-all duration-300 bg-card border border-border text-center min-h-[52px] active:scale-[0.97] shadow-sm"
                 whileHover={{ scale: 1.05, y: -4 }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -193,10 +193,7 @@ const HeroSection = () => {
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
         >
           <div 
-            className="w-10 h-10 rounded-full flex items-center justify-center bg-card/60 backdrop-blur-md border border-primary/20"
-            style={{
-              boxShadow: '0 0 20px hsl(var(--primary) / 0.1)',
-            }}
+            className="w-10 h-10 rounded-full flex items-center justify-center bg-card border border-border shadow-sm"
           >
             <ChevronDown className="w-5 h-5 text-primary" />
           </div>
