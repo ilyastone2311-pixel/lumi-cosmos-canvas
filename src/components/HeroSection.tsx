@@ -86,37 +86,17 @@ const HeroSection = () => {
               transition={{ duration: 0.7, delay: 0.2, ease: premiumEase }}
               className="relative"
             >
-              <div className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-[1.1] text-foreground">
-                {/* First line - solid text */}
-                <SplitText 
-                  text="Your shortcut"
-                  tag="span"
-                  className="block mb-1 sm:mb-2"
-                  splitType="chars"
-                  delay={40}
-                  duration={0.85}
-                  ease="power3.out"
-                  from={{ opacity: 0, y: 60, scale: 0.96 }}
-                  to={{ opacity: 1, y: 0, scale: 1 }}
-                  threshold={0.2}
-                />
+              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-[1.1]">
+                {/* First line - solid foreground text */}
+                <span className="block mb-1 sm:mb-2 text-foreground">
+                  Your shortcut
+                </span>
 
                 {/* Second line - animated gradient text */}
                 <span className="block animated-gradient-text">
-                  <SplitText 
-                    text="for quick insights"
-                    tag="span"
-                    className="inline"
-                    splitType="chars"
-                    delay={35}
-                    duration={0.85}
-                    ease="power3.out"
-                    from={{ opacity: 0, y: 60, scale: 0.96 }}
-                    to={{ opacity: 1, y: 0, scale: 1 }}
-                    threshold={0.2}
-                  />
+                  for quick insights
                 </span>
-              </div>
+              </h1>
             </motion.div>
 
             {/* Subheadline */}
