@@ -60,10 +60,10 @@ const BackgroundEffects = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Light mode: soft pastels - cyan, lavender, pearl tones (very desaturated)
-  const lightColors = ['#b8d4e3', '#c9c4e8', '#e8dfd4', '#d4e3e8', '#e0d8eb'];
+  // Light mode: clearly visible, medium-saturation colors
+  // Soft cyan, cool lavender, sky blue, warm lilac - matte/glass-like appearance
+  const lightColors = ['#5eadc9', '#9b8cc7', '#6ba8d9', '#a894c9', '#7bc4d4'];
   // Dark mode: deeper, more saturated colors - NO white/bright cores
-  // Using richer hues with lower luminosity to prevent overpowering white text
   const darkColors = ['#1d4ed8', '#6d28d9', '#7c3aed', '#a21caf', '#0891b2'];
 
   return (
@@ -76,30 +76,30 @@ const BackgroundEffects = () => {
         }}
       />
 
-      {/* Floating Lines - Light mode: soft, airy, out-of-focus */}
+      {/* Floating Lines - Light mode: clearly visible, expressive, matte appearance */}
       {isLight ? (
         <div 
           className="absolute inset-0 pointer-events-auto" 
           style={{ 
             zIndex: 1,
-            opacity: 0.045, // 3-6% opacity range
-            filter: 'blur(2px)', // Additional blur for softness
+            opacity: 0.22, // Clearly visible but not overpowering
+            filter: 'blur(1px)', // Light blur for soft edges
           }}
         >
           <FloatingLines
             key={`light-${key}`}
             linesGradient={lightColors}
-            enabledWaves={['middle', 'bottom']} // Fewer waves for cleaner look
-            lineCount={[4, 5]} // Reduced line count
-            lineDistance={[8, 7]} // More spread out
-            bendRadius={4.0}
-            bendStrength={-0.3} // Gentler bend
-            interactive={false} // No interaction in light mode for calm feel
+            enabledWaves={['top', 'middle', 'bottom']} // All waves for expressive presence
+            lineCount={[4, 5, 6]} // Moderate line count
+            lineDistance={[7, 6, 5]} // Good spacing
+            bendRadius={5.0}
+            bendStrength={-0.4}
+            interactive={true} // Enable interaction for engagement
             parallax={true}
-            parallaxStrength={0.15} // Subtle parallax
-            animationSpeed={0.35} // Very slow, gentle motion
-            mouseDamping={0.02}
-            mixBlendMode="multiply" // Soft blend on light backgrounds
+            parallaxStrength={0.18} // Subtle parallax for depth
+            animationSpeed={0.45} // Slow, smooth motion
+            mouseDamping={0.03}
+            mixBlendMode="multiply" // Matte blend on light backgrounds
           />
         </div>
       ) : (
