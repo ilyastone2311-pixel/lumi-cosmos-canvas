@@ -174,8 +174,8 @@ const HeroIllustration = () => {
               <motion.img
                 key={isLightTheme ? "hero-light" : "hero-dark"}
                 src={currentHeroImage}
-                alt="Girl reading in a glowing neon bubble"
-                className="w-auto h-auto max-w-full max-h-full object-contain relative z-10"
+                alt="Girl reading inside a transparent bubble illustration"
+                className="w-full h-full max-w-none max-h-none object-contain relative z-10 scale-[1.12]"
                 initial={{ opacity: 0, scale: 1.05 }}
                 animate={{
                   opacity: isSwitching ? 0.4 : 1,
@@ -184,8 +184,6 @@ const HeroIllustration = () => {
                 exit={{ opacity: 0, scale: 1.05 }}
                 transition={{ duration: 0.45, ease: "easeInOut" }}
                 style={{
-                  minHeight: '85%',
-                  minWidth: '85%',
                   filter: isActive
                     ? isLightTheme
                       ? "drop-shadow(0 0 70px hsla(270, 85%, 60%, 0.55))"

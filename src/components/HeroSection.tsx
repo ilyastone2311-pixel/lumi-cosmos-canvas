@@ -57,12 +57,14 @@ const HeroSection = () => {
 
       {/* Hero Illustration - fills entire right side with breathing room from edge */}
       <motion.div 
-        className="hidden lg:block absolute inset-y-0 right-[2%] xl:right-[3%] 2xl:right-[4%] w-[58%] xl:w-[60%] 2xl:w-[62%] overflow-visible pointer-events-none z-0 flex items-center justify-center py-8"
+        className="hidden lg:flex absolute inset-y-0 right-0 w-1/2 xl:w-[52%] 2xl:w-[54%] overflow-visible pointer-events-none z-0 items-stretch justify-end py-10 pr-10 xl:pr-14 2xl:pr-20"
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1.2, delay: 0.2, ease: premiumEase }}
       >
-        <HeroIllustration />
+        <div className="w-full h-full flex items-center justify-center">
+          <HeroIllustration />
+        </div>
       </motion.div>
 
       {/* Main content - Text on left, fixed width */}
