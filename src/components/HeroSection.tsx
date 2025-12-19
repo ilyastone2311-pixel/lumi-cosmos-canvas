@@ -55,10 +55,10 @@ const HeroSection = () => {
         }}
       />
 
-      {/* Hero Illustration - FULL BLEED RIGHT SIDE - Absolutely positioned for dominance */}
+      {/* Hero Illustration - positioned inward for better framing */}
       <motion.div 
-        className="hidden lg:block absolute top-0 right-[-2%] xl:right-[-4%] bottom-0 w-[66%] xl:w-[68%] 2xl:w-[70%] overflow-visible pointer-events-none z-0"
-        initial={{ opacity: 0, x: 50 }}
+        className="hidden lg:block absolute top-0 right-[2%] xl:right-[4%] 2xl:right-[6%] bottom-0 w-[62%] xl:w-[64%] 2xl:w-[66%] overflow-visible pointer-events-none z-0"
+        initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1.2, delay: 0.2, ease: premiumEase }}
       >
@@ -69,9 +69,9 @@ const HeroSection = () => {
       <div className="container mx-auto max-w-[1800px] px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 w-full">
         <div className="flex flex-col lg:flex-row items-center">
           
-          {/* Left side - Text content - FIXED WIDTH, not competing with image */}
+          {/* Left side - Text content - wider container for natural text flow */}
           <motion.div 
-            className="relative w-full lg:w-[34%] lg:max-w-[480px] xl:max-w-[520px] text-center lg:text-left space-y-6 sm:space-y-8 pt-20 lg:pt-0 lg:pr-8"
+            className="relative w-full lg:w-[38%] lg:max-w-[540px] xl:max-w-[580px] text-center lg:text-left space-y-6 sm:space-y-8 pt-20 lg:pt-0 lg:pr-12"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: premiumEase }}
@@ -86,11 +86,12 @@ const HeroSection = () => {
               transition={{ duration: 0.7, delay: 0.2, ease: premiumEase }}
               className="relative"
             >
-              <div className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-tight text-foreground">
+              <div className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-[1.1] text-foreground">
+                {/* First line - solid text */}
                 <SplitText 
                   text="Your shortcut"
                   tag="span"
-                  className="block mb-2"
+                  className="block mb-1 sm:mb-2"
                   splitType="chars"
                   delay={40}
                   duration={0.85}
@@ -100,18 +101,21 @@ const HeroSection = () => {
                   threshold={0.2}
                 />
 
-                <SplitText 
-                  text="for quick insights"
-                  tag="span"
-                  className="block text-primary"
-                  splitType="chars"
-                  delay={35}
-                  duration={0.85}
-                  ease="power3.out"
-                  from={{ opacity: 0, y: 60, scale: 0.96 }}
-                  to={{ opacity: 1, y: 0, scale: 1 }}
-                  threshold={0.2}
-                />
+                {/* Second line - animated gradient text */}
+                <span className="block animated-gradient-text">
+                  <SplitText 
+                    text="for quick insights"
+                    tag="span"
+                    className="inline"
+                    splitType="chars"
+                    delay={35}
+                    duration={0.85}
+                    ease="power3.out"
+                    from={{ opacity: 0, y: 60, scale: 0.96 }}
+                    to={{ opacity: 1, y: 0, scale: 1 }}
+                    threshold={0.2}
+                  />
+                </span>
               </div>
             </motion.div>
 
