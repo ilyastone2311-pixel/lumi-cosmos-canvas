@@ -175,15 +175,19 @@ const HeroIllustration = () => {
                 key={isLightTheme ? "hero-light" : "hero-dark"}
                 src={currentHeroImage}
                 alt="Girl reading inside a transparent bubble illustration"
-                className="w-full h-full max-w-none max-h-none object-contain relative z-10 scale-[1.12]"
+                className="object-contain relative z-10"
                 initial={{ opacity: 0, scale: 1.05 }}
                 animate={{
                   opacity: isSwitching ? 0.4 : 1,
-                  scale: isSwitching ? 1.03 : 1,
+                  scale: isSwitching ? 1.15 : 1.18,
                 }}
                 exit={{ opacity: 0, scale: 1.05 }}
                 transition={{ duration: 0.45, ease: "easeInOut" }}
                 style={{
+                  width: '100%',
+                  height: '100%',
+                  maxWidth: 'none',
+                  maxHeight: 'none',
                   filter: isActive
                     ? isLightTheme
                       ? "drop-shadow(0 0 70px hsla(270, 85%, 60%, 0.55))"
