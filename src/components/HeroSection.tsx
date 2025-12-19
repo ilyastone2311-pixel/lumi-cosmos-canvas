@@ -55,9 +55,9 @@ const HeroSection = () => {
         }}
       />
 
-      {/* Hero Illustration - larger size, shifted right */}
+      {/* Hero Illustration - large, dominant, with breathing room */}
       <motion.div 
-        className="hidden lg:block absolute top-0 right-[-4%] xl:right-[-6%] 2xl:right-[-8%] bottom-0 w-[68%] xl:w-[70%] 2xl:w-[72%] overflow-visible pointer-events-none z-0"
+        className="hidden lg:block absolute top-0 right-[3%] xl:right-[4%] 2xl:right-[5%] bottom-0 w-[64%] xl:w-[66%] 2xl:w-[68%] overflow-visible pointer-events-none z-0"
         initial={{ opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1.2, delay: 0.2, ease: premiumEase }}
