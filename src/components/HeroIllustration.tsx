@@ -168,8 +168,8 @@ const HeroIllustration = () => {
             )}
           </AnimatePresence>
 
-          {/* The image - FULL BLEED in the right column */}
-          <div className="relative h-full w-full overflow-visible flex items-center justify-end origin-right lg:scale-[1.25] xl:scale-[1.32] 2xl:scale-[1.38] lg:translate-x-[8%] xl:translate-x-[10%] 2xl:translate-x-[12%] lg:-translate-y-[3%]">
+          {/* The image - centered within frame, scaled for visual balance */}
+          <div className="relative h-full w-full overflow-visible flex items-center justify-center origin-center lg:scale-[1.18] xl:scale-[1.22] 2xl:scale-[1.26] lg:-translate-x-[2%] xl:-translate-x-[3%] 2xl:-translate-x-[4%]">
             <AnimatePresence mode="wait">
               <motion.img
                 key={isLightTheme ? "hero-light" : "hero-dark"}
