@@ -55,10 +55,10 @@ const HeroSection = () => {
         }}
       />
 
-      {/* Hero Illustration - positioned inward for better framing */}
+      {/* Hero Illustration - larger size, shifted right */}
       <motion.div 
-        className="hidden lg:block absolute top-0 right-[2%] xl:right-[4%] 2xl:right-[6%] bottom-0 w-[62%] xl:w-[64%] 2xl:w-[66%] overflow-visible pointer-events-none z-0"
-        initial={{ opacity: 0, x: 30 }}
+        className="hidden lg:block absolute top-0 right-[-4%] xl:right-[-6%] 2xl:right-[-8%] bottom-0 w-[68%] xl:w-[70%] 2xl:w-[72%] overflow-visible pointer-events-none z-0"
+        initial={{ opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1.2, delay: 0.2, ease: premiumEase }}
       >

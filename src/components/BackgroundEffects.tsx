@@ -25,12 +25,13 @@ const BackgroundParticles = memo(({ isLight }: { isLight: boolean }) => {
             top: p.top,
             width: p.size,
             height: p.size,
+            // Darker, more saturated particles - no bright white cores
             background: isLight 
               ? `hsla(220, 60%, 70%, ${0.3 + Math.random() * 0.2})`
-              : `hsla(200, 90%, 55%, ${0.4 + Math.random() * 0.25})`,
+              : `hsla(220, 80%, 50%, ${0.35 + Math.random() * 0.2})`,
             boxShadow: isLight
               ? `0 0 ${4 + p.size}px hsla(220, 60%, 65%, 0.3)`
-              : `0 0 ${6 + p.size}px hsla(200, 90%, 55%, 0.4)`,
+              : `0 0 ${4 + p.size}px hsla(240, 70%, 55%, 0.35)`,
             animationDelay: `${p.delay}s`,
             animationDuration: `${p.duration}s`,
           }}
@@ -61,8 +62,9 @@ const BackgroundEffects = () => {
 
   // Light mode: soft pastels - cyan, lavender, pearl tones (very desaturated)
   const lightColors = ['#b8d4e3', '#c9c4e8', '#e8dfd4', '#d4e3e8', '#e0d8eb'];
-  // Dark mode: rich deep colors for dark backgrounds  
-  const darkColors = ['#3b82f6', '#8b5cf6', '#a855f7', '#c026d3', '#06b6d4'];
+  // Dark mode: deeper, more saturated colors - NO white/bright cores
+  // Using richer hues with lower luminosity to prevent overpowering white text
+  const darkColors = ['#1d4ed8', '#6d28d9', '#7c3aed', '#a21caf', '#0891b2'];
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
@@ -101,19 +103,25 @@ const BackgroundEffects = () => {
           />
         </div>
       ) : (
-        <div className="absolute inset-0 pointer-events-auto" style={{ zIndex: 1 }}>
+        <div 
+          className="absolute inset-0 pointer-events-auto" 
+          style={{ 
+            zIndex: 1,
+            opacity: 0.7, // Reduced overall opacity
+          }}
+        >
           <FloatingLines
             key={`dark-${key}`}
             linesGradient={darkColors}
             enabledWaves={['top', 'middle', 'bottom']}
-            lineCount={[5, 7, 9]}
-            lineDistance={[6, 5, 4]}
-            bendRadius={6.0}
-            bendStrength={-0.6}
+            lineCount={[4, 6, 7]} // Slightly fewer lines
+            lineDistance={[7, 6, 5]} // More spacing
+            bendRadius={5.0}
+            bendStrength={-0.5}
             interactive={true}
             parallax={true}
-            parallaxStrength={0.25}
-            animationSpeed={0.8}
+            parallaxStrength={0.2}
+            animationSpeed={0.7}
             mouseDamping={0.04}
             mixBlendMode="screen"
           />
