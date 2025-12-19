@@ -55,10 +55,10 @@ const HeroSection = () => {
         }}
       />
 
-      {/* Hero Illustration - large, dominant, with breathing room */}
+      {/* Hero Illustration - fills entire right side with breathing room from edge */}
       <motion.div 
-        className="hidden lg:block absolute top-0 right-[3%] xl:right-[4%] 2xl:right-[5%] bottom-0 w-[64%] xl:w-[66%] 2xl:w-[68%] overflow-visible pointer-events-none z-0"
-        initial={{ opacity: 0, x: 40 }}
+        className="hidden lg:block absolute inset-y-0 right-[2%] xl:right-[3%] 2xl:right-[4%] w-[58%] xl:w-[60%] 2xl:w-[62%] overflow-visible pointer-events-none z-0 flex items-center justify-center py-8"
+        initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1.2, delay: 0.2, ease: premiumEase }}
       >
@@ -69,9 +69,9 @@ const HeroSection = () => {
       <div className="container mx-auto max-w-[1800px] px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 w-full">
         <div className="flex flex-col lg:flex-row items-center">
           
-          {/* Left side - Text content - wider container for natural text flow */}
+          {/* Left side - Text content */}
           <motion.div 
-            className="relative w-full lg:w-[38%] lg:max-w-[540px] xl:max-w-[580px] text-center lg:text-left space-y-6 sm:space-y-8 pt-20 lg:pt-0 lg:pr-12"
+            className="relative w-full lg:w-[42%] lg:max-w-[560px] xl:max-w-[620px] text-center lg:text-left space-y-6 sm:space-y-8 pt-20 lg:pt-0 lg:pr-16"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: premiumEase }}

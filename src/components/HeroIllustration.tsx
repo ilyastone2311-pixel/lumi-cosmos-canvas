@@ -100,7 +100,7 @@ const HeroIllustration = () => {
   return (
     <motion.div 
       ref={containerRef}
-      className="absolute inset-0 flex items-center justify-center pointer-events-auto"
+      className="w-full h-full flex items-center justify-center pointer-events-auto"
       style={{
         perspective: "1200px",
         opacity: scrollOpacity,
@@ -112,7 +112,7 @@ const HeroIllustration = () => {
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTap}
     >
-      {/* Ambient glow behind illustration - MASSIVE */}
+      {/* Ambient glow behind illustration */}
       <motion.div
         className="absolute inset-0 pointer-events-none overflow-visible"
         initial={{ opacity: 0 }}
@@ -120,18 +120,18 @@ const HeroIllustration = () => {
         transition={{ duration: 1.5, delay: 0.5 }}
       >
         <div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/3 -translate-y-1/2 w-[140%] h-[140%] rounded-full blur-[120px]"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full blur-[100px]"
           style={{
             background: isLightTheme
-              ? 'radial-gradient(ellipse at center, hsla(270, 80%, 75%, 0.3) 0%, hsla(270, 60%, 85%, 0.15) 40%, transparent 70%)'
-              : 'radial-gradient(ellipse at center, hsla(195, 100%, 50%, 0.25) 0%, hsla(195, 80%, 40%, 0.1) 40%, transparent 70%)',
+              ? 'radial-gradient(ellipse at center, hsla(270, 80%, 75%, 0.25) 0%, hsla(270, 60%, 85%, 0.12) 40%, transparent 70%)'
+              : 'radial-gradient(ellipse at center, hsla(195, 100%, 50%, 0.22) 0%, hsla(195, 80%, 40%, 0.1) 40%, transparent 70%)',
           }}
         />
       </motion.div>
 
-      {/* Main illustration container with 3D tilt */}
+      {/* Main illustration container - fills the space */}
       <motion.div
-        className="relative w-full h-[96%] flex items-center justify-center cursor-pointer"
+        className="relative w-full h-full flex items-center justify-center cursor-pointer"
         style={{
           rotateX: isActive ? rotateX : 0,
           rotateY: isActive ? rotateY : 0,
@@ -140,7 +140,7 @@ const HeroIllustration = () => {
       >
         {/* Illustration with floating animation */}
         <motion.div
-          className="relative h-full flex items-center justify-center"
+          className="relative w-full h-full flex items-center justify-center"
           animate={{
             y: isActive ? [0, -10, 0] : [0, -5, 0],
             scale: isActive ? 1.01 : 1,
@@ -168,22 +168,24 @@ const HeroIllustration = () => {
             )}
           </AnimatePresence>
 
-          {/* The image - scaled to fit fully within the viewport */}
-          <div className="relative h-full w-full overflow-visible flex items-center justify-center">
+          {/* The image - fills the container while maintaining aspect ratio */}
+          <div className="relative w-full h-full overflow-visible flex items-center justify-center">
             <AnimatePresence mode="wait">
               <motion.img
                 key={isLightTheme ? "hero-light" : "hero-dark"}
                 src={currentHeroImage}
                 alt="Girl reading in a glowing neon bubble"
-                className="h-full w-auto object-contain max-h-[90vh] relative z-10"
-                initial={{ opacity: 0, scale: 1.12 }}
+                className="w-auto h-auto max-w-full max-h-full object-contain relative z-10"
+                initial={{ opacity: 0, scale: 1.05 }}
                 animate={{
                   opacity: isSwitching ? 0.4 : 1,
-                  scale: isSwitching ? 1.10 : 1.12,
+                  scale: isSwitching ? 1.03 : 1,
                 }}
-                exit={{ opacity: 0, scale: 1.12 }}
+                exit={{ opacity: 0, scale: 1.05 }}
                 transition={{ duration: 0.45, ease: "easeInOut" }}
                 style={{
+                  minHeight: '85%',
+                  minWidth: '85%',
                   filter: isActive
                     ? isLightTheme
                       ? "drop-shadow(0 0 70px hsla(270, 85%, 60%, 0.55))"
