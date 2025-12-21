@@ -179,7 +179,7 @@ const HeroIllustration = () => {
                 initial={{ opacity: 0, scale: 1.05 }}
                 animate={{
                   opacity: isSwitching ? 0.4 : 1,
-                  scale: isSwitching ? 1.15 : 1.18,
+                  scale: isSwitching ? 1.35 : 1.4,
                 }}
                 exit={{ opacity: 0, scale: 1.05 }}
                 transition={{ duration: 0.45, ease: "easeInOut" }}
