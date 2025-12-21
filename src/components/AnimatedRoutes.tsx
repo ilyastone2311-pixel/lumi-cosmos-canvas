@@ -16,6 +16,7 @@ import Admin from "@/pages/Admin";
 import AdminArticles from "@/pages/AdminArticles";
 import Recommended from "@/pages/Recommended";
 import NotFound from "@/pages/NotFound";
+import MotionShowcase from "@/pages/MotionShowcase";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -128,6 +129,14 @@ const AnimatedRoutes = () => {
           element={
             <PageTransition>
               <AdminArticles />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/motion-showcase"
+          element={
+            <PageTransition>
+              <MotionShowcase />
             </PageTransition>
           }
         />
