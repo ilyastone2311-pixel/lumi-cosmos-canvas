@@ -2,7 +2,7 @@ import { Clock, List, Smartphone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useRef } from "react";
-import SplitText from "./SplitText";
+import AnimatedHeading from "./AnimatedHeading";
 
 const features = [
   {
@@ -36,16 +36,13 @@ const HowItWorks = () => {
       </div>
 
       <div className="container mx-auto max-w-7xl px-6 relative">
-        <SplitText 
+        <AnimatedHeading 
           text="How Lumi works"
           tag="h2"
           className="font-display text-3xl md:text-4xl font-bold text-center text-foreground mb-20"
-          splitType="chars"
           delay={50}
-          duration={0.85}
-          ease="power3.out"
-          from={{ opacity: 0, y: 60, scale: 0.96 }}
-          to={{ opacity: 1, y: 0, scale: 1 }}
+          duration={0.5}
+          stagger={0.03}
           threshold={0.15}
           textAlign="center"
         />

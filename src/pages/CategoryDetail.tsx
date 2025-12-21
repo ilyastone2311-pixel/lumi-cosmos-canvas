@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import BackgroundEffects from "@/components/BackgroundEffects";
 import ArticlePreviewCard from "@/components/ArticlePreviewCard";
+import AnimatedHeading from "@/components/AnimatedHeading";
+import { motion } from "framer-motion";
 import { SkeletonGrid } from "@/components/ui/skeleton-card";
 import { ArrowLeft } from "lucide-react";
 import { getArticlesByCategory, articles } from "@/data/articles";
@@ -158,8 +160,13 @@ const CategoryDetail = () => {
           </button>
 
           {/* Hero */}
-          <header className="mb-12 animate-fade-in">
-            <div className="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-8">
+          <header className="mb-12">
+            <motion.div 
+              className="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-8"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+            >
               <img 
                 src={data.image} 
                 alt={displayName} 
@@ -169,19 +176,38 @@ const CategoryDetail = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
-                <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-2">
-                  {displayName}
-                </h1>
-                <p className="text-lg text-foreground/80">{data.description}</p>
+                <AnimatedHeading
+                  text={displayName || ''}
+                  tag="h1"
+                  className="font-display text-4xl md:text-5xl font-bold text-foreground mb-2"
+                  delay={200}
+                  duration={0.5}
+                  stagger={0.03}
+                  threshold={0.1}
+                />
+                <motion.p 
+                  className="text-lg text-foreground/80"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                >
+                  {data.description}
+                </motion.p>
               </div>
-            </div>
+            </motion.div>
           </header>
 
           {/* Articles List with Preview Cards */}
           <section>
-            <h2 className="font-display text-2xl font-semibold text-foreground mb-6">
-              Popular Articles
-            </h2>
+            <AnimatedHeading
+              text="Popular Articles"
+              tag="h2"
+              className="font-display text-2xl font-semibold text-foreground mb-6"
+              delay={400}
+              duration={0.5}
+              stagger={0.03}
+              threshold={0.15}
+            />
             {isLoading ? (
               <SkeletonGrid count={6} variant="article" />
             ) : (

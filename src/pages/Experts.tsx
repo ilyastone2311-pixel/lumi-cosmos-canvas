@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
 import BackgroundEffects from "@/components/BackgroundEffects";
+import AnimatedHeading from "@/components/AnimatedHeading";
+import { motion } from "framer-motion";
 import { ArrowLeft, Award, BookOpen, Linkedin, Twitter, Quote } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -74,22 +76,36 @@ const Experts = () => {
           </button>
 
           {/* Header */}
-          <header className="text-center mb-16 animate-fade-in">
-            <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-              The Humans Behind Lumi
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <header className="text-center mb-16">
+            <AnimatedHeading
+              text="The Humans Behind Lumi"
+              tag="h1"
+              className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4"
+              delay={100}
+              duration={0.5}
+              stagger={0.025}
+              threshold={0.1}
+              textAlign="center"
+            />
+            <motion.p 
+              className="text-xl text-muted-foreground max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
               Real people who read way too many books so you don't have to.
-            </p>
+            </motion.p>
           </header>
 
-          {/* Experts Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {experts.map((expert, index) => (
-              <div
+              <motion.div
                 key={expert.name}
-                className="glass organic-border p-6 animate-fade-in imperfect-card hover:bg-white/5 transition-all duration-300 group"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="glass organic-border p-6 imperfect-card hover:bg-white/5 transition-all duration-300 group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 {/* Avatar */}
                 <div className="flex items-start gap-4 mb-4">
@@ -134,17 +150,30 @@ const Experts = () => {
                     </button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
           {/* Join CTA */}
-          <section className="mt-16 text-center animate-fade-in" style={{ animationDelay: '600ms' }}>
+          <motion.section 
+            className="mt-16 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <div className="glass gradient-border organic-border p-8 md:p-12">
               <Award className="w-12 h-12 text-primary mx-auto mb-4" />
-              <h2 className="font-display text-2xl font-semibold text-foreground mb-3">
-                Think you'd fit in?
-              </h2>
+              <AnimatedHeading
+                text="Think you'd fit in?"
+                tag="h2"
+                className="font-display text-2xl font-semibold text-foreground mb-3"
+                delay={100}
+                duration={0.5}
+                stagger={0.03}
+                threshold={0.2}
+                textAlign="center"
+              />
               <p className="text-muted-foreground mb-6 max-w-md mx-auto">
                 We're always looking for curious minds who can turn complex ideas into 
                 something you'd actually want to read. No corporate speak required.
@@ -153,7 +182,7 @@ const Experts = () => {
                 Say hi →
               </button>
             </div>
-          </section>
+          </motion.section>
         </div>
       </main>
     </div>

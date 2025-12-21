@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
 import BackgroundEffects from "@/components/BackgroundEffects";
+import AnimatedHeading from "@/components/AnimatedHeading";
+import { motion } from "framer-motion";
 import { ArrowLeft, Sparkles, BookOpen, Target, Users, Coffee, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -23,26 +25,48 @@ const About = () => {
           </button>
 
           {/* Header */}
-          <header className="text-center mb-16 animate-fade-in">
+          <header className="text-center mb-16">
             <div className="flex items-center justify-center gap-3 mb-6">
               <Sparkles className="w-10 h-10 text-primary animate-pulse" />
-              <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground">
-                About Lumi
-              </h1>
+              <AnimatedHeading
+                text="About Lumi"
+                tag="h1"
+                className="font-display text-4xl md:text-5xl font-bold text-foreground"
+                delay={100}
+                duration={0.5}
+                stagger={0.035}
+                threshold={0.1}
+                textAlign="center"
+              />
             </div>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <motion.p 
+              className="text-xl text-muted-foreground max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
               We're a small team who got tired of never finishing books.
-            </p>
+            </motion.p>
           </header>
 
-          {/* Story Section - more personal */}
-          <section className="mb-16 animate-fade-in" style={{ animationDelay: '100ms' }}>
-            <div className="glass organic-border p-8 md:p-12">
+          <section className="mb-16">
+            <motion.div 
+              className="glass organic-border p-8 md:p-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
               <div className="flex items-center gap-3 mb-6">
                 <Coffee className="w-6 h-6 text-primary" />
-                <h2 className="font-display text-2xl font-semibold text-foreground">
-                  How it started
-                </h2>
+                <AnimatedHeading
+                  text="How it started"
+                  tag="h2"
+                  className="font-display text-2xl font-semibold text-foreground"
+                  delay={400}
+                  duration={0.5}
+                  stagger={0.03}
+                  threshold={0.1}
+                />
               </div>
               <p className="text-muted-foreground leading-relaxed mb-4">
                 Real talk: we started Lumi because our reading lists were getting out of control. 
@@ -58,15 +82,24 @@ const About = () => {
                 That's Lumi. It's what we wished existed when we were drowning in our "to-read" 
                 pile at 2am. We hope it helps you too.
               </p>
-            </div>
+            </motion.div>
           </section>
 
           {/* What we care about */}
           <section className="mb-16">
-            <h2 className="font-display text-2xl font-semibold text-foreground mb-8 text-center animate-fade-in flex items-center justify-center gap-2" style={{ animationDelay: '200ms' }}>
+            <div className="flex items-center justify-center gap-2 mb-8">
               <Heart className="w-5 h-5 text-accent" />
-              What we actually care about
-            </h2>
+              <AnimatedHeading
+                text="What we actually care about"
+                tag="h2"
+                className="font-display text-2xl font-semibold text-foreground text-center"
+                delay={100}
+                duration={0.5}
+                stagger={0.02}
+                threshold={0.15}
+                textAlign="center"
+              />
+            </div>
             <div className="grid md:grid-cols-2 gap-6">
               {[
                 {
@@ -90,10 +123,13 @@ const About = () => {
                   description: "No dark patterns. No infinite scroll traps. Read, learn, go live your life. That's the whole point."
                 }
               ].map((feature, index) => (
-                <div
+                <motion.div
                   key={feature.title}
-                  className="glass organic-border p-6 animate-fade-in imperfect-card hover:bg-white/10 transition-all duration-300"
-                  style={{ animationDelay: `${300 + index * 100}ms` }}
+                  className="glass organic-border p-6 imperfect-card hover:bg-white/10 transition-all duration-300"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
                   <feature.icon className="w-8 h-8 text-primary mb-4" />
                   <h3 className="font-display text-lg font-semibold text-foreground mb-2">
@@ -102,13 +138,18 @@ const About = () => {
                   <p className="text-muted-foreground text-sm leading-relaxed">
                     {feature.description}
                   </p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </section>
 
           {/* Numbers - less corporate */}
-          <section className="animate-fade-in" style={{ animationDelay: '600ms' }}>
+          <motion.section 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <div className="glass gradient-border organic-border p-8">
               <p className="text-center text-muted-foreground mb-6 text-sm">
                 Some numbers (we're not obsessed with metrics, promise)
@@ -132,7 +173,7 @@ const About = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </motion.section>
         </div>
       </main>
     </div>

@@ -6,7 +6,7 @@ import HeroSection from "@/components/HeroSection";
 import HowItWorks from "@/components/HowItWorks";
 import IllustrationSection from "@/components/IllustrationSection";
 import ScrollSection from "@/components/ScrollSection";
-import SplitText from "@/components/SplitText";
+import AnimatedHeading from "@/components/AnimatedHeading";
 import { SectionHeader, CardGrid } from "@/components/PageLoadAnimation";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useAuth } from "@/hooks/useAuth";
@@ -110,16 +110,13 @@ const Index = () => {
             <div className="container mx-auto max-w-7xl relative">
               {/* Section Header */}
               <SectionHeader className="text-center mb-12 sm:mb-20 relative">
-                <SplitText 
+                <AnimatedHeading 
                   text="Explore Categories"
                   tag="h2"
                   className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4"
-                  splitType="chars"
-                  delay={40}
-                  duration={0.85}
-                  ease="power3.out"
-                  from={{ opacity: 0, y: 50, scale: 0.96 }}
-                  to={{ opacity: 1, y: 0, scale: 1 }}
+                  delay={50}
+                  duration={0.5}
+                  stagger={0.025}
                   threshold={0.1}
                   textAlign="center"
                 />
@@ -215,15 +212,16 @@ const Index = () => {
                 <div className="absolute top-4 right-8 w-20 h-20 bg-primary/10 rounded-full blur-2xl" />
                 <div className="absolute bottom-4 left-8 w-16 h-16 bg-secondary/10 rounded-full blur-xl" />
                 
-                <motion.h3 
+                <AnimatedHeading
+                  text="Ready to expand your mind?"
+                  tag="h3"
                   className="relative font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-4"
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.2, ease: premiumEase }}
-                >
-                  Ready to expand your mind?
-                </motion.h3>
+                  delay={200}
+                  duration={0.5}
+                  stagger={0.02}
+                  threshold={0.2}
+                  textAlign="center"
+                />
                 <motion.p 
                   className="relative text-sm sm:text-base text-muted-foreground mb-8 sm:mb-10 max-w-md mx-auto"
                   initial={{ opacity: 0, y: 12 }}

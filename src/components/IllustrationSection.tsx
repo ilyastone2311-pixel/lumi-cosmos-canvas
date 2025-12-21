@@ -1,6 +1,6 @@
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { motion, type Variants } from "framer-motion";
-import SplitText from "./SplitText";
+import AnimatedHeading from "./AnimatedHeading";
 
 import illustrationReaders from "@/assets/illustration-readers.webp";
 import illustrationDiscovery from "@/assets/illustration-discovery.webp";
@@ -112,16 +112,13 @@ const IllustrationSection = () => {
               
               {/* Glass panel for readability (keeps spacing from "Community") */}
               <div className="rounded-2xl bg-background/60 backdrop-blur-md border border-border/40 p-6 sm:p-8">
-                <SplitText 
+                <AnimatedHeading 
                   text="Learn Together, Grow Together"
                   tag="h2"
                   className="font-display text-3xl md:text-4xl font-bold text-foreground"
-                  splitType="words"
-                  delay={90}
-                  duration={0.85}
-                  ease="power3.out"
-                  from={{ opacity: 0, y: 40, scale: 0.96 }}
-                  to={{ opacity: 1, y: 0, scale: 1 }}
+                  delay={100}
+                  duration={0.5}
+                  stagger={0.025}
                   threshold={0.2}
                   textAlign="left"
                 />

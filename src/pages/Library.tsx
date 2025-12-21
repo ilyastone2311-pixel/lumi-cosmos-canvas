@@ -1,6 +1,7 @@
 import BackgroundEffects from "@/components/BackgroundEffects";
 import CategoryCard from "@/components/CategoryCard";
-import SplitText from "@/components/SplitText";
+import AnimatedHeading from "@/components/AnimatedHeading";
+import { motion } from "framer-motion";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -87,33 +88,43 @@ const Library = () => {
         <main id="main-content" className="relative z-10 pt-20 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
         <div className="container mx-auto max-w-7xl">
           {/* Header */}
-          <header className="mb-10 sm:mb-16 animate-fade-in">
-            <SplitText 
+          <header className="mb-10 sm:mb-16">
+            <AnimatedHeading 
               text="Your Library"
               tag="h1"
               className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-3 sm:mb-4"
-              splitType="chars"
               delay={50}
-              duration={0.85}
-              ease="power3.out"
-              from={{ opacity: 0, y: 60, scale: 0.96 }}
-              to={{ opacity: 1, y: 0, scale: 1 }}
+              duration={0.5}
+              stagger={0.03}
               threshold={0.1}
               textAlign="left"
             />
-            <p className="text-base sm:text-xl text-muted-foreground max-w-2xl">
+            <motion.p 
+              className="text-base sm:text-xl text-muted-foreground max-w-2xl"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
               Browse through our curated collection of insights. 
               {user ? " Your favorites are marked with a heart." : " Sign in to save your favorites."}
-            </p>
+            </motion.p>
           </header>
 
           {/* Favorites Section - Show only if user has favorites */}
           {user && favoriteCategories.length > 0 && (
             <section className="mb-10 sm:mb-16">
-              <h2 className="font-display text-xl sm:text-2xl font-semibold text-foreground mb-6 sm:mb-8 flex items-center gap-3 animate-fade-in">
+              <div className="flex items-center gap-3 mb-6 sm:mb-8">
                 <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                Your Favorites
-              </h2>
+                <AnimatedHeading
+                  text="Your Favorites"
+                  tag="h2"
+                  className="font-display text-xl sm:text-2xl font-semibold text-foreground"
+                  delay={200}
+                  duration={0.5}
+                  stagger={0.025}
+                  threshold={0.1}
+                />
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {favoriteCategories.map((category, index) => (
                   <div
@@ -136,9 +147,15 @@ const Library = () => {
 
           {/* All Categories */}
           <section>
-            <h2 className="font-display text-xl sm:text-2xl font-semibold text-foreground mb-6 sm:mb-8 animate-fade-in">
-              {user && favoriteCategories.length > 0 ? "Explore More" : "All Categories"}
-            </h2>
+            <AnimatedHeading
+              text={user && favoriteCategories.length > 0 ? "Explore More" : "All Categories"}
+              tag="h2"
+              className="font-display text-xl sm:text-2xl font-semibold text-foreground mb-6 sm:mb-8"
+              delay={300}
+              duration={0.5}
+              stagger={0.025}
+              threshold={0.1}
+            />
             
             {/* Multi-column layout */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
