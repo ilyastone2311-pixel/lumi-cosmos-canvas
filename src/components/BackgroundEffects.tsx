@@ -60,9 +60,9 @@ const BackgroundEffects = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Light mode: clearly visible, medium-saturation colors
-  // Soft cyan, cool lavender, sky blue, warm lilac - matte/glass-like appearance
-  const lightColors = ['#5eadc9', '#9b8cc7', '#6ba8d9', '#a894c9', '#7bc4d4'];
+  // Light mode: very subtle, desaturated colors - minimal cosmic presence
+  // Soft grays with hint of cool blue - premium, clean appearance
+  const lightColors = ['#c4d0dc', '#b8c4d4', '#d0d8e4', '#c8d4e0', '#bcc8d8'];
   // Dark mode: deeper, more saturated colors - NO white/bright cores
   const darkColors = ['#1d4ed8', '#6d28d9', '#7c3aed', '#a21caf', '#0891b2'];
 
@@ -76,30 +76,30 @@ const BackgroundEffects = () => {
         }}
       />
 
-      {/* Floating Lines - Light mode: clearly visible, expressive, matte appearance */}
+      {/* Floating Lines - Light mode: extremely subtle, almost invisible */}
       {isLight ? (
         <div 
           className="absolute inset-0 pointer-events-auto" 
           style={{ 
             zIndex: 1,
-            opacity: 0.30, // 28-32% range for clear visual presence
-            filter: 'blur(0.5px)', // Minimal blur for sharper lines
+            opacity: 0.12, // Very low opacity for subtle presence
+            filter: 'blur(1px)', // Softer lines
           }}
         >
           <FloatingLines
             key={`light-${key}`}
             linesGradient={lightColors}
-            enabledWaves={['top', 'middle', 'bottom']} // All waves for expressive presence
-            lineCount={[4, 5, 6]} // Moderate line count
-            lineDistance={[7, 6, 5]} // Good spacing
-            bendRadius={5.0}
-            bendStrength={-0.4}
-            interactive={true} // Enable interaction for engagement
+            enabledWaves={['middle']} // Only middle wave for minimal presence
+            lineCount={[3, 3, 3]} // Fewer lines
+            lineDistance={[10, 8, 8]} // More spacing
+            bendRadius={4.0}
+            bendStrength={-0.3}
+            interactive={false} // No interaction in light mode
             parallax={true}
-            parallaxStrength={0.18} // Subtle parallax for depth
-            animationSpeed={0.45} // Slow, smooth motion
-            mouseDamping={0.03}
-            mixBlendMode="multiply" // Matte blend on light backgrounds
+            parallaxStrength={0.1} // Very subtle parallax
+            animationSpeed={0.3} // Slower, calmer motion
+            mouseDamping={0.02}
+            mixBlendMode="multiply" // Matte blend
           />
         </div>
       ) : (

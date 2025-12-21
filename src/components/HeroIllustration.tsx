@@ -112,7 +112,7 @@ const HeroIllustration = () => {
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTap}
     >
-      {/* Ambient glow behind illustration */}
+      {/* Ambient glow behind illustration - very subtle in light mode */}
       <motion.div
         className="absolute inset-0 pointer-events-none overflow-visible"
         initial={{ opacity: 0 }}
@@ -123,7 +123,7 @@ const HeroIllustration = () => {
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full blur-[100px]"
           style={{
             background: isLightTheme
-              ? 'radial-gradient(ellipse at center, hsla(270, 80%, 75%, 0.25) 0%, hsla(270, 60%, 85%, 0.12) 40%, transparent 70%)'
+              ? 'radial-gradient(ellipse at center, hsla(260, 40%, 85%, 0.15) 0%, hsla(260, 30%, 90%, 0.06) 40%, transparent 70%)'
               : 'radial-gradient(ellipse at center, hsla(195, 100%, 50%, 0.22) 0%, hsla(195, 80%, 40%, 0.1) 40%, transparent 70%)',
           }}
         />
@@ -150,14 +150,14 @@ const HeroIllustration = () => {
             scale: { duration: 0.4, ease: [0.2, 0.9, 0.2, 1] },
           }}
         >
-          {/* Theme transition glow pulse */}
+          {/* Theme transition glow pulse - softer in light mode */}
           <AnimatePresence>
             {isSwitching && (
               <motion.div
                 className="absolute inset-[-20%] rounded-full pointer-events-none z-30"
                 style={{
                   background: isLightTheme
-                    ? 'radial-gradient(ellipse at center, hsla(270, 90%, 75%, 0.5) 0%, transparent 55%)'
+                    ? 'radial-gradient(ellipse at center, hsla(260, 50%, 80%, 0.3) 0%, transparent 55%)'
                     : 'radial-gradient(ellipse at center, hsla(195, 100%, 55%, 0.5) 0%, transparent 55%)',
                 }}
                 initial={{ opacity: 0, scale: 0.85 }}
@@ -188,12 +188,13 @@ const HeroIllustration = () => {
                   height: '100%',
                   maxWidth: 'none',
                   maxHeight: 'none',
+                  // Light mode: softer, wider diffusion shadow; Dark mode: vibrant glow
                   filter: isActive
                     ? isLightTheme
-                      ? "drop-shadow(0 0 70px hsla(270, 85%, 60%, 0.55))"
+                      ? "drop-shadow(0 8px 40px hsla(260, 30%, 50%, 0.18))"
                       : "drop-shadow(0 0 70px hsla(195, 100%, 50%, 0.6))"
                     : isLightTheme
-                      ? "drop-shadow(0 0 50px hsla(270, 85%, 65%, 0.4))"
+                      ? "drop-shadow(0 6px 30px hsla(260, 25%, 55%, 0.12))"
                       : "drop-shadow(0 0 50px hsla(195, 100%, 45%, 0.45))",
                   willChange: "transform, filter, opacity",
                 }}
@@ -228,24 +229,24 @@ const HeroIllustration = () => {
           <svg width={sparkle.size} height={sparkle.size} viewBox="0 0 24 24" fill="none">
             <path 
               d="M12 0L13.5 10.5L24 12L13.5 13.5L12 24L10.5 13.5L0 12L10.5 10.5L12 0Z" 
-              fill={isLightTheme ? "hsla(270, 100%, 70%, 0.9)" : "hsla(195, 100%, 75%, 0.9)"}
+              fill={isLightTheme ? "hsla(260, 45%, 65%, 0.6)" : "hsla(195, 100%, 75%, 0.9)"}
             />
           </svg>
         </motion.div>
       ))}
 
-      {/* Glowing rings extending into space - scaled up to match the artwork */}
+      {/* Glowing rings - very subtle in light mode */}
       <motion.div
         className="absolute top-1/2 right-[12%] -translate-y-1/2 pointer-events-none"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.35 }}
+        animate={{ opacity: isLightTheme ? 0.15 : 0.35 }}
         transition={{ duration: 1.5, delay: 0.8 }}
       >
         <div
           className="w-[110vh] h-[110vh] rounded-full"
           style={{
             border: isLightTheme
-              ? "1px solid hsla(270, 80%, 75%, 0.2)"
+              ? "1px solid hsla(260, 30%, 75%, 0.15)"
               : "1px solid hsla(195, 100%, 60%, 0.2)",
           }}
         />
@@ -253,27 +254,27 @@ const HeroIllustration = () => {
       <motion.div
         className="absolute top-1/2 right-[8%] -translate-y-1/2 pointer-events-none"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.2 }}
+        animate={{ opacity: isLightTheme ? 0.08 : 0.2 }}
         transition={{ duration: 1.5, delay: 1 }}
       >
         <div
           className="w-[140vh] h-[140vh] rounded-full"
           style={{
             border: isLightTheme
-              ? "1px solid hsla(270, 80%, 75%, 0.12)"
+              ? "1px solid hsla(260, 30%, 75%, 0.08)"
               : "1px solid hsla(195, 100%, 60%, 0.12)",
           }}
         />
       </motion.div>
 
-      {/* Hover glow ring */}
+      {/* Hover glow ring - softer in light mode */}
       <AnimatePresence>
         {isActive && (
           <motion.div
             className="absolute top-1/2 right-[10%] -translate-y-1/2 rounded-full pointer-events-none"
             style={{
               border: isLightTheme
-                ? "2px solid hsla(270, 100%, 70%, 0.4)"
+                ? "2px solid hsla(260, 40%, 70%, 0.2)"
                 : "2px solid hsla(195, 100%, 65%, 0.4)",
             }}
             initial={{ width: "26vh", height: "26vh", opacity: 0.8 }}

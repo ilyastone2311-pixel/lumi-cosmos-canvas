@@ -24,9 +24,9 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-[100vh] flex items-center overflow-visible">
-      {/* Subtle ambient glow effects - only in dark mode */}
+      {/* Subtle ambient glow effects - only in dark mode, removed for light */}
       <motion.div 
-        className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[150px] pointer-events-none dark:bg-primary/8 bg-transparent"
+        className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[150px] pointer-events-none opacity-0 dark:opacity-100 dark:bg-primary/8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.2, ease: premiumEase }}
@@ -35,7 +35,7 @@ const HeroSection = () => {
         }}
       />
       <motion.div 
-        className="absolute top-1/3 right-1/3 w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none dark:bg-secondary/10 bg-transparent"
+        className="absolute top-1/3 right-1/3 w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none opacity-0 dark:opacity-100 dark:bg-secondary/10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.3, ease: premiumEase }}
@@ -44,9 +44,9 @@ const HeroSection = () => {
         }}
       />
 
-      {/* Background geometric shape - subtle, dark mode only */}
+      {/* Background geometric shape - dark mode only */}
       <motion.div
-        className="absolute top-20 left-10 w-32 h-32 border rounded-lg rotate-45 pointer-events-none dark:border-primary/5 border-transparent"
+        className="absolute top-20 left-10 w-32 h-32 border rounded-lg rotate-45 pointer-events-none opacity-0 dark:opacity-100 dark:border-primary/5"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.6, ease: premiumEase }}
@@ -76,8 +76,8 @@ const HeroSection = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: premiumEase }}
           >
-            {/* Light-theme contrast layer - clean white scrim, no dark overlays */}
-            <div className="light-only absolute -inset-6 sm:-inset-10 rounded-3xl bg-background/80 transition-opacity" />
+            {/* Light-theme content surface - premium glassmorphism with subtle shadow */}
+            <div className="light-only absolute -inset-6 sm:-inset-10 rounded-3xl bg-white/75 backdrop-blur-xl border border-border/40 shadow-[0_4px_24px_hsla(220,30%,50%,0.06)] transition-opacity" />
             
             {/* Main headline */}
             <motion.div
