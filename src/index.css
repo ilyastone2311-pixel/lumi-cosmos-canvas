@@ -85,70 +85,70 @@ html {
     --sidebar-ring: 195 85% 55%;
   }
 
-  /* ========== LIGHT MODE - Clean, airy, premium ========== */
+  /* ========== LIGHT MODE - Clean, airy, premium (Apple/Linear/Vercel inspired) ========== */
   html.light,
   .light {
-    /* Very light neutral base - #F8FAFD equivalent */
-    --background: 220 30% 98%;
-    --foreground: 225 35% 10%;
+    /* True light base - #F8FAFF near-white, bright and airy */
+    --background: 220 40% 99%;
+    --foreground: 220 25% 10%;
 
-    /* Cards: pure white for clean surfaces */
+    /* Cards: pure white for clean, elevated surfaces */
     --card: 0 0% 100%;
-    --card-foreground: 225 35% 10%;
+    --card-foreground: 220 25% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 225 35% 10%;
+    --popover-foreground: 220 25% 10%;
 
-    /* Primary: Vibrant cyan - good contrast on light */
-    --primary: 195 80% 40%;
+    /* Primary: Deeper cyan for better contrast on light */
+    --primary: 195 75% 35%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary: Rich purple */
-    --secondary: 265 60% 50%;
+    /* Secondary: Darker, cooler purple for accent */
+    --secondary: 265 50% 45%;
     --secondary-foreground: 0 0% 100%;
 
-    /* Muted: Gray with better contrast for readability */
-    --muted: 220 18% 95%;
-    --muted-foreground: 220 12% 35%;
+    /* Muted: Very subtle gray, excellent contrast for body text */
+    --muted: 220 15% 96%;
+    --muted-foreground: 220 15% 40%;
 
-    /* Accent: Soft violet */
-    --accent: 270 55% 52%;
+    /* Accent: Muted violet for subtle highlights */
+    --accent: 270 45% 48%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Borders: very subtle, clean */
-    --border: 220 20% 90%;
-    --input: 220 20% 97%;
-    --ring: 195 80% 40%;
+    /* Borders: barely visible, clean lines */
+    --border: 220 20% 92%;
+    --input: 220 20% 98%;
+    --ring: 195 75% 35%;
 
-    /* Custom Lumi colors for light mode - clean, subtle */
-    --neon-cyan: 195 70% 42%;
-    --neon-purple: 265 55% 50%;
-    --neon-pink: 290 50% 52%;
-    --cosmic-blue: 220 25% 96%;
-    --deep-space: 220 30% 98%;
+    /* Custom Lumi colors for light mode - desaturated, subtle */
+    --neon-cyan: 195 60% 38%;
+    --neon-purple: 265 45% 45%;
+    --neon-pink: 290 40% 48%;
+    --cosmic-blue: 220 20% 97%;
+    --deep-space: 220 40% 99%;
     
-    --soft-turquoise: 190 60% 42%;
-    --soft-lavender: 260 40% 60%;
-    --deep-indigo: 245 20% 96%;
-    --warm-highlight: 45 75% 52%;
+    --soft-turquoise: 190 50% 38%;
+    --soft-lavender: 260 35% 55%;
+    --deep-indigo: 245 15% 97%;
+    --warm-highlight: 45 65% 48%;
 
-    /* Light mode gradients - extremely subtle, clean */
-    --gradient-cosmic: linear-gradient(135deg, hsl(220 30% 98%) 0%, hsl(220 25% 99%) 50%, hsl(215 30% 98%) 100%);
-    --gradient-neon: linear-gradient(135deg, hsl(195 80% 40%) 0%, hsl(265 60% 50%) 100%);
-    --gradient-glass: linear-gradient(135deg, hsla(220, 25%, 50%, 0.02) 0%, hsla(220, 25%, 50%, 0.005) 100%);
-    --gradient-character-blend: linear-gradient(180deg, transparent 0%, hsl(220 30% 99%) 100%);
+    /* Light mode gradients - extremely subtle, no fog */
+    --gradient-cosmic: linear-gradient(180deg, hsl(220 40% 99%) 0%, hsl(220 35% 98%) 100%);
+    --gradient-neon: linear-gradient(135deg, hsl(195 75% 35%) 0%, hsl(265 50% 45%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsla(220, 20%, 100%, 0.8) 0%, hsla(220, 20%, 100%, 0.6) 100%);
+    --gradient-character-blend: linear-gradient(180deg, transparent 0%, hsl(220 40% 99%) 100%);
 
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 225 35% 10%;
-    --sidebar-primary: 195 80% 40%;
+    --sidebar-foreground: 220 25% 10%;
+    --sidebar-primary: 195 75% 35%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 20% 97%;
-    --sidebar-accent-foreground: 225 35% 10%;
-    --sidebar-border: 220 20% 92%;
-    --sidebar-ring: 195 80% 40%;
+    --sidebar-accent: 220 15% 97%;
+    --sidebar-accent-foreground: 220 25% 10%;
+    --sidebar-border: 220 20% 94%;
+    --sidebar-ring: 195 75% 35%;
   }
 }
 
@@ -347,10 +347,12 @@ html {
       radial-gradient(ellipse at 15% 30%, hsla(245, 50%, 18%, 0.2) 0%, transparent 40%);
   }
 
-  /* Light mode body background - clean, neutral, no dark gradients */
+  /* Light mode body background - true light, clean surface */
   html.light body {
-    background-color: hsl(220 30% 98%);
-    background-image: none;
+    background-color: hsl(220 40% 99%);
+    /* Very subtle cool tint, no fog or atmosphere */
+    background-image: 
+      radial-gradient(ellipse at 50% 0%, hsla(220, 40%, 95%, 0.3) 0%, transparent 50%);
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -392,15 +394,15 @@ html {
     animation: gradient-flow 8s ease-in-out infinite;
   }
 
-  /* Light mode: softer, more refined gradient */
+  /* Light mode: darker, higher-contrast gradient for readability */
   html.light .animated-gradient-text {
     background: linear-gradient(
       90deg,
-      hsl(195 75% 38%) 0%,
-      hsl(260 55% 48%) 25%,
-      hsl(280 50% 52%) 50%,
-      hsl(260 55% 48%) 75%,
-      hsl(195 75% 38%) 100%
+      hsl(195 70% 32%) 0%,
+      hsl(260 50% 42%) 25%,
+      hsl(275 45% 45%) 50%,
+      hsl(260 50% 42%) 75%,
+      hsl(195 70% 32%) 100%
     );
     background-size: 200% 100%;
     -webkit-background-clip: text;
@@ -740,37 +742,37 @@ html {
       inset 0 1px 0 hsla(220, 30%, 95%, 0.04);
   }
 
-  /* === LIGHT MODE SURFACES - Clean, no glassmorphism === */
+  /* === LIGHT MODE SURFACES - Premium, clean glassmorphism === */
   .light .glass {
-    background: hsl(0 0% 100%);
-    border-color: hsla(220, 20%, 80%, 0.5);
-    backdrop-filter: none;
-    box-shadow: 0 2px 8px hsla(220, 30%, 50%, 0.06);
+    background: hsla(0, 0%, 100%, 0.75);
+    border-color: hsla(220, 25%, 90%, 0.8);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 3px hsla(220, 30%, 50%, 0.04);
   }
 
   .light .glass-strong {
-    background: hsl(0 0% 100%);
-    border-color: hsla(220, 20%, 80%, 0.6);
-    backdrop-filter: none;
-    box-shadow: 0 4px 12px hsla(220, 30%, 50%, 0.08);
+    background: hsla(0, 0%, 100%, 0.85);
+    border-color: hsla(220, 25%, 88%, 0.9);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 2px 8px hsla(220, 30%, 50%, 0.05);
   }
 
   .light .glass-panel {
-    background: hsl(0 0% 100%);
-    border-color: hsla(220, 20%, 80%, 0.4);
-    backdrop-filter: none;
+    background: hsla(0, 0%, 100%, 0.80);
+    border-color: hsla(220, 25%, 90%, 0.6);
+    backdrop-filter: blur(16px);
     box-shadow: 
-      0 4px 20px hsla(220, 30%, 50%, 0.08),
-      0 1px 3px hsla(220, 20%, 40%, 0.04);
+      0 4px 24px hsla(220, 30%, 50%, 0.06),
+      0 1px 2px hsla(220, 20%, 40%, 0.02);
   }
 
   .light .glass-card {
-    background: hsl(0 0% 100%);
-    border-color: hsla(220, 20%, 80%, 0.35);
-    backdrop-filter: none;
+    background: hsla(0, 0%, 100%, 0.75);
+    border-color: hsla(220, 25%, 90%, 0.5);
+    backdrop-filter: blur(12px);
     box-shadow: 
-      0 2px 16px hsla(220, 30%, 50%, 0.06),
-      0 1px 2px hsla(220, 20%, 40%, 0.03);
+      0 2px 16px hsla(220, 30%, 50%, 0.04),
+      0 1px 2px hsla(220, 20%, 40%, 0.02);
   }
 
   /* === NEUMORPHISM BUTTONS 2024-2025 === */
