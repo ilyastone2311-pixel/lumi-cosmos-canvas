@@ -16,28 +16,24 @@ const AnimatedLetters = ({
   const letters = text.split("");
 
   const container = {
-    hidden: { opacity: 0 },
-    visible: (i = 1) => ({
+    hidden: { opacity: 1 },
+    visible: {
       opacity: 1,
       transition: { staggerChildren: staggerDelay, delayChildren: delay },
-    }),
+    },
   };
 
   const child = {
     hidden: {
       opacity: 0,
-      y: 50,
-      rotateX: -90,
+      y: "100%",
     },
     visible: {
       opacity: 1,
       y: 0,
-      rotateX: 0,
       transition: {
-        type: "spring" as const,
-        damping: 12,
-        stiffness: 200,
-        mass: 0.8,
+        duration: 0.4,
+        ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
       },
     },
   };
@@ -48,19 +44,27 @@ const AnimatedLetters = ({
       variants={container}
       initial="hidden"
       animate="visible"
+      style={{ visibility: "visible" }}
     >
       {letters.map((letter, index) => (
-        <motion.span
+        <span
           key={index}
-          variants={child}
-          className="inline-block origin-bottom"
+          className="inline-block overflow-hidden"
           style={{ 
-            display: letter === " " ? "inline" : "inline-block",
-            width: letter === " " ? "0.3em" : "auto"
+            display: letter === " " ? "inline-block" : "inline-block",
+            width: letter === " " ? "0.3em" : "auto",
           }}
         >
-          {letter === " " ? "\u00A0" : letter}
-        </motion.span>
+          <motion.span
+            variants={child}
+            className="inline-block"
+            style={{ 
+              willChange: "transform, opacity",
+            }}
+          >
+            {letter === " " ? "\u00A0" : letter}
+          </motion.span>
+        </span>
       ))}
     </motion.span>
   );
