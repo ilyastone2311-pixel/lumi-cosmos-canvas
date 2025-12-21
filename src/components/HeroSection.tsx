@@ -4,7 +4,7 @@ import { useParallax } from "@/hooks/useParallax";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import HeroIllustration from "./HeroIllustration";
-import SplitText from "./SplitText";
+import AnimatedHeading from "./AnimatedHeading";
 
 // Premium easing
 const premiumEase: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
@@ -79,25 +79,32 @@ const HeroSection = () => {
             {/* Light-theme content surface - premium glassmorphism with subtle shadow */}
             <div className="light-only absolute -inset-6 sm:-inset-10 rounded-3xl bg-white/75 backdrop-blur-xl border border-border/40 shadow-[0_4px_24px_hsla(220,30%,50%,0.06)] transition-opacity" />
             
-            {/* Main headline */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: premiumEase }}
-              className="relative"
-            >
+            {/* Main headline - split-letter animation */}
+            <div className="relative">
               <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-[1.18]">
                 {/* First line - solid foreground text */}
-                <span className="block mb-1 sm:mb-2 text-foreground">
-                  Your shortcut
-                </span>
+                <AnimatedHeading
+                  text="Your shortcut"
+                  tag="span"
+                  className="block mb-1 sm:mb-2 text-foreground"
+                  delay={200}
+                  duration={0.5}
+                  stagger={0.03}
+                  threshold={0.1}
+                />
 
                 {/* Second line - animated gradient text */}
-                <span className="block animated-gradient-text">
-                  for quick insights
-                </span>
+                <AnimatedHeading
+                  text="for quick insights"
+                  tag="span"
+                  className="block animated-gradient-text"
+                  delay={450}
+                  duration={0.5}
+                  stagger={0.025}
+                  threshold={0.1}
+                />
               </h1>
-            </motion.div>
+            </div>
 
             {/* Subheadline */}
             <motion.p 
