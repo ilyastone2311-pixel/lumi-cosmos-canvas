@@ -116,10 +116,13 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
     return letters.map((letter, index) => (
       <span
         key={index}
-        className="inline-block overflow-hidden"
+        className="inline-block"
         style={{ 
-          display: letter === ' ' ? 'inline-block' : 'inline-block',
+          display: 'inline-block',
           width: letter === ' ' ? '0.3em' : 'auto',
+          overflow: 'hidden',
+          verticalAlign: 'bottom',
+          paddingBottom: '0.1em', // Prevent gradient clipping
         }}
       >
         <span
@@ -140,7 +143,8 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
   const style: React.CSSProperties = {
     textAlign,
     overflow: 'visible',
-    display: 'block',
+    display: tag === 'span' ? 'inline-block' : 'block',
+    lineHeight: 'inherit',
   };
 
   const props = {
