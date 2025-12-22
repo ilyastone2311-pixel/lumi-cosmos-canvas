@@ -378,7 +378,9 @@ html {
     padding-top: 0.02em;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
-    background: linear-gradient(
+
+    /* Store gradient + animation as variables so split-letter spans can reuse them */
+    --headline-gradient: linear-gradient(
       90deg,
       hsl(195 80% 45%) 0%,
       hsl(265 60% 55%) 25%,
@@ -386,17 +388,33 @@ html {
       hsl(265 60% 55%) 75%,
       hsl(195 80% 45%) 100%
     );
-    background-size: 200% 100%;
+    --headline-gradient-size: 200% 100%;
+    --headline-gradient-animation: gradient-flow 8s ease-in-out infinite;
+
+    /* If the text isn't split, this still works */
+    background: var(--headline-gradient);
+    background-size: var(--headline-gradient-size);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
-    animation: gradient-flow 8s ease-in-out infinite;
+    animation: var(--headline-gradient-animation);
+  }
+
+  /* Split-letter support: apply the gradient to the actual letter spans */
+  .animated-gradient-text .heading-char {
+    background-image: var(--headline-gradient);
+    background-size: var(--headline-gradient-size);
+    animation: var(--headline-gradient-animation);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
   }
 
   /* Light mode: darker, higher-contrast gradient for readability */
   html.light .animated-gradient-text {
-    background: linear-gradient(
+    --headline-gradient: linear-gradient(
       90deg,
       hsl(195 70% 32%) 0%,
       hsl(260 50% 42%) 25%,
@@ -404,11 +422,6 @@ html {
       hsl(260 50% 42%) 75%,
       hsl(195 70% 32%) 100%
     );
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradient-flow 8s ease-in-out infinite;
   }
 
   @keyframes gradient-flow {

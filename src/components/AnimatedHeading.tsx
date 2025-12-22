@@ -9,6 +9,11 @@ export interface AnimatedHeadingProps {
   text: string;
   className?: string;
   tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
+  /**
+   * Override display when rendering `tag="span"` inside other headings.
+   * Example: `display="block"` to force a new line.
+   */
+  display?: React.CSSProperties['display'];
   delay?: number;
   duration?: number;
   stagger?: number;
@@ -30,6 +35,7 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
   text,
   className = '',
   tag = 'h2',
+  display: displayProp,
   delay = 0,
   duration = 0.5,
   stagger = 0.025,
@@ -143,7 +149,7 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
   const style: React.CSSProperties = {
     textAlign,
     overflow: 'visible',
-    display: tag === 'span' ? 'inline-block' : 'block',
+    display: displayProp ?? (tag === 'span' ? 'inline-block' : 'block'),
     lineHeight: 'inherit',
   };
 
