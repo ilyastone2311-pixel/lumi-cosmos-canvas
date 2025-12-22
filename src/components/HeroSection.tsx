@@ -55,9 +55,9 @@ const HeroSection = () => {
         }}
       />
 
-      {/* Hero Illustration - fills entire right side with breathing room from edge */}
+      {/* Hero Illustration - positioned further right for more text breathing room */}
       <motion.div 
-        className="hidden lg:flex absolute top-0 bottom-0 right-0 w-[60%] xl:w-[65%] 2xl:w-[68%] overflow-visible pointer-events-none z-0 items-center justify-center pr-6 xl:pr-10 2xl:pr-14 py-8"
+        className="hidden lg:flex absolute top-0 bottom-0 right-[-4%] xl:right-[-6%] 2xl:right-[-8%] w-[58%] xl:w-[60%] 2xl:w-[62%] overflow-visible pointer-events-none z-0 items-center justify-center py-8"
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1.2, delay: 0.2, ease: premiumEase }}
@@ -69,16 +69,14 @@ const HeroSection = () => {
       <div className="container mx-auto max-w-[1800px] px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 w-full">
         <div className="flex flex-col lg:flex-row items-center">
           
-          {/* Left side - Text content */}
+          {/* Left side - Text content - no background panel, sits directly on page */}
           <motion.div 
-            className="relative w-full lg:w-[42%] lg:max-w-[560px] xl:max-w-[620px] text-center lg:text-left space-y-6 sm:space-y-8 pt-20 lg:pt-0 lg:pr-16"
+            className="relative w-full lg:w-[45%] lg:max-w-[600px] xl:max-w-[680px] text-center lg:text-left space-y-6 sm:space-y-8 pt-20 lg:pt-0 lg:pr-20 xl:pr-24"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: premiumEase }}
           >
-            {/* Light-theme content surface - premium glassmorphism with subtle shadow */}
-            <div className="light-only absolute -inset-6 sm:-inset-10 rounded-3xl bg-white/75 backdrop-blur-xl border border-border/40 shadow-[0_4px_24px_hsla(220,30%,50%,0.06)] transition-opacity" />
-            
+
             {/* Main headline - split-letter animation */}
             <div className="relative">
               <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-[1.24]">
