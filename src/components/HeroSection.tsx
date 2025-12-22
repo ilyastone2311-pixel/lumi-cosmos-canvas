@@ -86,6 +86,7 @@ const HeroSection = () => {
                 <AnimatedHeading
                   text="Your shortcut"
                   tag="span"
+                  display="block"
                   className="block mb-1 sm:mb-2 text-foreground"
                   delay={200}
                   duration={0.5}
@@ -97,6 +98,7 @@ const HeroSection = () => {
                 <AnimatedHeading
                   text="for quick insights"
                   tag="span"
+                  display="block"
                   className="block animated-gradient-text"
                   delay={450}
                   duration={0.5}
