@@ -386,10 +386,15 @@ html {
 
   .animated-gradient-text {
     display: inline-block;
-    padding-bottom: 0.24em;
-    padding-top: 0.08em;
+    /* Generous vertical padding to prevent descender clipping */
+    padding-bottom: 0.12em;
+    padding-top: 0.05em;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
+    /* Ensure overflow is visible for descenders */
+    overflow: visible;
+    /* Natural line height for headings */
+    line-height: 1.35;
 
     /* Premium cool-spectrum gradient */
     --headline-gradient: linear-gradient(
@@ -422,6 +427,17 @@ html {
     -webkit-text-fill-color: transparent;
     color: transparent;
     animation: headline-sheen 7.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    /* Ensure no clipping on individual characters */
+    overflow: visible;
+  }
+
+  /* Animated heading wrapper - ensure no clipping */
+  .animated-heading {
+    overflow: visible !important;
+  }
+
+  .animated-heading > span {
+    overflow: visible !important;
   }
 
   /* Light mode: calmer, premium ink-like gradient */

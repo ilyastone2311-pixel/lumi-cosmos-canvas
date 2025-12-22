@@ -22,13 +22,20 @@ export interface AnimatedHeadingProps {
   onAnimationComplete?: () => void;
 }
 
+interface WordData {
+  word: string;
+  letters: string[];
+  startIndex: number;
+}
+
 /**
  * AnimatedHeading - Premium split-letter animation for headings
  * 
  * Key behaviors:
  * - Text is invisible on initial render (no flash)
  * - Letters animate from bottom to top with smooth ease-out
- * - Subtle stagger creates reading flow
+ * - Words stay together to prevent awkward line breaks
+ * - Full glyph metrics preserved (no descender clipping)
  * - Animation triggers on scroll into view (or immediately if above fold)
  */
 const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
@@ -44,18 +51,29 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
   onAnimationComplete
 }) => {
   const containerRef = useRef<HTMLElement>(null);
-  const [letters, setLetters] = useState<string[]>([]);
+  const [words, setWords] = useState<WordData[]>([]);
   const animatedRef = useRef(false);
   const initializedRef = useRef(false);
 
-  // Split text into letters on mount
+  // Split text into words, then letters - preserves word grouping for natural line breaks
   useEffect(() => {
     if (!text) return;
-    setLetters(text.split(''));
+    
+    const wordStrings = text.split(' ');
+    let charIndex = 0;
+    
+    const wordData: WordData[] = wordStrings.map((word) => {
+      const startIndex = charIndex;
+      const letters = word.split('');
+      charIndex += letters.length + 1; // +1 for space
+      return { word, letters, startIndex };
+    });
+    
+    setWords(wordData);
   }, [text]);
 
   useGSAP(() => {
-    if (!containerRef.current || letters.length === 0 || animatedRef.current) return;
+    if (!containerRef.current || words.length === 0 || animatedRef.current) return;
 
     const el = containerRef.current;
     const chars = el.querySelectorAll<HTMLElement>('.heading-char');
@@ -116,53 +134,68 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
     return () => {
       st.kill();
     };
-  }, { dependencies: [letters, delay, duration, stagger, threshold], scope: containerRef });
+  }, { dependencies: [words, delay, duration, stagger, threshold], scope: containerRef });
 
   const isGradientText = className.split(/\s+/).includes("animated-gradient-text");
+  
+  // Calculate total character count for gradient positioning
+  const totalChars = words.reduce((sum, w) => sum + w.letters.length, 0);
 
-  const renderLetters = () => {
-    const total = Math.max(letters.length, 1);
+  const renderWords = () => {
+    return words.map((wordData, wordIndex) => (
+      <span
+        key={wordIndex}
+        className="inline-block whitespace-nowrap"
+        style={{
+          // Add space after each word except the last
+          marginRight: wordIndex < words.length - 1 ? '0.3em' : 0,
+        }}
+      >
+        {wordData.letters.map((letter, letterIndex) => {
+          const globalIndex = wordData.startIndex + letterIndex;
+          const charPct = totalChars <= 1 ? 0 : (globalIndex / (totalChars - 1)) * 100;
 
-    return letters.map((letter, index) => {
-      const charPct = total === 1 ? 0 : (index / (total - 1)) * 100;
-      const wrapperHeight = isGradientText ? "1.38em" : "1.18em";
-
-      return (
-        <span
-          key={index}
-          className="inline-flex"
-          style={{
-            width: letter === " " ? "0.3em" : "auto",
-            height: wrapperHeight,
-            overflow: "hidden",
-            alignItems: "flex-end",
-            verticalAlign: "baseline",
-            paddingTop: isGradientText ? "0.10em" : "0.04em",
-            paddingBottom: isGradientText ? "0.18em" : "0.10em",
-          }}
-        >
-          <span
-            className="heading-char inline-block"
-            style={{
-              willChange: "transform, opacity",
-              transformOrigin: "50% 100%",
-              // Start invisible - GSAP will set initial state
-              opacity: initializedRef.current ? undefined : 0,
-              ...(isGradientText ? ({ "--char": charPct } as React.CSSProperties) : null),
-            }}
-          >
-            {letter === " " ? "\u00A0" : letter}
-          </span>
-        </span>
-      );
-    });
+          return (
+            <span
+              key={letterIndex}
+              className="inline-block"
+              style={{
+                // Use clip-path instead of overflow:hidden to preserve descenders
+                // No height constraint - let font metrics determine size
+                verticalAlign: 'baseline',
+                lineHeight: 'inherit',
+              }}
+            >
+              <span
+                className="heading-char inline-block"
+                style={{
+                  willChange: 'transform, opacity',
+                  transformOrigin: '50% 100%',
+                  // Start invisible - GSAP will set initial state
+                  opacity: initializedRef.current ? undefined : 0,
+                  // Generous padding to prevent any clipping during animation
+                  paddingTop: '0.15em',
+                  paddingBottom: '0.25em',
+                  marginTop: '-0.15em',
+                  marginBottom: '-0.25em',
+                  ...(isGradientText ? ({ '--char': charPct } as React.CSSProperties) : null),
+                }}
+              >
+                {letter}
+              </span>
+            </span>
+          );
+        })}
+      </span>
+    ));
   };
 
   const style: React.CSSProperties = {
     textAlign,
     overflow: 'visible',
     display: displayProp ?? (tag === 'span' ? 'inline-block' : 'block'),
-    lineHeight: 'inherit',
+    // Generous line-height to accommodate descenders and animation
+    lineHeight: 1.35,
   };
 
   const props = {
@@ -173,21 +206,21 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
 
   switch (tag) {
     case 'h1':
-      return <h1 {...props}>{renderLetters()}</h1>;
+      return <h1 {...props}>{renderWords()}</h1>;
     case 'h2':
-      return <h2 {...props}>{renderLetters()}</h2>;
+      return <h2 {...props}>{renderWords()}</h2>;
     case 'h3':
-      return <h3 {...props}>{renderLetters()}</h3>;
+      return <h3 {...props}>{renderWords()}</h3>;
     case 'h4':
-      return <h4 {...props}>{renderLetters()}</h4>;
+      return <h4 {...props}>{renderWords()}</h4>;
     case 'h5':
-      return <h5 {...props}>{renderLetters()}</h5>;
+      return <h5 {...props}>{renderWords()}</h5>;
     case 'h6':
-      return <h6 {...props}>{renderLetters()}</h6>;
+      return <h6 {...props}>{renderWords()}</h6>;
     case 'span':
-      return <span {...props}>{renderLetters()}</span>;
+      return <span {...props}>{renderWords()}</span>;
     default:
-      return <h2 {...props}>{renderLetters()}</h2>;
+      return <h2 {...props}>{renderWords()}</h2>;
   }
 };
 
