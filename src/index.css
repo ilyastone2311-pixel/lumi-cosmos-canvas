@@ -370,26 +370,40 @@ html {
     -webkit-text-fill-color: transparent;
     color: transparent;
   }
-
   /* Animated gradient text for hero headline */
+
+  @keyframes headline-sheen {
+    0% {
+      background-position: calc(var(--char, 0) * 1%) 50%;
+    }
+    50% {
+      background-position: calc((var(--char, 0) * 1%) + 120%) 50%;
+    }
+    100% {
+      background-position: calc(var(--char, 0) * 1%) 50%;
+    }
+  }
+
   .animated-gradient-text {
     display: inline-block;
-    padding-bottom: 0.22em; /* extra room for split-letter clipping */
-    padding-top: 0.06em;
+    padding-bottom: 0.24em;
+    padding-top: 0.08em;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
 
-    /* Store gradient + animation as variables so split-letter spans can reuse them */
+    /* Premium cool-spectrum gradient */
     --headline-gradient: linear-gradient(
       90deg,
-      hsl(198 82% 44%) 0%,
-      hsl(256 58% 56%) 55%,
-      hsl(214 78% 48%) 100%
+      hsl(198 92% 60%) 0%,
+      hsl(232 88% 70%) 40%,
+      hsl(262 82% 70%) 70%,
+      hsl(198 92% 60%) 100%
     );
-    --headline-gradient-size: 420% 100%;
-    --headline-gradient-animation: gradient-flow 7.5s ease-in-out infinite;
 
-    /* If the text isn't split, this still works */
+    /* Wide span so the sheen reads soft and premium */
+    --headline-gradient-size: 520% 100%;
+
+    /* If text isn't split, still render gradient */
     background: var(--headline-gradient);
     background-size: var(--headline-gradient-size);
     background-position: 0% 50%;
@@ -397,28 +411,27 @@ html {
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
-    animation: var(--headline-gradient-animation);
   }
 
-  /* Split-letter support: apply the gradient to the actual letter spans */
+  /* Split-letter support: coordinated gradient + sheen per letter */
   .animated-gradient-text .heading-char {
     background-image: var(--headline-gradient);
     background-size: var(--headline-gradient-size);
-    background-position: 0% 50%;
-    animation: var(--headline-gradient-animation);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
+    animation: headline-sheen 7.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
   }
 
-  /* Light mode: darker, higher-contrast gradient for readability */
+  /* Light mode: calmer, premium ink-like gradient */
   html.light .animated-gradient-text {
     --headline-gradient: linear-gradient(
       90deg,
-      hsl(198 70% 32%) 0%,
-      hsl(256 45% 42%) 55%,
-      hsl(214 65% 34%) 100%
+      hsl(206 58% 36%) 0%,
+      hsl(232 42% 44%) 40%,
+      hsl(262 38% 46%) 70%,
+      hsl(206 58% 36%) 100%
     );
   }
 
