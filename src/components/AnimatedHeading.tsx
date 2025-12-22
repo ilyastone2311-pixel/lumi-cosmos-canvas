@@ -118,36 +118,44 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
     };
   }, { dependencies: [letters, delay, duration, stagger, threshold], scope: containerRef });
 
-  const isGradientText = className.split(/\s+/).includes('animated-gradient-text');
+  const isGradientText = className.split(/\s+/).includes("animated-gradient-text");
 
   const renderLetters = () => {
-    return letters.map((letter, index) => (
+    const total = Math.max(letters.length, 1);
+
+    return letters.map((letter, index) => {
+      const charPct = total === 1 ? 0 : (index / (total - 1)) * 100;
+      const wrapperHeight = isGradientText ? "1.38em" : "1.18em";
+
+      return (
         <span
           key={index}
-          className="inline-block"
+          className="inline-flex"
           style={{
-            display: 'inline-block',
-            width: letter === ' ' ? '0.3em' : 'auto',
-            overflow: 'hidden',
-            verticalAlign: 'baseline',
-            // Extra breathing room for ascenders/descenders (fixes cropping)
-            paddingTop: isGradientText ? '0.18em' : '0.06em',
-            paddingBottom: isGradientText ? '0.58em' : '0.22em',
+            width: letter === " " ? "0.3em" : "auto",
+            height: wrapperHeight,
+            overflow: "hidden",
+            alignItems: "flex-end",
+            verticalAlign: "baseline",
+            paddingTop: isGradientText ? "0.10em" : "0.04em",
+            paddingBottom: isGradientText ? "0.18em" : "0.10em",
           }}
         >
-        <span
-          className="heading-char inline-block"
-          style={{
-            willChange: 'transform, opacity',
-            transformOrigin: '50% 100%',
-            // Start invisible - GSAP will set initial state
-            opacity: initializedRef.current ? undefined : 0,
-          }}
-        >
-          {letter === ' ' ? '\u00A0' : letter}
+          <span
+            className="heading-char inline-block"
+            style={{
+              willChange: "transform, opacity",
+              transformOrigin: "50% 100%",
+              // Start invisible - GSAP will set initial state
+              opacity: initializedRef.current ? undefined : 0,
+              ...(isGradientText ? ({ "--char": charPct } as React.CSSProperties) : null),
+            }}
+          >
+            {letter === " " ? "\u00A0" : letter}
+          </span>
         </span>
-      </span>
-    ));
+      );
+    });
   };
 
   const style: React.CSSProperties = {
