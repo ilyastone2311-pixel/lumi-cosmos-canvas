@@ -89,7 +89,7 @@ html {
   html.light,
   .light {
     /* True light base - #F8FAFF near-white, bright and airy */
-    --background: 220 40% 99%;
+    --background: 220 45% 98.5%;
     --foreground: 220 25% 10%;
 
     /* Cards: pure white for clean, elevated surfaces */
@@ -347,12 +347,15 @@ html {
       radial-gradient(ellipse at 15% 30%, hsla(245, 50%, 18%, 0.2) 0%, transparent 40%);
   }
 
-  /* Light mode body background - true light, clean surface */
+  /* Light mode body background - true light, bright, with subtle atmospheric depth */
   html.light body {
-    background-color: hsl(220 40% 99%);
-    /* Very subtle cool tint, no fog or atmosphere */
+    background-color: hsl(220 45% 98.5%);
+    /* Near-white #F8FAFF base with subtle radial gradients for dimensional depth */
     background-image: 
-      radial-gradient(ellipse at 50% 0%, hsla(220, 40%, 95%, 0.3) 0%, transparent 50%);
+      radial-gradient(ellipse at 30% 15%, hsla(210, 60%, 92%, 0.4) 0%, transparent 45%),
+      radial-gradient(ellipse at 75% 25%, hsla(260, 45%, 93%, 0.25) 0%, transparent 40%),
+      radial-gradient(ellipse at 50% 70%, hsla(195, 50%, 94%, 0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 85%, hsla(270, 40%, 95%, 0.15) 0%, transparent 35%);
   }
 
   h1, h2, h3, h4, h5, h6 {
