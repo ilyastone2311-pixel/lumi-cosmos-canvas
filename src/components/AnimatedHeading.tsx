@@ -118,32 +118,54 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
     };
   }, { dependencies: [letters, delay, duration, stagger, threshold], scope: containerRef });
 
+  const isGradientText = className.split(/\s+/).includes('animated-gradient-text');
+
   const renderLetters = () => {
-    return letters.map((letter, index) => (
-      <span
-        key={index}
-        className="inline-block"
-        style={{ 
-          display: 'inline-block',
-          width: letter === ' ' ? '0.3em' : 'auto',
-          overflow: 'hidden',
-          verticalAlign: 'bottom',
-          paddingBottom: '0.1em', // Prevent gradient clipping
-        }}
-      >
+    const total = Math.max(letters.length, 1);
+
+    return letters.map((letter, index) => {
+      const gradientSize = `${total * 100}% 100%`;
+      const gradientPos = total === 1 ? '0% 50%' : `${(index / (total - 1)) * 100}% 50%`;
+
+      return (
         <span
-          className="heading-char inline-block"
-          style={{ 
-            willChange: 'transform, opacity',
-            transformOrigin: '50% 100%',
-            // Start invisible - GSAP will set initial state
-            opacity: initializedRef.current ? undefined : 0,
+          key={index}
+          className="inline-block"
+          style={{
+            display: 'inline-block',
+            width: letter === ' ' ? '0.3em' : 'auto',
+            overflow: 'hidden',
+            verticalAlign: 'baseline',
+            paddingTop: isGradientText ? '0.06em' : '0.02em',
+            paddingBottom: isGradientText ? '0.22em' : '0.12em',
           }}
         >
-          {letter === ' ' ? '\u00A0' : letter}
+          <span
+            className="heading-char inline-block"
+            style={{
+              willChange: 'transform, opacity',
+              transformOrigin: '50% 100%',
+              // Start invisible - GSAP will set initial state
+              opacity: initializedRef.current ? undefined : 0,
+
+              ...(isGradientText
+                ? {
+                    backgroundImage: 'var(--headline-gradient)',
+                    backgroundSize: gradientSize,
+                    backgroundPosition: gradientPos,
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    color: 'transparent',
+                  }
+                : null),
+            }}
+          >
+            {letter === ' ' ? '\u00A0' : letter}
+          </span>
         </span>
-      </span>
-    ));
+      );
+    });
   };
 
   const style: React.CSSProperties = {

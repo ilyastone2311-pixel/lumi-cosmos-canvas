@@ -382,14 +382,12 @@ html {
     /* Store gradient + animation as variables so split-letter spans can reuse them */
     --headline-gradient: linear-gradient(
       90deg,
-      hsl(195 80% 45%) 0%,
-      hsl(265 60% 55%) 25%,
-      hsl(290 55% 55%) 50%,
-      hsl(265 60% 55%) 75%,
-      hsl(195 80% 45%) 100%
+      hsl(198 82% 44%) 0%,
+      hsl(256 58% 56%) 55%,
+      hsl(214 78% 48%) 100%
     );
-    --headline-gradient-size: 200% 100%;
-    --headline-gradient-animation: gradient-flow 8s ease-in-out infinite;
+    --headline-gradient-size: 220% 100%;
+    --headline-gradient-animation: none;
 
     /* If the text isn't split, this still works */
     background: var(--headline-gradient);
@@ -416,11 +414,9 @@ html {
   html.light .animated-gradient-text {
     --headline-gradient: linear-gradient(
       90deg,
-      hsl(195 70% 32%) 0%,
-      hsl(260 50% 42%) 25%,
-      hsl(275 45% 45%) 50%,
-      hsl(260 50% 42%) 75%,
-      hsl(195 70% 32%) 100%
+      hsl(198 70% 32%) 0%,
+      hsl(256 45% 42%) 55%,
+      hsl(214 65% 34%) 100%
     );
   }
 
