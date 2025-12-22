@@ -44,9 +44,9 @@ const HeroSection = () => {
         }}
       />
 
-      {/* Background geometric shape - dark mode only */}
+      {/* Background geometric shape - dark mode only, completely hidden in light mode */}
       <motion.div
-        className="absolute top-20 left-10 w-32 h-32 border rounded-lg rotate-45 pointer-events-none opacity-0 dark:opacity-100 dark:border-primary/5"
+        className="absolute top-20 left-10 w-32 h-32 rounded-lg rotate-45 pointer-events-none hidden dark:block dark:border dark:border-primary/5"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.6, ease: premiumEase }}
