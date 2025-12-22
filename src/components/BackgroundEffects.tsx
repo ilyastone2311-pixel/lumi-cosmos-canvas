@@ -74,7 +74,7 @@ const BackgroundEffects = () => {
       <div 
         className="absolute inset-0"
         style={{
-          background: 'hsl(var(--background))',
+          background: 'var(--gradient-cosmic)',
         }}
       />
 
@@ -114,8 +114,7 @@ const BackgroundEffects = () => {
           className="absolute inset-0 pointer-events-auto" 
           style={{ 
             zIndex: 1,
-            opacity: 0.22,
-            filter: 'blur(0.3px)',
+            opacity: 0.16,
           }}
         >
           <FloatingLines
@@ -131,7 +130,7 @@ const BackgroundEffects = () => {
             parallaxStrength={0.15}
             animationSpeed={0.25}
             mouseDamping={0.03}
-            mixBlendMode="multiply"
+            mixBlendMode="screen"
           />
         </div>
       ) : (

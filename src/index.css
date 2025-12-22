@@ -88,8 +88,8 @@ html {
   /* ========== LIGHT MODE - Clean, airy, premium (Apple/Linear/Vercel inspired) ========== */
   html.light,
   .light {
-    /* True light base - #F8FAFF near-white, bright and airy */
-    --background: 220 100% 99%;
+    /* True light base - near-white with a hint of blue (reads as white) */
+    --background: 216 100% 99.5%;
     --foreground: 220 25% 10%;
 
     /* Cards: pure white for clean, elevated surfaces */
@@ -135,11 +135,11 @@ html {
     --deep-indigo: 245 15% 97%;
     --warm-highlight: 45 65% 48%;
 
-    /* Light mode gradients - extremely subtle, no fog */
-    --gradient-cosmic: linear-gradient(180deg, hsl(220 40% 99%) 0%, hsl(220 35% 98%) 100%);
+    /* Light mode gradients - ultra-light, no gray cast */
+    --gradient-cosmic: linear-gradient(180deg, hsl(216 100% 99.7%) 0%, hsl(216 75% 99.2%) 100%);
     --gradient-neon: linear-gradient(135deg, hsl(195 75% 35%) 0%, hsl(265 50% 45%) 100%);
     --gradient-glass: linear-gradient(135deg, hsla(220, 20%, 100%, 0.8) 0%, hsla(220, 20%, 100%, 0.6) 100%);
-    --gradient-character-blend: linear-gradient(180deg, transparent 0%, hsl(220 40% 99%) 100%);
+    --gradient-character-blend: linear-gradient(180deg, transparent 0%, hsl(216 100% 99.7%) 100%);
 
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 220 25% 10%;
@@ -347,16 +347,15 @@ html {
       radial-gradient(ellipse at 15% 30%, hsla(245, 50%, 18%, 0.2) 0%, transparent 40%);
   }
 
-  /* Light mode body background - pure bright white #FAFCFF with soft depth */
+  /* Light mode body background - pure near-white with soft depth */
   html.light body {
-    /* Pure bright white base */
-    background-color: #FAFCFF;
+    background-color: hsl(216 100% 99.7%);
     /* Very subtle atmospheric gradients for depth - near-white tones only */
     background-image: 
-      radial-gradient(ellipse at 20% 8%, hsla(225, 80%, 97%, 0.6) 0%, transparent 35%),
-      radial-gradient(ellipse at 85% 15%, hsla(270, 60%, 98%, 0.4) 0%, transparent 30%),
-      radial-gradient(ellipse at 50% 85%, hsla(200, 70%, 98%, 0.35) 0%, transparent 40%),
-      radial-gradient(ellipse at 95% 80%, hsla(285, 50%, 98%, 0.25) 0%, transparent 28%);
+      radial-gradient(ellipse at 20% 8%, hsla(225, 80%, 97%, 0.55) 0%, transparent 35%),
+      radial-gradient(ellipse at 85% 15%, hsla(270, 60%, 98%, 0.35) 0%, transparent 30%),
+      radial-gradient(ellipse at 50% 85%, hsla(200, 70%, 98%, 0.3) 0%, transparent 40%),
+      radial-gradient(ellipse at 95% 80%, hsla(285, 50%, 98%, 0.22) 0%, transparent 28%);
   }
 
   h1, h2, h3, h4, h5, h6 {
