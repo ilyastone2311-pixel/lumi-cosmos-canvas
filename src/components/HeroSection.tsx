@@ -76,9 +76,8 @@ const HeroSection = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: premiumEase }}
           >
-
-            {/* Main headline - split-letter animation */}
-            <div className="relative">
+            {/* Main headline - split-letter animation - NO background panel */}
+            <div className="relative z-10">
               <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-[1.24]">
                 {/* First line - solid foreground text */}
                 <AnimatedHeading

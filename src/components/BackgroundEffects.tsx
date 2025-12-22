@@ -1,17 +1,18 @@
 import { useState, useEffect, memo, useMemo } from "react";
 import FloatingLines from "./FloatingLines";
 
-// Lightweight CSS-based particles
+// Lightweight CSS-based particles - now for both modes
 const BackgroundParticles = memo(({ isLight }: { isLight: boolean }) => {
   const particles = useMemo(() => 
-    Array.from({ length: 18 }, (_, i) => ({
+    Array.from({ length: isLight ? 12 : 18 }, (_, i) => ({
       id: i,
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
-      size: 2 + Math.random() * 3,
+      size: isLight ? (1.5 + Math.random() * 2) : (2 + Math.random() * 3),
       delay: Math.random() * 10,
-      duration: 10 + Math.random() * 10,
-    })), []
+      duration: 12 + Math.random() * 12,
+      opacity: isLight ? (0.04 + Math.random() * 0.03) : (0.35 + Math.random() * 0.2),
+    })), [isLight]
   );
 
   return (
@@ -25,12 +26,13 @@ const BackgroundParticles = memo(({ isLight }: { isLight: boolean }) => {
             top: p.top,
             width: p.size,
             height: p.size,
-            // Darker, more saturated particles - no bright white cores
+            // Light mode: very subtle, muted particles (6-8% opacity)
+            // Dark mode: deeper saturated colors
             background: isLight 
-              ? `hsla(220, 60%, 70%, ${0.3 + Math.random() * 0.2})`
-              : `hsla(220, 80%, 50%, ${0.35 + Math.random() * 0.2})`,
+              ? `hsla(260, 35%, 60%, ${p.opacity})`
+              : `hsla(220, 80%, 50%, ${p.opacity})`,
             boxShadow: isLight
-              ? `0 0 ${4 + p.size}px hsla(220, 60%, 65%, 0.3)`
+              ? `0 0 ${6 + p.size}px hsla(260, 30%, 55%, ${p.opacity * 0.6})`
               : `0 0 ${4 + p.size}px hsla(240, 70%, 55%, 0.35)`,
             animationDelay: `${p.delay}s`,
             animationDuration: `${p.duration}s`,
@@ -76,30 +78,60 @@ const BackgroundEffects = () => {
         }}
       />
 
+      {/* Light mode: Subtle nebula haze for atmospheric depth */}
+      {isLight && (
+        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+          {/* Soft nebula gradients - max 6-8% opacity */}
+          <div 
+            className="absolute top-[10%] left-[15%] w-[40%] h-[35%] rounded-full animate-nebula-float"
+            style={{
+              background: 'radial-gradient(ellipse, hsla(210, 50%, 85%, 0.06) 0%, transparent 70%)',
+              filter: 'blur(40px)',
+            }}
+          />
+          <div 
+            className="absolute top-[25%] right-[10%] w-[35%] h-[30%] rounded-full animate-nebula-float"
+            style={{
+              background: 'radial-gradient(ellipse, hsla(270, 40%, 88%, 0.05) 0%, transparent 70%)',
+              filter: 'blur(50px)',
+              animationDelay: '-15s',
+            }}
+          />
+          <div 
+            className="absolute bottom-[20%] left-[25%] w-[45%] h-[35%] rounded-full animate-nebula-float"
+            style={{
+              background: 'radial-gradient(ellipse, hsla(195, 45%, 87%, 0.05) 0%, transparent 65%)',
+              filter: 'blur(45px)',
+              animationDelay: '-30s',
+            }}
+          />
+        </div>
+      )}
+
       {/* Floating Lines - Light mode: luminous pastels, clearly visible but atmospheric */}
       {isLight ? (
         <div 
           className="absolute inset-0 pointer-events-auto" 
           style={{ 
             zIndex: 1,
-            opacity: 0.22, // Higher opacity for visibility (8-14% actual after color alpha)
-            filter: 'blur(0.5px)', // Slight softness for bloom effect
+            opacity: 0.18, // Slightly reduced for cleaner feel
+            filter: 'blur(0.5px)',
           }}
         >
           <FloatingLines
             key={`light-${key}`}
             linesGradient={lightColors}
-            enabledWaves={['top', 'middle', 'bottom']} // All waves for depth
-            lineCount={[3, 4, 3]} // Balanced distribution
-            lineDistance={[9, 7, 8]} // Good spacing
+            enabledWaves={['top', 'middle', 'bottom']}
+            lineCount={[2, 3, 2]} // Fewer lines for cleaner look
+            lineDistance={[10, 8, 9]}
             bendRadius={5.0}
             bendStrength={-0.35}
-            interactive={false} // No interaction for calm feel
+            interactive={false}
             parallax={true}
-            parallaxStrength={0.15} // Subtle parallax
-            animationSpeed={0.25} // Slow, calm motion
+            parallaxStrength={0.12}
+            animationSpeed={0.2} // Slower, calmer motion
             mouseDamping={0.02}
-            mixBlendMode="multiply" // Soft blend on light background
+            mixBlendMode="multiply"
           />
         </div>
       ) : (
@@ -107,15 +139,15 @@ const BackgroundEffects = () => {
           className="absolute inset-0 pointer-events-auto" 
           style={{ 
             zIndex: 1,
-            opacity: 0.7, // Reduced overall opacity
+            opacity: 0.7,
           }}
         >
           <FloatingLines
             key={`dark-${key}`}
             linesGradient={darkColors}
             enabledWaves={['top', 'middle', 'bottom']}
-            lineCount={[4, 6, 7]} // Slightly fewer lines
-            lineDistance={[7, 6, 5]} // More spacing
+            lineCount={[4, 6, 7]}
+            lineDistance={[7, 6, 5]}
             bendRadius={5.0}
             bendStrength={-0.5}
             interactive={true}
@@ -128,8 +160,8 @@ const BackgroundEffects = () => {
         </div>
       )}
 
-      {/* Particles - dark mode only */}
-      {!isLight && <BackgroundParticles isLight={isLight} />}
+      {/* Particles - both modes, but lighter in light mode */}
+      <BackgroundParticles isLight={isLight} />
     </div>
   );
 };
