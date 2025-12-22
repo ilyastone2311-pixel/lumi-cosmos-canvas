@@ -121,13 +121,7 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
   const isGradientText = className.split(/\s+/).includes('animated-gradient-text');
 
   const renderLetters = () => {
-    const total = Math.max(letters.length, 1);
-
-    return letters.map((letter, index) => {
-      const gradientSize = `${total * 100}% 100%`;
-      const gradientPos = total === 1 ? '0% 50%' : `${(index / (total - 1)) * 100}% 50%`;
-
-      return (
+    return letters.map((letter, index) => (
         <span
           key={index}
           className="inline-block"
@@ -136,36 +130,24 @@ const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
             width: letter === ' ' ? '0.3em' : 'auto',
             overflow: 'hidden',
             verticalAlign: 'baseline',
-            paddingTop: isGradientText ? '0.06em' : '0.02em',
-            paddingBottom: isGradientText ? '0.22em' : '0.12em',
+            // Extra breathing room for ascenders/descenders (fixes cropping)
+            paddingTop: isGradientText ? '0.18em' : '0.06em',
+            paddingBottom: isGradientText ? '0.58em' : '0.22em',
           }}
         >
-          <span
-            className="heading-char inline-block"
-            style={{
-              willChange: 'transform, opacity',
-              transformOrigin: '50% 100%',
-              // Start invisible - GSAP will set initial state
-              opacity: initializedRef.current ? undefined : 0,
-
-              ...(isGradientText
-                ? {
-                    backgroundImage: 'var(--headline-gradient)',
-                    backgroundSize: gradientSize,
-                    backgroundPosition: gradientPos,
-                    WebkitBackgroundClip: 'text',
-                    backgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    color: 'transparent',
-                  }
-                : null),
-            }}
-          >
-            {letter === ' ' ? '\u00A0' : letter}
-          </span>
+        <span
+          className="heading-char inline-block"
+          style={{
+            willChange: 'transform, opacity',
+            transformOrigin: '50% 100%',
+            // Start invisible - GSAP will set initial state
+            opacity: initializedRef.current ? undefined : 0,
+          }}
+        >
+          {letter === ' ' ? '\u00A0' : letter}
         </span>
-      );
-    });
+      </span>
+    ));
   };
 
   const style: React.CSSProperties = {

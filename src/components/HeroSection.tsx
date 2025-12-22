@@ -81,7 +81,7 @@ const HeroSection = () => {
             
             {/* Main headline - split-letter animation */}
             <div className="relative">
-              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-[1.18]">
+              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-[1.24]">
                 {/* First line - solid foreground text */}
                 <AnimatedHeading
                   text="Your shortcut"
