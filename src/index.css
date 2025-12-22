@@ -374,8 +374,8 @@ html {
   /* Animated gradient text for hero headline */
   .animated-gradient-text {
     display: inline-block;
-    padding-bottom: 0.14em; /* prevent descender clipping */
-    padding-top: 0.02em;
+    padding-bottom: 0.22em; /* extra room for split-letter clipping */
+    padding-top: 0.06em;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
 
@@ -386,12 +386,13 @@ html {
       hsl(256 58% 56%) 55%,
       hsl(214 78% 48%) 100%
     );
-    --headline-gradient-size: 220% 100%;
-    --headline-gradient-animation: none;
+    --headline-gradient-size: 420% 100%;
+    --headline-gradient-animation: gradient-flow 7.5s ease-in-out infinite;
 
     /* If the text isn't split, this still works */
     background: var(--headline-gradient);
     background-size: var(--headline-gradient-size);
+    background-position: 0% 50%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -403,6 +404,7 @@ html {
   .animated-gradient-text .heading-char {
     background-image: var(--headline-gradient);
     background-size: var(--headline-gradient-size);
+    background-position: 0% 50%;
     animation: var(--headline-gradient-animation);
     -webkit-background-clip: text;
     background-clip: text;
