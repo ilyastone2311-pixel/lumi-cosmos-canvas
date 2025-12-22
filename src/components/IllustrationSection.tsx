@@ -2,9 +2,9 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { motion, type Variants } from "framer-motion";
 import AnimatedHeading from "./AnimatedHeading";
 
-import illustrationReaders from "@/assets/illustration-readers.webp";
-import illustrationDiscovery from "@/assets/illustration-discovery.webp";
-import illustrationMindful from "@/assets/illustration-mindful.webp";
+import illustrationLearnTogether from "@/assets/illustration-learn-together.webp";
+import illustrationDiscoverNewIdeas from "@/assets/illustration-discover-new-ideas.webp";
+import illustrationLearnAtYourPace from "@/assets/illustration-learn-at-your-pace.webp";
 
 const IllustrationSection = () => {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
@@ -78,8 +78,8 @@ const IllustrationSection = () => {
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
                 
                 <img
-                  src={illustrationReaders}
-                  alt="People reading together"
+                  src={illustrationLearnTogether}
+                  alt="Learn together and grow together"
                   className="w-full h-auto rounded-2xl"
                   loading="eager"
                   decoding="async"
@@ -150,8 +150,8 @@ const IllustrationSection = () => {
               
               <div className="flex flex-col md:flex-row items-center gap-6">
               <motion.img
-                  src={illustrationDiscovery}
-                  alt="Discovery moment"
+                  src={illustrationDiscoverNewIdeas}
+                  alt="Discover new ideas illustration"
                   className="w-32 h-32 object-contain"
                   loading="lazy"
                   decoding="async"
@@ -190,8 +190,8 @@ const IllustrationSection = () => {
               
               <div className="flex flex-col md:flex-row items-center gap-6">
               <motion.img
-                  src={illustrationMindful}
-                  alt="Mindful learning"
+                  src={illustrationLearnAtYourPace}
+                  alt="Learn at your pace illustration"
                   className="w-32 h-32 object-contain"
                   loading="lazy"
                   decoding="async"
