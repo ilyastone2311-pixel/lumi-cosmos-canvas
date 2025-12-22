@@ -1,17 +1,17 @@
 import { useState, useEffect, memo, useMemo } from "react";
 import FloatingLines from "./FloatingLines";
 
-// Lightweight CSS-based particles - now for both modes
+// Lightweight CSS-based particles - enhanced for light mode visibility
 const BackgroundParticles = memo(({ isLight }: { isLight: boolean }) => {
   const particles = useMemo(() => 
-    Array.from({ length: isLight ? 12 : 18 }, (_, i) => ({
+    Array.from({ length: isLight ? 20 : 18 }, (_, i) => ({
       id: i,
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
-      size: isLight ? (1.5 + Math.random() * 2) : (2 + Math.random() * 3),
+      size: isLight ? (2 + Math.random() * 2.5) : (2 + Math.random() * 3),
       delay: Math.random() * 10,
-      duration: 12 + Math.random() * 12,
-      opacity: isLight ? (0.04 + Math.random() * 0.03) : (0.35 + Math.random() * 0.2),
+      duration: 10 + Math.random() * 15,
+      opacity: isLight ? (0.12 + Math.random() * 0.08) : (0.35 + Math.random() * 0.2),
     })), [isLight]
   );
 
@@ -26,13 +26,13 @@ const BackgroundParticles = memo(({ isLight }: { isLight: boolean }) => {
             top: p.top,
             width: p.size,
             height: p.size,
-            // Light mode: very subtle, muted particles (6-8% opacity)
+            // Light mode: visible soft dots with subtle color
             // Dark mode: deeper saturated colors
             background: isLight 
-              ? `hsla(260, 35%, 60%, ${p.opacity})`
+              ? `hsla(240, 45%, 70%, ${p.opacity})`
               : `hsla(220, 80%, 50%, ${p.opacity})`,
             boxShadow: isLight
-              ? `0 0 ${6 + p.size}px hsla(260, 30%, 55%, ${p.opacity * 0.6})`
+              ? `0 0 ${8 + p.size}px hsla(250, 40%, 65%, ${p.opacity * 0.5})`
               : `0 0 ${4 + p.size}px hsla(240, 70%, 55%, 0.35)`,
             animationDelay: `${p.delay}s`,
             animationDuration: `${p.duration}s`,
@@ -108,29 +108,29 @@ const BackgroundEffects = () => {
         </div>
       )}
 
-      {/* Floating Lines - Light mode: luminous pastels, clearly visible but atmospheric */}
+      {/* Floating Lines - Light mode: luminous pastels with hover interactions */}
       {isLight ? (
         <div 
           className="absolute inset-0 pointer-events-auto" 
           style={{ 
             zIndex: 1,
-            opacity: 0.18, // Slightly reduced for cleaner feel
-            filter: 'blur(0.5px)',
+            opacity: 0.22,
+            filter: 'blur(0.3px)',
           }}
         >
           <FloatingLines
             key={`light-${key}`}
             linesGradient={lightColors}
             enabledWaves={['top', 'middle', 'bottom']}
-            lineCount={[2, 3, 2]} // Fewer lines for cleaner look
+            lineCount={[3, 4, 3]}
             lineDistance={[10, 8, 9]}
             bendRadius={5.0}
             bendStrength={-0.35}
-            interactive={false}
+            interactive={true}
             parallax={true}
-            parallaxStrength={0.12}
-            animationSpeed={0.2} // Slower, calmer motion
-            mouseDamping={0.02}
+            parallaxStrength={0.15}
+            animationSpeed={0.25}
+            mouseDamping={0.03}
             mixBlendMode="multiply"
           />
         </div>
