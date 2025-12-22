@@ -144,13 +144,9 @@ const Recommended = () => {
     <div className="min-h-screen relative overflow-hidden">
       <BackgroundEffects />
       
-      {/* Semantic overlay layer - reduces background interference */}
+      {/* Semantic overlay layer - theme-aware */}
       <div 
-        className="fixed inset-0 pointer-events-none z-[1]"
-        style={{
-          background: 'linear-gradient(180deg, rgba(11, 16, 32, 0.55) 0%, rgba(11, 16, 32, 0.65) 50%, rgba(11, 16, 32, 0.7) 100%)',
-          backdropFilter: 'blur(2px)',
-        }}
+        className="fixed inset-0 pointer-events-none z-[1] dark:bg-gradient-to-b dark:from-[rgba(11,16,32,0.55)] dark:via-[rgba(11,16,32,0.65)] dark:to-[rgba(11,16,32,0.7)] dark:backdrop-blur-[2px] light:bg-transparent"
       />
 
       <main className="relative z-10 pt-20 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
@@ -158,7 +154,7 @@ const Recommended = () => {
           {/* Back button */}
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-white/70 hover:text-white transition-all duration-300 mb-6 sm:mb-8 group active:scale-95 font-medium"
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-all duration-300 mb-6 sm:mb-8 group active:scale-95 font-medium"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             Back
@@ -170,15 +166,9 @@ const Recommended = () => {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8 sm:mb-12"
           >
-            {/* Hero Card - Enhanced surface separation */}
+            {/* Hero Card - Theme-aware surface */}
             <div 
-              className="relative h-48 sm:h-64 md:h-72 rounded-2xl overflow-hidden mb-6 sm:mb-8"
-              style={{
-                background: 'rgba(15, 20, 40, 0.75)',
-                backdropFilter: 'blur(12px)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05) inset',
-              }}
+              className="relative h-48 sm:h-64 md:h-72 rounded-2xl overflow-hidden mb-6 sm:mb-8 bg-card border border-border shadow-lg"
             >
               {/* Dimmed animated gradient background */}
               <motion.div 
@@ -222,29 +212,21 @@ const Recommended = () => {
                 ))}
               </div>
 
-              {/* Dark gradient scrim for text area */}
+              {/* Gradient scrim for text area - theme-aware */}
               <div 
-                className="absolute inset-0"
-                style={{
-                  background: 'linear-gradient(to top, rgba(11, 16, 32, 0.95) 0%, rgba(11, 16, 32, 0.7) 40%, rgba(11, 16, 32, 0.3) 100%)',
-                }}
+                className="absolute inset-0 bg-gradient-to-t from-card via-card/70 to-transparent"
               />
               
               {/* Content with improved typography */}
               <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
                 <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
                   <motion.div 
-                    className="p-2.5 sm:p-3 rounded-xl"
-                    style={{
-                      background: 'rgba(15, 20, 40, 0.8)',
-                      border: '1px solid rgba(255, 255, 255, 0.1)',
-                      boxShadow: '0 0 20px hsl(var(--primary) / 0.3)',
-                    }}
+                    className="p-2.5 sm:p-3 rounded-xl bg-muted border border-border shadow-md"
                     animate={{ 
                       boxShadow: [
-                        '0 0 20px hsl(var(--primary) / 0.3)',
-                        '0 0 35px hsl(var(--primary) / 0.4)',
-                        '0 0 20px hsl(var(--primary) / 0.3)'
+                        '0 0 20px hsl(var(--primary) / 0.15)',
+                        '0 0 35px hsl(var(--primary) / 0.25)',
+                        '0 0 20px hsl(var(--primary) / 0.15)'
                       ]
                     }}
                     transition={{ duration: 2, repeat: Infinity }}
@@ -255,7 +237,7 @@ const Recommended = () => {
                     <SplitText 
                       text="For You"
                       tag="h1"
-                      className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white"
+                      className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground"
                       splitType="chars"
                       delay={50}
                       duration={0.85}
@@ -265,7 +247,7 @@ const Recommended = () => {
                       threshold={0.1}
                       textAlign="left"
                     />
-                    <p className="text-sm sm:text-base text-white/70 leading-relaxed mt-1">
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mt-1">
                       Personalized recommendations based on your interests
                     </p>
                   </div>
@@ -273,26 +255,21 @@ const Recommended = () => {
               </div>
             </div>
 
-            {/* Stats bar - Enhanced card surface */}
+            {/* Stats bar - Theme-aware card surface */}
             <div 
-              className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm p-4 rounded-xl"
-              style={{
-                background: 'rgba(15, 20, 40, 0.6)',
-                backdropFilter: 'blur(8px)',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
-              }}
+              className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm p-4 rounded-xl bg-muted border border-border"
             >
               <div className="flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-primary" />
-                <span className="text-white/80 font-medium">{recommendations.length} articles</span>
+                <span className="text-foreground/80 font-medium">{recommendations.length} articles</span>
               </div>
               <div className="flex items-center gap-2">
                 <Headphones className="w-4 h-4 text-secondary" />
-                <span className="text-white/80 font-medium">Audio available</span>
+                <span className="text-foreground/80 font-medium">Audio available</span>
               </div>
               <div className="flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-accent" />
-                <span className="text-white/80 font-medium">Updated daily</span>
+                <span className="text-foreground/80 font-medium">Updated daily</span>
               </div>
             </div>
           </motion.header>
@@ -302,17 +279,11 @@ const Recommended = () => {
             {loading ? (
               <SkeletonGrid count={6} variant="article" />
             ) : hasNoActivity ? (
-              /* Empty state for new users - Enhanced card */
+              /* Empty state for new users - Theme-aware card */
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex flex-col items-center justify-center py-12 sm:py-16 px-4 rounded-2xl"
-                style={{
-                  background: 'rgba(15, 20, 40, 0.7)',
-                  backdropFilter: 'blur(12px)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.25)',
-                }}
+                className="flex flex-col items-center justify-center py-12 sm:py-16 px-4 rounded-2xl bg-card border border-border shadow-lg"
               >
                 {/* Animated icon container */}
                 <motion.div
@@ -321,16 +292,12 @@ const Recommended = () => {
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                 >
                   <motion.div
-                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(var(--primary-rgb), 0.2), rgba(var(--accent-rgb), 0.2))',
-                      border: '1px solid rgba(255, 255, 255, 0.1)',
-                    }}
+                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20 border border-border"
                     animate={{ 
                       boxShadow: [
-                        '0 0 30px hsl(var(--primary) / 0.2)',
-                        '0 0 50px hsl(var(--primary) / 0.35)',
-                        '0 0 30px hsl(var(--primary) / 0.2)'
+                        '0 0 30px hsl(var(--primary) / 0.15)',
+                        '0 0 50px hsl(var(--primary) / 0.25)',
+                        '0 0 30px hsl(var(--primary) / 0.15)'
                       ]
                     }}
                     transition={{ duration: 2, repeat: Infinity }}
@@ -348,11 +315,11 @@ const Recommended = () => {
                   </motion.div>
                 </motion.div>
 
-                <h2 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3 text-center">
+                <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2 sm:mb-3 text-center">
                   Let's personalize your feed
                 </h2>
                 
-                <p className="text-sm sm:text-base text-white/70 text-center max-w-md mb-6 sm:mb-8 leading-relaxed">
+                <p className="text-sm sm:text-base text-muted-foreground text-center max-w-md mb-6 sm:mb-8 leading-relaxed">
                   Tell us what topics interest you most, and we'll curate the perfect reading experience just for you.
                 </p>
 
@@ -374,7 +341,7 @@ const Recommended = () => {
                 </motion.div>
 
                 {/* Secondary option */}
-                <p className="text-sm text-white/60 mt-5 sm:mt-6 text-center">
+                <p className="text-sm text-muted-foreground mt-5 sm:mt-6 text-center">
                   Or{' '}
                   <button 
                     onClick={() => navigate('/library')} 
@@ -389,18 +356,13 @@ const Recommended = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-center py-16 sm:py-20 rounded-2xl"
-                style={{
-                  background: 'rgba(15, 20, 40, 0.7)',
-                  backdropFilter: 'blur(12px)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
-                }}
+                className="text-center py-16 sm:py-20 rounded-2xl bg-card border border-border shadow-lg"
               >
-                <Sparkles className="w-12 h-12 sm:w-16 sm:h-16 text-white/40 mx-auto mb-4" />
-                <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">
+                <Sparkles className="w-12 h-12 sm:w-16 sm:h-16 text-muted-foreground mx-auto mb-4" />
+                <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-2">
                   No recommendations yet
                 </h2>
-                <p className="text-sm sm:text-base text-white/70 mb-6">
+                <p className="text-sm sm:text-base text-muted-foreground mb-6">
                   Read and like articles to get personalized recommendations
                 </p>
                 <Button onClick={() => navigate('/library')} className="w-full sm:w-auto">
@@ -409,15 +371,11 @@ const Recommended = () => {
               </motion.div>
             ) : (
               <>
-                {/* Section heading with scrim */}
+                {/* Section heading - theme-aware */}
                 <div 
-                  className="mb-4 sm:mb-6 p-4 rounded-xl inline-block"
-                  style={{
-                    background: 'rgba(15, 20, 40, 0.5)',
-                    backdropFilter: 'blur(4px)',
-                  }}
+                  className="mb-4 sm:mb-6 p-4 rounded-xl inline-block bg-muted"
                 >
-                  <h2 className="font-display text-xl sm:text-2xl font-semibold text-white">
+                  <h2 className="font-display text-xl sm:text-2xl font-semibold text-foreground">
                     Recommended Articles
                   </h2>
                 </div>
@@ -440,29 +398,21 @@ const Recommended = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="mt-12 sm:mt-16 pt-8 sm:pt-12"
-              style={{
-                borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-              }}
+              className="mt-12 sm:mt-16 pt-8 sm:pt-12 border-t border-border"
             >
               <div 
-                className="text-center p-8 rounded-2xl"
-                style={{
-                  background: 'rgba(15, 20, 40, 0.6)',
-                  backdropFilter: 'blur(8px)',
-                  border: '1px solid rgba(255, 255, 255, 0.06)',
-                }}
+                className="text-center p-8 rounded-2xl bg-muted border border-border"
               >
-                <h3 className="font-display text-lg sm:text-xl font-semibold text-white mb-2">
+                <h3 className="font-display text-lg sm:text-xl font-semibold text-foreground mb-2">
                   Want more personalized content?
                 </h3>
-                <p className="text-sm sm:text-base text-white/70 mb-4 sm:mb-6 leading-relaxed">
+                <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 leading-relaxed">
                   Explore more categories to improve your recommendations
                 </p>
                 <Button 
                   variant="outline" 
                   onClick={() => navigate('/library')}
-                  className="w-full sm:w-auto border-white/20 text-white hover:bg-white/10"
+                  className="w-full sm:w-auto"
                 >
                   Browse All Categories
                 </Button>
