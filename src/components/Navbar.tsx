@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import ThemeToggle from "./ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
-import logoImage from "@/assets/logo.webp";
+import logoImage from "@/assets/logo-book.webp";
 
 const Navbar = () => {
   const { user, signOut, loading } = useAuth();
@@ -76,44 +76,44 @@ const Navbar = () => {
         {/* Logo with glow */}
         <motion.div 
           onClick={() => navigate("/")}
-          className="flex items-center gap-4 group cursor-pointer"
+          className="flex items-center gap-3 group cursor-pointer"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
           <motion.div 
             className="relative flex-shrink-0"
             whileHover={{ 
-              filter: "drop-shadow(0 0 16px hsl(190 100% 60% / 0.8))"
+              filter: "drop-shadow(0 0 8px hsl(270 80% 60% / 0.4))"
             }}
             transition={{ duration: 0.2 }}
           >
             <img 
               src={logoImage} 
               alt="Lumi" 
-              className="h-12 w-auto sm:h-14 md:h-16 object-contain relative z-10" 
+              className="h-10 w-auto sm:h-11 md:h-12 object-contain relative z-10" 
             />
             <div 
-              className="absolute -inset-2 blur-xl rounded-full opacity-50 group-hover:opacity-75 transition-opacity duration-300"
+              className="absolute -inset-1 blur-md rounded-full opacity-20 group-hover:opacity-35 transition-opacity duration-300"
               style={{
-                background: 'radial-gradient(circle, hsl(190 100% 50% / 0.5), hsl(270 80% 60% / 0.3))',
+                background: 'radial-gradient(circle, hsl(270 80% 60% / 0.3), hsl(190 100% 50% / 0.15))',
               }}
             />
             <motion.div
-              className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100"
+              className="absolute -inset-1 rounded-full opacity-0 group-hover:opacity-100"
               animate={{ 
                 boxShadow: [
-                  '0 0 12px hsl(190 100% 50% / 0.3)',
-                  '0 0 24px hsl(190 100% 50% / 0.55)',
-                  '0 0 12px hsl(190 100% 50% / 0.3)'
+                  '0 0 6px hsl(270 80% 60% / 0.15)',
+                  '0 0 12px hsl(270 80% 60% / 0.25)',
+                  '0 0 6px hsl(270 80% 60% / 0.15)'
                 ]
               }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
             />
           </motion.div>
           <span 
             className="font-display text-xl sm:text-2xl font-bold tracking-wide text-foreground"
             style={{
-              textShadow: '0 0 20px hsl(190 100% 50% / 0.3)',
+              textShadow: '0 0 12px hsl(270 80% 60% / 0.15)',
             }}
           >
             Lumi
