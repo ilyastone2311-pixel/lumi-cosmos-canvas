@@ -83,7 +83,7 @@ const Navbar = () => {
           <motion.div 
             className="relative flex-shrink-0 origin-center scale-[1.5] sm:scale-[1.4] md:scale-[1.3]"
             whileHover={{ 
-              filter: "drop-shadow(0 0 2px hsl(270 80% 60% / 0.25))"
+              filter: "drop-shadow(0 0 1px hsl(270 80% 60% / 0.22))"
             }}
             transition={{ duration: 0.2 }}
           >
@@ -93,18 +93,19 @@ const Navbar = () => {
               className="h-14 w-auto sm:h-16 md:h-[52px] object-contain relative z-10 block" 
             />
             <div 
-              className="absolute -inset-1 blur-md rounded-full opacity-20 group-hover:opacity-35 transition-opacity duration-300"
+              className="absolute inset-0 blur-sm rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"
               style={{
-                background: 'radial-gradient(circle, hsl(270 80% 60% / 0.3), hsl(190 100% 50% / 0.15))',
+                background:
+                  "radial-gradient(circle, hsl(270 80% 60% / 0.22), hsl(190 100% 50% / 0.10))",
               }}
             />
             <motion.div
-              className="absolute -inset-1 rounded-full opacity-0 group-hover:opacity-100"
+              className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 pointer-events-none"
               animate={{ 
                 boxShadow: [
-                  '0 0 6px hsl(270 80% 60% / 0.15)',
-                  '0 0 12px hsl(270 80% 60% / 0.25)',
-                  '0 0 6px hsl(270 80% 60% / 0.15)'
+                  "0 0 2px hsl(270 80% 60% / 0.12)",
+                  "0 0 6px hsl(270 80% 60% / 0.18)",
+                  "0 0 2px hsl(270 80% 60% / 0.12)"
                 ]
               }}
               transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
