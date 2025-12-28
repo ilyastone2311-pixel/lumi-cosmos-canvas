@@ -76,24 +76,24 @@ const Navbar = () => {
         {/* Logo with glow */}
         <motion.div 
           onClick={() => navigate("/")}
-          className="flex items-center gap-3 group cursor-pointer"
-          whileHover={{ scale: 1.03 }}
+          className="flex items-center gap-4 group cursor-pointer"
+          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
           <motion.div 
             className="relative flex-shrink-0"
             whileHover={{ 
-              filter: "drop-shadow(0 0 14px hsl(190 100% 60% / 0.75))"
+              filter: "drop-shadow(0 0 16px hsl(190 100% 60% / 0.8))"
             }}
             transition={{ duration: 0.2 }}
           >
             <img 
               src={logoImage} 
               alt="Lumi" 
-              className="w-12 h-12 sm:w-14 sm:h-14 object-contain relative z-10" 
+              className="h-10 w-auto sm:h-12 md:h-14 object-contain relative z-10" 
             />
             <div 
-              className="absolute -inset-2 blur-xl rounded-full opacity-60 group-hover:opacity-80 transition-opacity duration-300"
+              className="absolute -inset-2 blur-xl rounded-full opacity-50 group-hover:opacity-75 transition-opacity duration-300"
               style={{
                 background: 'radial-gradient(circle, hsl(190 100% 50% / 0.5), hsl(270 80% 60% / 0.3))',
               }}
@@ -102,9 +102,9 @@ const Navbar = () => {
               className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100"
               animate={{ 
                 boxShadow: [
-                  '0 0 10px hsl(190 100% 50% / 0.3)',
-                  '0 0 22px hsl(190 100% 50% / 0.55)',
-                  '0 0 10px hsl(190 100% 50% / 0.3)'
+                  '0 0 12px hsl(190 100% 50% / 0.3)',
+                  '0 0 24px hsl(190 100% 50% / 0.55)',
+                  '0 0 12px hsl(190 100% 50% / 0.3)'
                 ]
               }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
