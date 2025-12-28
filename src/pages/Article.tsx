@@ -133,9 +133,30 @@ const Article = () => {
             </div>
           </div>
 
-          {/* Article Content with Karaoke Highlighting - optimized for mobile reading */}
-          <article className="prose prose-invert max-w-none prose-p:text-base prose-p:leading-relaxed sm:prose-p:text-lg prose-headings:scroll-mt-24">
-            <div className="mb-8 animate-fade-in" style={{ animationDelay: '200ms' }}>
+          {/* Article Content with Karaoke Highlighting - Liquid Glass backdrop */}
+          <article 
+            className="relative prose prose-invert max-w-none prose-p:text-base prose-p:leading-relaxed sm:prose-p:text-lg prose-headings:scroll-mt-24 rounded-3xl p-6 sm:p-8 md:p-10"
+            style={{
+              background: 'linear-gradient(135deg, hsl(var(--card) / 0.6), hsl(var(--card) / 0.4))',
+              backdropFilter: 'blur(20px) saturate(1.2)',
+              WebkitBackdropFilter: 'blur(20px) saturate(1.2)',
+              border: '1px solid hsl(var(--border) / 0.3)',
+              boxShadow: `
+                0 0 0 1px hsl(var(--primary) / 0.05),
+                0 4px 24px hsl(var(--foreground) / 0.08),
+                inset 0 1px 0 hsl(255 100% 100% / 0.06)
+              `,
+            }}
+          >
+            {/* Subtle inner glow */}
+            <div 
+              className="absolute inset-0 rounded-3xl pointer-events-none"
+              style={{
+                background: 'radial-gradient(ellipse at 50% 0%, hsl(var(--primary) / 0.08) 0%, transparent 60%)',
+              }}
+            />
+
+            <div className="relative z-10 mb-8 animate-fade-in" style={{ animationDelay: '200ms' }}>
               <KaraokeText 
                 text={articleContent.intro}
                 currentTime={audioTime}
@@ -147,7 +168,7 @@ const Article = () => {
             {articleContent.sections.map((section, index) => (
               <section 
                 key={section.title} 
-                className="mb-8 sm:mb-10 animate-fade-in" 
+                className="relative z-10 mb-8 sm:mb-10 animate-fade-in" 
                 style={{ animationDelay: `${300 + index * 100}ms` }}
               >
                 <h2 className="font-display text-xl sm:text-2xl font-semibold text-foreground mb-3 sm:mb-4">
