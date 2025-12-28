@@ -83,27 +83,27 @@ const Navbar = () => {
           <motion.div 
             className="relative flex-shrink-0"
             whileHover={{ 
-              filter: "drop-shadow(0 0 12px hsl(190 100% 60% / 0.7))"
+              filter: "drop-shadow(0 0 14px hsl(190 100% 60% / 0.75))"
             }}
             transition={{ duration: 0.2 }}
           >
             <img 
               src={logoImage} 
               alt="Lumi" 
-              className="w-10 h-10 sm:w-11 sm:h-11 object-contain relative z-10" 
+              className="w-12 h-12 sm:w-14 sm:h-14 object-contain relative z-10" 
             />
             <div 
-              className="absolute -inset-1 blur-xl rounded-full opacity-60 group-hover:opacity-80 transition-opacity duration-300"
+              className="absolute -inset-2 blur-xl rounded-full opacity-60 group-hover:opacity-80 transition-opacity duration-300"
               style={{
                 background: 'radial-gradient(circle, hsl(190 100% 50% / 0.5), hsl(270 80% 60% / 0.3))',
               }}
             />
             <motion.div
-              className="absolute -inset-1 rounded-full opacity-0 group-hover:opacity-100"
+              className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100"
               animate={{ 
                 boxShadow: [
                   '0 0 10px hsl(190 100% 50% / 0.3)',
-                  '0 0 20px hsl(190 100% 50% / 0.5)',
+                  '0 0 22px hsl(190 100% 50% / 0.55)',
                   '0 0 10px hsl(190 100% 50% / 0.3)'
                 ]
               }}
