@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import { Sparkles, LogOut, User, Search, Settings, ChevronDown, Menu, X, Zap, Shield } from "lucide-react";
+import { LogOut, User, Search, Settings, ChevronDown, Menu, X, Zap, Shield } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
 import { useNavigate, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import ThemeToggle from "./ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
+import logoImage from "@/assets/logo.webp";
 
 const Navbar = () => {
   const { user, signOut, loading } = useAuth();
@@ -80,7 +81,7 @@ const Navbar = () => {
           whileTap={{ scale: 0.98 }}
         >
           <div className="relative">
-            <Sparkles className="w-5 h-5 text-primary relative z-10 icon-glow" />
+            <img src={logoImage} alt="Lumi" className="w-7 h-7 relative z-10" />
             <div 
               className="absolute inset-0 blur-lg rounded-full animate-pulse"
               style={{
