@@ -80,12 +80,12 @@ const Navbar = () => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <div className="relative">
-            <img src={logoImage} alt="Lumi" className="w-7 h-7 relative z-10" />
+          <div className="relative flex-shrink-0">
+            <img src={logoImage} alt="Lumi" className="w-9 h-9 object-contain relative z-10" />
             <div 
               className="absolute inset-0 blur-lg rounded-full animate-pulse"
               style={{
-                background: 'hsl(190 100% 50% / 0.6)',
+                background: 'hsl(190 100% 50% / 0.4)',
                 animationDuration: '2s',
               }}
             />
