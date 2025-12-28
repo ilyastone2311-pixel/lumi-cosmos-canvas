@@ -81,10 +81,7 @@ const Navbar = () => {
           whileTap={{ scale: 0.98 }}
         >
           <motion.div 
-            className="relative flex-shrink-0 origin-center scale-[1.5] sm:scale-[1.4] md:scale-[1.3]"
-            whileHover={{ 
-              filter: "drop-shadow(0 0 1px hsl(270 80% 60% / 0.22))"
-            }}
+            className="relative flex-shrink-0 overflow-hidden rounded-xl origin-center scale-[1.5] sm:scale-[1.4] md:scale-[1.3]"
             transition={{ duration: 0.2 }}
           >
             <img 
