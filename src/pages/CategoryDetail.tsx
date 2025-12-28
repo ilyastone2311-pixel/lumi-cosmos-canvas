@@ -9,15 +9,15 @@ import { SkeletonGrid } from "@/components/ui/skeleton-card";
 import { ArrowLeft } from "lucide-react";
 import { getArticlesByCategory, articles } from "@/data/articles";
 
-import categoryPolitics from "@/assets/category-politics.jpg";
-import categoryPsychology from "@/assets/category-psychology.jpg";
-import categoryCulture from "@/assets/category-culture.jpg";
-import categoryTechnology from "@/assets/category-technology.jpg";
-import categoryMindfulness from "@/assets/category-mindfulness.jpg";
-import categoryHistory from "@/assets/category-history.jpg";
-import categoryGrowth from "@/assets/category-growth.jpg";
-import categoryScience from "@/assets/category-science.jpg";
-import categoryBusiness from "@/assets/category-business.jpg";
+import categoryPolitics from "@/assets/category-politics-new.webp";
+import categoryPsychology from "@/assets/category-psychology-neon.png";
+import categoryCulture from "@/assets/category-culture-new.webp";
+import categoryTechnology from "@/assets/category-technology-neon.png";
+import categoryMindfulness from "@/assets/category-mindfulness-new.webp";
+import categoryHistory from "@/assets/category-history-new.webp";
+import categoryGrowth from "@/assets/category-growth-new.webp";
+import categoryScience from "@/assets/category-science-neon.png";
+import categoryBusiness from "@/assets/category-business-new.webp";
 
 const categoryData: Record<string, { image: string; description: string; articles: { id: string; title: string; author: string; readTime: number; rating: number }[] }> = {
   politics: {

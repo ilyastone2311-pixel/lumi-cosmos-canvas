@@ -5,15 +5,15 @@ import { motion } from "framer-motion";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useAuth } from "@/hooks/useAuth";
 
-import categoryPolitics from "@/assets/category-politics-neon.png";
+import categoryPolitics from "@/assets/category-politics-new.webp";
 import categoryPsychology from "@/assets/category-psychology-neon.png";
-import categoryCulture from "@/assets/category-culture-neon.png";
+import categoryCulture from "@/assets/category-culture-new.webp";
 import categoryTechnology from "@/assets/category-technology-neon.png";
-import categoryMindfulness from "@/assets/category-mindfulness-neon.png";
-import categoryHistory from "@/assets/category-history-neon.png";
-import categoryGrowth from "@/assets/category-growth-neon.png";
+import categoryMindfulness from "@/assets/category-mindfulness-new.webp";
+import categoryHistory from "@/assets/category-history-new.webp";
+import categoryGrowth from "@/assets/category-growth-new.webp";
 import categoryScience from "@/assets/category-science-neon.png";
-import categoryBusiness from "@/assets/category-business-neon.png";
+import categoryBusiness from "@/assets/category-business-new.webp";
 
 const categories = [
   {
