@@ -76,22 +76,42 @@ const Navbar = () => {
         {/* Logo with glow */}
         <motion.div 
           onClick={() => navigate("/")}
-          className="flex items-center gap-2.5 group cursor-pointer"
-          whileHover={{ scale: 1.02 }}
+          className="flex items-center gap-3 group cursor-pointer"
+          whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.98 }}
         >
-          <div className="relative flex-shrink-0">
-            <img src={logoImage} alt="Lumi" className="w-9 h-9 object-contain relative z-10" />
+          <motion.div 
+            className="relative flex-shrink-0"
+            whileHover={{ 
+              filter: "drop-shadow(0 0 12px hsl(190 100% 60% / 0.7))"
+            }}
+            transition={{ duration: 0.2 }}
+          >
+            <img 
+              src={logoImage} 
+              alt="Lumi" 
+              className="w-10 h-10 sm:w-11 sm:h-11 object-contain relative z-10" 
+            />
             <div 
-              className="absolute inset-0 blur-lg rounded-full animate-pulse"
+              className="absolute -inset-1 blur-xl rounded-full opacity-60 group-hover:opacity-80 transition-opacity duration-300"
               style={{
-                background: 'hsl(190 100% 50% / 0.4)',
-                animationDuration: '2s',
+                background: 'radial-gradient(circle, hsl(190 100% 50% / 0.5), hsl(270 80% 60% / 0.3))',
               }}
             />
-          </div>
+            <motion.div
+              className="absolute -inset-1 rounded-full opacity-0 group-hover:opacity-100"
+              animate={{ 
+                boxShadow: [
+                  '0 0 10px hsl(190 100% 50% / 0.3)',
+                  '0 0 20px hsl(190 100% 50% / 0.5)',
+                  '0 0 10px hsl(190 100% 50% / 0.3)'
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </motion.div>
           <span 
-            className="font-display text-xl font-bold tracking-wide text-foreground"
+            className="font-display text-xl sm:text-2xl font-bold tracking-wide text-foreground"
             style={{
               textShadow: '0 0 20px hsl(190 100% 50% / 0.3)',
             }}
