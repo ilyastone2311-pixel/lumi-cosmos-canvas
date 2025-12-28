@@ -81,7 +81,7 @@ const Navbar = () => {
           whileTap={{ scale: 0.98 }}
         >
           <motion.div 
-            className="relative flex-shrink-0"
+            className="relative flex-shrink-0 origin-center scale-[1.5] sm:scale-[1.4] md:scale-[1.3]"
             whileHover={{ 
               filter: "drop-shadow(0 0 8px hsl(270 80% 60% / 0.4))"
             }}
@@ -89,8 +89,8 @@ const Navbar = () => {
           >
             <img 
               src={logoImage} 
-              alt="Lumi" 
-              className="h-14 w-auto sm:h-16 md:h-[52px] object-contain relative z-10" 
+              alt="Lumi open book logo" 
+              className="h-14 w-auto sm:h-16 md:h-[52px] object-contain relative z-10 block" 
             />
             <div 
               className="absolute -inset-1 blur-md rounded-full opacity-20 group-hover:opacity-35 transition-opacity duration-300"
