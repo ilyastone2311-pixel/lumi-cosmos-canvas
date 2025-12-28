@@ -60,7 +60,7 @@ const Navbar = () => {
 
   return (
     <nav 
-      className="fixed top-0 left-0 right-0 z-50 w-full py-3 px-4"
+      className="fixed top-0 left-0 right-0 z-50 w-full py-2 px-4"
     >
       <div 
         className="mx-auto max-w-5xl rounded-2xl animate-navbar-glow bg-card/80 backdrop-blur-xl border border-border/50"
@@ -72,7 +72,7 @@ const Navbar = () => {
           `,
         }}
       >
-      <div className="relative px-4 sm:px-6 py-3 flex items-center justify-between">
+      <div className="relative px-4 sm:px-6 py-1.5 flex items-center justify-between">
         {/* Logo with glow */}
         <motion.div 
           onClick={() => navigate("/")}
@@ -90,7 +90,7 @@ const Navbar = () => {
             <img 
               src={logoImage} 
               alt="Lumi" 
-              className="h-10 w-auto sm:h-12 md:h-14 object-contain relative z-10" 
+              className="h-12 w-auto sm:h-14 md:h-16 object-contain relative z-10" 
             />
             <div 
               className="absolute -inset-2 blur-xl rounded-full opacity-50 group-hover:opacity-75 transition-opacity duration-300"
