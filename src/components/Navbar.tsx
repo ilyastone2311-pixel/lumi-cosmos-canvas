@@ -90,7 +90,7 @@ const Navbar = () => {
             <img 
               src={logoImage} 
               alt="Lumi" 
-              className="h-10 w-auto sm:h-11 md:h-12 object-contain relative z-10" 
+              className="h-12 w-auto sm:h-14 md:h-[42px] object-contain relative z-10" 
             />
             <div 
               className="absolute -inset-1 blur-md rounded-full opacity-20 group-hover:opacity-35 transition-opacity duration-300"
