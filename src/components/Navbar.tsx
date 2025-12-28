@@ -90,22 +90,12 @@ const Navbar = () => {
               className="h-14 w-auto sm:h-16 md:h-[52px] object-contain relative z-10 block" 
             />
             <div 
-              className="absolute inset-0 blur-sm rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"
+              className="absolute inset-0 rounded-xl opacity-5 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
               style={{
                 background:
-                  "radial-gradient(circle, hsl(270 80% 60% / 0.22), hsl(190 100% 50% / 0.10))",
+                  "radial-gradient(circle, hsl(270 80% 60% / 0.18), hsl(190 100% 50% / 0.08))",
+                filter: "blur(2px)",
               }}
-            />
-            <motion.div
-              className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 pointer-events-none"
-              animate={{ 
-                boxShadow: [
-                  "0 0 2px hsl(270 80% 60% / 0.12)",
-                  "0 0 6px hsl(270 80% 60% / 0.18)",
-                  "0 0 2px hsl(270 80% 60% / 0.12)"
-                ]
-              }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
             />
           </motion.div>
           <span 
