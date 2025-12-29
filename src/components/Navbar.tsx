@@ -81,7 +81,7 @@ const Navbar = () => {
           whileTap={{ scale: 0.98 }}
         >
           <motion.div 
-            className="relative flex-shrink-0 overflow-hidden rounded-xl origin-center scale-[1.5] sm:scale-[1.4] md:scale-[1.3] -mr-2"
+            className="relative flex-shrink-0 overflow-hidden rounded-xl origin-center scale-[1.35] sm:scale-[1.25] md:scale-[1.15] -mr-2"
             transition={{ duration: 0.2 }}
           >
             <img 
