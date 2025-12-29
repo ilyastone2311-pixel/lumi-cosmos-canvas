@@ -4,59 +4,56 @@ interface LumiLogoProps {
 
 const LumiLogo = ({ className = "" }: LumiLogoProps) => {
   return (
-    <div className={`flex items-center gap-2.5 ${className}`}>
-      {/* Light Spark Icon - 3 diagonal rays + dot */}
-      <div className="relative flex-shrink-0" style={{ width: '24px', height: '24px' }}>
+    <div className={`flex items-center gap-3 ${className}`}>
+      {/* Light Spark Icon - 3 parallel diagonal rays + dot */}
+      <svg 
+        width="22" 
+        height="22" 
+        viewBox="0 0 22 22" 
+        fill="none" 
+        className="flex-shrink-0"
+      >
         {/* Ray 1 - Top left, longest */}
-        <div 
-          className="absolute bg-primary"
-          style={{ 
-            width: '4px',
-            height: '12px',
-            top: '-2px', 
-            left: '3px', 
-            transform: 'rotate(-45deg)',
-            borderRadius: '2px'
-          }}
+        <rect 
+          x="1" 
+          y="3" 
+          width="4" 
+          height="11" 
+          rx="2" 
+          transform="rotate(-45 1 3)"
+          className="fill-primary"
         />
         
         {/* Ray 2 - Middle */}
-        <div 
-          className="absolute bg-primary"
-          style={{ 
-            width: '4px',
-            height: '10px',
-            top: '2px', 
-            left: '9px', 
-            transform: 'rotate(-45deg)',
-            borderRadius: '2px'
-          }}
+        <rect 
+          x="6" 
+          y="8" 
+          width="4" 
+          height="9" 
+          rx="2" 
+          transform="rotate(-45 6 8)"
+          className="fill-primary"
         />
         
         {/* Ray 3 - Shortest */}
-        <div 
-          className="absolute bg-primary"
-          style={{ 
-            width: '4px',
-            height: '8px',
-            top: '6px', 
-            left: '15px', 
-            transform: 'rotate(-45deg)',
-            borderRadius: '2px'
-          }}
+        <rect 
+          x="11" 
+          y="13" 
+          width="4" 
+          height="7" 
+          rx="2" 
+          transform="rotate(-45 11 13)"
+          className="fill-primary"
         />
         
         {/* Dot - Bottom right */}
-        <div 
-          className="absolute rounded-full bg-primary"
-          style={{ 
-            width: '5px',
-            height: '5px',
-            bottom: '0px', 
-            right: '0px'
-          }}
+        <circle 
+          cx="18" 
+          cy="18" 
+          r="2.5" 
+          className="fill-primary"
         />
-      </div>
+      </svg>
       
       {/* Lumi Text */}
       <span 
