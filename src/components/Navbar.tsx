@@ -70,19 +70,19 @@ const Navbar = () => {
           `,
         }}
       >
-        <div className="relative px-3 sm:px-4 h-12 flex items-center justify-between">
-          {/* Logo with glow - positioned absolutely to not affect navbar height */}
+        <div className="relative px-3 sm:px-4 h-14 flex items-center justify-between overflow-visible">
+          {/* Logo with glow - constrained to navbar height */}
           <motion.div
             onClick={() => navigate("/")}
-            className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 flex items-center gap-3 group cursor-pointer z-10"
+            className="flex items-center gap-3 group cursor-pointer h-full"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <motion.div className="relative flex-shrink-0 origin-center" transition={{ duration: 0.2 }}>
+            <motion.div className="relative flex-shrink-0 origin-center h-full flex items-center" transition={{ duration: 0.2 }}>
               <img
                 src={logoFullImage}
                 alt="Lumi logo"
-                className="h-20 sm:h-24 md:h-20 w-auto object-contain relative z-10 block"
+                className="h-full max-h-12 w-auto object-contain relative z-10 block py-1"
               />
               <div
                 className="absolute inset-0 opacity-30 group-hover:opacity-50 transition-opacity duration-300 pointer-events-none"
@@ -93,8 +93,6 @@ const Navbar = () => {
               />
             </motion.div>
           </motion.div>
-          {/* Spacer for logo */}
-          <div className="w-24 sm:w-28 md:w-24 flex-shrink-0" />
 
           {/* Center Navigation - Desktop */}
           <div className="hidden md:flex items-center gap-1">
