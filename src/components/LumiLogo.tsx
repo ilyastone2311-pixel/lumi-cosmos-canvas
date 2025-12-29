@@ -7,49 +7,52 @@ const LumiLogo = ({ className = "" }: LumiLogoProps) => {
     <div className={`flex items-center gap-3 ${className}`}>
       {/* Light Spark Icon - 3 parallel diagonal rays + dot */}
       <svg 
-        width="22" 
-        height="22" 
-        viewBox="0 0 22 22" 
+        width="24" 
+        height="24" 
+        viewBox="0 0 24 24" 
         fill="none" 
         className="flex-shrink-0"
       >
         {/* Ray 1 - Top left, longest */}
-        <rect 
-          x="1" 
-          y="3" 
-          width="4" 
-          height="11" 
-          rx="2" 
-          transform="rotate(-45 1 3)"
-          className="fill-primary"
+        <line 
+          x1="2" 
+          y1="10" 
+          x2="10" 
+          y2="2" 
+          stroke="currentColor"
+          strokeWidth="3.5"
+          strokeLinecap="round"
+          className="text-primary"
         />
         
         {/* Ray 2 - Middle */}
-        <rect 
-          x="6" 
-          y="8" 
-          width="4" 
-          height="9" 
-          rx="2" 
-          transform="rotate(-45 6 8)"
-          className="fill-primary"
+        <line 
+          x1="6" 
+          y1="14" 
+          x2="12" 
+          y2="8" 
+          stroke="currentColor"
+          strokeWidth="3.5"
+          strokeLinecap="round"
+          className="text-primary"
         />
         
         {/* Ray 3 - Shortest */}
-        <rect 
-          x="11" 
-          y="13" 
-          width="4" 
-          height="7" 
-          rx="2" 
-          transform="rotate(-45 11 13)"
-          className="fill-primary"
+        <line 
+          x1="10" 
+          y1="18" 
+          x2="14" 
+          y2="14" 
+          stroke="currentColor"
+          strokeWidth="3.5"
+          strokeLinecap="round"
+          className="text-primary"
         />
         
         {/* Dot - Bottom right */}
         <circle 
           cx="18" 
-          cy="18" 
+          cy="20" 
           r="2.5" 
           className="fill-primary"
         />
