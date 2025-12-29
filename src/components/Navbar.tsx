@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import ThemeToggle from "./ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
-import logoFullImage from "@/assets/logo-full.webp";
+import LumiLogo from "./LumiLogo";
 
 const Navbar = () => {
   const { user, signOut, loading } = useAuth();
@@ -70,28 +70,15 @@ const Navbar = () => {
           `,
         }}
       >
-        <div className="relative px-3 sm:px-4 h-16 sm:h-18 md:h-16 flex items-center justify-between">
-          {/* Logo with glow - fills navbar height */}
+        <div className="relative px-3 sm:px-4 h-14 flex items-center justify-between">
+          {/* Code-based Logo */}
           <motion.div
             onClick={() => navigate("/")}
-            className="flex items-center gap-3 group cursor-pointer h-full py-2"
+            className="flex items-center cursor-pointer"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <motion.div className="relative flex-shrink-0 origin-center h-full flex items-center" transition={{ duration: 0.2 }}>
-              <img
-                src={logoFullImage}
-                alt="Lumi logo"
-                className="h-full w-auto object-contain relative z-10 block"
-              />
-              <div
-                className="absolute inset-0 opacity-30 group-hover:opacity-50 transition-opacity duration-300 pointer-events-none"
-                style={{
-                  background: "radial-gradient(circle, hsl(190 100% 50% / 0.3), transparent 70%)",
-                  filter: "blur(8px)",
-                }}
-              />
-            </motion.div>
+            <LumiLogo />
           </motion.div>
 
           {/* Center Navigation - Desktop */}
