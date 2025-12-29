@@ -72,7 +72,7 @@ const Navbar = () => {
           `,
         }}
       >
-      <div className="relative px-4 sm:px-6 py-1.5 flex items-center justify-between">
+      <div className="relative px-3 sm:px-4 py-0.5 flex items-center justify-between">
         {/* Logo with glow */}
         <motion.div 
           onClick={() => navigate("/")}
@@ -87,7 +87,7 @@ const Navbar = () => {
             <img 
               src={logoFullImage} 
               alt="Lumi logo" 
-              className="h-14 sm:h-16 md:h-14 w-auto object-contain relative z-10 block" 
+              className="h-9 w-auto object-contain relative z-10 block" 
             />
             <div 
               className="absolute inset-0 opacity-30 group-hover:opacity-50 transition-opacity duration-300 pointer-events-none"
