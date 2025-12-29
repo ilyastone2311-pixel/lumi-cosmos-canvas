@@ -4,48 +4,45 @@ interface LumiLogoProps {
 
 const LumiLogo = ({ className = "" }: LumiLogoProps) => {
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
-      {/* Light Spark Icon - 3 diagonal rays + dot matching the reference */}
-      <div className="relative w-6 h-7 flex-shrink-0">
+    <div className={`flex items-center gap-2.5 ${className}`}>
+      {/* Light Spark Icon - 3 diagonal rays + dot */}
+      <div className="relative flex-shrink-0" style={{ width: '24px', height: '24px' }}>
         {/* Ray 1 - Top left, longest */}
         <div 
-          className="absolute rounded-full bg-primary"
+          className="absolute bg-primary"
           style={{ 
-            width: '5px',
-            height: '14px',
-            top: '0px', 
-            left: '0px', 
+            width: '4px',
+            height: '12px',
+            top: '-2px', 
+            left: '3px', 
             transform: 'rotate(-45deg)',
-            transformOrigin: 'center center',
-            borderRadius: '3px'
+            borderRadius: '2px'
           }}
         />
         
         {/* Ray 2 - Middle */}
         <div 
-          className="absolute rounded-full bg-primary"
+          className="absolute bg-primary"
           style={{ 
-            width: '5px',
-            height: '12px',
-            top: '5px', 
-            left: '7px', 
+            width: '4px',
+            height: '10px',
+            top: '2px', 
+            left: '9px', 
             transform: 'rotate(-45deg)',
-            transformOrigin: 'center center',
-            borderRadius: '3px'
+            borderRadius: '2px'
           }}
         />
         
-        {/* Ray 3 - Shortest, bottom */}
+        {/* Ray 3 - Shortest */}
         <div 
-          className="absolute rounded-full bg-primary"
+          className="absolute bg-primary"
           style={{ 
-            width: '5px',
-            height: '10px',
-            top: '10px', 
-            left: '14px', 
+            width: '4px',
+            height: '8px',
+            top: '6px', 
+            left: '15px', 
             transform: 'rotate(-45deg)',
-            transformOrigin: 'center center',
-            borderRadius: '3px'
+            borderRadius: '2px'
           }}
         />
         
@@ -53,21 +50,21 @@ const LumiLogo = ({ className = "" }: LumiLogoProps) => {
         <div 
           className="absolute rounded-full bg-primary"
           style={{ 
-            width: '6px',
-            height: '6px',
+            width: '5px',
+            height: '5px',
             bottom: '0px', 
-            right: '-2px'
+            right: '0px'
           }}
         />
       </div>
       
-      {/* Lumi Text - Rounded friendly font like in reference */}
+      {/* Lumi Text */}
       <span 
         className="font-bold text-primary"
         style={{ 
           fontFamily: "'Nunito', system-ui, sans-serif",
-          fontSize: '26px',
-          letterSpacing: '-0.02em',
+          fontSize: '24px',
+          letterSpacing: '-0.01em',
           lineHeight: 1
         }}
       >
