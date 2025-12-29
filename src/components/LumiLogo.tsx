@@ -4,123 +4,27 @@ interface LumiLogoProps {
 }
 
 const LumiLogo = ({ className = "", size = "md" }: LumiLogoProps) => {
-  // Responsive sizing
   const sizeClasses = {
-    sm: "h-6", // 24px - mobile
-    md: "h-7 md:h-8", // 28px mobile, 32px desktop
+    sm: "h-6",
+    md: "h-7 md:h-8",
     lg: "h-10",
   };
 
   return (
     <div className={`flex items-center ${sizeClasses[size]} ${className}`}>
       <svg
-        viewBox="0 0 120 32"
+        viewBox="0 0 230 72"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="h-full w-auto"
         preserveAspectRatio="xMinYMid meet"
         aria-label="Lumi logo"
       >
-        <defs>
-          {/* Vertical gradient for turquoise - lighter on top */}
-          <linearGradient id="lumiGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#6FE8F5" />
-            <stop offset="100%" stopColor="#4FD3E6" />
-          </linearGradient>
-          
-          {/* Subtle drop shadow filter */}
-          <filter id="lumiShadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="1" stdDeviation="0.8" floodColor="#2BA8B8" floodOpacity="0.35" />
-          </filter>
-          
-          {/* Highlight filter for 3D effect */}
-          <filter id="lumiHighlight" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="-0.5" stdDeviation="0.3" floodColor="#FFFFFF" floodOpacity="0.4" />
-          </filter>
-        </defs>
-
-        {/* Spark Icon Group - positioned to the left */}
-        <g filter="url(#lumiShadow)">
-          {/* Central dot */}
-          <circle
-            cx="12"
-            cy="18"
-            r="2.8"
-            fill="url(#lumiGradient)"
-          />
-          
-          {/* Ray 1 - Top-left diagonal (longest) */}
-          <line
-            x1="10"
-            y1="16"
-            x2="3"
-            y2="6"
-            stroke="url(#lumiGradient)"
-            strokeWidth="3.2"
-            strokeLinecap="round"
-          />
-          
-          {/* Ray 2 - Left horizontal */}
-          <line
-            x1="9"
-            y1="18"
-            x2="1"
-            y2="16"
-            stroke="url(#lumiGradient)"
-            strokeWidth="3.2"
-            strokeLinecap="round"
-          />
-          
-          {/* Ray 3 - Bottom-left diagonal */}
-          <line
-            x1="10"
-            y1="20"
-            x2="5"
-            y2="27"
-            stroke="url(#lumiGradient)"
-            strokeWidth="3.2"
-            strokeLinecap="round"
-          />
-        </g>
-
-        {/* Wordmark "Lumi" - with 3D emboss effect */}
-        <g filter="url(#lumiShadow)">
-          {/* Main text */}
-          <text
-            x="26"
-            y="24"
-            fontFamily="'Nunito', 'Manrope', 'Inter', system-ui, sans-serif"
-            fontSize="24"
-            fontWeight="700"
-            fill="url(#lumiGradient)"
-            letterSpacing="-0.5"
-          >
-            Lumi
-          </text>
-          
-          {/* Highlight layer for 3D effect - offset slightly up */}
-          <text
-            x="26"
-            y="23"
-            fontFamily="'Nunito', 'Manrope', 'Inter', system-ui, sans-serif"
-            fontSize="24"
-            fontWeight="700"
-            fill="white"
-            fillOpacity="0.15"
-            letterSpacing="-0.5"
-          >
-            Lumi
-          </text>
-        </g>
-        
-        {/* Dot above the "i" - enhanced */}
-        <circle
-          cx="107.5"
-          cy="8"
-          r="2"
-          fill="url(#lumiGradient)"
-          filter="url(#lumiShadow)"
-        />
+        <path d="M94.6364 71V24.4545H100.273V66H121.909V71H94.6364ZM151.909 56.7273V36.0909H157.273V71H151.909V65.0909H151.545C150.727 66.8636 149.455 68.3712 147.727 69.6136C146 70.8409 143.818 71.4545 141.182 71.4545C139 71.4545 137.061 70.9773 135.364 70.0227C133.667 69.053 132.333 67.5985 131.364 65.6591C130.394 63.7045 129.909 61.2424 129.909 58.2727V36.0909H135.273V57.9091C135.273 60.4545 135.985 62.4848 137.409 64C138.848 65.5152 140.682 66.2727 142.909 66.2727C144.242 66.2727 145.598 65.9318 146.977 65.25C148.371 64.5682 149.538 63.5227 150.477 62.1136C151.432 60.7045 151.909 58.9091 151.909 56.7273ZM167.097 71V36.0909H172.278V41.5455H172.733C173.46 39.6818 174.634 38.2348 176.256 37.2045C177.877 36.1591 179.824 35.6364 182.097 35.6364C184.4 35.6364 186.316 36.1591 187.847 37.2045C189.392 38.2348 190.597 39.6818 191.46 41.5455H191.824C192.718 39.7424 194.059 38.3106 195.847 37.25C197.634 36.1742 199.778 35.6364 202.278 35.6364C205.4 35.6364 207.953 36.6136 209.938 38.5682C211.922 40.5076 212.915 43.5303 212.915 47.6364V71H207.551V47.6364C207.551 45.0606 206.847 43.2197 205.438 42.1136C204.028 41.0076 202.369 40.4545 200.46 40.4545C198.006 40.4545 196.104 41.197 194.756 42.6818C193.407 44.1515 192.733 46.0152 192.733 48.2727V71H187.278V47.0909C187.278 45.1061 186.634 43.5076 185.347 42.2955C184.059 41.0682 182.4 40.4545 180.369 40.4545C178.975 40.4545 177.672 40.8258 176.46 41.5682C175.263 42.3106 174.294 43.3409 173.551 44.6591C172.824 45.9621 172.46 47.4697 172.46 49.1818V71H167.097ZM222.722 71V36.0909H228.085V71H222.722ZM225.449 30.2727C224.403 30.2727 223.502 29.9167 222.744 29.2045C222.002 28.4924 221.631 27.6364 221.631 26.6364C221.631 25.6364 222.002 24.7803 222.744 24.0682C223.502 23.3561 224.403 23 225.449 23C226.494 23 227.388 23.3561 228.131 24.0682C228.888 24.7803 229.267 25.6364 229.267 26.6364C229.267 27.6364 228.888 28.4924 228.131 29.2045C227.388 29.9167 226.494 30.2727 225.449 30.2727Z" fill="#1C9EEA"/>
+        <circle cx="60" cy="58" r="11" fill="#1C9EEA"/>
+        <path d="M41 59L1.07288e-06 59" stroke="#1C9EEA" strokeWidth="3"/>
+        <path d="M60 41L60 -2.02656e-06" stroke="#1C9EEA" strokeWidth="3"/>
+        <path d="M49.3301 45.6487L20 17" stroke="#1C9EEA" strokeWidth="3"/>
       </svg>
     </div>
   );
