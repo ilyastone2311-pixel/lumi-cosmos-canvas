@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import ThemeToggle from "./ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
-import logoImage from "@/assets/logo-book.webp";
+import logoImage from "@/assets/logo-navbar.webp";
 
 const Navbar = () => {
   const { user, signOut, loading } = useAuth();
