@@ -5,7 +5,7 @@ interface LumiLogoProps {
 const LumiLogo = ({ className = "" }: LumiLogoProps) => {
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      {/* Light Spark Icon - 3 parallel diagonal rays + dot */}
+      {/* Light Spark Icon - центральная точка + 3 расходящихся луча */}
       <svg 
         width="24" 
         height="24" 
@@ -13,48 +13,48 @@ const LumiLogo = ({ className = "" }: LumiLogoProps) => {
         fill="none" 
         className="flex-shrink-0"
       >
-        {/* Ray 1 - Top left, longest */}
-        <line 
-          x1="2" 
-          y1="10" 
-          x2="10" 
-          y2="2" 
-          stroke="currentColor"
-          strokeWidth="3.5"
-          strokeLinecap="round"
-          className="text-primary"
+        {/* Центральная точка */}
+        <circle 
+          cx="12" 
+          cy="12" 
+          r="3" 
+          className="fill-primary"
         />
         
-        {/* Ray 2 - Middle */}
-        <line 
-          x1="6" 
-          y1="14" 
-          x2="12" 
-          y2="8" 
-          stroke="currentColor"
-          strokeWidth="3.5"
-          strokeLinecap="round"
-          className="text-primary"
-        />
-        
-        {/* Ray 3 - Shortest */}
+        {/* Луч 1 - вверх-влево */}
         <line 
           x1="10" 
-          y1="18" 
-          x2="14" 
-          y2="14" 
+          y1="10" 
+          x2="3" 
+          y2="3" 
           stroke="currentColor"
-          strokeWidth="3.5"
+          strokeWidth="3"
           strokeLinecap="round"
           className="text-primary"
         />
         
-        {/* Dot - Bottom right */}
-        <circle 
-          cx="18" 
-          cy="20" 
-          r="2.5" 
-          className="fill-primary"
+        {/* Луч 2 - вверх */}
+        <line 
+          x1="12" 
+          y1="9" 
+          x2="12" 
+          y2="1" 
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          className="text-primary"
+        />
+        
+        {/* Луч 3 - вправо-вверх */}
+        <line 
+          x1="14" 
+          y1="10" 
+          x2="21" 
+          y2="3" 
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          className="text-primary"
         />
       </svg>
       
