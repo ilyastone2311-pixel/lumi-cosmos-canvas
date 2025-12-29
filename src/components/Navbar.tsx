@@ -78,11 +78,11 @@ const Navbar = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <motion.div className="relative flex-shrink-0 overflow-hidden origin-center -my-1" transition={{ duration: 0.2 }}>
+            <motion.div className="relative flex-shrink-0 overflow-hidden origin-center -my-2" transition={{ duration: 0.2 }}>
               <img
                 src={logoFullImage}
                 alt="Lumi logo"
-                className="h-14 sm:h-16 md:h-[3.25rem] w-auto object-contain relative z-10 block"
+                className="h-20 sm:h-24 md:h-20 w-auto object-contain relative z-10 block"
               />
               <div
                 className="absolute inset-0 opacity-30 group-hover:opacity-50 transition-opacity duration-300 pointer-events-none"
