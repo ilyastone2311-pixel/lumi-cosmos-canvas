@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import ThemeToggle from "./ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
-import logoImage from "@/assets/navbar-logo.webp";
+import logoFullImage from "@/assets/logo-full.webp";
 
 const Navbar = () => {
   const { user, signOut, loading } = useAuth();
@@ -81,31 +81,23 @@ const Navbar = () => {
           whileTap={{ scale: 0.98 }}
         >
           <motion.div 
-            className="relative flex-shrink-0 overflow-hidden rounded-xl origin-center scale-[1.35] sm:scale-[1.25] md:scale-[1.15] -mr-2"
+            className="relative flex-shrink-0 overflow-hidden origin-center"
             transition={{ duration: 0.2 }}
           >
             <img 
-              src={logoImage} 
-              alt="Lumi open book logo" 
-              className="h-14 w-auto sm:h-16 md:h-[52px] object-contain relative z-10 block" 
+              src={logoFullImage} 
+              alt="Lumi logo" 
+              className="h-10 sm:h-12 md:h-10 w-auto object-contain relative z-10 block" 
             />
             <div 
-              className="absolute inset-0 rounded-xl opacity-5 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
+              className="absolute inset-0 opacity-30 group-hover:opacity-50 transition-opacity duration-300 pointer-events-none"
               style={{
                 background:
-                  "radial-gradient(circle, hsl(270 80% 60% / 0.18), hsl(190 100% 50% / 0.08))",
-                filter: "blur(2px)",
+                  "radial-gradient(circle, hsl(190 100% 50% / 0.3), transparent 70%)",
+                filter: "blur(8px)",
               }}
             />
           </motion.div>
-          <span 
-            className="font-display text-xl sm:text-2xl font-bold tracking-wide text-foreground"
-            style={{
-              textShadow: '0 0 12px hsl(270 80% 60% / 0.15)',
-            }}
-          >
-            Lumi
-          </span>
         </motion.div>
 
         {/* Center Navigation - Desktop */}
