@@ -4,51 +4,73 @@ interface LumiLogoProps {
 
 const LumiLogo = ({ className = "" }: LumiLogoProps) => {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      {/* Light Spark Icon - Pure CSS */}
-      <div className="relative w-8 h-8 flex items-center justify-center">
-        {/* Center circle */}
-        <div className="absolute w-3 h-3 rounded-full bg-primary" />
-        
-        {/* Ray 1 - Top */}
+    <div className={`flex items-center gap-3 ${className}`}>
+      {/* Light Spark Icon - 3 diagonal rays + dot matching the reference */}
+      <div className="relative w-6 h-7 flex-shrink-0">
+        {/* Ray 1 - Top left, longest */}
         <div 
-          className="absolute w-1 h-2.5 rounded-full bg-primary"
-          style={{ top: '2px', left: '50%', transform: 'translateX(-50%)' }}
+          className="absolute rounded-full bg-primary"
+          style={{ 
+            width: '5px',
+            height: '14px',
+            top: '0px', 
+            left: '0px', 
+            transform: 'rotate(-45deg)',
+            transformOrigin: 'center center',
+            borderRadius: '3px'
+          }}
         />
         
-        {/* Ray 2 - Bottom */}
+        {/* Ray 2 - Middle */}
         <div 
-          className="absolute w-1 h-2.5 rounded-full bg-primary"
-          style={{ bottom: '2px', left: '50%', transform: 'translateX(-50%)' }}
+          className="absolute rounded-full bg-primary"
+          style={{ 
+            width: '5px',
+            height: '12px',
+            top: '5px', 
+            left: '7px', 
+            transform: 'rotate(-45deg)',
+            transformOrigin: 'center center',
+            borderRadius: '3px'
+          }}
         />
         
-        {/* Ray 3 - Right */}
+        {/* Ray 3 - Shortest, bottom */}
         <div 
-          className="absolute w-2.5 h-1 rounded-full bg-primary"
-          style={{ right: '2px', top: '50%', transform: 'translateY(-50%)' }}
+          className="absolute rounded-full bg-primary"
+          style={{ 
+            width: '5px',
+            height: '10px',
+            top: '10px', 
+            left: '14px', 
+            transform: 'rotate(-45deg)',
+            transformOrigin: 'center center',
+            borderRadius: '3px'
+          }}
         />
         
-        {/* Ray 4 - Left */}
+        {/* Dot - Bottom right */}
         <div 
-          className="absolute w-2.5 h-1 rounded-full bg-primary"
-          style={{ left: '2px', top: '50%', transform: 'translateY(-50%)' }}
-        />
-        
-        {/* Diagonal Ray - Top Right */}
-        <div 
-          className="absolute w-1 h-2 rounded-full bg-primary/70"
-          style={{ top: '4px', right: '5px', transform: 'rotate(45deg)' }}
-        />
-        
-        {/* Diagonal Ray - Top Left */}
-        <div 
-          className="absolute w-1 h-2 rounded-full bg-primary/70"
-          style={{ top: '4px', left: '5px', transform: 'rotate(-45deg)' }}
+          className="absolute rounded-full bg-primary"
+          style={{ 
+            width: '6px',
+            height: '6px',
+            bottom: '0px', 
+            right: '-2px'
+          }}
         />
       </div>
       
-      {/* Lumi Text */}
-      <span className="font-display font-bold text-2xl tracking-tight text-primary">
+      {/* Lumi Text - Rounded friendly font like in reference */}
+      <span 
+        className="font-bold text-primary"
+        style={{ 
+          fontFamily: "'Nunito', system-ui, sans-serif",
+          fontSize: '26px',
+          letterSpacing: '-0.02em',
+          lineHeight: 1
+        }}
+      >
         Lumi
       </span>
     </div>
