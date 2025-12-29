@@ -5,7 +5,7 @@ interface LumiLogoProps {
 const LumiLogo = ({ className = "" }: LumiLogoProps) => {
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      {/* Light Spark Icon - центральная точка + 3 расходящихся луча */}
+      {/* Light Spark Icon - точка внизу + 3 луча вверх */}
       <svg 
         width="24" 
         height="24" 
@@ -13,48 +13,48 @@ const LumiLogo = ({ className = "" }: LumiLogoProps) => {
         fill="none" 
         className="flex-shrink-0"
       >
-        {/* Центральная точка */}
-        <circle 
-          cx="12" 
-          cy="12" 
-          r="3" 
-          className="fill-primary"
-        />
-        
-        {/* Луч 1 - вверх-влево */}
+        {/* Луч 1 - влево-вверх (диагональ) */}
         <line 
-          x1="10" 
-          y1="10" 
+          x1="8" 
+          y1="14" 
           x2="3" 
-          y2="3" 
+          y2="6" 
           stroke="currentColor"
           strokeWidth="3"
           strokeLinecap="round"
           className="text-primary"
         />
         
-        {/* Луч 2 - вверх */}
+        {/* Луч 2 - вверх (вертикальный, чуть правее) */}
         <line 
           x1="12" 
-          y1="9" 
-          x2="12" 
-          y2="1" 
+          y1="13" 
+          x2="14" 
+          y2="4" 
           stroke="currentColor"
           strokeWidth="3"
           strokeLinecap="round"
           className="text-primary"
         />
         
-        {/* Луч 3 - вправо-вверх */}
+        {/* Луч 3 - вправо (горизонтальный) */}
         <line 
-          x1="14" 
-          y1="10" 
+          x1="13" 
+          y1="16" 
           x2="21" 
-          y2="3" 
+          y2="12" 
           stroke="currentColor"
           strokeWidth="3"
           strokeLinecap="round"
           className="text-primary"
+        />
+        
+        {/* Точка внизу */}
+        <circle 
+          cx="8" 
+          cy="20" 
+          r="2.5" 
+          className="fill-primary"
         />
       </svg>
       
