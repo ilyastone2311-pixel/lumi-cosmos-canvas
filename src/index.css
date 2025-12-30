@@ -321,10 +321,45 @@ html {
     scroll-behavior: smooth;
   }
 
-  /* Reduce scroll-linked animation intensity on mobile */
-  @media (max-width: 768px) {
+  /* ========== MOBILE-SPECIFIC STYLES (<768px) ========== */
+  @media (max-width: 767px) {
     html {
       scroll-behavior: auto;
+    }
+    
+    /* Mobile-first spacing */
+    .mobile-container {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+    
+    /* Large touch targets */
+    .touch-target {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    /* Reduce visual noise on mobile backgrounds */
+    html:not(.light) body {
+      background-image: 
+        radial-gradient(ellipse at 50% 20%, hsla(265, 45%, 22%, 0.15) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 80%, hsla(195, 50%, 18%, 0.12) 0%, transparent 35%);
+    }
+    
+    html.light body {
+      background-image: 
+        radial-gradient(ellipse at 50% 20%, hsla(225, 60%, 97%, 0.4) 0%, transparent 40%);
+    }
+    
+    /* Readable text width */
+    .mobile-readable {
+      max-width: 100%;
+      line-height: 1.7;
+    }
+    
+    /* Safe area for bottom navigation */
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 0px);
     }
   }
 

@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import PageTransition from "./PageTransition";
 import Navbar from "./Navbar";
+import MobileBottomNav from "./MobileBottomNav";
 import Index from "@/pages/Index";
 import Auth from "@/pages/Auth";
 import Library from "@/pages/Library";
@@ -22,9 +23,12 @@ const AnimatedRoutes = () => {
   const location = useLocation();
 
   return (
-    <>
+    <div className="pb-20 md:pb-0">
       {/* Navbar outside AnimatePresence for fixed positioning */}
       <Navbar />
+      
+      {/* Mobile Bottom Navigation */}
+      <MobileBottomNav />
       
       <AnimatePresence mode="wait" initial={false}>
       <Routes location={location} key={location.pathname}>
@@ -150,7 +154,7 @@ const AnimatedRoutes = () => {
         />
       </Routes>
       </AnimatePresence>
-    </>
+    </div>
   );
 };
 
