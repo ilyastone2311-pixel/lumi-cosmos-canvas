@@ -77,12 +77,21 @@ const Navbar = () => {
         <motion.div 
           onClick={() => navigate("/")}
           className="flex items-center gap-3 group cursor-pointer"
+          initial={{ opacity: 0, scale: 0.8, y: -10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ 
+            duration: 0.6, 
+            ease: [0.23, 1, 0.32, 1],
+            delay: 0.1 
+          }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
           <motion.div 
             className="relative flex-shrink-0 overflow-hidden rounded-xl origin-center scale-[1.5] sm:scale-[1.4] md:scale-[1.3]"
-            transition={{ duration: 0.2 }}
+            initial={{ rotate: -10, opacity: 0 }}
+            animate={{ rotate: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
           >
             <img 
               src={logoImage} 
