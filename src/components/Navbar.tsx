@@ -88,7 +88,7 @@ const Navbar = () => {
           whileTap={{ scale: 0.98 }}
         >
           <motion.div 
-            className="relative flex-shrink-0 overflow-hidden rounded-xl origin-center scale-[1.8] sm:scale-[1.7] md:scale-[1.6]"
+            className="relative flex-shrink-0 overflow-hidden rounded-xl origin-center scale-[2.2] sm:scale-[2.1] md:scale-[2.0]"
             initial={{ rotate: -10, opacity: 0 }}
             animate={{ rotate: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
