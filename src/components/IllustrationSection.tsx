@@ -1,6 +1,8 @@
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { motion, type Variants } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import AnimatedHeading from "./AnimatedHeading";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 import illustrationLearnTogether from "@/assets/illustration-learn-together.webp";
 import illustrationDiscoverNewIdeas from "@/assets/illustration-discover-new-ideas.webp";
@@ -8,6 +10,48 @@ import illustrationLearnAtYourPace from "@/assets/illustration-learn-at-your-pac
 
 const IllustrationSection = () => {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
+  const isMobile = useIsMobile();
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [activeCard, setActiveCard] = useState(0);
+
+  const featureCards = [
+    {
+      id: 1,
+      image: illustrationDiscoverNewIdeas,
+      alt: "Discover new ideas illustration",
+      title: "Discover New Ideas",
+      description: "Every article sparks curiosity and opens doors to new perspectives.",
+      glowColor: "via-amber-500/30 dark:via-yellow-500/30",
+      hoverRotate: 2,
+    },
+    {
+      id: 2,
+      image: illustrationLearnAtYourPace,
+      alt: "Learn at your pace illustration",
+      title: "Learn at Your Pace",
+      description: "Short reads designed for busy minds seeking meaningful growth.",
+      glowColor: "via-secondary/40",
+      hoverRotate: -2,
+    },
+  ];
+
+  // Handle mobile carousel scroll
+  useEffect(() => {
+    if (!isMobile || !carouselRef.current) return;
+
+    const handleScroll = () => {
+      const container = carouselRef.current;
+      if (!container) return;
+      const scrollLeft = container.scrollLeft;
+      const cardWidth = container.offsetWidth * 0.8;
+      const newActive = Math.round(scrollLeft / cardWidth);
+      setActiveCard(Math.min(newActive, featureCards.length - 1));
+    };
+
+    const container = carouselRef.current;
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, [isMobile, featureCards.length]);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -45,6 +89,148 @@ const IllustrationSection = () => {
     },
   };
 
+  // Mobile layout
+  if (isMobile) {
+    return (
+      <section
+        ref={sectionRef}
+        className="relative py-12 overflow-hidden"
+      >
+        {/* Subtle cosmic glow - reduced for mobile */}
+        <div className="absolute top-1/4 left-4 w-24 h-24 rounded-full bg-gradient-to-br from-primary/8 to-secondary/6 blur-2xl" />
+        <div className="absolute bottom-1/4 right-4 w-32 h-32 rounded-full bg-gradient-to-tl from-accent/6 to-primary/8 blur-2xl" />
+
+        <div className="container mx-auto px-4">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+            className="space-y-8"
+          >
+            {/* Mobile: Illustration first */}
+            <motion.div variants={imageVariants}>
+              <div 
+                className="relative rounded-2xl overflow-hidden p-4 bg-card/95 dark:bg-card/80 backdrop-blur-xl border border-border/50 mx-auto max-w-sm"
+                style={{
+                  boxShadow: `
+                    0 0 0 1px hsla(var(--border), 0.2),
+                    0 12px 40px hsla(var(--foreground), 0.08)
+                  `,
+                }}
+              >
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+                <img
+                  src={illustrationLearnTogether}
+                  alt="Learn together and grow together"
+                  className="w-full h-auto rounded-xl"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
+                />
+              </div>
+            </motion.div>
+
+            {/* Mobile: Headline and description */}
+            <motion.div variants={itemVariants} className="space-y-4 text-center">
+              <span 
+                className="inline-block px-3 py-1 rounded-full text-xs font-medium text-primary bg-primary/10 border border-primary/20"
+              >
+                Community
+              </span>
+              
+              <AnimatedHeading 
+                text="Learn Together, Grow Together"
+                tag="h2"
+                className="font-display text-2xl font-bold text-foreground"
+                delay={100}
+                duration={0.5}
+                stagger={0.025}
+                threshold={0.2}
+                textAlign="center"
+              />
+              <p className="text-base text-muted-foreground leading-relaxed px-2">
+                Join thousands of curious minds exploring ideas across psychology, 
+                technology, mindfulness, and more.
+              </p>
+            </motion.div>
+
+            {/* Mobile: Swipeable feature cards carousel */}
+            <motion.div variants={itemVariants} className="space-y-4">
+              <div 
+                ref={carouselRef}
+                className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 -mx-4 px-4"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                {featureCards.map((card) => (
+                  <div
+                    key={card.id}
+                    className="flex-shrink-0 snap-center"
+                    style={{ width: '80%' }}
+                  >
+                    <div
+                      className="relative rounded-2xl overflow-hidden p-5 bg-card/95 dark:bg-card/80 backdrop-blur-xl border border-border/50 h-full"
+                      style={{
+                        boxShadow: `
+                          0 0 0 1px hsla(var(--border), 0.2),
+                          0 10px 30px hsla(var(--foreground), 0.06)
+                        `,
+                      }}
+                    >
+                      <div className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent ${card.glowColor} to-transparent`} />
+                      
+                      <div className="flex flex-col items-center text-center gap-4">
+                        <img
+                          src={card.image}
+                          alt={card.alt}
+                          className="w-20 h-20 object-contain"
+                          loading="lazy"
+                          decoding="async"
+                          style={{
+                            filter: 'drop-shadow(0 6px 15px hsla(var(--foreground), 0.12))',
+                          }}
+                        />
+                        <div>
+                          <h3 className="font-display text-lg font-semibold text-foreground mb-1.5">
+                            {card.title}
+                          </h3>
+                          <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2">
+                            {card.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Pagination dots */}
+              <div className="flex justify-center gap-2">
+                {featureCards.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      activeCard === index
+                        ? 'bg-primary w-5'
+                        : 'bg-muted-foreground/30'
+                    }`}
+                    onClick={() => {
+                      carouselRef.current?.scrollTo({
+                        left: index * carouselRef.current.offsetWidth * 0.8,
+                        behavior: 'smooth',
+                      });
+                    }}
+                    aria-label={`Go to card ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+    );
+  }
+
+  // Desktop layout (unchanged)
   return (
     <section
       ref={sectionRef}
