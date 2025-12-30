@@ -1,45 +1,55 @@
 import { Clock, List, Smartphone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import AnimatedHeading from "./AnimatedHeading";
 
 const features = [
   {
     icon: Clock,
     title: "Bitesized",
-    description: "Get the key insights of the world's best books in 5 min.",
+    description: "Get key insights from the world's best books in 5 min.",
     link: "/about",
   },
   {
     icon: List,
     title: "Curated",
-    description: "Explore top content on diverse topics selected by experts",
+    description: "Top content on diverse topics selected by experts.",
     link: "/experts",
   },
   {
     icon: Smartphone,
     title: "Accessible",
-    description: "Read and listen on your phone, tablet or computer",
+    description: "Read and listen on phone, tablet or computer.",
     link: "/downloads",
   },
 ];
 
 const HowItWorks = () => {
   const navigate = useNavigate();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (!carouselRef.current) return;
+    const scrollLeft = carouselRef.current.scrollLeft;
+    const cardWidth = carouselRef.current.offsetWidth * 0.75;
+    const newIndex = Math.round(scrollLeft / cardWidth);
+    setActiveIndex(Math.min(newIndex, features.length - 1));
+  };
 
   return (
-    <section className="py-20 md:py-28 relative">
-      {/* Ambient section glow */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
+    <section className="py-16 md:py-28 relative">
+      {/* Ambient section glow - desktop only */}
+      <div className="hidden md:block absolute inset-0 pointer-events-none overflow-hidden -z-10">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-gradient-to-r from-primary/3 via-secondary/3 to-primary/3 rounded-full blur-[150px]" />
       </div>
 
-      <div className="container mx-auto max-w-7xl px-6 relative">
+      <div className="container mx-auto max-w-7xl px-5 md:px-6 relative">
         <AnimatedHeading 
           text="How Lumi works"
           tag="h2"
-          className="font-display text-3xl md:text-4xl font-bold text-center text-foreground mb-20"
+          className="font-display text-2xl md:text-4xl font-bold text-center text-foreground mb-10 md:mb-20"
           delay={50}
           duration={0.5}
           stagger={0.03}
@@ -47,7 +57,77 @@ const HowItWorks = () => {
           textAlign="center"
         />
 
-        <div className="grid md:grid-cols-3 gap-10">
+        {/* ========== MOBILE CAROUSEL (<768px) ========== */}
+        <div className="md:hidden">
+          <div 
+            ref={carouselRef}
+            onScroll={handleScroll}
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 -mx-5 px-5"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          >
+            {features.map((feature, index) => (
+              <motion.button
+                key={feature.title}
+                onClick={() => navigate(feature.link)}
+                className="flex-shrink-0 w-[75%] snap-center text-left"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div 
+                  className="relative p-5 rounded-2xl bg-card/80 backdrop-blur-sm border border-border/40 h-full"
+                  style={{
+                    boxShadow: '0 4px 20px hsla(var(--foreground), 0.06)',
+                  }}
+                >
+                  {/* Icon */}
+                  <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <feature.icon className="w-5 h-5 text-primary" />
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="font-display text-lg font-semibold text-foreground mb-2">
+                    {feature.title}
+                  </h3>
+
+                  {/* Description - max 2 lines */}
+                  <p className="text-sm text-muted-foreground leading-snug line-clamp-2">
+                    {feature.description}
+                  </p>
+
+                  {/* Arrow */}
+                  <div className="absolute bottom-5 right-5 w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="text-primary">
+                      <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Pagination dots */}
+          <div className="flex justify-center gap-2 mt-4">
+            {features.map((_, index) => (
+              <div
+                key={index}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  index === activeIndex 
+                    ? 'w-6 bg-primary' 
+                    : 'w-1.5 bg-muted-foreground/30'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* ========== DESKTOP GRID (>=768px) ========== */}
+        <div className="hidden md:grid md:grid-cols-3 gap-10">
           {features.map((feature, index) => {
             const cardRef = useRef<HTMLButtonElement>(null);
 
