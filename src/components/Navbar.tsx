@@ -5,7 +5,7 @@ import { useAdmin } from "@/hooks/useAdmin";
 import { useNavigate, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import ThemeToggle from "./ThemeToggle";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import logoImage from "@/assets/logo-navbar.webp";
 
 const Navbar = () => {
@@ -16,6 +16,12 @@ const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  
+  // Scroll-based shrinking for mobile header
+  const { scrollY } = useScroll();
+  const mobileHeaderScale = useTransform(scrollY, [0, 100], [1, 0.92]);
+  const mobileHeaderOpacity = useTransform(scrollY, [0, 50], [1, 0.95]);
+  const mobileLogoScale = useTransform(scrollY, [0, 100], [1.8, 1.5]);
 
   // Handle ESC key to close search
   useEffect(() => {
@@ -55,10 +61,76 @@ const Navbar = () => {
 
   return (
     <nav 
-      className="fixed top-0 left-0 right-0 z-50 w-full py-2 px-4 md:py-2 md:px-4"
+      className="fixed top-0 left-0 right-0 z-50 w-full py-1.5 px-3 md:py-2 md:px-4"
     >
+      {/* Mobile Header - Compact with scroll shrinking */}
+      <motion.div 
+        className="md:hidden mx-auto rounded-xl bg-card/95 backdrop-blur-xl border border-border/50"
+        style={{
+          scale: mobileHeaderScale,
+          opacity: mobileHeaderOpacity,
+          boxShadow: `
+            0 0 0 1px hsl(var(--primary) / 0.1),
+            0 0 12px hsl(var(--primary) / 0.06),
+            0 4px 20px hsl(var(--foreground) / 0.08)
+          `,
+        }}
+      >
+        <div className="relative px-3 py-1.5 flex items-center justify-between">
+          {/* Logo */}
+          <motion.div 
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 group cursor-pointer"
+            whileTap={{ scale: 0.97 }}
+          >
+            <motion.div 
+              className="relative flex-shrink-0 overflow-hidden rounded-lg origin-center"
+              style={{ scale: mobileLogoScale }}
+            >
+              <img 
+                src={logoImage} 
+                alt="Lumi" 
+                className="h-8 w-auto object-contain relative z-10 block" 
+              />
+            </motion.div>
+            <span className="font-display text-base font-bold tracking-wide text-foreground">
+              Lumi
+            </span>
+          </motion.div>
+
+          {/* Right side: Theme + Profile/Sign Up */}
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+            
+            {!loading && (
+              user ? (
+                <motion.button
+                  onClick={() => navigate("/profile")}
+                  className="p-2 rounded-full bg-gradient-to-br from-primary to-secondary"
+                  whileTap={{ scale: 0.92 }}
+                >
+                  <User className="w-4 h-4 text-primary-foreground" />
+                </motion.button>
+              ) : (
+                <motion.button
+                  onClick={() => navigate("/auth")}
+                  className="px-3 py-1.5 rounded-full text-xs font-semibold text-primary-foreground"
+                  style={{
+                    background: 'linear-gradient(135deg, hsl(190 100% 50%), hsl(270 80% 60%))',
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Sign Up
+                </motion.button>
+              )
+            )}
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Desktop Header - Unchanged */}
       <div 
-        className="mx-auto max-w-5xl rounded-xl md:rounded-2xl animate-navbar-glow bg-card/90 md:bg-card/80 backdrop-blur-xl border border-border/50"
+        className="hidden md:block mx-auto max-w-5xl rounded-2xl animate-navbar-glow bg-card/80 backdrop-blur-xl border border-border/50"
         style={{
           boxShadow: `
             0 0 0 1px hsl(var(--primary) / 0.1),
@@ -67,7 +139,7 @@ const Navbar = () => {
           `,
         }}
       >
-      <div className="relative px-3 md:px-6 py-1 md:py-1.5 flex items-center justify-between">
+      <div className="relative px-6 py-1.5 flex items-center justify-between">
         {/* Logo with glow */}
         <motion.div 
           onClick={() => navigate("/")}
@@ -83,7 +155,7 @@ const Navbar = () => {
           whileTap={{ scale: 0.98 }}
         >
           <motion.div 
-            className="relative flex-shrink-0 overflow-hidden rounded-xl origin-center scale-[1.8] md:scale-[2.0]"
+            className="relative flex-shrink-0 overflow-hidden rounded-xl origin-center scale-[2.0]"
             initial={{ rotate: -10, opacity: 0 }}
             animate={{ rotate: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
@@ -91,7 +163,7 @@ const Navbar = () => {
             <img 
               src={logoImage} 
               alt="Lumi open book logo" 
-              className="h-10 md:h-[52px] w-auto object-contain relative z-10 block" 
+              className="h-[52px] w-auto object-contain relative z-10 block" 
             />
             <div 
               className="absolute inset-0 rounded-xl opacity-5 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
@@ -103,7 +175,7 @@ const Navbar = () => {
             />
           </motion.div>
           <span 
-            className="font-display text-lg md:text-2xl font-bold tracking-wide text-foreground"
+            className="font-display text-2xl font-bold tracking-wide text-foreground"
             style={{
               textShadow: '0 0 12px hsl(270 80% 60% / 0.15)',
             }}
@@ -113,7 +185,7 @@ const Navbar = () => {
         </motion.div>
 
         {/* Center Navigation - Desktop */}
-        <div className="hidden md:flex items-center gap-1">
+        <div className="flex items-center gap-1">
           <motion.button
             onClick={() => navigate("/")}
             className={`relative px-5 py-2 rounded-full font-display font-medium text-base transition-all duration-300 ${
@@ -216,23 +288,12 @@ const Navbar = () => {
           </motion.button>
         </div>
 
-        {/* Mobile Search Button */}
-        <motion.button
-          onClick={() => setSearchOpen(true)}
-          className="md:hidden p-2 rounded-full text-muted-foreground hover:text-foreground"
-          whileTap={{ scale: 0.95 }}
-        >
-          <Search className="w-5 h-5" />
-        </motion.button>
 
-        {/* Theme Toggle & Auth */}
-        <div className="flex items-center gap-1 md:gap-2">
-          {/* Theme Toggle */}
+        {/* Desktop Auth */}
+        <div className="flex items-center gap-2">
           <ThemeToggle />
-
-          {/* Desktop Auth */}
           {!loading && (
-            <div className="hidden md:flex items-center gap-1">
+            <>
               {user ? (
                 <div className="relative" ref={dropdownRef}>
                   {/* User Account Button */}
@@ -334,14 +395,14 @@ const Navbar = () => {
                   <span className="relative text-primary-foreground">Sign Up</span>
                 </motion.button>
               )}
-            </div>
+            </>
           )}
         </div>
+      </div>
       </div>
 
       {/* Search Modal */}
       <SearchBar isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-      </div>
     </nav>
   );
 };
