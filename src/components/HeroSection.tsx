@@ -26,7 +26,7 @@ const HeroSection = () => {
     <section className="relative min-h-[100vh] flex items-center overflow-visible">
       {/* Subtle ambient glow effects - only in dark mode, removed for light */}
       <motion.div 
-        className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[150px] pointer-events-none opacity-0 dark:opacity-100 dark:bg-primary/8"
+        className="hidden md:block absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[150px] pointer-events-none opacity-0 dark:opacity-100 dark:bg-primary/8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.2, ease: premiumEase }}
@@ -35,7 +35,7 @@ const HeroSection = () => {
         }}
       />
       <motion.div 
-        className="absolute top-1/3 right-1/3 w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none opacity-0 dark:opacity-100 dark:bg-secondary/10"
+        className="hidden md:block absolute top-1/3 right-1/3 w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none opacity-0 dark:opacity-100 dark:bg-secondary/10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.3, ease: premiumEase }}
@@ -46,7 +46,7 @@ const HeroSection = () => {
 
       {/* Background geometric shape - dark mode only, completely hidden in light mode */}
       <motion.div
-        className="absolute top-20 left-10 w-32 h-32 rounded-lg rotate-45 pointer-events-none hidden dark:block dark:border dark:border-primary/5"
+        className="absolute top-20 left-10 w-32 h-32 rounded-lg rotate-45 pointer-events-none hidden dark:md:block dark:border dark:border-primary/5"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.6, ease: premiumEase }}
@@ -55,7 +55,7 @@ const HeroSection = () => {
         }}
       />
 
-      {/* Hero Illustration - positioned further right for more text breathing room */}
+      {/* Hero Illustration - DESKTOP ONLY - positioned further right for more text breathing room */}
       <motion.div 
         className="hidden lg:flex absolute top-0 bottom-0 right-[-4%] xl:right-[-6%] 2xl:right-[-8%] w-[58%] xl:w-[60%] 2xl:w-[62%] overflow-visible pointer-events-none z-0 items-center justify-center py-8"
         initial={{ opacity: 0, x: 50 }}
@@ -65,8 +65,100 @@ const HeroSection = () => {
         <HeroIllustration />
       </motion.div>
 
-      {/* Main content - Text on left, fixed width */}
-      <div className="container mx-auto max-w-[1800px] px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 w-full">
+      {/* ========== MOBILE LAYOUT (<768px) ========== */}
+      <div className="md:hidden w-full px-5 pt-20 pb-8 flex flex-col items-center">
+        {/* Mobile headline - top, centered */}
+        <motion.div 
+          className="text-center mb-5"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: premiumEase }}
+        >
+          <h1 className="font-display text-[2rem] leading-[1.2] font-bold mb-4">
+            <AnimatedHeading
+              text="Your shortcut"
+              tag="span"
+              display="block"
+              className="block text-foreground"
+              delay={100}
+              duration={0.4}
+              stagger={0.025}
+              threshold={0.1}
+            />
+            <AnimatedHeading
+              text="for quick insights"
+              tag="span"
+              display="block"
+              className="block animated-gradient-text"
+              delay={300}
+              duration={0.4}
+              stagger={0.02}
+              threshold={0.1}
+            />
+          </h1>
+          
+          {/* Mobile subheadline */}
+          <motion.p 
+            className="text-base text-muted-foreground leading-relaxed max-w-[280px] mx-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4, ease: premiumEase }}
+          >
+            Discover books, articles, and ideas for self-improvement
+          </motion.p>
+        </motion.div>
+
+        {/* Mobile CTA buttons - stacked, full width */}
+        <motion.div 
+          className="w-full flex flex-col gap-3 mb-8"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5, ease: premiumEase }}
+        >
+          <motion.button
+            onClick={() => user ? navigate("/library") : navigate("/auth")}
+            className="relative w-full py-4 rounded-2xl font-display font-semibold text-primary-foreground overflow-hidden min-h-[52px] active:scale-[0.97]"
+            whileTap={{ scale: 0.97 }}
+          >
+            <span className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_100%] animate-shimmer rounded-2xl" />
+            <span className="absolute inset-0 opacity-30 blur-lg bg-gradient-to-r from-primary to-secondary rounded-2xl" />
+            <span className="relative text-base">Get started</span>
+          </motion.button>
+
+          <motion.button
+            onClick={() => navigate("/library")}
+            className="w-full py-4 rounded-2xl font-display font-semibold text-foreground bg-card/80 border border-border/60 min-h-[52px] active:scale-[0.97]"
+            whileTap={{ scale: 0.97 }}
+          >
+            <span className="flex items-center justify-center gap-2 text-base">
+              Explore Library
+              <span>→</span>
+            </span>
+          </motion.button>
+        </motion.div>
+
+        {/* Mobile illustration - below CTAs, centered, cropped */}
+        <motion.div 
+          className="relative w-full max-w-[320px] aspect-square overflow-hidden flex items-center justify-center"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.6, ease: premiumEase }}
+        >
+          {/* Subtle cosmic glow behind illustration */}
+          <div 
+            className="absolute inset-0 rounded-full opacity-40 dark:opacity-60 pointer-events-none"
+            style={{
+              background: 'radial-gradient(circle, hsl(var(--primary) / 0.15) 0%, transparent 70%)',
+            }}
+          />
+          <div className="relative w-full h-full scale-110">
+            <HeroIllustration />
+          </div>
+        </motion.div>
+      </div>
+
+      {/* ========== DESKTOP/TABLET LAYOUT (>=768px) ========== */}
+      <div className="hidden md:block container mx-auto max-w-[1800px] px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 w-full">
         <div className="flex flex-col lg:flex-row items-center">
           
           {/* Left side - Text content - no background panel, sits directly on page */}
@@ -157,9 +249,9 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Mobile illustration - shown only on mobile/tablet */}
+          {/* Tablet illustration - shown only on tablet (md-lg) */}
           <motion.div 
-            className="lg:hidden relative w-full h-[72vh] mt-8 flex items-center justify-center"
+            className="lg:hidden relative w-full h-[60vh] mt-8 flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4, ease: premiumEase }}
@@ -169,9 +261,9 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator - desktop only */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-20"
+        className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 cursor-pointer z-20"
         onClick={scrollToContent}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
