@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { LogOut, User, Search, Settings, ChevronDown, Menu, X, Zap, Shield } from "lucide-react";
+import { LogOut, User, Search, Settings, ChevronDown, Zap, Shield } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -15,7 +15,6 @@ const Navbar = () => {
   const location = useLocation();
   const [searchOpen, setSearchOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Handle ESC key to close search
@@ -53,17 +52,13 @@ const Navbar = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
-  // Close mobile menu on route change
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [location.pathname]);
 
   return (
     <nav 
-      className="fixed top-0 left-0 right-0 z-50 w-full py-2 px-4"
+      className="fixed top-0 left-0 right-0 z-50 w-full py-2 px-4 md:py-2 md:px-4"
     >
       <div 
-        className="mx-auto max-w-5xl rounded-2xl animate-navbar-glow bg-card/80 backdrop-blur-xl border border-border/50"
+        className="mx-auto max-w-5xl rounded-xl md:rounded-2xl animate-navbar-glow bg-card/90 md:bg-card/80 backdrop-blur-xl border border-border/50"
         style={{
           boxShadow: `
             0 0 0 1px hsl(var(--primary) / 0.1),
@@ -72,7 +67,7 @@ const Navbar = () => {
           `,
         }}
       >
-      <div className="relative px-4 sm:px-6 py-1.5 flex items-center justify-between">
+      <div className="relative px-3 md:px-6 py-1 md:py-1.5 flex items-center justify-between">
         {/* Logo with glow */}
         <motion.div 
           onClick={() => navigate("/")}
@@ -88,7 +83,7 @@ const Navbar = () => {
           whileTap={{ scale: 0.98 }}
         >
           <motion.div 
-            className="relative flex-shrink-0 overflow-hidden rounded-xl origin-center scale-[2.2] sm:scale-[2.1] md:scale-[2.0]"
+            className="relative flex-shrink-0 overflow-hidden rounded-xl origin-center scale-[1.8] md:scale-[2.0]"
             initial={{ rotate: -10, opacity: 0 }}
             animate={{ rotate: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
@@ -96,7 +91,7 @@ const Navbar = () => {
             <img 
               src={logoImage} 
               alt="Lumi open book logo" 
-              className="h-14 w-auto sm:h-16 md:h-[52px] object-contain relative z-10 block" 
+              className="h-10 md:h-[52px] w-auto object-contain relative z-10 block" 
             />
             <div 
               className="absolute inset-0 rounded-xl opacity-5 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
@@ -108,7 +103,7 @@ const Navbar = () => {
             />
           </motion.div>
           <span 
-            className="font-display text-xl sm:text-2xl font-bold tracking-wide text-foreground"
+            className="font-display text-lg md:text-2xl font-bold tracking-wide text-foreground"
             style={{
               textShadow: '0 0 12px hsl(270 80% 60% / 0.15)',
             }}
@@ -230,19 +225,10 @@ const Navbar = () => {
           <Search className="w-5 h-5" />
         </motion.button>
 
-        {/* Theme Toggle, Auth & Mobile Menu */}
-        <div className="flex items-center gap-2">
+        {/* Theme Toggle & Auth */}
+        <div className="flex items-center gap-1 md:gap-2">
           {/* Theme Toggle */}
           <ThemeToggle />
-
-          {/* Mobile Menu Button */}
-          <motion.button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-full text-muted-foreground hover:text-foreground"
-            whileTap={{ scale: 0.95 }}
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </motion.button>
 
           {/* Desktop Auth */}
           {!loading && (
@@ -352,116 +338,6 @@ const Navbar = () => {
           )}
         </div>
       </div>
-
-      {/* Mobile Menu Dropdown */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden overflow-hidden border-t border-border/30"
-          >
-            <div className="px-4 py-4 space-y-1 max-h-[70vh] overflow-y-auto">
-              {/* Navigation Links - Large touch targets */}
-              <button
-                onClick={() => navigate("/")}
-                className={`w-full flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-all active:scale-[0.98] ${
-                  isActive("/")
-                    ? "bg-primary/10 text-foreground"
-                    : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
-                }`}
-              >
-                <span className="font-medium text-base">Home</span>
-              </button>
-              
-              <button
-                onClick={() => navigate("/library")}
-                className={`w-full flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-all active:scale-[0.98] ${
-                  isActive("/library")
-                    ? "bg-primary/10 text-foreground"
-                    : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
-                }`}
-              >
-                <span className="font-medium text-base">Library</span>
-              </button>
-
-              {/* Recommended - Mobile (only for logged in) */}
-              {user && (
-                <button
-                  onClick={() => navigate("/recommended")}
-                  className={`w-full flex items-center gap-3 px-4 py-4 rounded-xl text-left transition-all active:scale-[0.98] ${
-                    isActive("/recommended")
-                      ? "bg-primary/10 text-foreground"
-                      : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
-                  }`}
-                >
-                  <Zap className="w-5 h-5" />
-                  <span className="font-medium text-base">For You</span>
-                </button>
-              )}
-
-              {/* Divider */}
-              <div className="h-px bg-border/30 my-2" />
-
-              {/* User Section */}
-              {!loading && (
-                <>
-                  {user ? (
-                    <>
-                      <div className="px-4 py-2">
-                        <p className="text-sm font-medium text-foreground truncate">{user.email}</p>
-                        <p className="text-xs text-muted-foreground">Logged in</p>
-                      </div>
-                      <button
-                        onClick={() => navigate("/profile")}
-                        className="w-full flex items-center gap-3 px-4 py-4 rounded-xl text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all active:scale-[0.98]"
-                      >
-                        <User className="w-5 h-5" />
-                        <span className="font-medium text-base">Profile</span>
-                      </button>
-                      <button
-                        onClick={() => navigate("/settings")}
-                        className="w-full flex items-center gap-3 px-4 py-4 rounded-xl text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all active:scale-[0.98]"
-                      >
-                        <Settings className="w-5 h-5" />
-                        <span className="font-medium text-base">Settings</span>
-                      </button>
-                      {isAdmin && (
-                        <button
-                          onClick={() => navigate("/admin")}
-                          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all"
-                        >
-                          <Shield className="w-4 h-4 text-amber-500" />
-                          <span className="font-medium">Admin Panel</span>
-                        </button>
-                      )}
-                      <button
-                        onClick={handleSignOut}
-                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-destructive hover:bg-destructive/10 transition-all"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        <span className="font-medium">Sign Out</span>
-                      </button>
-                    </>
-                  ) : (
-                    <button
-                      onClick={() => navigate("/auth")}
-                      className="w-full py-3 rounded-xl text-sm font-semibold text-primary-foreground"
-                      style={{
-                        background: 'linear-gradient(135deg, hsl(190 100% 50%), hsl(270 80% 60%))',
-                      }}
-                    >
-                      Sign Up / Log In
-                    </button>
-                  )}
-                </>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Search Modal */}
       <SearchBar isOpen={searchOpen} onClose={() => setSearchOpen(false)} />

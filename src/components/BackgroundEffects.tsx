@@ -1,5 +1,6 @@
 import { useState, useEffect, memo, useMemo } from "react";
 import FloatingLines from "./FloatingLines";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Lightweight CSS-based particles - enhanced for light mode visibility
 const BackgroundParticles = memo(({ isLight }: { isLight: boolean }) => {
@@ -48,6 +49,7 @@ BackgroundParticles.displayName = 'BackgroundParticles';
 const BackgroundEffects = () => {
   const [isLight, setIsLight] = useState(false);
   const [key, setKey] = useState(0);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const checkTheme = () => {
@@ -67,6 +69,11 @@ const BackgroundEffects = () => {
   const lightColors = ['#7dd3fc', '#93c5fd', '#a5b4fc', '#c4b5fd', '#f0abfc'];
   // Dark mode: deeper, more saturated colors - NO white/bright cores
   const darkColors = ['#1d4ed8', '#6d28d9', '#7c3aed', '#a21caf', '#0891b2'];
+  
+  // Mobile: reduce line count and opacity for better readability
+  const mobileLineCount = isMobile ? [2, 3, 2] : undefined;
+  const mobileOpacityLight = isMobile ? 0.1 : 0.16;
+  const mobileOpacityDark = isMobile ? 0.4 : 0.7;
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
@@ -114,21 +121,21 @@ const BackgroundEffects = () => {
           className="absolute inset-0 pointer-events-auto" 
           style={{ 
             zIndex: 1,
-            opacity: 0.16,
+            opacity: mobileOpacityLight,
           }}
         >
           <FloatingLines
             key={`light-${key}`}
             linesGradient={lightColors}
             enabledWaves={['top', 'middle', 'bottom']}
-            lineCount={[3, 4, 3]}
+            lineCount={mobileLineCount ?? [3, 4, 3]}
             lineDistance={[10, 8, 9]}
             bendRadius={5.0}
             bendStrength={-0.35}
-            interactive={true}
-            parallax={true}
+            interactive={!isMobile}
+            parallax={!isMobile}
             parallaxStrength={0.15}
-            animationSpeed={0.25}
+            animationSpeed={isMobile ? 0.2 : 0.25}
             mouseDamping={0.03}
             mixBlendMode="screen"
           />
@@ -138,21 +145,21 @@ const BackgroundEffects = () => {
           className="absolute inset-0 pointer-events-auto" 
           style={{ 
             zIndex: 1,
-            opacity: 0.7,
+            opacity: mobileOpacityDark,
           }}
         >
           <FloatingLines
             key={`dark-${key}`}
             linesGradient={darkColors}
             enabledWaves={['top', 'middle', 'bottom']}
-            lineCount={[4, 6, 7]}
+            lineCount={mobileLineCount ?? [4, 6, 7]}
             lineDistance={[7, 6, 5]}
             bendRadius={5.0}
             bendStrength={-0.5}
-            interactive={true}
-            parallax={true}
+            interactive={!isMobile}
+            parallax={!isMobile}
             parallaxStrength={0.2}
-            animationSpeed={0.7}
+            animationSpeed={isMobile ? 0.5 : 0.7}
             mouseDamping={0.04}
             mixBlendMode="screen"
           />
