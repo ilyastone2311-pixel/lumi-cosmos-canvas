@@ -45,6 +45,7 @@ interface CategoryCardProps {
   delay?: number;
   isFavorite?: boolean;
   onToggleFavorite?: () => void;
+  compact?: boolean;
 }
 
 const CategoryCard = ({ 
@@ -53,7 +54,8 @@ const CategoryCard = ({
   image, 
   delay = 0, 
   isFavorite = false,
-  onToggleFavorite 
+  onToggleFavorite,
+  compact = false,
 }: CategoryCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
@@ -213,8 +215,9 @@ const CategoryCard = ({
           <button
             onClick={handleFavoriteClick}
             className={`
-              absolute top-3 right-3 sm:top-4 sm:right-4 z-20
-              w-11 h-11 sm:w-10 sm:h-10 rounded-full
+              absolute z-20
+              ${compact ? 'top-2 right-2 w-8 h-8' : 'top-3 right-3 sm:top-4 sm:right-4 w-11 h-11 sm:w-10 sm:h-10'}
+              rounded-full
               flex items-center justify-center
               transition-all duration-300
               hover:scale-110 active:scale-95
@@ -227,7 +230,7 @@ const CategoryCard = ({
             }}
           >
             <Heart 
-              className={`w-5 h-5 transition-all duration-300 ${isHovered ? "scale-110" : ""}`}
+              className={`transition-all duration-300 ${isHovered ? "scale-110" : ""} ${compact ? 'w-4 h-4' : 'w-5 h-5'}`}
               style={{
                 color: isFavorite ? 'hsl(var(--accent))' : 'hsl(var(--muted-foreground))',
                 filter: isFavorite ? 'drop-shadow(0 0 8px hsla(var(--accent), 0.8))' : 'none',
@@ -237,7 +240,7 @@ const CategoryCard = ({
           </button>
 
           {/* Image Container */}
-          <div className="relative h-40 sm:h-48 overflow-hidden">
+          <div className={`relative overflow-hidden ${compact ? 'h-24' : 'h-40 sm:h-48'}`}>
             <img
               src={image}
               alt={title}
@@ -256,21 +259,25 @@ const CategoryCard = ({
             />
             
             {/* Subtle scan line effect */}
-            <div 
-              className={`absolute inset-0 pointer-events-none transition-opacity duration-500 ${isHovered ? 'opacity-30' : 'opacity-0'}`}
-              style={{
-                background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, hsla(var(--primary), 0.03) 2px, hsla(var(--primary), 0.03) 4px)',
-              }}
-            />
+            {!compact && (
+              <div 
+                className={`absolute inset-0 pointer-events-none transition-opacity duration-500 ${isHovered ? 'opacity-30' : 'opacity-0'}`}
+                style={{
+                  background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, hsla(var(--primary), 0.03) 2px, hsla(var(--primary), 0.03) 4px)',
+                }}
+              />
+            )}
           </div>
 
           {/* Content - Enhanced readability with backdrop */}
-          <div className="relative p-4 sm:p-6">
+          <div className={`relative ${compact ? 'p-3' : 'p-4 sm:p-6'}`}>
             {/* Subtle backdrop for text legibility */}
             <div className="absolute inset-0 bg-gradient-to-t from-card via-card/95 to-card/80 pointer-events-none" />
             
             <h3 
-              className="relative font-display text-base sm:text-lg font-semibold mb-1.5 sm:mb-2 tracking-wide transition-all duration-300 text-card-foreground"
+              className={`relative font-display font-semibold tracking-wide transition-all duration-300 text-card-foreground ${
+                compact ? 'text-sm mb-1' : 'text-base sm:text-lg mb-1.5 sm:mb-2'
+              }`}
               style={{
                 color: isHovered ? 'hsl(var(--primary))' : undefined,
                 textShadow: isHovered ? '0 0 20px hsla(var(--primary), 0.5), 0 0 40px hsla(var(--primary), 0.2)' : 'none',
@@ -278,7 +285,9 @@ const CategoryCard = ({
             >
               {title}
             </h3>
-            <p className="relative text-sm text-foreground/70 dark:text-foreground/60 line-clamp-2 leading-relaxed font-medium">
+            <p className={`relative text-foreground/70 dark:text-foreground/60 leading-relaxed font-medium ${
+              compact ? 'text-xs line-clamp-1' : 'text-sm line-clamp-2'
+            }`}>
               {subtitle}
             </p>
 
