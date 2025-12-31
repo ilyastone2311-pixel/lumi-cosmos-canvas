@@ -46,6 +46,7 @@ interface CategoryCardProps {
   isFavorite?: boolean;
   onToggleFavorite?: () => void;
   compact?: boolean;
+  homeCompact?: boolean; // Special compact mode for Home page on mobile
 }
 
 const CategoryCard = ({ 
@@ -56,6 +57,7 @@ const CategoryCard = ({
   isFavorite = false,
   onToggleFavorite,
   compact = false,
+  homeCompact = false,
 }: CategoryCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
@@ -211,12 +213,17 @@ const CategoryCard = ({
             }}
           />
 
-          {/* Favorite Button - larger touch target on mobile */}
+          {/* Favorite Button - sized based on variant */}
           <button
             onClick={handleFavoriteClick}
             className={`
               absolute z-20
-              ${compact ? 'top-2 right-2 w-8 h-8' : 'top-3 right-3 sm:top-4 sm:right-4 w-11 h-11 sm:w-10 sm:h-10'}
+              ${homeCompact 
+                ? 'top-2 right-2 w-8 h-8 md:top-3 md:right-3 md:w-10 md:h-10' 
+                : compact 
+                  ? 'top-2 right-2 w-8 h-8' 
+                  : 'top-3 right-3 sm:top-4 sm:right-4 w-11 h-11 sm:w-10 sm:h-10'
+              }
               rounded-full
               flex items-center justify-center
               transition-all duration-300
@@ -230,7 +237,9 @@ const CategoryCard = ({
             }}
           >
             <Heart 
-              className={`transition-all duration-300 ${isHovered ? "scale-110" : ""} ${compact ? 'w-4 h-4' : 'w-5 h-5'}`}
+              className={`transition-all duration-300 ${isHovered ? "scale-110" : ""} ${
+                homeCompact || compact ? 'w-4 h-4' : 'w-5 h-5'
+              }`}
               style={{
                 color: isFavorite ? 'hsl(var(--accent))' : 'hsl(var(--muted-foreground))',
                 filter: isFavorite ? 'drop-shadow(0 0 8px hsla(var(--accent), 0.8))' : 'none',
@@ -239,8 +248,14 @@ const CategoryCard = ({
             />
           </button>
 
-          {/* Image Container */}
-          <div className={`relative overflow-hidden ${compact ? 'h-24' : 'h-40 sm:h-48'}`}>
+          {/* Image Container - homeCompact uses smaller cropped preview on mobile */}
+          <div className={`relative overflow-hidden ${
+            homeCompact 
+              ? 'h-16 md:h-40 md:sm:h-48' 
+              : compact 
+                ? 'h-24' 
+                : 'h-40 sm:h-48'
+          }`}>
             <img
               src={image}
               alt={title}
@@ -250,16 +265,19 @@ const CategoryCard = ({
                 w-full h-full object-cover
                 transition-all duration-700 ease-out
                 ${isHovered ? "scale-110 brightness-110" : "scale-100 brightness-100"}
+                ${homeCompact ? 'object-top' : ''}
               `}
             />
             
             {/* Image overlay with gradient - theme aware */}
             <div 
-              className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent"
+              className={`absolute inset-0 bg-gradient-to-t from-card ${
+                homeCompact ? 'via-card/70' : 'via-card/50'
+              } to-transparent`}
             />
             
             {/* Subtle scan line effect */}
-            {!compact && (
+            {!compact && !homeCompact && (
               <div 
                 className={`absolute inset-0 pointer-events-none transition-opacity duration-500 ${isHovered ? 'opacity-30' : 'opacity-0'}`}
                 style={{
@@ -270,13 +288,23 @@ const CategoryCard = ({
           </div>
 
           {/* Content - Enhanced readability with backdrop */}
-          <div className={`relative ${compact ? 'p-3' : 'p-4 sm:p-6'}`}>
+          <div className={`relative ${
+            homeCompact 
+              ? 'p-3 md:p-4 md:sm:p-6' 
+              : compact 
+                ? 'p-3' 
+                : 'p-4 sm:p-6'
+          }`}>
             {/* Subtle backdrop for text legibility */}
             <div className="absolute inset-0 bg-gradient-to-t from-card via-card/95 to-card/80 pointer-events-none" />
             
             <h3 
               className={`relative font-display font-semibold tracking-wide transition-all duration-300 text-card-foreground ${
-                compact ? 'text-sm mb-1' : 'text-base sm:text-lg mb-1.5 sm:mb-2'
+                homeCompact 
+                  ? 'text-sm md:text-base md:sm:text-lg mb-1 md:mb-1.5 md:sm:mb-2' 
+                  : compact 
+                    ? 'text-sm mb-1' 
+                    : 'text-base sm:text-lg mb-1.5 sm:mb-2'
               }`}
               style={{
                 color: isHovered ? 'hsl(var(--primary))' : undefined,
@@ -286,7 +314,11 @@ const CategoryCard = ({
               {title}
             </h3>
             <p className={`relative text-foreground/70 dark:text-foreground/60 leading-relaxed font-medium ${
-              compact ? 'text-xs line-clamp-1' : 'text-sm line-clamp-2'
+              homeCompact 
+                ? 'text-xs line-clamp-2 md:text-sm md:line-clamp-2' 
+                : compact 
+                  ? 'text-xs line-clamp-1' 
+                  : 'text-sm line-clamp-2'
             }`}>
               {subtitle}
             </p>
