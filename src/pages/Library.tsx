@@ -194,22 +194,19 @@ const Library = () => {
               </div>
             </div>
 
-            {/* Categories Grid - 2 columns on mobile, 1 on very small */}
+            {/* Categories Grid - 2 columns on mobile, single column on very small */}
             <section className="mt-4">
               {filteredCategories.length === 0 ? (
                 <div className="text-center py-12">
                   <p className="text-muted-foreground text-sm">No categories found</p>
                 </div>
               ) : (
-                <div 
-                  className="grid gap-3"
-                  style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}
-                >
+                <div className="grid grid-cols-2 min-[320px]:grid-cols-2 max-[319px]:grid-cols-1 gap-2.5">
                   {filteredCategories.map((category, index) => (
                     <div
                       key={category.title}
                       className="animate-fade-in"
-                      style={{ animationDelay: `${index * 50}ms` }}
+                      style={{ animationDelay: `${index * 40}ms` }}
                     >
                       <CategoryCard
                         title={category.title}
@@ -217,7 +214,7 @@ const Library = () => {
                         image={category.image}
                         isFavorite={isFavorite(category.title)}
                         onToggleFavorite={() => toggleFavorite(category.title)}
-                        compact
+                        libraryCompact
                       />
                     </div>
                   ))}
