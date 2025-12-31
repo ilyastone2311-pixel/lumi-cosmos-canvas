@@ -23,7 +23,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-[100vh] flex items-center overflow-visible">
+    <section className="relative min-h-[85vh] sm:min-h-[100vh] flex items-center overflow-visible">
       {/* Subtle ambient glow effects - only in dark mode, removed for light */}
       <motion.div 
         className="hidden md:block absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[150px] pointer-events-none opacity-0 dark:opacity-100 dark:bg-primary/8"
@@ -67,7 +67,7 @@ const HeroSection = () => {
 
       {/* ========== MOBILE LAYOUT (<768px) ========== */}
       {/* Centered vertically in viewport, no illustration, increased spacing */}
-      <div className="md:hidden w-full min-h-[100vh] px-6 flex flex-col items-center justify-center">
+      <div className="md:hidden w-full min-h-[75vh] px-6 flex flex-col items-center justify-center py-8">
         {/* Subtle cosmic glow accents */}
         <div 
           className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full pointer-events-none opacity-60 dark:opacity-80"

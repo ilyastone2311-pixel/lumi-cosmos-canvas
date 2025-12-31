@@ -84,7 +84,7 @@ const Index = () => {
       <BackgroundEffects />
 
       {/* Main Content - all sections are transparent to show background through */}
-      <main id="main-content" className="relative z-10 pt-20 sm:pt-28">
+      <main id="main-content" className="relative z-10 pt-16 sm:pt-28">
         {/* Hero Section */}
         <HeroSection />
 
@@ -100,7 +100,7 @@ const Index = () => {
 
         {/* Categories Section */}
         <ScrollSection direction="up" delay={0.1}>
-        <section className="py-8 sm:py-24 px-4 sm:px-6 relative">
+        <section className="py-4 sm:py-24 px-4 sm:px-6 relative">
             {/* Soft ambient glow */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
               <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[180px]" />
@@ -176,7 +176,7 @@ const Index = () => {
 
         {/* Bottom CTA */}
         <ScrollSection direction="up" delay={0.1}>
-          <section className="py-16 sm:py-24 px-4 sm:px-6 relative">
+          <section className="py-10 sm:py-24 px-4 sm:px-6 relative">
             {/* Background glow */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="w-[600px] h-[400px] bg-gradient-to-r from-primary/8 via-secondary/8 to-primary/8 rounded-full blur-[120px]" />
@@ -281,7 +281,7 @@ const Index = () => {
         </ScrollSection>
 
         {/* Bottom spacing */}
-        <div className="h-20" />
+        <div className="h-12 sm:h-20" />
       </main>
     </div>
   );
