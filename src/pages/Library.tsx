@@ -123,7 +123,7 @@ const Library = () => {
       <div className="min-h-screen relative overflow-hidden">
         <BackgroundEffects />
 
-        <main id="main-content" className="relative z-10 pt-16 pb-24 px-4">
+        <main id="main-content" className="relative z-10 pt-20 pb-24 px-4">
           <div className="container mx-auto">
             {/* Header */}
             <header className="mb-4">
