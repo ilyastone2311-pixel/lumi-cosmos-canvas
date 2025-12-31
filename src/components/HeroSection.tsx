@@ -66,15 +66,32 @@ const HeroSection = () => {
       </motion.div>
 
       {/* ========== MOBILE LAYOUT (<768px) ========== */}
-      <div className="md:hidden w-full px-5 pt-20 pb-8 flex flex-col items-center">
-        {/* Mobile headline - top, centered */}
+      {/* Centered vertically in viewport, no illustration, increased spacing */}
+      <div className="md:hidden w-full min-h-[100vh] px-6 flex flex-col items-center justify-center">
+        {/* Subtle cosmic glow accents */}
+        <div 
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full pointer-events-none opacity-60 dark:opacity-80"
+          style={{
+            background: 'radial-gradient(circle, hsl(var(--primary) / 0.12) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+          }}
+        />
+        <div 
+          className="absolute bottom-1/3 left-1/4 w-[200px] h-[200px] rounded-full pointer-events-none opacity-40 dark:opacity-60"
+          style={{
+            background: 'radial-gradient(circle, hsl(var(--secondary) / 0.15) 0%, transparent 70%)',
+            filter: 'blur(50px)',
+          }}
+        />
+
+        {/* Mobile headline - centered */}
         <motion.div 
-          className="text-center mb-5"
+          className="text-center mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: premiumEase }}
         >
-          <h1 className="font-display text-[2rem] leading-[1.2] font-bold mb-4">
+          <h1 className="font-display text-[2.25rem] leading-[1.15] font-bold mb-6">
             <AnimatedHeading
               text="Your shortcut"
               tag="span"
@@ -97,9 +114,9 @@ const HeroSection = () => {
             />
           </h1>
           
-          {/* Mobile subheadline */}
+          {/* Mobile subheadline - increased spacing */}
           <motion.p 
-            className="text-base text-muted-foreground leading-relaxed max-w-[280px] mx-auto"
+            className="text-base text-muted-foreground leading-relaxed max-w-[300px] mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4, ease: premiumEase }}
@@ -108,52 +125,35 @@ const HeroSection = () => {
           </motion.p>
         </motion.div>
 
-        {/* Mobile CTA buttons - stacked, full width */}
+        {/* Mobile CTA buttons - stacked, full width, increased gap */}
         <motion.div 
-          className="w-full flex flex-col gap-3 mb-8"
+          className="w-full max-w-[320px] flex flex-col gap-4"
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5, ease: premiumEase }}
         >
+          {/* Primary CTA - full width */}
           <motion.button
             onClick={() => user ? navigate("/library") : navigate("/auth")}
-            className="relative w-full py-4 rounded-2xl font-display font-semibold text-primary-foreground overflow-hidden min-h-[52px] active:scale-[0.97]"
+            className="relative w-full py-4 rounded-2xl font-display font-semibold text-primary-foreground overflow-hidden min-h-[56px] active:scale-[0.97]"
             whileTap={{ scale: 0.97 }}
           >
             <span className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_100%] animate-shimmer rounded-2xl" />
             <span className="absolute inset-0 opacity-30 blur-lg bg-gradient-to-r from-primary to-secondary rounded-2xl" />
-            <span className="relative text-base">Get started</span>
+            <span className="relative text-base font-semibold">Get started</span>
           </motion.button>
 
+          {/* Secondary CTA - below primary */}
           <motion.button
             onClick={() => navigate("/library")}
-            className="w-full py-4 rounded-2xl font-display font-semibold text-foreground bg-card/80 border border-border/60 min-h-[52px] active:scale-[0.97]"
+            className="w-full py-4 rounded-2xl font-display font-semibold text-foreground bg-card/80 backdrop-blur-sm border border-border/60 min-h-[56px] active:scale-[0.97]"
             whileTap={{ scale: 0.97 }}
           >
             <span className="flex items-center justify-center gap-2 text-base">
               Explore Library
-              <span>→</span>
+              <span className="text-muted-foreground">→</span>
             </span>
           </motion.button>
-        </motion.div>
-
-        {/* Mobile illustration - below CTAs, centered, cropped */}
-        <motion.div 
-          className="relative w-full max-w-[320px] aspect-square overflow-hidden flex items-center justify-center"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: premiumEase }}
-        >
-          {/* Subtle cosmic glow behind illustration */}
-          <div 
-            className="absolute inset-0 rounded-full opacity-40 dark:opacity-60 pointer-events-none"
-            style={{
-              background: 'radial-gradient(circle, hsl(var(--primary) / 0.15) 0%, transparent 70%)',
-            }}
-          />
-          <div className="relative w-full h-full scale-110">
-            <HeroIllustration />
-          </div>
         </motion.div>
       </div>
 
