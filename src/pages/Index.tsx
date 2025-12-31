@@ -151,11 +151,11 @@ const Index = () => {
                 </motion.div>
               </SectionHeader>
 
-              {/* Categories Grid - tighter gap on mobile */}
+              {/* Categories Grid - balanced spacing on mobile for vertical rhythm */}
               <CardGrid 
                 staggerDelay={0.08} 
                 baseDelay={0.2}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8 lg:gap-10"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 lg:gap-10"
               >
                 {categories.map((category, index) => (
                   <CategoryCard
