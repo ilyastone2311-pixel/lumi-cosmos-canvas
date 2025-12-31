@@ -39,7 +39,7 @@ const HowItWorks = () => {
   };
 
   return (
-    <section className="py-16 md:py-28 relative">
+    <section className="py-8 md:py-28 relative">
       {/* Ambient section glow - desktop only */}
       <div className="hidden md:block absolute inset-0 pointer-events-none overflow-hidden -z-10">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-gradient-to-r from-primary/3 via-secondary/3 to-primary/3 rounded-full blur-[150px]" />
@@ -49,7 +49,7 @@ const HowItWorks = () => {
         <AnimatedHeading 
           text="How Lumi works"
           tag="h2"
-          className="font-display text-2xl md:text-4xl font-bold text-center text-foreground mb-10 md:mb-20"
+          className="font-display text-2xl md:text-4xl font-bold text-center text-foreground mb-6 md:mb-20"
           delay={50}
           duration={0.5}
           stagger={0.03}

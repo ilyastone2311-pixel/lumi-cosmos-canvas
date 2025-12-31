@@ -94,7 +94,7 @@ const IllustrationSection = () => {
     return (
       <section
         ref={sectionRef}
-        className="relative py-12 overflow-hidden"
+        className="relative py-6 overflow-hidden"
       >
         {/* Subtle cosmic glow - reduced for mobile */}
         <div className="absolute top-1/4 left-4 w-24 h-24 rounded-full bg-gradient-to-br from-primary/8 to-secondary/6 blur-2xl" />
@@ -105,7 +105,7 @@ const IllustrationSection = () => {
             variants={containerVariants}
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
-            className="space-y-8"
+            className="space-y-5"
           >
             {/* Mobile: Illustration first */}
             <motion.div variants={imageVariants}>
@@ -155,7 +155,7 @@ const IllustrationSection = () => {
             </motion.div>
 
             {/* Mobile: Swipeable feature cards carousel */}
-            <motion.div variants={itemVariants} className="space-y-4">
+            <motion.div variants={itemVariants} className="space-y-3">
               <div 
                 ref={carouselRef}
                 className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 -mx-4 px-4"
