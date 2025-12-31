@@ -167,6 +167,7 @@ const Index = () => {
                     isFavorite={isFavorite(category.title)}
                     onToggleFavorite={() => toggleFavorite(category.title)}
                     homeCompact
+                    homeFeatured={index === 0}
                   />
                 ))}
               </CardGrid>
