@@ -265,16 +265,23 @@ const CategoryCard = ({
                 w-full h-full object-cover
                 transition-all duration-700 ease-out
                 ${isHovered ? "scale-110 brightness-110" : "scale-100 brightness-100"}
-                ${homeCompact ? 'object-top' : ''}
+                ${homeCompact ? 'object-top blur-[1px] brightness-[0.7] md:blur-0 md:brightness-100' : ''}
               `}
             />
             
-            {/* Image overlay with gradient - theme aware */}
+            {/* Image overlay with gradient - theme aware, enhanced darkening on mobile for homeCompact */}
             <div 
               className={`absolute inset-0 bg-gradient-to-t from-card ${
-                homeCompact ? 'via-card/70' : 'via-card/50'
-              } to-transparent`}
+                homeCompact 
+                  ? 'via-card/80 md:via-card/70' 
+                  : 'via-card/50'
+              } to-transparent ${homeCompact ? 'backdrop-blur-[0.5px] md:backdrop-blur-0' : ''}`}
             />
+            
+            {/* Additional subtle darkening overlay for mobile homeCompact */}
+            {homeCompact && (
+              <div className="absolute inset-0 bg-foreground/10 md:bg-transparent pointer-events-none" />
+            )}
             
             {/* Subtle scan line effect */}
             {!compact && !homeCompact && (
