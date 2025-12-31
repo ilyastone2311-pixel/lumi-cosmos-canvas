@@ -47,6 +47,7 @@ interface CategoryCardProps {
   onToggleFavorite?: () => void;
   compact?: boolean;
   homeCompact?: boolean; // Special compact mode for Home page on mobile
+  libraryCompact?: boolean; // Ultra-compact for Library mobile grid
 }
 
 const CategoryCard = ({ 
@@ -58,6 +59,7 @@ const CategoryCard = ({
   onToggleFavorite,
   compact = false,
   homeCompact = false,
+  libraryCompact = false,
 }: CategoryCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
@@ -220,35 +222,74 @@ const CategoryCard = ({
             onClick={handleFavoriteClick}
             className={`
               absolute z-20
-              ${homeCompact 
-                ? 'top-2 right-2 w-8 h-8 md:top-3 md:right-3 md:w-10 md:h-10' 
-                : compact 
-                  ? 'top-2 right-2 w-8 h-8' 
-                  : 'top-3 right-3 sm:top-4 sm:right-4 w-11 h-11 sm:w-10 sm:h-10'
+              ${libraryCompact
+                ? 'top-1.5 right-1.5 w-6 h-6'
+                : homeCompact 
+                  ? 'top-2 right-2 w-8 h-8 md:top-3 md:right-3 md:w-10 md:h-10' 
+                  : compact 
+                    ? 'top-2 right-2 w-8 h-8' 
+                    : 'top-3 right-3 sm:top-4 sm:right-4 w-11 h-11 sm:w-10 sm:h-10'
               }
               rounded-full
               flex items-center justify-center
               transition-all duration-300
               hover:scale-110 active:scale-95
-              backdrop-blur-md bg-muted/60 border border-border
+              ${libraryCompact 
+                ? 'backdrop-blur-sm bg-background/40 border border-border/30' 
+                : 'backdrop-blur-md bg-muted/60 border border-border'
+              }
             `}
             style={{
-              boxShadow: isFavorite 
-                ? '0 0 20px hsla(var(--accent), 0.5), 0 0 40px hsla(var(--accent), 0.2)' 
-                : '0 4px 15px hsl(var(--foreground) / 0.15)',
+              boxShadow: libraryCompact
+                ? 'none'
+                : isFavorite 
+                  ? '0 0 20px hsla(var(--accent), 0.5), 0 0 40px hsla(var(--accent), 0.2)' 
+                  : '0 4px 15px hsl(var(--foreground) / 0.15)',
             }}
           >
             <Heart 
               className={`transition-all duration-300 ${isHovered ? "scale-110" : ""} ${
-                homeCompact || compact ? 'w-4 h-4' : 'w-5 h-5'
+                libraryCompact ? 'w-3 h-3' : homeCompact || compact ? 'w-4 h-4' : 'w-5 h-5'
               }`}
               style={{
-                color: isFavorite ? 'hsl(var(--accent))' : 'hsl(var(--muted-foreground))',
-                filter: isFavorite ? 'drop-shadow(0 0 8px hsla(var(--accent), 0.8))' : 'none',
+                color: isFavorite 
+                  ? 'hsl(var(--accent))' 
+                  : libraryCompact 
+                    ? 'hsl(var(--muted-foreground) / 0.6)' 
+                    : 'hsl(var(--muted-foreground))',
+                filter: isFavorite && !libraryCompact ? 'drop-shadow(0 0 8px hsla(var(--accent), 0.8))' : 'none',
               }}
               fill={isFavorite ? "currentColor" : "none"}
             />
           </button>
+
+          {/* LIBRARY COMPACT MOBILE LAYOUT */}
+          {libraryCompact && (
+            <div className="relative h-[120px] overflow-hidden">
+              {/* Background illustration - subtle accent */}
+              <div className="absolute inset-0">
+                <img
+                  src={image}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-center brightness-[0.4] scale-110"
+                />
+                {/* Strong overlay for text readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/85 to-card/60" />
+              </div>
+              
+              {/* Content */}
+              <div className="relative z-10 h-full flex flex-col justify-end p-3 pr-8">
+                <h3 className="font-display font-semibold text-sm leading-tight text-card-foreground mb-0.5">
+                  {title}
+                </h3>
+                <p className="text-[11px] text-foreground/70 leading-snug line-clamp-1">
+                  {subtitle}
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* MOBILE LAYOUT for homeCompact: Text first, illustration as background */}
           {homeCompact && (
@@ -289,7 +330,7 @@ const CategoryCard = ({
           )}
 
           {/* DESKTOP LAYOUT: Original structure with image on top */}
-          <div className={homeCompact ? 'hidden md:block' : ''}>
+          <div className={(homeCompact || libraryCompact) ? 'hidden md:block' : ''}>
             {/* Image Container */}
             <div className={`relative overflow-hidden ${
               homeCompact 
