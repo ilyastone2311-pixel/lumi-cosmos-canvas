@@ -166,6 +166,7 @@ const Index = () => {
                     delay={index * 80}
                     isFavorite={isFavorite(category.title)}
                     onToggleFavorite={() => toggleFavorite(category.title)}
+                    homeCompact
                   />
                 ))}
               </CardGrid>
