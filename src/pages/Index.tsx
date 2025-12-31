@@ -100,7 +100,7 @@ const Index = () => {
 
         {/* Categories Section */}
         <ScrollSection direction="up" delay={0.1}>
-          <section className="py-16 sm:py-24 px-4 sm:px-6 relative">
+        <section className="py-8 sm:py-24 px-4 sm:px-6 relative">
             {/* Soft ambient glow */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
               <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[180px]" />
@@ -108,12 +108,12 @@ const Index = () => {
             </div>
 
             <div className="container mx-auto max-w-7xl relative">
-              {/* Section Header */}
-              <SectionHeader className="text-center mb-12 sm:mb-20 relative">
+              {/* Section Header - Compact on mobile */}
+              <SectionHeader className="text-center mb-5 sm:mb-20 relative">
                 <AnimatedHeading 
                   text="Explore Categories"
                   tag="h2"
-                  className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4"
+                  className="font-display text-xl sm:text-3xl md:text-4xl font-semibold sm:font-bold text-foreground mb-1.5 sm:mb-4"
                   delay={50}
                   duration={0.5}
                   stagger={0.025}
@@ -121,7 +121,7 @@ const Index = () => {
                   textAlign="center"
                 />
                 <motion.p 
-                  className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto px-4"
+                  className="text-xs sm:text-base text-muted-foreground max-w-xl mx-auto px-4"
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-80px" }}
@@ -133,9 +133,9 @@ const Index = () => {
                   }
                 </motion.p>
                 
-                {/* Decorative line */}
+                {/* Decorative line - hidden on mobile */}
                 <motion.div 
-                  className="mt-8 flex justify-center"
+                  className="mt-4 sm:mt-8 hidden sm:flex justify-center"
                   initial={{ opacity: 0, scaleX: 0 }}
                   whileInView={{ opacity: 1, scaleX: 1 }}
                   viewport={{ once: true, margin: "-80px" }}
@@ -151,11 +151,11 @@ const Index = () => {
                 </motion.div>
               </SectionHeader>
 
-              {/* Categories Grid */}
+              {/* Categories Grid - tighter gap on mobile */}
               <CardGrid 
                 staggerDelay={0.08} 
                 baseDelay={0.2}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 lg:gap-10"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8 lg:gap-10"
               >
                 {categories.map((category, index) => (
                   <CategoryCard
