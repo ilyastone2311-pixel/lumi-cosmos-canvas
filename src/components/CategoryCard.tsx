@@ -47,7 +47,6 @@ interface CategoryCardProps {
   onToggleFavorite?: () => void;
   compact?: boolean;
   homeCompact?: boolean; // Special compact mode for Home page on mobile
-  homeFeatured?: boolean; // First card on mobile gets more prominence
 }
 
 const CategoryCard = ({ 
@@ -59,7 +58,6 @@ const CategoryCard = ({
   onToggleFavorite,
   compact = false,
   homeCompact = false,
-  homeFeatured = false,
 }: CategoryCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
@@ -254,7 +252,7 @@ const CategoryCard = ({
 
           {/* MOBILE LAYOUT for homeCompact: Text first, illustration as background */}
           {homeCompact && (
-            <div className={`md:hidden relative ${homeFeatured ? 'min-h-[120px]' : 'min-h-[80px]'}`}>
+            <div className="md:hidden relative min-h-[88px]">
               {/* Background illustration - positioned absolutely */}
               <div className="absolute inset-0 overflow-hidden">
                 <img
@@ -262,36 +260,24 @@ const CategoryCard = ({
                   alt=""
                   loading="lazy"
                   decoding="async"
-                  className={`w-full h-full object-cover object-center scale-110 ${
-                    homeFeatured 
-                      ? 'blur-[1px] brightness-[0.6]' 
-                      : 'blur-[2px] brightness-[0.5]'
-                  }`}
+                  className="w-full h-full object-cover object-center blur-[2px] brightness-[0.55] scale-110"
                 />
                 {/* Overlay gradient for text readability */}
-                <div className={`absolute inset-0 ${
-                  homeFeatured
-                    ? 'bg-gradient-to-r from-card/85 via-card/60 to-card/40'
-                    : 'bg-gradient-to-r from-card/90 via-card/75 to-card/55'
-                }`} />
-                <div className="absolute inset-0 bg-gradient-to-b from-card/50 via-transparent to-card/70" />
+                <div className="absolute inset-0 bg-gradient-to-r from-card/90 via-card/70 to-card/50" />
+                <div className="absolute inset-0 bg-gradient-to-b from-card/60 via-transparent to-card/80" />
               </div>
               
               {/* Content on top */}
-              <div className={`relative z-10 pr-12 ${homeFeatured ? 'p-4' : 'p-3'}`}>
+              <div className="relative z-10 p-3 pr-12">
                 <h3 
-                  className={`font-display font-semibold tracking-wide text-card-foreground ${
-                    homeFeatured ? 'text-base mb-1.5' : 'text-sm mb-0.5'
-                  }`}
+                  className="font-display font-semibold tracking-wide text-sm mb-1 text-card-foreground"
                   style={{
                     textShadow: '0 1px 2px hsl(var(--background) / 0.5)',
                   }}
                 >
                   {title}
                 </h3>
-                <p className={`text-foreground/80 leading-relaxed font-medium ${
-                  homeFeatured ? 'text-sm line-clamp-2' : 'text-xs line-clamp-1'
-                }`}
+                <p className="text-xs text-foreground/80 leading-relaxed font-medium line-clamp-2"
                   style={{
                     textShadow: '0 1px 2px hsl(var(--background) / 0.3)',
                   }}
