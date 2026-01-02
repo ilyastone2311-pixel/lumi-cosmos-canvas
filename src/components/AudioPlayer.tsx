@@ -1,26 +1,29 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, Headphones, Volume2, VolumeX } from "lucide-react";
+import { Play, Pause, Headphones, Volume2, VolumeX, Loader2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import MiniAudioPlayer from "./MiniAudioPlayer";
 import AudioWaveform from "./AudioWaveform";
+import { toast } from "sonner";
 
 interface AudioPlayerProps {
   audioUrl?: string;
   duration?: string;
   articleId?: string;
   articleTitle?: string;
+  articleText?: string;
   onTimeUpdate?: (time: number) => void;
 }
 
 const PLAYBACK_SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2];
 
 const AudioPlayer = ({ 
-  audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+  audioUrl,
   duration = "3:24",
   articleId = "default",
   articleTitle = "Discovering Insights That Transform Perspectives",
+  articleText,
   onTimeUpdate
 }: AudioPlayerProps) => {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -38,6 +41,9 @@ const AudioPlayer = ({
   const [hasLoadedProgress, setHasLoadedProgress] = useState(false);
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
+  const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
+  const [generatedAudioUrl, setGeneratedAudioUrl] = useState<string | null>(null);
+  const [hasGeneratedAudio, setHasGeneratedAudio] = useState(false);
 
   const formatTime = (time: number) => {
     if (isNaN(time)) return "0:00";
@@ -135,8 +141,71 @@ const AudioPlayer = ({
     return () => observer.disconnect();
   }, [isPlaying]);
 
-  const togglePlay = () => {
+  // Generate audio using ElevenLabs TTS
+  const generateAudio = useCallback(async () => {
+    if (!articleText || isGeneratingAudio || hasGeneratedAudio) return;
+    
+    setIsGeneratingAudio(true);
+    toast.info("Generating audio narration...");
+    
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-tts`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          },
+          body: JSON.stringify({ text: articleText }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Failed to generate audio: ${response.status}`);
+      }
+
+      const audioBlob = await response.blob();
+      const blobUrl = URL.createObjectURL(audioBlob);
+      setGeneratedAudioUrl(blobUrl);
+      setHasGeneratedAudio(true);
+      toast.success("Audio ready to play!");
+      
+      // Set the audio source and play
+      if (audioRef.current) {
+        audioRef.current.src = blobUrl;
+        audioRef.current.load();
+        audioRef.current.play();
+        setIsPlaying(true);
+      }
+    } catch (error) {
+      console.error("Error generating audio:", error);
+      toast.error(error instanceof Error ? error.message : "Failed to generate audio");
+    } finally {
+      setIsGeneratingAudio(false);
+    }
+  }, [articleText, isGeneratingAudio, hasGeneratedAudio]);
+
+  // Cleanup blob URL on unmount
+  useEffect(() => {
+    return () => {
+      if (generatedAudioUrl) {
+        URL.revokeObjectURL(generatedAudioUrl);
+      }
+    };
+  }, [generatedAudioUrl]);
+
+  const togglePlay = async () => {
     if (!audioRef.current) return;
+    
+    // If we have article text but haven't generated audio yet, generate it first
+    if (articleText && !hasGeneratedAudio && !generatedAudioUrl) {
+      await generateAudio();
+      return;
+    }
+    
     if (isPlaying) {
       audioRef.current.pause();
       saveProgress(currentTime, playbackSpeed);
@@ -252,11 +321,11 @@ const AudioPlayer = ({
         {/* Hidden Audio Element */}
         <audio
           ref={audioRef}
-          src={audioUrl}
+          src={generatedAudioUrl || audioUrl}
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleLoadedMetadata}
           onEnded={handleEnded}
-          preload="metadata"
+          preload={audioUrl ? "metadata" : "none"}
         />
 
         {/* Resume Tooltip */}
@@ -342,9 +411,12 @@ const AudioPlayer = ({
                 
                 <motion.button
                   onClick={togglePlay}
-                  className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center cursor-pointer z-10 active:scale-95"
+                  className={`relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center z-10 active:scale-95 ${isGeneratingAudio ? 'cursor-wait' : 'cursor-pointer'}`}
+                  disabled={isGeneratingAudio}
                   style={{
-                    background: "linear-gradient(135deg, hsl(var(--neon-cyan)), hsl(var(--primary)), hsl(var(--neon-purple)))",
+                    background: isGeneratingAudio 
+                      ? "linear-gradient(135deg, hsl(var(--muted)), hsl(var(--muted-foreground)))"
+                      : "linear-gradient(135deg, hsl(var(--neon-cyan)), hsl(var(--primary)), hsl(var(--neon-purple)))",
                     boxShadow: "0 0 30px hsla(var(--neon-cyan), 0.4), inset 0 2px 10px hsla(0, 0%, 100%, 0.2)",
                   }}
                   whileHover={{ 
@@ -364,7 +436,17 @@ const AudioPlayer = ({
                   />
                   
                   <AnimatePresence mode="wait">
-                    {isPlaying ? (
+                    {isGeneratingAudio ? (
+                      <motion.div
+                        key="loading"
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.5, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <Loader2 className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-white drop-shadow-lg animate-spin" />
+                      </motion.div>
+                    ) : isPlaying ? (
                       <motion.div
                         key="pause"
                         initial={{ scale: 0.5, opacity: 0 }}
