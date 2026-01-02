@@ -19,9 +19,9 @@ const Navbar = () => {
   
   // Scroll-based shrinking for mobile header
   const { scrollY } = useScroll();
-  const mobileHeaderScale = useTransform(scrollY, [0, 100], [1, 0.95]);
-  const mobileHeaderOpacity = useTransform(scrollY, [0, 50], [1, 0.98]);
-  const mobileLogoScale = useTransform(scrollY, [0, 100], [1, 0.9]);
+  const mobileHeaderScale = useTransform(scrollY, [0, 100], [1, 0.92]);
+  const mobileHeaderOpacity = useTransform(scrollY, [0, 50], [1, 0.95]);
+  const mobileLogoScale = useTransform(scrollY, [0, 100], [1.8, 1.5]);
 
   // Handle ESC key to close search
   useEffect(() => {
@@ -61,7 +61,7 @@ const Navbar = () => {
 
   return (
     <nav 
-      className="fixed top-0 left-0 right-0 z-50 w-full py-1 px-2 md:py-2 md:px-4"
+      className="fixed top-0 left-0 right-0 z-50 w-full py-1.5 px-3 md:py-2 md:px-4"
     >
       {/* Mobile Header - Compact with scroll shrinking */}
       <motion.div 
@@ -76,49 +76,49 @@ const Navbar = () => {
           `,
         }}
       >
-        <div className="relative px-2.5 py-1 flex items-center justify-between h-12">
+        <div className="relative px-3 py-1.5 flex items-center justify-between">
           {/* Logo */}
           <motion.div 
             onClick={() => navigate("/")}
-            className="flex items-center gap-1.5 group cursor-pointer"
+            className="flex items-center gap-2 group cursor-pointer"
             whileTap={{ scale: 0.97 }}
           >
             <motion.div 
-              className="relative flex-shrink-0 overflow-hidden rounded-md origin-center"
+              className="relative flex-shrink-0 overflow-hidden rounded-lg origin-center"
               style={{ scale: mobileLogoScale }}
               whileHover={{
-                filter: "drop-shadow(0 0 10px hsl(190 100% 50% / 0.6)) drop-shadow(0 0 20px hsl(270 80% 60% / 0.4))",
+                filter: "drop-shadow(0 0 12px hsl(190 100% 50% / 0.6)) drop-shadow(0 0 24px hsl(270 80% 60% / 0.4))",
               }}
               transition={{ duration: 0.3 }}
             >
               <img 
                 src={logoImage} 
                 alt="Lumi" 
-                className="h-8 w-auto object-contain relative z-10 block" 
+                className="h-10 w-auto object-contain relative z-10 block" 
               />
             </motion.div>
-            <span className="font-display text-sm font-bold tracking-wide text-foreground">
+            <span className="font-display text-base font-bold tracking-wide text-foreground">
               Lumi
             </span>
           </motion.div>
 
           {/* Right side: Theme + Profile/Sign Up */}
-          <div className="flex items-center gap-0.5">
+          <div className="flex items-center gap-1">
             <ThemeToggle />
             
             {!loading && (
               user ? (
                 <motion.button
                   onClick={() => navigate("/profile")}
-                  className="p-1.5 rounded-full bg-gradient-to-br from-primary to-secondary"
+                  className="p-2 rounded-full bg-gradient-to-br from-primary to-secondary"
                   whileTap={{ scale: 0.92 }}
                 >
-                  <User className="w-3.5 h-3.5 text-primary-foreground" />
+                  <User className="w-4 h-4 text-primary-foreground" />
                 </motion.button>
               ) : (
                 <motion.button
                   onClick={() => navigate("/auth")}
-                  className="px-2.5 py-1 rounded-full text-xs font-semibold text-primary-foreground"
+                  className="px-3 py-1.5 rounded-full text-xs font-semibold text-primary-foreground"
                   style={{
                     background: 'linear-gradient(135deg, hsl(190 100% 50%), hsl(270 80% 60%))',
                   }}
