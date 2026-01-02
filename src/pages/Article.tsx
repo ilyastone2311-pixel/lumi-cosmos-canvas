@@ -53,12 +53,6 @@ const Article = () => {
   const [fontSize, setFontSize] = useState<FontSize>('medium');
   const articleRef = useRef<HTMLElement>(null);
 
-  // Combine all article text for TTS
-  const fullArticleText = [
-    articleContent.intro,
-    ...articleContent.sections.map(s => `${s.title}. ${s.content}`)
-  ].join(' ');
-
   const displayCategory = category?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   const fullArticleId = `${category}-${articleId}`;
 
@@ -282,7 +276,6 @@ const Article = () => {
                 duration="5:00" 
                 articleId={fullArticleId}
                 articleTitle="Discovering Insights That Transform Perspectives"
-                articleText={fullArticleText}
                 onTimeUpdate={(time) => {
                   setAudioTime(time);
                   setIsPlaying(true);
@@ -395,7 +388,6 @@ const Article = () => {
             duration="5:00" 
             articleId={fullArticleId}
             articleTitle="Discovering Insights That Transform Perspectives"
-            articleText={fullArticleText}
             onTimeUpdate={(time) => {
               setAudioTime(time);
               setIsPlaying(true);
