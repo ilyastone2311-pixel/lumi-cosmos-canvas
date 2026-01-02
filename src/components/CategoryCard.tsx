@@ -217,13 +217,13 @@ const CategoryCard = ({
             }}
           />
 
-          {/* Favorite Button - sized based on variant */}
+          {/* Favorite Button - sized based on variant with min 44px touch target */}
           <button
             onClick={handleFavoriteClick}
             className={`
               absolute z-20
               ${libraryCompact
-                ? 'top-1.5 right-1.5 w-6 h-6'
+                ? 'top-2 right-2 w-9 h-9'
                 : homeCompact 
                   ? 'top-2 right-2 w-8 h-8 md:top-3 md:right-3 md:w-10 md:h-10' 
                   : compact 
@@ -235,13 +235,13 @@ const CategoryCard = ({
               transition-all duration-300
               hover:scale-110 active:scale-95
               ${libraryCompact 
-                ? 'backdrop-blur-sm bg-background/40 border border-border/30' 
+                ? 'backdrop-blur-md bg-background/50 border border-border/40 shadow-lg shadow-background/20' 
                 : 'backdrop-blur-md bg-muted/60 border border-border'
               }
             `}
             style={{
               boxShadow: libraryCompact
-                ? 'none'
+                ? isFavorite ? '0 0 12px hsla(var(--accent), 0.4)' : undefined
                 : isFavorite 
                   ? '0 0 20px hsla(var(--accent), 0.5), 0 0 40px hsla(var(--accent), 0.2)' 
                   : '0 4px 15px hsl(var(--foreground) / 0.15)',
@@ -249,23 +249,23 @@ const CategoryCard = ({
           >
             <Heart 
               className={`transition-all duration-300 ${isHovered ? "scale-110" : ""} ${
-                libraryCompact ? 'w-3 h-3' : homeCompact || compact ? 'w-4 h-4' : 'w-5 h-5'
+                libraryCompact ? 'w-4 h-4' : homeCompact || compact ? 'w-4 h-4' : 'w-5 h-5'
               }`}
               style={{
                 color: isFavorite 
                   ? 'hsl(var(--accent))' 
                   : libraryCompact 
-                    ? 'hsl(var(--muted-foreground) / 0.6)' 
+                    ? 'hsl(var(--muted-foreground) / 0.7)' 
                     : 'hsl(var(--muted-foreground))',
-                filter: isFavorite && !libraryCompact ? 'drop-shadow(0 0 8px hsla(var(--accent), 0.8))' : 'none',
+                filter: isFavorite ? 'drop-shadow(0 0 6px hsla(var(--accent), 0.7))' : 'none',
               }}
               fill={isFavorite ? "currentColor" : "none"}
             />
           </button>
 
-          {/* LIBRARY COMPACT MOBILE LAYOUT */}
+          {/* LIBRARY COMPACT MOBILE LAYOUT - Min 44px touch target */}
           {libraryCompact && (
-            <div className="relative h-[120px] overflow-hidden">
+            <div className="relative min-h-[140px] overflow-hidden">
               {/* Background illustration - subtle accent */}
               <div className="absolute inset-0">
                 <img
@@ -273,18 +273,25 @@ const CategoryCard = ({
                   alt=""
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-cover object-center brightness-[0.4] scale-110"
+                  className="w-full h-full object-cover object-center brightness-[0.35] scale-110"
                 />
                 {/* Strong overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/85 to-card/60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/90 to-card/50" />
+                {/* Cosmic glow accent */}
+                <div 
+                  className="absolute inset-0 opacity-40"
+                  style={{
+                    background: 'radial-gradient(ellipse at top right, hsla(var(--primary), 0.2) 0%, transparent 60%)',
+                  }}
+                />
               </div>
               
-              {/* Content */}
-              <div className="relative z-10 h-full flex flex-col justify-end p-3 pr-8">
-                <h3 className="font-display font-semibold text-sm leading-tight text-card-foreground mb-0.5">
+              {/* Content - Readable titles without truncation */}
+              <div className="relative z-10 h-full flex flex-col justify-end p-4 pr-10">
+                <h3 className="font-display font-semibold text-[15px] leading-tight text-card-foreground mb-1">
                   {title}
                 </h3>
-                <p className="text-[11px] text-foreground/70 leading-snug line-clamp-1">
+                <p className="text-xs text-foreground/65 leading-snug line-clamp-2">
                   {subtitle}
                 </p>
               </div>

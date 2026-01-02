@@ -194,14 +194,14 @@ const Library = () => {
               </div>
             </div>
 
-            {/* Categories Grid - 2 columns on mobile, single column on very small */}
-            <section className="mt-4">
+            {/* Categories Grid - Clean 2-column grid on mobile */}
+            <section className="mt-5">
               {filteredCategories.length === 0 ? (
                 <div className="text-center py-12">
                   <p className="text-muted-foreground text-sm">No categories found</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 min-[320px]:grid-cols-2 max-[319px]:grid-cols-1 gap-2.5">
+                <div className="grid grid-cols-2 gap-4">
                   {filteredCategories.map((category, index) => (
                     <div
                       key={category.title}
