@@ -86,11 +86,15 @@ const Navbar = () => {
             <motion.div 
               className="relative flex-shrink-0 overflow-hidden rounded-lg origin-center"
               style={{ scale: mobileLogoScale }}
+              whileHover={{
+                filter: "drop-shadow(0 0 12px hsl(190 100% 50% / 0.6)) drop-shadow(0 0 24px hsl(270 80% 60% / 0.4))",
+              }}
+              transition={{ duration: 0.3 }}
             >
               <img 
                 src={logoImage} 
                 alt="Lumi" 
-                className="h-10 w-auto object-contain relative z-10 block"
+                className="h-10 w-auto object-contain relative z-10 block" 
               />
             </motion.div>
             <span className="font-display text-base font-bold tracking-wide text-foreground">
@@ -158,19 +162,23 @@ const Navbar = () => {
             className="relative flex-shrink-0 overflow-hidden rounded-xl origin-center scale-[2.0]"
             initial={{ rotate: -10, opacity: 0 }}
             animate={{ rotate: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+            whileHover={{
+              filter: "drop-shadow(0 0 16px hsl(190 100% 50% / 0.7)) drop-shadow(0 0 32px hsl(270 80% 60% / 0.5))",
+              scale: 2.1,
+            }}
+            transition={{ duration: 0.3, delay: 0.2, ease: "easeOut" }}
           >
             <img 
               src={logoImage} 
               alt="Lumi open book logo" 
-              className="h-[64px] w-auto object-contain relative z-10 block"
+              className="h-[64px] w-auto object-contain relative z-10 block" 
             />
             <div 
-              className="absolute inset-0 rounded-xl opacity-5 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
+              className="absolute inset-0 rounded-xl opacity-5 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"
               style={{
                 background:
-                  "radial-gradient(circle, hsl(270 80% 60% / 0.18), hsl(190 100% 50% / 0.08))",
-                filter: "blur(2px)",
+                  "radial-gradient(circle, hsl(270 80% 60% / 0.25), hsl(190 100% 50% / 0.12))",
+                filter: "blur(4px)",
               }}
             />
           </motion.div>
