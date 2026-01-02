@@ -17,7 +17,7 @@ interface AudioPlayerProps {
 const PLAYBACK_SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2];
 
 const AudioPlayer = ({ 
-  audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+  audioUrl = "/audio/article-placeholder.wav",
   duration = "3:24",
   articleId = "default",
   articleTitle = "Discovering Insights That Transform Perspectives",
