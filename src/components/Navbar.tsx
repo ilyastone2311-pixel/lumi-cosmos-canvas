@@ -90,7 +90,7 @@ const Navbar = () => {
               <img 
                 src={logoImage} 
                 alt="Lumi" 
-                className="h-8 w-auto object-contain relative z-10 block" 
+                className="h-10 w-auto object-contain relative z-10 block"
               />
             </motion.div>
             <span className="font-display text-base font-bold tracking-wide text-foreground">
@@ -163,7 +163,7 @@ const Navbar = () => {
             <img 
               src={logoImage} 
               alt="Lumi open book logo" 
-              className="h-[52px] w-auto object-contain relative z-10 block" 
+              className="h-[64px] w-auto object-contain relative z-10 block"
             />
             <div 
               className="absolute inset-0 rounded-xl opacity-5 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
