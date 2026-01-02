@@ -138,15 +138,17 @@ const HeroIllustration = () => {
           transformStyle: "preserve-3d",
         }}
       >
-        {/* Illustration with floating animation */}
+        {/* Illustration with passive levitation animation */}
         <motion.div
           className="relative w-full h-full flex items-center justify-center"
           animate={{
-            y: isActive ? [0, -10, 0] : [0, -5, 0],
-            scale: isActive ? 1.01 : 1,
+            y: [0, -12, 0],
+            rotate: [0, 0.5, 0, -0.5, 0],
+            scale: isActive ? 1.02 : 1,
           }}
           transition={{
-            y: { duration: isActive ? 2.5 : 4, repeat: Infinity, ease: "easeInOut" },
+            y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+            rotate: { duration: 6, repeat: Infinity, ease: "easeInOut" },
             scale: { duration: 0.4, ease: [0.2, 0.9, 0.2, 1] },
           }}
         >
